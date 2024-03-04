@@ -6,7 +6,7 @@
 /*   By: aherman <aherman@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:23:39 by aherman           #+#    #+#             */
-/*   Updated: 2024/02/29 16:38:49 by aherman          ###   ########.fr       */
+/*   Updated: 2024/03/04 12:35:53 by aherman          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,17 @@
 /* /\_/\_/\_/\_/\_/\_/\_/\_/\_/\_ INCLUDE _/\_/\_/\_/\_/\_/\_/\_/\_/\_/\ */
 
 # include <math.h>
+# include <fcntl.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <errno.h>
 # include "../minilibx/mlx.h"
 # include "../ft_printf/include/ft_printf.h"
 
 /* /\_/\_/\_/\_/\_/\_/\_/\_/\_/\_ MACRO _/\_/\_/\_/\_/\_/\_/\_/\_/\_/\ */
 
-# define WIDTH 600
-# define HEIGHT 600
-# define MAX_ITERATION 40
+# define WIDTH 1024
+# define HEIGHT 512
 
 # define ESC 53
 # define C 8
@@ -33,24 +36,13 @@
 # define MOUSSTOP 4
 
 # define ERROR_NBR_ARG "Invalid number of arguments.\n \
-	Fractal Mandelbrot: ./fractol mandelbrot\n \
-	Fractal Julia: ./fractol julia “two decimal numbers“\n"
+	Example of use:: ./cub3D XX.map\n"
 
-# define ERROR_WRONG_FRACTAL_NAME  "Parameter given wrong!\n \
-	Fractal Mandelbrot: ./fractol mandelbrot\n \
-	Fractal Julia: ./fractol julia “two decimal numbers“\n"
-
-# define ERROR_ARG_JULIA "Only Julia take two decimal numbers.\n \
-	Fractal Mandelbrot: ./fractol mandelbrot\n \
-	Fractal Julia: ./fractol julia “two decimal numbers“\n"
+# define ERROR_WRONG_MAP_NAME "Parameter given wrong!\n \
+	Example of use:: ./cub3D XX.map\n"
 
 # define ERROR_EXEMPLE "Example of use:\n \
-	Fractal Mandelbrot: ./fractol mandelbrot\n \
-	Fractal Julia: ./fractol julia “two decimal numbers“\n"
-
-# define ERROR_ARG_JULIA_NEED "Julia take two decimal numbers.\n \
-	Fractal Mandelbrot: ./fractol mandelbrot\n \
-	Fractal Julia: ./fractol julia “two decimal numbers“\n"
+	./cub3D XX.map“\n"
 
 /* /\_/\_/\_/\_/\_/\_/\_/\_/\_/\_ STRUCTS _/\_/\_/\_/\_/\_/\_/\_/\_/\_/\ */
 
