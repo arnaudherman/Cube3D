@@ -6,74 +6,45 @@
 /*   By: aherman <aherman@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 13:48:53 by aherman           #+#    #+#             */
-/*   Updated: 2024/03/08 14:09:59 by aherman          ###   ########.fr       */
+/*   Updated: 2024/03/11 14:46:25 by aherman          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-int	read_map(char *fdmap, t_data *data, int *count)
+//check si le fichier map est en cub et que le fichier peut etre open et renvoie le fd
+int	ft_check_file(char *fname, char *name)
 {
-	data->fd = open(fdmap, O_RDONLY); // set fd to .cub
-	if (data->fd == -1)
-		return (write(1, "Error\ninvalid file\n", 20), 0);
-	data->line = get_next_line(data->fd);
-	if (data->line == NULL)
-		return (write(1, "Error\nempty file\n", 18), 0);
-	data->ture = ft_strdup("");
-	while (data->line && data->line[0] != '1' && data->line[0] != 32)
-	{
-		if (check_color_textures(data->line))
-		{
-			data->ture = ft_strjoin(data->ture, data->line);
-			(*count)++;
-		}
-		free(data->line);
-		data->line = get_next_line(data->fd);
-	}
-	if (!check_countture(data, *count))
-		return (freeme(NULL, NULL, data->fd), 0);
-	data->ture2d = ft_split(data->ture, '\n');
-	if (!data->ture2d)
-		return (freeme(data->ture, NULL, data->fd), 0);
-	if (!read_map_(data, *count))
-		return (freeme(data->ture, NULL, data->fd), free_2d(data->ture2d), 0);
-	return (freeme(data->ture, data->line, data->fd), 1);
+	int		fd;
+	char	*s1;
+
+	s1 = ft_strrchr(fname, '.');
+	if (s1 && !ft_strcmp(s1, name))
+		ft_error(ERROR_MAP_EXT);
+	else if (!fname || !s1)
+		return (0);
+	fd = open(fname, O_RDONLY);
+	if (fd == -1)
+		ft_error(ERROR_MAP_OPEN);
+	return (fd);
 }
 
-int ft_check_ext_name(char *fname, char *name)
+void	process_textures_and_colors(char *file_d, t_data *data)
 {
-	char	*dotp;
+	len_map(file_d, data);
+	if (parse_textures(file_d, data) != 0)
+		fail("error parse_textures");
+	convert_colors(data);
+	free(data->colors.f_color);
+	free(data->colors.c_color);
+}
 
-	dotp = ft_strrchr(fname, '.');
-	if (dotp && !ft_strcmp(dotp, name))
-		return (1);
-	else if (!fname || !dotp)
-		return (0);
+//main du parsing
+int	parsing(char *argv[], t_data *data)
+{
+	data->fd = ft_check_file(argv[1], ".cub");
+	process_textures_and_colors(argv[1], data);
+	initialize_map(data);
+	fill_validate_and_close_map(argv[1], data, data->fd);
 	return (0);
-}
-
-int	parsing(int argc, char *argv[], t_data *data, t_txtr *l_ture)
-{
-	int		count;
-
-	count = 0;
-	l_ture = NULL;
-	if (argc != 2 || !ft_check_ext_name(argv[1], ".cub"))
-	{
-		ft_error(-4);
-		exit(0);
-	}
-	if (!read_map(argv[1], data, &count))
-		return (0);
-	if (!valid_map(data))
-		return (0);
-	if (!lst_ture(data, &l_ture))
-		return (free_map(data), freelist(&l_ture), 0);
-	if (!color_ture(data, l_ture))
-		return (free_map(data), freelist(&l_ture), 0);
-	get_x_y_player(data);
-	get_rows_cols(data);
-	data->t = l_ture;
-	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: aherman <aherman@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:23:34 by aherman           #+#    #+#             */
-/*   Updated: 2024/03/08 13:48:24 by aherman          ###   ########.fr       */
+/*   Updated: 2024/03/11 13:00:51 by aherman          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ int	main(int argc, char *argv[])
 {
 	t_data	data;
 
-	if (!parsing(argc, argv, &data, data.t))
+	if (argc != 2)
+		ft_error(ERROR_NBR_ARG);
+	if (!parsing(argv, &data))
 		return (0);
 
 }

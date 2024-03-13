@@ -1,0 +1,21 @@
+Parsing Cub3D
+->Check extension du fichier (.cub)
+->Check Open readonly
+->Check parasite
+--------
+Check textures
+->Trouver lignes textures
+->Stocker les chemin dans une struct + marquer flag found
+->Check Open readonly les xpm
+->Fonction mlx pour savoir si les xpm sont valide (A faire au moment d'afficher)
+--------
+Check colors
+->Trouver lignes textures
+->Stocker le char de la couleur + marquer flag found
+->Convertir en valeur couleur
+--------
+Check map
+-> Regarder si il y a que des 0/1/N/S/E/W
+-> Space et tab(4 space) = wall (Convertir sapce in to wall)
+-> Completer les lignes avec une valeur plus faible que map_x par des wall
+-> Stocker dans un char in struct
