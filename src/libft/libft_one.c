@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft_one.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aherman <aherman@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 13:57:21 by aherman           #+#    #+#             */
-/*   Updated: 2024/03/08 15:17:41 by aherman          ###   ########.fr       */
+/*   Updated: 2024/03/13 17:11:48 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,4 +87,14 @@ char	*ft_strdup(char *src)
 	}
 	s1[c[1]] = '\0';
 	return (s1);
+}
+
+int	ft_strcmp(char *s1, char *s2)
+{
+	int i;
+
+	i = 0;
+	while (s1[i] == s2[i] && s1[i] != '\0' && s2[i] != '\0')
+		i++;
+	return (s1[i] - s2[i]);
 }

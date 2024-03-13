@@ -6,7 +6,7 @@
 /*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:23:39 by aherman           #+#    #+#             */
-/*   Updated: 2024/03/13 16:49:16 by bat              ###   ########.fr       */
+/*   Updated: 2024/03/13 20:56:59 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,14 +93,15 @@ typedef struct s_data
 	t_color_info	colors;
 }				t_data;
 
-// Map data struct
-typedef struct s_map {
-    char **map2d;
-    int w_map;
-    int h_map;
-    int x_pos_map;
-    int y_pos_map;
-} t_map;
+// // Mlx library struct
+// typedef struct s_mlx //the mlx structure
+// {
+//  	mlx_image_t	*img; // the image
+//  	mlx_t		*mlx_p; // mlx pointer
+//  	t_ray   	*ray; // ray structure
+//  	t_data   	*data; // data structure
+//  	t_player  	*plyr; // player structure
+// } t_mlx;
 
 // Raycasting struct
 typedef struct s_ray
@@ -109,6 +110,15 @@ typedef struct s_ray
  	double wall_dist; // distance to the wall
  	int  wall_flag;  // flag for the wall
 } t_ray;
+
+// Map data struct
+typedef struct s_map {
+    char **map2d;
+    int w_map;
+    int h_map;
+    int x_pos_map;
+    int y_pos_map;
+} t_map;
 
 // Player struct
 typedef struct s_player
@@ -121,6 +131,18 @@ typedef struct s_player
  	int  up_down; // up down flag
  	int  rot; // rotation flag
 } t_player;
+
+// Mlx library struct
+typedef struct	s_data_mlx {
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+	t_ray   	*ray; // ray structure
+	t_data   	*data; // data structure
+	t_player  	*plyr; // player structure
+} t_data_mlx;
 
 /* /\_/\_/\_/\_/\_/\_/\_/\_/\_/\_ PROTOTYPE _/\_/\_/\_/\_/\_/\_/\_/\_/\_/\ */
 
@@ -138,6 +160,9 @@ int			parsing(char *argv[], t_data *data);
 int			process_line(char *line, t_data *data);
 char		*ignore_texture(int fd_cub);
 int			len_map(char *file_d, t_data *data);
+// Located in *len_map.c*
+// Located in *texture_color.c*
+int	parse_textures(char *file_d, t_data *data);
 
 /* -------------------- LIBFT -------------------- */
 
@@ -146,6 +171,8 @@ char		*ft_strchr(const char *s, int c);
 void		*ft_calloc(size_t nmemb, size_t size);
 char		*ft_strjoin(char *s1, char *s2);
 char		*ft_strdup(char *src);
+int			ft_strcmp(char *s1, char *s2);
+
 
 // Located in *get_next_line.c*
 char		*join_line(char *left_line, char *s1);
