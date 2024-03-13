@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aherman <aherman@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:23:39 by aherman           #+#    #+#             */
-/*   Updated: 2024/03/12 13:45:43 by aherman          ###   ########.fr       */
+/*   Updated: 2024/03/13 16:49:16 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,12 @@
 # include "../ft_printf/include/ft_printf.h"
 
 /* /\_/\_/\_/\_/\_/\_/\_/\_/\_/\_ MACRO _/\_/\_/\_/\_/\_/\_/\_/\_/\_/\ */
+
+#define WINDOW_WIDTH 1920
+#define WINDOW_HEIGHT 1000
+#define FOV 60
+#define SPEED 4.2
+#define ROTATION 0.042
 
 # define ERROR_NBR_ARG "Error\n \
 	Invalid number of arguments.\n \
@@ -86,6 +92,35 @@ typedef struct s_data
 	t_texture_info	ea;
 	t_color_info	colors;
 }				t_data;
+
+// Map data struct
+typedef struct s_map {
+    char **map2d;
+    int w_map;
+    int h_map;
+    int x_pos_map;
+    int y_pos_map;
+} t_map;
+
+// Raycasting struct
+typedef struct s_ray
+{
+	double ray_ang; // ray angle
+ 	double wall_dist; // distance to the wall
+ 	int  wall_flag;  // flag for the wall
+} t_ray;
+
+// Player struct
+typedef struct s_player
+{
+ 	int  x_pos_px; // player x position in pixels
+ 	int  y_pos_px; // player y position in pixels
+	double player_angle; // player angle
+	float fov; // field of view in radians
+ 	int  left_right; // left right flag
+ 	int  up_down; // up down flag
+ 	int  rot; // rotation flag
+} t_player;
 
 /* /\_/\_/\_/\_/\_/\_/\_/\_/\_/\_ PROTOTYPE _/\_/\_/\_/\_/\_/\_/\_/\_/\_/\ */
 

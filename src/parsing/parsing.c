@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aherman <aherman@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 13:48:53 by aherman           #+#    #+#             */
-/*   Updated: 2024/03/11 14:46:25 by aherman          ###   ########.fr       */
+/*   Updated: 2024/03/13 16:39:14 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_check_file(char *fname, char *name)
 	int		fd;
 	char	*s1;
 
-	s1 = ft_strrchr(fname, '.');
+	s1 = ft_strchr(fname, '.');
 	if (s1 && !ft_strcmp(s1, name))
 		ft_error(ERROR_MAP_EXT);
 	else if (!fname || !s1)
