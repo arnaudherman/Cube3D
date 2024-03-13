@@ -6,7 +6,7 @@
 /*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:23:39 by aherman           #+#    #+#             */
-/*   Updated: 2024/03/13 20:56:59 by bat              ###   ########.fr       */
+/*   Updated: 2024/03/13 21:40:37 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 /* /\_/\_/\_/\_/\_/\_/\_/\_/\_/\_ INCLUDE _/\_/\_/\_/\_/\_/\_/\_/\_/\_/\ */
 
+# include "colors.h"
+# include "libft.h"
 # include <stdlib.h>
 # include <math.h>
 # include <string.h>
@@ -26,11 +28,19 @@
 
 /* /\_/\_/\_/\_/\_/\_/\_/\_/\_/\_ MACRO _/\_/\_/\_/\_/\_/\_/\_/\_/\_/\ */
 
-#define WINDOW_WIDTH 1920
-#define WINDOW_HEIGHT 1000
-#define FOV 60
-#define SPEED 4.2
-#define ROTATION 0.042
+# define WINDOW_WIDTH 1920
+# define WINDOW_HEIGHT 1000
+# define SQUARE 64
+# define FOV 60
+# define SPEED 4.2
+# define ROTATION 0.042
+/* MINIMAP MACROS */
+# define MMAP_PIXEL_SIZE 128
+# define MMAP_VIEW_DIST 4
+# define MMAP_COLOR_PLAYER 0x00FF00
+# define MMAP_COLOR_WALL 0x808080
+# define MMAP_COLOR_FLOOR 0xE6E6E6
+# define MMAP_COLOR_SPACE 0x404040
 
 # define ERROR_NBR_ARG "Error\n \
 	Invalid number of arguments.\n \
@@ -143,6 +153,14 @@ typedef struct	s_data_mlx {
 	t_data   	*data; // data structure
 	t_player  	*plyr; // player structure
 } t_data_mlx;
+
+enum e_texture_dir
+{
+	NORTH = 0,
+	SOUTH = 1,
+	EAST = 2,
+	WEST = 3
+};
 
 /* /\_/\_/\_/\_/\_/\_/\_/\_/\_/\_ PROTOTYPE _/\_/\_/\_/\_/\_/\_/\_/\_/\_/\ */
 
