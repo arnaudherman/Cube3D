@@ -6,7 +6,7 @@
 /*   By: aherman <aherman@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:23:39 by aherman           #+#    #+#             */
-/*   Updated: 2024/03/14 17:58:37 by aherman          ###   ########.fr       */
+/*   Updated: 2024/03/14 18:57:27 by aherman          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@
 typedef struct s_color_info
 {
 	char	*string_color;
+	int		final_color;
 	int		int_r;
 	int		int_g;
 	int		int_b;
@@ -157,6 +158,7 @@ size_t		ft_strlen(const char *s);
 size_t		ft_strlcpy(char *dst, const char *src, size_t dstsize);
 int			ft_strncmp(const char *s1, const char *s2, size_t size);
 int			ft_atoi(const char *str);
+void		free_tokens(char **tokens);
 
 // Located in *libft_three.c*
 char		**ft_split(char const *s, char c);

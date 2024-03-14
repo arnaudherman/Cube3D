@@ -6,7 +6,7 @@
 /*   By: aherman <aherman@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:54:11 by aherman           #+#    #+#             */
-/*   Updated: 2024/03/14 17:30:52 by aherman          ###   ########.fr       */
+/*   Updated: 2024/03/14 18:55:42 by aherman          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,19 @@ int	ft_atoi(const char *str)
 		c1++;
 	}
 	return (res * neg);
+}
+
+void	free_tokens(char **tokens)
+{
+	int	i;
+
+	i = 0;
+	if (tokens == NULL)
+		return ;
+	while (tokens[i] != NULL)
+	{
+		free(tokens[i]);
+		i++;
+	}
+	free(tokens);
 }

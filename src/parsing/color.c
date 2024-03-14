@@ -6,11 +6,22 @@
 /*   By: aherman <aherman@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 17:44:30 by aherman           #+#    #+#             */
-/*   Updated: 2024/03/14 17:52:19 by aherman          ###   ########.fr       */
+/*   Updated: 2024/03/14 19:00:08 by aherman          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
+
+int	encode_rgb(int r, int g, int b)
+{
+	int	color;
+
+	color = 0;
+	color += r << 16;
+	color += g << 8;
+	color += b;
+	return (color);
+}
 
 void	save_color_data(t_color_info *color, char *line)
 {
@@ -57,21 +68,6 @@ void	found_color_data(t_data *data)
 		ft_error(ERROR_MISSING_COLOR);
 }
 
-void	free_tokens(char **tokens)
-{
-	int	i;
-
-	i = 0;
-	if (tokens == NULL)
-		return ;
-	while (tokens[i] != NULL)
-	{
-		free(tokens[i]);
-		i++;
-	}
-	free(tokens);
-}
-
 void	is_valid_color(t_color_info *color)
 {
 	char	**tokens;
@@ -109,4 +105,8 @@ void	color_data(t_data *data)
 	found_color_data(data);
 	is_valid_color(&data->fcolors);
 	is_valid_color(&data->ccolors);
+	data->fcolors.final_color = encode_rgb(data->fcolors.int_r,
+			data->fcolors.int_g, data->fcolors.int_b);
+	data->ccolors.final_color = encode_rgb(data->ccolors.int_r,
+			data->ccolors.int_g, data->ccolors.int_b);
 }
