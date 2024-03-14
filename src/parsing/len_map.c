@@ -6,7 +6,7 @@
 /*   By: aherman <aherman@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 13:48:16 by aherman           #+#    #+#             */
-/*   Updated: 2024/03/12 13:18:59 by aherman          ###   ########.fr       */
+/*   Updated: 2024/03/14 17:53:42 by aherman          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ char	*ignore_texture(int fd_cub)
 // les chemins vers des textures (NO, SO, WE, EA) qui sont dans assests,
 // les couleurs du plafond (F) et du sol (C) et
 // une représentation de la carte elle-même.
-int	len_map(char *file_d, t_data *data)
+void	len_map(char *file_d, t_data *data)
 {
 	char	*line;
 	char	*next_line;
@@ -117,5 +117,5 @@ int	len_map(char *file_d, t_data *data)
 		next_line = get_next_line(data->fd);
 	}
 	close(data->fd);
-	return (0);
+	return ;
 }

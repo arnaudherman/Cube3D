@@ -6,7 +6,7 @@
 #    By: aherman <aherman@student.42lausanne.ch>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/27 12:15:54 by aherman           #+#    #+#              #
-#    Updated: 2024/03/14 12:51:35 by aherman          ###   ########.fr        #
+#    Updated: 2024/03/14 17:58:04 by aherman          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,12 +14,14 @@ NAME = cub3D
 
 SRCS := src/main.c\
 			src/parsing/parsing.c\
-			src/parsing/initialize_map.c\
 			src/parsing/len_map.c\
-			src/parsing/texture_color.c\
+			src/parsing/color.c\
+			src/parsing/texture.c\
 			src/error/error.c\
 			src/libft/get_next_line.c\
 			src/libft_one.c\
+			src/libft_two.c\
+			src/libft_three.c\
 
 
 CC = gcc

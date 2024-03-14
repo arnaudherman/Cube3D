@@ -6,7 +6,7 @@
 /*   By: aherman <aherman@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:54:11 by aherman           #+#    #+#             */
-/*   Updated: 2024/03/14 13:54:39 by aherman          ###   ########.fr       */
+/*   Updated: 2024/03/14 17:30:52 by aherman          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,31 @@ int	ft_strncmp(const char *s1, const char *s2, size_t size)
 	if (c1 == size)
 		return (0);
 	return (((unsigned char *)s1)[c1] - ((unsigned char *)s2)[c1]);
+}
+
+int	ft_atoi(const char *str)
+{
+	int	c1;
+	int	neg;
+	int	res;
+
+	c1 = 0;
+	neg = 1;
+	res = 0;
+	while (str[c1] == '\t' || str[c1] == '\n' || str[c1] == '\v'
+		|| str[c1] == '\f' || str[c1] == '\r' || str[c1] == ' ')
+		c1++;
+	if (str[c1] == '-' || str[c1] == '+')
+	{
+		if (str[c1] == '-')
+			neg = neg * -1;
+		c1++;
+	}
+	while (str[c1] != '\0' && str[c1] <= '9' && str[c1] >= '0')
+	{
+		res = res * 10;
+		res = res + (str[c1] - '0');
+		c1++;
+	}
+	return (res * neg);
 }

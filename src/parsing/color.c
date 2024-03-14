@@ -1,18 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   zonedechantier.c                                   :+:      :+:    :+:   */
+/*   color.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aherman <aherman@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/14 12:57:45 by aherman           #+#    #+#             */
-/*   Updated: 2024/03/14 17:44:19 by aherman          ###   ########.fr       */
+/*   Created: 2024/03/14 17:44:30 by aherman           #+#    #+#             */
+/*   Updated: 2024/03/14 17:52:19 by aherman          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d.h"
-
-//Ici c'est juste pour coder sans y mettre la forme
+#include "../../include/cub3d.h"
 
 void	save_color_data(t_color_info *color, char *line)
 {
@@ -59,18 +57,24 @@ void	found_color_data(t_data *data)
 		ft_error(ERROR_MISSING_COLOR);
 }
 
-void free_tokens(char **tokens) {
-	if (tokens != NULL)
+void	free_tokens(char **tokens)
+{
+	int	i;
+
+	i = 0;
+	if (tokens == NULL)
+		return ;
+	while (tokens[i] != NULL)
 	{
-		for (int i = 0; tokens[i] != NULL; i++)
-			free(tokens[i]);
-		free(tokens);
+		free(tokens[i]);
+		i++;
 	}
+	free(tokens);
 }
 
-void is_valid_color(t_color_info *color)
+void	is_valid_color(t_color_info *color)
 {
-	char **tokens;
+	char	**tokens;
 
 	tokens = split(color, ',');
 	if (tokens == NULL)
@@ -83,12 +87,10 @@ void is_valid_color(t_color_info *color)
 		free_tokens(tokens);
 		ft_error(ERROR_FORMAT_COLOR);
 	}
-
 	color->int_r = atoi(tokens[0]);
 	color->int_g = atoi(tokens[1]);
 	color->int_b = atoi(tokens[2]);
 	free_tokens(tokens);
-
 	if (color->int_r < 0 || color->int_r > 255 || color->int_g < 0
 		|| color->int_g > 255 || color->int_b < 0 || color->int_b > 255)
 	{
@@ -96,7 +98,13 @@ void is_valid_color(t_color_info *color)
 	}
 }
 
-void	color(t_data *data)
+// L'objectif est de mettre les couleurs dans nos struct
+// On trouve une ligne qui start avec F ou C
+// On regarde que cette direction na pas deja une couleur set
+// On envoie dans  data, on extrait le char grace a split
+// On atoi dans les differents int r, g, b.
+// On regarde si c'est bien des valeurs rgb
+void	color_data(t_data *data)
 {
 	found_color_data(data);
 	is_valid_color(&data->fcolors);

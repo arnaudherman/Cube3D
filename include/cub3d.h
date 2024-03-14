@@ -6,7 +6,7 @@
 /*   By: aherman <aherman@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:23:39 by aherman           #+#    #+#             */
-/*   Updated: 2024/03/14 13:55:13 by aherman          ###   ########.fr       */
+/*   Updated: 2024/03/14 17:58:37 by aherman          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,21 @@
 # define ERROR_PATH_TEXT "Error\n \
 	Textures path does not show a usable file.\n \
 	Example of use: ./cub3D map/XX.cub\n"
+# define ERROR_MISSING_COLOR "Error\n \
+	A color has been not setup.\n \
+	Example of use: ./cub3D map/XX.cub\n"
+# define ERROR_DOUBLE_COLOR "Error\n \
+	Twice the same color has been setup.\n \
+	Example of use: ./cub3D map/XX.cub\n"
+# define ERROR_SPLIT_COLOR "Error\n \
+	Failed to split color string.\n \
+	Example of use: ./cub3D map/XX.cub\n"
+# define ERROR_FORMAT_COLOR "Error\n \
+	Failed to split color string.\n \
+	Example of use: ./cub3D map/XX.cub\n"
+# define ERROR_RANGE_COLOR "Error\n \
+	Failed to split color string.\n \
+	Example of use: ./cub3D map/XX.cub\n"
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
@@ -72,10 +87,11 @@
 
 typedef struct s_color_info
 {
-	char	*f_color;
-	char	*c_color;
-	int		floor;
-	int		ceiling;
+	char	*string_color;
+	int		int_r;
+	int		int_g;
+	int		int_b;
+	int		found_color;
 }	t_color_info;
 
 typedef struct s_texture_info
@@ -93,7 +109,8 @@ typedef struct s_data
 	t_texture_info	so;
 	t_texture_info	we;
 	t_texture_info	ea;
-	t_color_info	colors;
+	t_color_info	fcolors;
+	t_color_info	ccolors;
 }				t_data;
 
 /* /\_/\_/\_/\_/\_/\_/\_/\_/\_/\_ PROTOTYPE _/\_/\_/\_/\_/\_/\_/\_/\_/\_/\ */
@@ -112,6 +129,12 @@ int			parsing(char *argv[], t_data *data);
 int			process_line(char *line, t_data *data);
 char		*ignore_texture(int fd_cub);
 int			len_map(char *file_d, t_data *data);
+
+// Located in *texture.c*
+void		found_textures_data(t_data *data);
+
+// Located in *color.c*
+void	color_data(t_data *data);
 
 /* -------------------- LIBFT -------------------- */
 
@@ -133,5 +156,10 @@ void		ft_bzero(void *s, size_t n);
 size_t		ft_strlen(const char *s);
 size_t		ft_strlcpy(char *dst, const char *src, size_t dstsize);
 int			ft_strncmp(const char *s1, const char *s2, size_t size);
+int			ft_atoi(const char *str);
+
+// Located in *libft_three.c*
+char		**ft_split(char const *s, char c);
+
 
 #endif

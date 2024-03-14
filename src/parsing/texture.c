@@ -6,7 +6,7 @@
 /*   By: aherman <aherman@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 12:57:45 by aherman           #+#    #+#             */
-/*   Updated: 2024/03/14 14:03:54 by aherman          ###   ########.fr       */
+/*   Updated: 2024/03/14 14:39:54 by aherman          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	found_textures_data(t_data *data)
 				save_texture_data(&data->ea, line);
 		}
 	}
-	if ((data->no.texture_found == 0) && (data->so.texture_found == 0)
-		&& (data->we.texture_found == 0) && (data->ea.texture_found == 0))
+	if ((data->no.texture_found == 0) || (data->so.texture_found == 0)
+		|| (data->we.texture_found == 0) || (data->ea.texture_found == 0))
 		ft_error(ERROR_MISSING_TEXT);
 }
