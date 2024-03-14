@@ -6,7 +6,7 @@
 /*   By: aherman <aherman@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 13:57:21 by aherman           #+#    #+#             */
-/*   Updated: 2024/03/08 15:17:41 by aherman          ###   ########.fr       */
+/*   Updated: 2024/03/14 12:48:23 by aherman          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,4 +87,16 @@ char	*ft_strdup(char *src)
 	}
 	s1[c[1]] = '\0';
 	return (s1);
+}
+
+void	ft_bzero(void *s, size_t n)
+{
+	size_t	c1;
+
+	c1 = 0;
+	while (c1 != n)
+	{
+		((unsigned char *)s)[c1] = 0;
+		c1++;
+	}
 }

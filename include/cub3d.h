@@ -6,7 +6,7 @@
 /*   By: aherman <aherman@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:23:39 by aherman           #+#    #+#             */
-/*   Updated: 2024/03/12 13:45:43 by aherman          ###   ########.fr       */
+/*   Updated: 2024/03/14 13:55:13 by aherman          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,15 @@
 
 # define ERROR_MAP "Error\n \
 	Forbidden character in the map.\n \
+	Example of use: ./cub3D map/XX.cub\n"
+# define ERROR_DOUBLE_TEXT "Error\n \
+	Twice the same texture has been setup.\n \
+	Example of use: ./cub3D map/XX.cub\n"
+# define ERROR_MISSING_TEXT "Error\n \
+	A texture has been not setup.\n \
+	Example of use: ./cub3D map/XX.cub\n"
+# define ERROR_PATH_TEXT "Error\n \
+	Textures path does not show a usable file.\n \
 	Example of use: ./cub3D map/XX.cub\n"
 
 # ifndef BUFFER_SIZE
@@ -106,17 +115,23 @@ int			len_map(char *file_d, t_data *data);
 
 /* -------------------- LIBFT -------------------- */
 
-// Located in *libft_one.c*
-char		*ft_strchr(const char *s, int c);
-void		*ft_calloc(size_t nmemb, size_t size);
-char		*ft_strjoin(char *s1, char *s2);
-char		*ft_strdup(char *src);
-
 // Located in *get_next_line.c*
 char		*join_line(char *left_line, char *s1);
 char		*read_the_line(int fd, char *left_line);
 char		*go_line(char *left_line);
 char		*go_next(char *left_line);
 char		*get_next_line(int fd);
+
+// Located in *libft_one.c*
+char		*ft_strchr(const char *s, int c);
+void		*ft_calloc(size_t nmemb, size_t size);
+char		*ft_strjoin(char *s1, char *s2);
+char		*ft_strdup(char *src);
+void		ft_bzero(void *s, size_t n);
+
+// Located in *libft_two.c*
+size_t		ft_strlen(const char *s);
+size_t		ft_strlcpy(char *dst, const char *src, size_t dstsize);
+int			ft_strncmp(const char *s1, const char *s2, size_t size);
 
 #endif

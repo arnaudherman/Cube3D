@@ -6,13 +6,14 @@
 /*   By: aherman <aherman@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 13:48:53 by aherman           #+#    #+#             */
-/*   Updated: 2024/03/11 14:46:25 by aherman          ###   ########.fr       */
+/*   Updated: 2024/03/14 12:53:29 by aherman          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-//check si le fichier map est en cub et que le fichier peut etre open et renvoie le fd
+//check si le fichier map est en cub 
+//et que le fichier peut etre open et renvoie le fd
 int	ft_check_file(char *fname, char *name)
 {
 	int		fd;
