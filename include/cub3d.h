@@ -6,7 +6,7 @@
 /*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:23:39 by aherman           #+#    #+#             */
-/*   Updated: 2024/03/13 21:40:37 by bat              ###   ########.fr       */
+/*   Updated: 2024/03/15 08:52:15 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,9 @@
 
 # define WINDOW_WIDTH 1920
 # define WINDOW_HEIGHT 1000
-# define SQUARE 64
+# define CELLSIZE 64
+#define MAPX 8
+#define MAPYX 8
 # define FOV 60
 # define SPEED 4.2
 # define ROTATION 0.042

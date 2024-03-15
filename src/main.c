@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/27 14:23:34 by aherman           #+#    #+#             */
-/*   Updated: 2024/03/13 21:39:02 by bat              ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../include/cub3d.h"
 
 // int	main(int argc, char *argv[])
@@ -21,21 +9,6 @@
 // 	// if (!parsing(argv, &data))
 // 	// 	return (0);
 // }
-
-int mapX = 8;
-int mapY = 8;
-int mapS = 64;
-int map[] =
-{
-	1, 1, 1, 1, 1, 1, 1, 1,
-	1, 0, 0, 0, 1, 0, 0, 1,
-	1, 0, 1, 0, 1, 0, 0, 1,
-	1, 0, 1, 0, 1, 0, 0, 1,
-	1, 0, 1, 0, 1, 0, 0, 1,
-	1, 0, 1, 0, 1, 1, 0, 1,
-	1, 0, 1, 0, 0, 0, 0, 1,
-	1, 1, 1, 1, 1, 1, 1, 1,
-};
 
 void	my_mlx_pixel_put(t_data_mlx *data, int x, int y, int color)
 {
@@ -51,13 +24,20 @@ void	init()
 	gluOrtho2D(0, 1920, 1080, 0);
 }
 
+// clear and free
+// mlx_destroy_display(mlx);
+// free(mlx);
+
 int	main(void)
 {
 	void	*mlx;
 	void	*mlx_win;
 	t_data_mlx	img;
 
+	// mlx_init create a xvar struct and return a pointer to it;
 	mlx = mlx_init();
+	if (mlx == NULL)
+		return 1;
 	mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
 	img.img = mlx_new_image(mlx, 1920, 1080);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
