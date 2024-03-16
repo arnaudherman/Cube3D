@@ -6,7 +6,7 @@
 /*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:23:39 by aherman           #+#    #+#             */
-/*   Updated: 2024/03/15 08:52:15 by bat              ###   ########.fr       */
+/*   Updated: 2024/03/15 14:36:04 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,90 +79,75 @@
 
 /* /\_/\_/\_/\_/\_/\_/\_/\_/\_/\_ STRUCTS _/\_/\_/\_/\_/\_/\_/\_/\_/\_/\ */
 
-typedef struct s_color_info
-{
-	char	*f_color;
-	char	*c_color;
-	int		floor;
-	int		ceiling;
-}	t_color_info;
-
-typedef struct s_texture_info
-{
-	int		texture_found;
-	char	*road;
-}	t_texture_info;
-
-typedef struct s_data
-{
-	int				fd;
-	int				map_x;
-	int				map_y;
-	t_texture_info	no;
-	t_texture_info	so;
-	t_texture_info	we;
-	t_texture_info	ea;
-	t_color_info	colors;
-}				t_data;
-
-// // Mlx library struct
-// typedef struct s_mlx //the mlx structure
-// {
-//  	mlx_image_t	*img; // the image
-//  	mlx_t		*mlx_p; // mlx pointer
-//  	t_ray   	*ray; // ray structure
-//  	t_data   	*data; // data structure
-//  	t_player  	*plyr; // player structure
-// } t_mlx;
-
-// Raycasting struct
-typedef struct s_ray
-{
-	double ray_ang; // ray angle
- 	double wall_dist; // distance to the wall
- 	int  wall_flag;  // flag for the wall
-} t_ray;
-
-// Map data struct
-typedef struct s_map {
-    char **map2d;
-    int w_map;
-    int h_map;
-    int x_pos_map;
-    int y_pos_map;
-} t_map;
-
-// Player struct
-typedef struct s_player
-{
- 	int  x_pos_px; // player x position in pixels
- 	int  y_pos_px; // player y position in pixels
-	double player_angle; // player angle
-	float fov; // field of view in radians
- 	int  left_right; // left right flag
- 	int  up_down; // up down flag
- 	int  rot; // rotation flag
-} t_player;
-
-// Mlx library struct
-typedef struct	s_data_mlx {
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-	t_ray   	*ray; // ray structure
-	t_data   	*data; // data structure
-	t_player  	*plyr; // player structure
-} t_data_mlx;
-
-enum e_texture_dir
+enum e_direction
 {
 	NORTH = 0,
-	SOUTH = 1,
-	EAST = 2,
+	EAST = 1,
+	SOUTH = 2,
 	WEST = 3
 };
+
+typedef struct s_color
+{
+	char		*f_color;
+	char		*c_color;
+	int			floor;
+	int			ceiling;
+}	t_color;
+
+typedef struct s_texture
+{
+	int			texture_found;
+	char		*road;
+}	t_texture;
+
+typedef struct s_ray
+{
+	int			map_x;
+	int			map_y;
+	int			step_x;
+	int			step_y;
+	double 		ray_ang;
+ 	double 		wall_dist;
+ 	int  		wall_flag;  
+} t_ray;
+
+typedef struct s_map {
+    char 		**map2d;
+    int			w_map;
+    int 		h_map;
+    int 		x_pos_map;
+    int 		y_pos_map;
+} t_map;
+typedef struct s_player
+{
+ 	int  		x_pos_px; // player x position in pixels
+ 	int  		y_pos_px; // player y position in pixels
+	double		 player_angle; // player angle
+	float 		fov; // field of view in radians
+ 	int  		left_right; // left right flag
+ 	int  		up_down; // up down flag
+ 	int  		rot; // rotation flag
+} t_player;
+typedef struct	s_data {
+	int			fd;
+	void		*mlx;
+	void		*win;
+	void		*img;
+	char		*addr;
+	int			win_width;
+	int			win_height;
+	int			bits_per_pixel;
+	int			line_length;
+	int			endian;
+	char 		**map;
+	t_map		map;
+	t_ray  		ray;
+	t_data  	data;
+	t_player  	player;
+	t_texture 	texture;
+	t_color		color;
+} t_data;
 
 /* /\_/\_/\_/\_/\_/\_/\_/\_/\_/\_ PROTOTYPE _/\_/\_/\_/\_/\_/\_/\_/\_/\_/\ */
 
@@ -182,7 +167,11 @@ char		*ignore_texture(int fd_cub);
 int			len_map(char *file_d, t_data *data);
 // Located in *len_map.c*
 // Located in *texture_color.c*
-int	parse_textures(char *file_d, t_data *data);
+int			parse_textures(char *file_d, t_data *data);
+
+/* -------------------- RAYCASTING -------------------- */
+void		 dda_algo(float x1, float y1, float x2, float y2);
+
 
 /* -------------------- LIBFT -------------------- */
 

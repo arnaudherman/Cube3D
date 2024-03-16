@@ -49,3 +49,9 @@ void draw_map(void *mlx_ptr, void *win_ptr)
         y++;
     }
 }
+
+void display_map()
+{
+    draw_map2D();
+    draw_player();
+}
