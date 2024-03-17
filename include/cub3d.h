@@ -1,14 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aherman <aherman@student.42lausanne.ch>    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/27 14:23:39 by aherman           #+#    #+#             */
-/*   Updated: 2024/03/14 18:57:27 by aherman          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+
 
 #ifndef CUB3D_H
 # define CUB3D_H
@@ -29,27 +19,21 @@
 # define ERROR_NBR_ARG "Error\n \
 	Invalid number of arguments.\n \
 	Example of use: ./cub3D map/XX.cub\n"
-
 # define ERROR_WRONG_MAP_NAME "Error\n \
 	Parameter given wrong!\n \
 	Example of use: ./cub3D map/XX.cub\n"
-
 # define ERROR_EXEMPLE "Error\n \
 	Example of use:\n \
 	./cub3D map/XX.cub\n"
-
 # define ERROR_MAP_EXT "Error\n \
 	Invalid extension for map.\n \
 	Example of use: ./cub3D map/XX.cub\n"
-
 # define ERROR_MAP_OPEN "Error\n \
 	Error map open.\n \
 	Example of use: ./cub3D map/XX.cub\n"
-
 # define ERROR_MAP_LTEX "Error\n \
 	Error .cub ligne texture.\n \
 	Example of use: ./cub3D map/XX.cub\n"
-
 # define ERROR_MAP "Error\n \
 	Forbidden character in the map.\n \
 	Example of use: ./cub3D map/XX.cub\n"

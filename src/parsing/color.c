@@ -1,14 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   color.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aherman <aherman@student.42lausanne.ch>    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/14 17:44:30 by aherman           #+#    #+#             */
-/*   Updated: 2024/03/14 19:00:08 by aherman          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+
 
 #include "../../include/cub3d.h"
 
@@ -100,6 +90,7 @@ void	is_valid_color(t_color_info *color)
 // On envoie dans  data, on extrait le char grace a split
 // On atoi dans les differents int r, g, b.
 // On regarde si c'est bien des valeurs rgb
+// et je convertir pour la mlx
 void	color_data(t_data *data)
 {
 	found_color_data(data);
