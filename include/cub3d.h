@@ -6,7 +6,7 @@
 /*   By: bat <bat@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:23:39 by aherman           #+#    #+#             */
-/*   Updated: 2024/03/15 14:36:04 by bat              ###   ########.fr       */
+/*   Updated: 2024/03/17 18:26:01 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@
 # define MMAP_COLOR_WALL 0x808080
 # define MMAP_COLOR_FLOOR 0xE6E6E6
 # define MMAP_COLOR_SPACE 0x404040
+#  define BUFFER_SIZE 42
 
 # define ERROR_NBR_ARG "Error\n \
 	Invalid number of arguments.\n \
@@ -72,9 +73,6 @@
 	Forbidden character in the map.\n \
 	Example of use: ./cub3D map/XX.cub\n"
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
-
 # endif
 
 /* /\_/\_/\_/\_/\_/\_/\_/\_/\_/\_ STRUCTS _/\_/\_/\_/\_/\_/\_/\_/\_/\_/\ */
@@ -100,16 +98,24 @@ typedef struct s_texture
 	int			texture_found;
 	char		*road;
 }	t_texture;
-
-typedef struct s_ray
-{
-	int			map_x;
-	int			map_y;
-	int			step_x;
-	int			step_y;
-	double 		ray_ang;
- 	double 		wall_dist;
- 	int  		wall_flag;  
+typedef struct s_ray {
+    int 		step_x;          // Direction x du pas de grille du rayon (1 ou -1)
+    int 		step_y;          // Direction y du pas de grille du rayon (1 ou -1)
+    int 		side;            // Indicateur de côté de la carte frappée par le rayon (0: horizontal, 1: vertical)
+    int 		line_height;     // Hauteur de ligne à dessiner sur l'écran
+    int 		draw_start;      // Début de la ligne à dessiner sur l'écran
+    int 		draw_end;        // Fin de la ligne à dessiner sur l'écran
+	double 		wall_dist;       // Distance de la caméra au mur frappé par le rayon
+    double 		wall_x;          // Position exacte du mur frappé par le rayon
+	double 		pov_x;        	 // Position horizontale de la caméra sur le plan de projection
+    double 		dir_x;           // Composante x de la direction du rayon
+    double 		dir_y;           // Composante y de la direction du rayon
+    double 		map_x;           // Coordonnée x de la case de la carte frappée par le rayon
+    double 		map_y;           // Coordonnée y de la case de la carte frappée par le rayon
+    double 		deltadist_x;     // Distance entre deux intersections de rayon horizontales
+    double 		deltadist_y;     // Distance entre deux intersections de rayon verticales
+    double 		sidedist_x;      // Distance du rayon horizontal à la prochaine ligne de grille x
+    double 		sidedist_y;      // Distance du rayon vertical à la prochaine ligne de grille y
 } t_ray;
 
 typedef struct s_map {
@@ -123,11 +129,14 @@ typedef struct s_player
 {
  	int  		x_pos_px; // player x position in pixels
  	int  		y_pos_px; // player y position in pixels
-	double		 player_angle; // player angle
+	double		x_dir;
+	double		y_dir;
+	float		player_angle; // player angle
 	float 		fov; // field of view in radians
  	int  		left_right; // left right flag
  	int  		up_down; // up down flag
- 	int  		rot; // rotation flag
+ 	int  		rotate; // rotation flag
+	char 		dir;
 } t_player;
 typedef struct	s_data {
 	int			fd;
@@ -143,7 +152,6 @@ typedef struct	s_data {
 	char 		**map;
 	t_map		map;
 	t_ray  		ray;
-	t_data  	data;
 	t_player  	player;
 	t_texture 	texture;
 	t_color		color;
@@ -170,8 +178,10 @@ int			len_map(char *file_d, t_data *data);
 int			parse_textures(char *file_d, t_data *data);
 
 /* -------------------- RAYCASTING -------------------- */
-void		 dda_algo(float x1, float y1, float x2, float y2);
-
+static void init_raycasting(t_data *data);
+static void perform_dda(t_data *data, t_ray *ray);
+static void calculate_line_height(t_ray *ray, t_data *data, t_player *player);
+int 		raycasting(t_player *player, t_data *data);
 
 /* -------------------- LIBFT -------------------- */
 

@@ -14,7 +14,7 @@
 // y * line_length : cela détermine la position verticale dans l'image en prenant en compte la longueur de la ligne.
 // x * (bits_per_pixel / 8) : cela détermine la position horizontale en prenant en compte le nombre de bits par pixel et le divisant par 8 pour obtenir le nombre d'octets.
 // int offset = (y * line_length + x * (bits_per_pixel / 8));
-void	my_mlx_pixel_put(t_data_mlx *data, int x, int y, int color)
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
 
@@ -36,7 +36,7 @@ int	main(void)
 {
 	void	*mlx;
 	void	*mlx_win;
-	t_data_mlx	img;
+	t_data	img;
 	char	*relative_path = "./test.xpm";
 
 
@@ -45,7 +45,7 @@ int	main(void)
 	if (mlx == NULL)
 		return 1;
 	// read from an image (PNG format leaks memory)
-	img.img = mlx_xpm_file_to_image(mlx, relative_path, img.img_width, img.img_height);
+	img.img = mlx_xpm_file_to_image(mlx, relative_path, img.win_width, img.win_height);
 	mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
 	img.img = mlx_new_image(mlx, 1920, 1080);
 	/*
