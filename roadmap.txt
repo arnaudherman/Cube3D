@@ -1,0 +1,58 @@
+Parsing Cub3D
+->Check extension du fichier (.cub)
+->Check Open readonly
+->Check parasite
+--------
+Check textures
+->Trouver lignes textures
+->Stocker les chemin dans une struct + marquer flag found
+->Check Open readonly les xpm
+->Fonction mlx pour savoir si les xpm sont valide (A faire au moment d'afficher)
+--------
+Check colors
+->Trouver lignes textures
+->Stocker le char de la couleur + marquer flag found
+->Convertir en valeur couleur
+--------
+Check map
+-> Regarder si il y a que des 0/1/N/S/E/W
+-> Space et tab(4 space) = wall (Convertir sapce in to wall)
+-> Completer les lignes avec une valeur plus faible que map_x par des wall
+-> Stocker dans un char in struct
+------
+Comment check si une map est valide façon aherman
+
+1->Lire une fois la map et dire que un tab = 4 espaces
+1->avoir map_x et map_y
+1->Mettre la map dans un tableau de char**
+1->check si la premieres et derniere ligne est composé que de espace ou de 1
+1->check si les autres commencent par un 1 et un finissent par un 1 apres ou avant les espaces
+1->completer les lignes
+1->check si au dessus de chaque 0 de la deuxieme ligne il y a un 1;
+->check si en desous il y a un 1 ou un 0 ou n ou s ou w ou e sous chaque 0
+-----
+Check que dans les couleurs il y a que des lettres
+
+Map error
+Si map = 
+1111111111111111
+1110000000011111
+1111100001111111
+1110010111111111
+1100001111111111
+1100N00111111111
+1111111111111111
+1111111111111111
+
+ou 
+
+1111111111111111
+111000000001111
+1111100001111111
+1110010111111111
+1100001111111111
+1100N00111111111
+1111111111111111
+1111111111111111
+
+donc doit etre fix
