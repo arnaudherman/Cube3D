@@ -20,8 +20,10 @@
 # define WINDOW_WIDTH 1920
 # define WINDOW_HEIGHT 1000
 # define TILE_SIZE 64
-#define MAPX 8
-#define MAPYX 8
+# define MAPX 8
+# define MAPYX 8
+// # define MAP_HEIGHT 24
+// # define MAP_WIDTH 24
 # define FOV 60
 # define SPEED 4.2
 # define ROTATION 0.042
