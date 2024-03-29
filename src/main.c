@@ -51,7 +51,7 @@ int	main(void)
 		return 1;
 	// read from an image (PNG format leaks memory)
 	img.img = mlx_xpm_file_to_image(mlx_ptr, relative_path, &img.win_width, &img.win_height);
-	mlx_win = mlx_new_window(mlx_ptr, 1920, 1080, "Hello world!");
+	mlx_win_ptr = mlx_new_window(mlx_ptr, 1920, 1080, "Hello world!");
 	img.img = mlx_new_image(mlx_ptr, 1920, 1080);
 	/*
 	** After creating an image, we can call `mlx_get_data_addr`, we pass

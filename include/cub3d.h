@@ -210,17 +210,19 @@ void		len_map(char *file_d, t_data *data);
 // Located in *texture_color.c*
 int			parse_textures(char *file_d, t_data *data);
 
-/* -------------------- RAYCASTING -------------------- */
+/* -------------------- RENDERING -------------------- */
+void 		draw_square(void *mlx_ptr, void *win_ptr, int x, int y, int color);
+void 		draw_map(void *mlx_ptr, void *mlx_win_ptr/*, t_map map_data*/);
 // static void init_raycasting(t_data *data);
 // static void perform_dda(t_data *data, t_ray *ray);
 // static void calculate_line_height(t_ray *ray, t_data *data, t_player *player);
-// int 		raycasting(t_player *player, t_data *data);
+int 		raycasting(t_player *player, t_data *data);
 
 // Located in *texture.c*
 void		found_textures_data(t_data *data);
 
 // Located in *color.c*
-void	color_data(t_data *data);
+void		color_data(t_data *data);
 
 /* -------------------- LIBFT -------------------- */
 
