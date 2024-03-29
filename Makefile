@@ -7,20 +7,30 @@ NAME = Cub3D
 # DIRECTORIES
 HEADER_DIRECTORY := ./include
 SRCS_DIRECTORY := ./src
-LIBFT_FOLDER := $(SRCS_DIRECTORY)/libft/libftbat
+LIBFT_FOLDER := ./libft
 
 # ALL FILES.C
 MAIN := main.c
-SRCS := src/main.c\
-			src/parsing/parsing.c\
-			src/parsing/len_map.c\
-			src/parsing/color.c\
-			src/parsing/texture.c\
-			src/error/error.c\
-			src/libft/get_next_line.c\
-			src/libft_one.c\
-			src/libft_two.c\
-			src/libft_three.c\
+SRCS := src/main.c \
+			src/error/error.c \
+			src/parsing/color.c \
+			src/parsing/initialize_map.c \
+			src/parsing/map.c \
+			src/parsing/len_map.c \
+			src/parsing/parsing.c \
+			src/parsing/texture_color.c \
+			src/parsing/texture.c \
+			src/rendering/image.c \
+			src/rendering/map.c \
+			src/rendering/minimap_draw.c \
+			src/rendering/minimap.c \
+			src/rendering/raycasting.c \
+			src/rendering/render.c \
+			src/rendering/texture.c \
+			src/libft/get_next_line.c \
+			src/libft/libft_one.c \
+			src/libft/libft_two.c \
+			src/libft/libft_three.c \
 
 # GLOBAL VARIABLES
 CC = gcc
@@ -35,16 +45,20 @@ RM := rm -f
 all: ${NAME} ${CHECK} ${OBJS}
 
 ${NAME}: ${OBJS}
+	@${MAKE} -C ./libft
 	@${MAKE} -C ./ft_printf
-	@${MAKE} -C ./src/libft/libftbat
+	@${MAKE} -C ./src/error
+	@${MAKE} -C ./src/libft
+	@${MAKE} -C ./src/parsing
 	@${MAKE} -C ./minilibx
-	@${CC} ${CFLAGS} ${OBJS} -L ./ft_printf -l ft_printf -L ./minilibx -l mlx -framework OpenGL -framework AppKit -o $(NAME)
+	@${CC} ${CFLAGS} ${OBJS} -L ./libft -l libft ./ft_printf -l ft_printf -L ./minilibx -l mlx -framework OpenGL -framework AppKit -o $(NAME)
 
 ${CHECK}: ${CHECK_OBJS} 
-	@${CC} ${CFLAGS} ${CHECK_OBJS} -I ./ft_printf/ -I ./minilibx/-o ${CHECK}
+	@${CC} ${CFLAGS} ${CHECK_OBJS} -I ./libft/ ./ft_printf/ -I ./minilibx/-o ${CHECK}
 
 clean: 
 	@${MAKE} -C ./ft_printf fclean
+	@${MAKE} -C ./libft fclean
 	@${MAKE} -C ./minilibx fclean
 	@${RM} ${OBJS}
 	@${RM} ${CHECK_OBJS}

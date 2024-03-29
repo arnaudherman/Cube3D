@@ -4,8 +4,6 @@
 
 /* /\_/\_/\_/\_/\_/\_/\_/\_/\_/\_ INCLUDE _/\_/\_/\_/\_/\_/\_/\_/\_/\_/\ */
 
-# include "colors.h"
-# include "libft.h"
 # include <stdlib.h>
 # include <math.h>
 # include <string.h>
@@ -13,13 +11,15 @@
 # include <stdbool.h>
 # include <fcntl.h>
 # include "../minilibx/mlx.h"
+# include "../libft/libft.h"
 # include "../ft_printf/include/ft_printf.h"
+# include "../include/colors.h"
 
 /* /\_/\_/\_/\_/\_/\_/\_/\_/\_/\_ MACRO _/\_/\_/\_/\_/\_/\_/\_/\_/\_/\ */
 
 # define WINDOW_WIDTH 1920
 # define WINDOW_HEIGHT 1000
-# define CELLSIZE 64
+# define TILE_SIZE 64
 #define MAPX 8
 #define MAPYX 8
 # define FOV 60
@@ -91,6 +91,9 @@ enum e_direction
 	SOUTH = 2,
 	WEST = 3
 };
+
+typedef struct s_color_info
+{
 	char	*string_color;
 	int		final_color;
 	int		int_r;
@@ -101,8 +104,8 @@ enum e_direction
 
 typedef struct s_color
 {
-	char		*f_color;
-	char		*c_color;
+	char		*fcolor;
+	char		*ccolor;
 	int			floor;
 	int			ceiling;
 } t_color;
@@ -139,7 +142,9 @@ typedef struct s_map {
     int 		h_map;
     int 		x_pos_map;
     int 		y_pos_map;
+	t_ray  		ray;
 } t_map;
+
 typedef struct s_player
 {
  	int  		x_pos_px; // player x position in pixels
@@ -153,6 +158,7 @@ typedef struct s_player
  	int  		rotate; // rotation flag
 	char 		dir;
 } t_player;
+
 typedef struct	s_data {
 	int			fd;
 	void		*mlx;
@@ -164,7 +170,6 @@ typedef struct	s_data {
 	int			bits_per_pixel;
 	int			line_length;
 	int			endian;
-	char 		**map;
 	t_map		map;
 	t_ray  		ray;
 	t_player  	player;
@@ -198,26 +203,19 @@ int			parsing(char *argv[], t_data *data);
 // Located in *len_map.c*
 int			process_line(char *line, t_data *data);
 char		*ignore_texture(int fd_cub);
-int			len_map(char *file_d, t_data *data);
+void		len_map(char *file_d, t_data *data);
 // Located in *len_map.c*
 // Located in *texture_color.c*
 int			parse_textures(char *file_d, t_data *data);
 
 /* -------------------- RAYCASTING -------------------- */
-static void init_raycasting(t_data *data);
-static void perform_dda(t_data *data, t_ray *ray);
-static void calculate_line_height(t_ray *ray, t_data *data, t_player *player);
-int 		raycasting(t_player *player, t_data *data);
+// static void init_raycasting(t_data *data);
+// static void perform_dda(t_data *data, t_ray *ray);
+// static void calculate_line_height(t_ray *ray, t_data *data, t_player *player);
+// int 		raycasting(t_player *player, t_data *data);
 
 // Located in *texture.c*
 void		found_textures_data(t_data *data);
-
-// Located in *libft_one.c*
-char		*ft_strchr(const char *s, int c);
-void		*ft_calloc(size_t nmemb, size_t size);
-char		*ft_strjoin(char *s1, char *s2);
-char		*ft_strdup(char *src);
-int			ft_strcmp(char *s1, char *s2);
 
 // Located in *color.c*
 void	color_data(t_data *data);
@@ -232,21 +230,19 @@ char		*go_next(char *left_line);
 char		*get_next_line(int fd);
 
 // Located in *libft_one.c*
-char		*ft_strchr(const char *s, int c);
-void		*ft_calloc(size_t nmemb, size_t size);
-char		*ft_strjoin(char *s1, char *s2);
-char		*ft_strdup(char *src);
-void		ft_bzero(void *s, size_t n);
+// char		*ft_strchr(const char *s, int c);
+// void		*ft_calloc(size_t nmemb, size_t size);
+// char		*ft_strjoin(char *s1, char *s2);
+// char		*ft_strdup(char *src);
+// void		ft_bzero(void *s, size_t n);
+int			ft_strcmp(char *s1, char *s2);
 
-// Located in *libft_two.c*
-size_t		ft_strlen(const char *s);
-size_t		ft_strlcpy(char *dst, const char *src, size_t dstsize);
-int			ft_strncmp(const char *s1, const char *s2, size_t size);
-int			ft_atoi(const char *str);
+// // Located in *libft_two.c*
+// size_t		ft_strlen(const char *s);
+// size_t		ft_strlcpy(char *dst, const char *src, size_t dstsize);
+// int			ft_strncmp(const char *s1, const char *s2, size_t size);
+// int			ft_atoi(const char *str);
 void		free_tokens(char **tokens);
 
 // Located in *libft_three.c*
 char		**ft_split(char const *s, char c);
-
-
-#endif

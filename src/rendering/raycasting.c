@@ -63,10 +63,10 @@ static void perform_dda(t_data *data, t_ray *ray) {
 			ray->side = 1;
 		}
 		if (ray->map_y < 0.25 || ray->map_x < 0.25 ||
-		    ray->map_y > data->mapinfo.height - 0.25 ||
-		    ray->map_x > data->mapinfo.width - 1.25)
+		    ray->map_y > data->map.h_map - 0.25 ||
+		    ray->map_x > data->map.w_map - 1.25)
 			break;
-		else if (data->map[ray->map_y][ray->map_x] > '0')
+		else if (data->map.map2d[(int)ray->map_y][(int)ray->map_x] != '0')
 			hit = 1;
 	}
 }
@@ -85,9 +85,9 @@ static void calculate_line_height(t_ray *ray, t_data *data, t_player *player) {
 	if (ray->draw_end >= data->win_height)
 		ray->draw_end = data->win_height - 1;
 	if (ray->side == 0)
-		ray->wall_x = player->pos_y + ray->wall_dist * ray->dir_y;
+		ray->wall_x = player->y_pos_px + ray->wall_dist * ray->dir_y;
 	else
-		ray->wall_x = player->pos_x + ray->wall_dist * ray->dir_x;
+		ray->wall_x = player->x_pos_px + ray->wall_dist * ray->dir_x;
 	ray->wall_x -= floor(ray->wall_x);
 }
 
@@ -104,7 +104,7 @@ int raycasting(t_player *player, t_data *data) {
 		//update_texture_pixels(data, &data->texinfo, &ray, x);
 		x++;
 	}
-	return SUCCESS;
+	return (0);
 }
 
 // int main() {
