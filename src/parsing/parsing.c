@@ -38,12 +38,12 @@ int	ft_check_file(char *fname, char *name)
 // }
 //main du parsing
 
-int	parsing(char *argv[], t_data *data)
-{
-	data->fd = ft_check_file(argv[1], ".cub");
-	len_map(argv[1], data);
-	found_textures_data(data);
-	color_data(data);
+// int	parsing(char *argv[], t_data *data)
+// {
+// 	data->fd = ft_check_file(argv[1], ".cub");
+// 	len_map(argv[1], data);
+// 	found_textures_data(data);
+// 	color_data(data);
 
-	return (0);
-}
+// 	return (0);
+// }

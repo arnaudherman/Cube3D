@@ -7,7 +7,11 @@ NAME = Cub3D
 # DIRECTORIES
 HEADER_DIRECTORY := ./include
 SRCS_DIRECTORY := ./src
+FT_PRINTF_FOLDER := ./ft_printf
 LIBFT_FOLDER := ./libft
+MAP_FOLDER := ./map
+MINILIBX_FOLDER := ./minilibx
+
 
 # ALL FILES.C
 MAIN := main.c
@@ -34,39 +38,27 @@ SRCS := src/main.c \
 
 # GLOBAL VARIABLES
 CC = gcc
-#CC := gcc -O3 -ffast-math -framework Cocoa -framework OpenGL -framework IOKit -lglfw (path to libmlx42.a) -L(path to glfw library) cub3d.c -o cub
-CFLAGS := -Wall -Wextra -Werror -O3 -g -I$(HEADER_DIRECTORY)
+CFLAGS := -Wall -Wextra -Werror -O3 -g -I$(HEADER_DIRECTORY) -Imlx
 OBJS = $(SRCS:.c=.o)
 RM := rm -f
 
 %.o: %.c
-	$(CC) $(CFLAGS) -Imlx -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
-all: ${NAME} ${CHECK} ${OBJS}
+all: ${NAME}
 
 ${NAME}: ${OBJS}
-	@${MAKE} -C ./libft
-	@${MAKE} -C ./ft_printf
-	@${MAKE} -C ./src/error
-	@${MAKE} -C ./src/libft
-	@${MAKE} -C ./src/parsing
-	@${MAKE} -C ./minilibx
-	@${CC} ${CFLAGS} ${OBJS} -L ./libft -l libft ./ft_printf -l ft_printf -L ./minilibx -l mlx -framework OpenGL -framework AppKit -o $(NAME)
-
-${CHECK}: ${CHECK_OBJS} 
-	@${CC} ${CFLAGS} ${CHECK_OBJS} -I ./libft/ ./ft_printf/ -I ./minilibx/-o ${CHECK}
+	@${MAKE} -C ${FT_PRINTF_FOLDER}
+	@${MAKE} -C ${LIBFT_FOLDER}
+	@${MAKE} -C ${MINILIBX_FOLDER}
+	@${CC} ${CFLAGS} ${OBJS} -L${LIBFT_FOLDER} -lft -L${FT_PRINTF_FOLDER} -lft_printf -L./minilibx -lmlx -framework OpenGL -framework AppKit -o $(NAME)
 
 clean: 
-	@${MAKE} -C ./ft_printf fclean
-	@${MAKE} -C ./libft fclean
-	@${MAKE} -C ./minilibx fclean
+	@${MAKE} -C ${LIBFT_FOLDER} clean
+	@${MAKE} -C ${FT_PRINTF_FOLDER} clean
 	@${RM} ${OBJS}
-	@${RM} ${CHECK_OBJS}
-	@make -C $(LIBFT_FOLDER) clean
 
 fclean: clean
 	@${RM} ${NAME}
-	@${RM} ${CHECK}
-	@make -C $(LIBFT_FOLDER) fclean
 
 re: fclean all

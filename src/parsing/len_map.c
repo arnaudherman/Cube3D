@@ -84,28 +84,28 @@
 // les chemins vers des textures (NO, SO, WE, EA) qui sont dans assests,
 // les couleurs du plafond (F) et du sol (C) et
 // une représentation de la carte elle-même.
-void	len_map(char *file_d, t_data *data)
-{
-	char	*line;
-	char	*next_line;
+// void	len_map(char *file_d, t_data *data)
+// {
+// 	char	*line;
+// 	char	*next_line;
 
-	(void)file_d;
-	line = ignore_texture(data->fd);
-	free(line);
-	data->map.y_pos_map = 1;
-	next_line = get_next_line(data->fd);
-	while (next_line != NULL)
-	{
-		line = next_line;
-		if (process_line(line, data) == 1)
-		{
-			free(line);
-			close(data->fd);
-			ft_error(ERROR_MAP);
-		}
-		free(line);
-		next_line = get_next_line(data->fd);
-	}
-	close(data->fd);
-	return ;
-}
+// 	(void)file_d;
+// 	line = ignore_texture(data->fd);
+// 	free(line);
+// 	data->map.y_pos_map = 1;
+// 	next_line = get_next_line(data->fd);
+// 	while (next_line != NULL)
+// 	{
+// 		line = next_line;
+// 		if (process_line(line, data) == 1)
+// 		{
+// 			free(line);
+// 			close(data->fd);
+// 			ft_error(ERROR_MAP);
+// 		}
+// 		free(line);
+// 		next_line = get_next_line(data->fd);
+// 	}
+// 	close(data->fd);
+// 	return ;
+// }
