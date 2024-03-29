@@ -39,20 +39,20 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 
 int	main(void)
 {
-	void	*mlx;
-	void	*mlx_win;
+	void	*mlx_ptr;
+	void	*mlx_win_ptr;
 	t_data	img;
 	char	*relative_path = "./test.xpm";
 
 
 	// mlx_init create a xvar struct and return a pointer to it;
-	mlx = mlx_init();
-	if (mlx == NULL)
+	mlx_ptr = mlx_init();
+	if (mlx_ptr == NULL)
 		return 1;
 	// read from an image (PNG format leaks memory)
-	img.img = mlx_xpm_file_to_image(mlx, relative_path, &img.win_width, &img.win_height);
-	mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
-	img.img = mlx_new_image(mlx, 1920, 1080);
+	img.img = mlx_xpm_file_to_image(mlx_ptr, relative_path, &img.win_width, &img.win_height);
+	mlx_win = mlx_new_window(mlx_ptr, 1920, 1080, "Hello world!");
+	img.img = mlx_new_image(mlx_ptr, 1920, 1080);
 	/*
 	** After creating an image, we can call `mlx_get_data_addr`, we pass
 	** `bits_per_pixel`, `line_length`, and `endian` by reference. These will
@@ -64,6 +64,7 @@ int	main(void)
 	// int	render_next_frame(void *YourStruct);
 	// mlx_loop_hook(mlx, render_next_frame, YourStruct);
 	my_mlx_pixel_put(&img, 5, 5, 0x00FF0000);
-	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
-	mlx_loop(mlx);
+	draw_map(mlx_ptr, mlx_win_ptr);
+	mlx_put_image_to_window(mlx_ptr, mlx_win_ptr, img.img, 0, 0);
+	mlx_loop(mlx_ptr);
 }
