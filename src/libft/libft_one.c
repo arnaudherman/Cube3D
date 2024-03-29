@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -9,6 +10,9 @@
 /*   Updated: 2024/03/13 17:11:48 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+=======
+
+>>>>>>> main
 
 #include "../../include/cub3d.h"
 
@@ -89,6 +93,7 @@ char	*ft_strdup(char *src)
 	return (s1);
 }
 
+<<<<<<< HEAD
 int	ft_strcmp(char *s1, char *s2)
 {
 	int i;
@@ -98,3 +103,16 @@ int	ft_strcmp(char *s1, char *s2)
 		i++;
 	return (s1[i] - s2[i]);
 }
+=======
+void	ft_bzero(void *s, size_t n)
+{
+	size_t	c1;
+
+	c1 = 0;
+	while (c1 != n)
+	{
+		((unsigned char *)s)[c1] = 0;
+		c1++;
+	}
+}
+>>>>>>> main

@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> main
 #include "../include/cub3d.h"
 
 // int	main(int argc, char *argv[])
@@ -18,6 +23,7 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
 
+<<<<<<< HEAD
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
 }
@@ -26,6 +32,13 @@ void	init()
 {
 	glClearColor(0.3, 0.3, 0.3, 0);
 	gluOrtho2D(0, 1920, 1080, 0);
+=======
+	if (argc != 2)
+		ft_error(ERROR_NBR_ARG);
+	ft_bzero(&data, sizeof(t_data));
+	if (!parsing(argv, &data))
+		return (0);
+>>>>>>> main
 }
 
 // clear and free

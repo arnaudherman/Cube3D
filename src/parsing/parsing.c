@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -17,6 +18,17 @@
 // {
 // 	int		fd;
 // 	char	*s1;
+=======
+
+#include "../../include/cub3d.h"
+
+//check si le fichier map est en cub 
+//et que le fichier peut etre open et renvoie le fd
+int	ft_check_file(char *fname, char *name)
+{
+	int		fd;
+	char	*s1;
+>>>>>>> main
 
 // 	s1 = ft_strchr(fname, '.');
 // 	if (s1 && !ft_strcmp(s1, name))
@@ -29,6 +41,7 @@
 // 	return (fd);
 // }
 
+<<<<<<< HEAD
 // void	process_textures_and_colors(char *file_d, t_data *data)
 // {
 // 	len_map(file_d, data);
@@ -48,3 +61,15 @@
 // 	fill_validate_and_close_map(argv[1], data, data->fd);
 // 	return (0);
 // }
+=======
+//main du parsing
+int	parsing(char *argv[], t_data *data)
+{
+	data->fd = ft_check_file(argv[1], ".cub");
+	len_map(argv[1], data);
+	found_textures_data(data);
+	color_data(data);
+
+	return (0);
+}
+>>>>>>> main

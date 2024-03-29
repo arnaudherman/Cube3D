@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -9,6 +10,9 @@
 /*   Updated: 2024/03/13 17:16:51 by bat              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+=======
+
+>>>>>>> main
 
 // #include "../../include/cub3d.h"
 
@@ -90,6 +94,7 @@
 // 	}
 // }
 
+<<<<<<< HEAD
 // // L'objectif général du code est de lire le fichier .cub
 // // Ce fichier contient les informations suiventes
 // // les chemins vers des textures (NO, SO, WE, EA) qui sont dans assests,
@@ -119,3 +124,34 @@
 // 	close(data->fd);
 // 	return (0);
 // }
+=======
+// L'objectif général du code est de lire le fichier .cub
+// Ce fichier contient les informations suiventes
+// les chemins vers des textures (NO, SO, WE, EA) qui sont dans assests,
+// les couleurs du plafond (F) et du sol (C) et
+// une représentation de la carte elle-même.
+void	len_map(char *file_d, t_data *data)
+{
+	char	*line;
+	char	*next_line;
+
+	line = ignore_texture(data->fd);
+	free(line);
+	data->map_y = 1;
+	next_line = get_next_line(data->fd);
+	while (next_line != NULL)
+	{
+		line = next_line;
+		if (process_line(line, data) == 1)
+		{
+			free(line);
+			close(data->fd);
+			ft_error(ERROR_MAP);
+		}
+		free(line);
+		next_line = get_next_line(data->fd);
+	}
+	close(data->fd);
+	return ;
+}
+>>>>>>> main

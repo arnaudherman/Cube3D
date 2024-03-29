@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: bat <bat@student.42.fr>                    +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/02/27 12:15:54 by aherman           #+#    #+#              #
-#    Updated: 2024/03/13 17:25:34 by bat              ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 # Do mind that you need the libmlx.dylib in the same 
 # directory as your build target as it is a dynamic library!
 
@@ -25,9 +13,14 @@ LIBFT_FOLDER := $(SRCS_DIRECTORY)/libft/libftbat
 MAIN := main.c
 SRCS := src/main.c\
 			src/parsing/parsing.c\
-			src/parsing/initialize_map.c\
 			src/parsing/len_map.c\
-			src/parsing/texture_color.c\
+			src/parsing/color.c\
+			src/parsing/texture.c\
+			src/error/error.c\
+			src/libft/get_next_line.c\
+			src/libft_one.c\
+			src/libft_two.c\
+			src/libft_three.c\
 
 # GLOBAL VARIABLES
 CC = gcc
