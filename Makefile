@@ -17,7 +17,7 @@ SRCS := src/main.c\
 
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -I.
+CFLAGS = -Wall -Wextra -Werror -I -g
 OBJS = $(SRCS:.c=.o)
 
 

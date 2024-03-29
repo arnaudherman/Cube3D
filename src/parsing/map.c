@@ -14,26 +14,72 @@ void print_string_array(char **array) {
 	}
 }
 
+void afficherAvecEspaces(const char *chaine) {
+	printf("La chaîne de destination est : ");
+	for (int i = 0; chaine[i] != '\0'; i++) {
+		if (chaine[i] == '\t') {
+			printf("\\t"); // Afficher une tabulation sous forme d'échappement
+		} else if (chaine[i] == ' ') {
+			printf("_"); // Remplacer les espaces par un caractère de soulignement pour la visibilité
+		} else if (chaine[i] == '\n') {
+			printf("b"); // Remplacer les espaces par un caractère de soulignement pour la visibilité
+		} else {
+			printf("%c", chaine[i]); // Afficher les autres caractères normalement
+		}
+	}
+	printf("\n");
+}
+
+void remove_newline(char **array)
+{
+	if (array == NULL || *array == NULL)
+	{
+		return;
+	}
+	char **ptr = array;
+
+	while (*ptr != NULL) {
+		size_t len = strlen(*ptr);
+
+		if (len > 0 && (*ptr)[len - 1] == '\n')
+		{
+						(*ptr)[len - 1] = '\0';
+		}
+		ptr++;
+	}
+}
+
 void tab_to_space(char* string)
 {
 	char* p = string;
+	size_t len = strlen(string);
+	char* new_string = malloc((len * 3) + 1);
+
+	if (new_string == NULL) {
+		ft_error(ERROR_MALLOC);
+		return;
+	}
+
+	char* q = new_string;
+
 	while (*p != '\0')
 	{
 		if (*p == '\t')
 		{
-			char* q = string + strlen(string);
-			while (q > p)
-			{
-				*(q + 3) = *q;
-				q--;
-			}
-			*p++ = ' ';
-			*p++ = ' ';
-			*p++ = ' ';
-			*p = ' ';
+			*(q++) = ' ';
+			*(q++) = ' ';
+			*(q++) = ' ';
+			*(q++) = ' ';
+			p++;
 		}
-		p++;
+		else
+		{
+			*(q++) = *(p++);
+		}
 	}
+	*q = '\0';
+	strcpy(string, new_string);
+	free(new_string);
 }
 
 void only_space_or_one(char *string)
@@ -56,63 +102,98 @@ void	check_start_end(char *string)
 
 	i = 0;
 	len = ft_strlen(string);
-	printf("check_start_end string to check:%s", string);
 	while(string[i] == ' ')
 	{
 		i++;
-		printf("check_start_end In while\n");
 	}
 	if (string[i] != '1')
 	{
-		printf("check_start_end first if\n");
 		ft_error(ERROR_MAP_NOT_ONE_START);
 	}
-	printf("string à len:%c\n", string[len - 2]);
 	if(string[len - 1] == '\n')
-		len -= 2;
+		len -= 1;
 	if(string[len - 1] != '\n')
 		len -= 1;
 	while(string[len] == ' ')
 	{
 		len--;
-		printf("check_start_end In while 2\n");
 	}
 	if (string[len] != '1')
 	{
-		printf("kakoukakou");
-		printf("check_start_end second if\n");
+		printf("string len a -2 lol:%d\n", string[len]);
 		ft_error(ERROR_MAP_NOT_ONE_END);
 	}
 }
 
+// void complet_string_with_space(char **string, int len)
+// {
+// 	int max_len = 0;
+// 	int i = 0;
 
-void complet_string_with_space(char **string, int len)
-{
-	int string_len;
-	char *return_string;
-	int i;
+// 	while (string[i] != NULL)
+// 	{
+// 		int string_len = strlen(string[i]);
+// 		if (string_len > max_len)
+// 			max_len = string_len;
+// 		i++;
+// 	}
 
-	printf("complet_string_with_space start string: %s\n", *string);
-	string_len = strlen(*string);
-	if (string_len < len)
-	{
-		printf("complet_string_with_space in if: %s\n", *string);
-		return_string = malloc(len + 1);
-		if (return_string == NULL)
-			ft_error(ERROR_MALLOC);
-		strcpy(return_string, *string);
-		i = string_len;
-		while (i < len)
-		{
-			return_string[i] = ' ';
-			i++;
-		}
-		return_string[len] = '\0';
-		free(*string);
-		*string = return_string;
+// 	if (len > max_len)
+// 		max_len = len;
+
+// 	i = 0;
+// 	while (string[i] != NULL)
+// 	{
+// 		int string_len = strlen(string[i]);
+// 		if (string_len < max_len)
+// 		{
+// 			char *return_string = realloc(string[i], max_len + 1);
+// 			if (return_string == NULL)
+// 			{
+// 				ft_error(ERROR_MALLOC);
+// 				return;
+// 			}
+// 			memset(return_string + string_len, ' ', max_len - string_len);
+// 			return_string[max_len] = '\0';
+// 			string[i] = return_string;
+// 		}
+// 		i++;
+// 	}
+// }
+void complet_string_with_space(char **string, int len) {
+	int max_len = 0;
+	int i = 0;
+
+	while (string[i] != NULL) {
+		int string_len = strlen(string[i]);
+		if (string_len > max_len)
+			max_len = string_len;
+		i++;
 	}
-	printf("complet_string_with_space end: %s\n", *string);
+
+	if (len > max_len)
+		max_len = len;
+
+	i = 0;
+	while (string[i] != NULL) {
+		int string_len = strlen(string[i]);
+		if (string_len < max_len) {
+			string[i] = realloc(string[i], max_len + 1);
+			if (string[i] == NULL) {
+				ft_error(ERROR_MALLOC);
+				return;
+			}
+			for (int j = string_len; j < max_len; j++) {
+				string[i][j] = ' ';
+			}
+			string[i][max_len] = '\0';
+		}
+		i++;
+	}
 }
+
+
+
 
 
 int on_map(char car)
@@ -163,7 +244,6 @@ void check_map(char *fname, t_data *data)
 	int i;
 	int map_x_new;
 
-	printf("check_map start\n");
 	i = 0;
 	fd_cub = open(fname, O_RDONLY);
 	if (fd_cub < 0)
@@ -171,7 +251,7 @@ void check_map(char *fname, t_data *data)
 		ft_error("Error opening file");
 		return;
 	}
-	data->map = malloc(sizeof(char*) * data->map_y);
+	data->map = malloc(sizeof(char*) * (data->map_y + 1));
 	if (!data->map)
 	{
 		ft_error("Memory allocation failed");
@@ -179,7 +259,6 @@ void check_map(char *fname, t_data *data)
 		return;
 	}
 	line = ignore_texture(fd_cub);
-	printf("check_map ignore_texture after\n");
 	while (line && i < data->map_y)
 	{
 		data->map[i] = malloc(strlen(line) + 1);
@@ -194,37 +273,29 @@ void check_map(char *fname, t_data *data)
 		if (i < data->map_y)
 			line = get_next_line(fd_cub);
 	}
-	printf("check_map while 1 after\n");
 	i = 0;
-	while(data->map[i])
+	while (i < data->map_y && data->map[i])
 	{
-		printf("check_map while 2 in start string check:%s\n", data->map[i]);
 		tab_to_space(data->map[i]);
 		map_x_new = ft_strlen(data->map[i]);
 		if (map_x_new > data->map_x)
-			data->map_x = map_x_new;
-		printf("check_map while 2 in before i++ string check:%s\n", data->map[i]);
-		printf("check_map while 2 in before i++ map_y check:%d\n", data->map_y);
-			i++;
-		printf("check_map while 2 in end string check:%s\n", data->map[i]);
-	}
-	i = 0;
-	printf("check_map while 2 after\n");
-	print_string_array(data->map);
-	while(i < data->map_y)
-	{
-		printf("check_map in while 3 data->map[i]:%s\n", data->map[i]);
-		complet_string_with_space(&data->map[i], data->map_x);
-		printf("check_map in while 3 after complet data->map[i]:%s\n", data->map[i]);
-		check_start_end(data->map[i]);
-		printf("check_map end while 3 i:%d map->y:%d\n", i, data->map_y);
+			data->map_x = map_x_new - 1;
 		i++;
 	}
-	printf("check_map while 3 after\n");
+	i = 0;
+	print_string_array(data->map);
+	remove_newline(data->map);
+	print_string_array(data->map);
+	complet_string_with_space(data->map, data->map_x);
+	while(i < data->map_y)
+	{
+		printf("check_map string send to check start end:%s\n", data->map[i]);
+		afficherAvecEspaces(data->map[i]);
+		check_start_end(data->map[i]);
+		i++;
+	}
 	only_space_or_one(data->map[0]);
-	printf("check_map betwen only space\n");
 	only_space_or_one(data->map[data->map_y - 1]);
-	printf("check_map after seconde only space\n");
 	check_upper(data->map[0], data->map[1]);
 	i = 1;
 	while(i < data->map_y - 1)
@@ -232,6 +303,13 @@ void check_map(char *fname, t_data *data)
 		check_down(data->map[i], data->map[i + 1]);
 		i++;
 	}
-	printf("check_map while 4 after\n");
 	close(fd_cub);
+	i = 0;
+	while(data->map[i])
+	{
+		afficherAvecEspaces(data->map[i]);
+		i++;
+	}
+	printf("map_x:%d\n", data->map_x);
+	printf("map_y:%d\n", data->map_y);
 }

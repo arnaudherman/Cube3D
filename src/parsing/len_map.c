@@ -31,14 +31,13 @@ int	process_line(char *line, t_data *data)
 {
 	char	*trimmed_line;
 
-	trimmed_line = ft_strtrim(line, "\n");
-	if (check_auth_char(trimmed_line, data))
+	trimmed_line = ft_strtrim(line, "\n"); // Allocation mémoire ici
+	if (check_auth_char(trimmed_line, data)) // Utilisation de trimmed_line
 	{
-		free(trimmed_line);
+		free(trimmed_line); // Libération de la mémoire uniquement en cas d'échec
 		ft_error("char bizarre found");
 		return (1);
 	}
-	free(trimmed_line);
 	data->map_y++;
 	return (0);
 }

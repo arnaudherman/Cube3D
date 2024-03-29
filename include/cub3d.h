@@ -62,10 +62,13 @@
 	Failed to split color string.\n \
 	Example of use: ./cub3D map/XX.cub\n"
 # define ERROR_FORMAT_COLOR "Error\n \
-	Failed to split color string.\n \
+	Format color string.\n \
 	Example of use: ./cub3D map/XX.cub\n"
 # define ERROR_RANGE_COLOR "Error\n \
-	Failed to split color string.\n \
+	Range RGB color string.\n \
+	Example of use: ./cub3D map/XX.cub\n"
+# define ERROR_STRING_COLOR "Error\n \
+	A color is not correct.\n \
 	Example of use: ./cub3D map/XX.cub\n"
 # define ERROR_MAP_ONLY_SPACE_ONE "Error\n \
 	First or last map line is false.\n \
@@ -83,7 +86,7 @@
 	A line does not have a 1 or 0 below any of its 0.\n \
 	Example of use: ./cub3D map/XX.cub\n"
 # define ERROR_BACK_AFTER_MAP "Error\n \
-	There are newlines after the map.\n \
+	There are newlines after or on the map.\n \
 	Example of use: ./cub3D map/XX.cub\n"
 
 # ifndef BUFFER_SIZE

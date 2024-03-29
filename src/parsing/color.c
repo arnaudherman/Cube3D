@@ -89,6 +89,25 @@ void	is_valid_color(t_color_info *color)
 	}
 }
 
+void	check_string_color(t_data data)
+{
+	int i;
+
+	i = 0;
+	while(data.fcolors.string_color[i])
+	{
+		if(!(data.fcolors.string_color[i] >= 48 && data.fcolors.string_color[i] <= 57) && data.fcolors.string_color[i] != ',')
+			ft_error(ERROR_STRING_COLOR);
+		i++;
+	}
+		i = 0;
+	while(data.ccolors.string_color[i])
+	{
+		if(!(data.ccolors.string_color[i] >= 48 && data.ccolors.string_color[i] <= 57) && data.ccolors.string_color[i] != ',')
+			ft_error(ERROR_STRING_COLOR);
+		i++;
+	}
+}
 // L'objectif est de mettre les couleurs dans nos struct
 // On trouve une ligne qui start avec F ou C
 // On regarde que cette direction na pas deja une couleur set
@@ -99,6 +118,7 @@ void	is_valid_color(t_color_info *color)
 void	color_data(char *fname, t_data *data)
 {
 	found_color_data(fname, data);
+	check_string_color(*data);
 	is_valid_color(&data->fcolors);
 	is_valid_color(&data->ccolors);
 	data->fcolors.final_color = encode_rgb(data->fcolors.int_r,
