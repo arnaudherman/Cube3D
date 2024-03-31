@@ -41,7 +41,7 @@ int	main(void)
 {
 	void	*mlx_ptr;
 	void	*mlx_win_ptr;
-	t_data	img;
+	// t_data	img;
 	// char	*relative_path = "./test.xpm";
 
 
@@ -49,23 +49,40 @@ int	main(void)
 	mlx_ptr = mlx_init();
 	if (mlx_ptr == NULL)
 		return 1;
-	// read from an image (PNG format leaks memory)
-	mlx_win_ptr = mlx_new_window(mlx_ptr, 1920, 1080, "Hello world!");
-	// TO DO : delete because already one image AND SEGFAULT
+
+	// Create a new window ; read from an image (PNG format leaks memory)
+    mlx_win_ptr = mlx_new_window(mlx_ptr, TILE_SIZE * MAP_WIDTH, TILE_SIZE * MAP_HEIGHT, "Cub3D");
+    if (mlx_win_ptr == NULL)
+	{
+		// mlx_destroy_display(mlx_ptr);
+		return 1;
+	}
+
+	
+	// Initialize game data (you may need to modify this according to your game structure)
+    // For example, initializing the map, player position, textures, etc.
+    // init_game(&data);
+	
+	// TO DO : delete because already one image ? 
 	// img.img = mlx_xpm_file_to_image(mlx_ptr, relative_path, &img.win_width, &img.win_height);
-	img.img = mlx_new_image(mlx_ptr, 1920, 1080);
-	/*
-	** After creating an image, we can call `mlx_get_data_addr`, we pass
-	** `bits_per_pixel`, `line_length`, and `endian` by reference. These will
-	** then be set accordingly for the *current* data address.
-	*/
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
-								&img.endian);
-	// init();
+	// img.img = mlx_new_image(mlx_ptr, MAP_WIDTH * TILE_SIZE, MAP_HEIGHT * TILE_SIZE);
+
+	// ** After creating an image, we can call `mlx_get_data_addr`, we pass
+	// ** `bits_per_pixel`, `line_length`, and `endian` by reference. These will
+	// ** then be set accordingly for the *current* data address.
+	// img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
+	// 							&img.endian);
+
 	// int	render_next_frame(void *YourStruct);
 	// mlx_loop_hook(mlx, render_next_frame, YourStruct);
 	// my_mlx_pixel_put(&img, 5, 5, 0x00FF0000); // TO DO : remove red dot
 	draw_map(mlx_ptr, mlx_win_ptr);
-	mlx_put_image_to_window(mlx_ptr, mlx_win_ptr, img.img, 0, 0);
+	// mlx_put_image_to_window(mlx_ptr, mlx_win_ptr, img.img, 0, 0);
 	mlx_loop(mlx_ptr);
+
+	// // Cleanup resources
+    // mlx_destroy_window(mlx_ptr, mlx_win_ptr);
+    // mlx_destroy_display(mlx_ptr);
+	
+	return (0);
 }
