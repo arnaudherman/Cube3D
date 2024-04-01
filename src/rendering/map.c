@@ -49,9 +49,9 @@ void draw_map(void *mlx_ptr, void *mlx_win_ptr/*, t_map map_data*/)
         while (x < MAP_WIDTH)
         {
             if (map2d[y][x] == 1)
-                draw_square(mlx_ptr, mlx_win_ptr, x * TILE_SIZE, y * TILE_SIZE, 0xFFFFFF); // white empty space
+                draw_square(mlx_ptr, mlx_win_ptr, x * TILE_SIZE, y * TILE_SIZE, 0x000000); // black empty space
             else
-                draw_square(mlx_ptr, mlx_win_ptr, x * TILE_SIZE, y * TILE_SIZE, 0xFF0000); // red wall
+                draw_square(mlx_ptr, mlx_win_ptr, x * TILE_SIZE, y * TILE_SIZE, 0xFFFFFF); // while  wall
             x++;
         }
         y++;

@@ -153,6 +153,7 @@ typedef struct s_player
  	int  		y_pos_px; // player y position in pixels
 	double		x_dir;
 	double		y_dir;
+	double		speed;
 	float		player_angle; // player angle
 	float 		fov; // field of view in radians
  	int  		left_right; // left right flag
@@ -164,7 +165,7 @@ typedef struct s_player
 typedef struct	s_data {
 	int			fd;
 	void		*mlx;
-	void		*win;
+	void		*win_ptr;
 	void		*img;
 	char		*addr;
 	int			win_width;
@@ -196,6 +197,14 @@ typedef struct	s_data {
 
 // Located in *error.c*
 void		ft_error(char *error);
+
+/* -------------------- MOVEMENTS -------------------- */
+
+// Located in *player.c*
+void update_player_position(t_player *player, char **map, int map_width, int map_height);
+void draw_player(t_data *img, t_player *player);
+int key_hook(int keycode, void *param);
+
 
 /* -------------------- PARSING -------------------- */
 

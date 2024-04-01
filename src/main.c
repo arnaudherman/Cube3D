@@ -37,14 +37,18 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 // mlx_destroy_display(mlx);
 // free(mlx);
 
+
+// TO DO big function for mlx
+// TO DO big function for player
 int	main(void)
 {
 	void	*mlx_ptr;
 	void	*mlx_win_ptr;
-	// t_data	img;
+	t_data img;
+    t_player player;
 	// char	*relative_path = "./test.xpm";
 
-
+	// 1) Initialisation de la fenêtre MLX
 	// mlx_init create a xvar struct and return a pointer to it;
 	mlx_ptr = mlx_init();
 	if (mlx_ptr == NULL)
@@ -59,7 +63,7 @@ int	main(void)
 	}
 
 	
-	// Initialize game data (you may need to modify this according to your game structure)
+	// 2) Initialize game data (you may need to modify this according to your game structure)
     // For example, initializing the map, player position, textures, etc.
     // init_game(&data);
 	
@@ -75,9 +79,25 @@ int	main(void)
 
 	// int	render_next_frame(void *YourStruct);
 	// mlx_loop_hook(mlx, render_next_frame, YourStruct);
+
+	// 3) Initialisation du joueur
+    player.x_pos_px = 100; // Position x initiale du joueur
+    player.y_pos_px = 100; // Position y initiale du joueur
+    player.speed = 5; // Vitesse de déplacement du joueur
+
+	// 4) Draw map
 	// my_mlx_pixel_put(&img, 5, 5, 0x00FF0000); // TO DO : remove red dot
 	draw_map(mlx_ptr, mlx_win_ptr);
+
+	// 5) Draw player
+	draw_player(&img, &player); // Dessiner le joueur sur la carte
 	// mlx_put_image_to_window(mlx_ptr, mlx_win_ptr, img.img, 0, 0);
+
+	// 6) player movement
+	// Attacher la fonction de gestion des touches au hook clavier de la fenêtre MLX
+    mlx_key_hook(img.win_ptr, key_hook, &player);
+
+	// 7) main loop
 	mlx_loop(mlx_ptr);
 
 	// // Cleanup resources
