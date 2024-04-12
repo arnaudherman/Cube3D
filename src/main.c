@@ -44,7 +44,8 @@ int	main(void)
 {
 	void	*mlx_ptr;
 	void	*mlx_win_ptr;
-	t_data img;
+	char 	**map;
+	// t_data img;
     t_player player;
 	// char	*relative_path = "./test.xpm";
 
@@ -85,19 +86,34 @@ int	main(void)
     player.y_pos_px = 100; // Position y initiale du joueur
     player.speed = 5; // Vitesse de déplacement du joueur
 
-	// 4) Draw map
+	// 4) Allouez et initialisez votre carte
+    map = (char **)malloc(MAP_HEIGHT * sizeof(char *));
+    int i = 0;
+    while (i < MAP_HEIGHT) {
+        map[i] = (char *)malloc((MAP_WIDTH + 1) * sizeof(char)); // +1 pour le caractère de fin de chaîne '\0'
+        int j = 0;
+        while (j < MAP_WIDTH) {
+            // Initialiser votre carte selon votre logique (par exemple, '1' pour un mur, '0' pour vide, etc.)
+            map[i][j] = '0'; // Par défaut, supposons que toutes les cases sont vides
+            j++;
+        }
+        map[i][j] = '\0'; // Terminer la chaîne de caractères
+        i++;
+    }
+
+	// 5) Draw map
 	// my_mlx_pixel_put(&img, 5, 5, 0x00FF0000); // TO DO : remove red dot
 	draw_map(mlx_ptr, mlx_win_ptr);
 
-	// 5) Draw player
-	draw_player(&img, &player); // Dessiner le joueur sur la carte
+	// 6) Draw player
+	// draw_player(&img, &player); // Dessiner le joueur sur la carte
 	// mlx_put_image_to_window(mlx_ptr, mlx_win_ptr, img.img, 0, 0);
 
-	// 6) player movement
+	// 7) player movement
 	// Attacher la fonction de gestion des touches au hook clavier de la fenêtre MLX
-    mlx_key_hook(img.win_ptr, key_hook, &player);
+    // mlx_key_hook(img.win_ptr, key_hook, &player);
 
-	// 7) main loop
+	// 8) main loop
 	mlx_loop(mlx_ptr);
 
 	// // Cleanup resources

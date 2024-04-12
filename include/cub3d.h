@@ -221,7 +221,7 @@ int			parse_textures(char *file_d, t_data *data);
 
 /* -------------------- RENDERING -------------------- */
 void 		draw_square(void *mlx_ptr, void *win_ptr, int x, int y, int color);
-void 		draw_map(void *mlx_ptr, void *mlx_win_ptr/*, t_map map_data*/);
+void 		draw_map(/*char **map, */void *mlx_ptr, void *mlx_win_ptr/*, t_map map_data*/);
 // static void init_raycasting(t_data *data);
 // static void perform_dda(t_data *data, t_ray *ray);
 // static void calculate_line_height(t_ray *ray, t_data *data, t_player *player);
