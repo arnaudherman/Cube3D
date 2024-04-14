@@ -11,7 +11,7 @@ FT_PRINTF_FOLDER := ./ft_printf
 LIBFT_FOLDER := ./libft
 MAP_FOLDER := ./map
 MINILIBX_FOLDER := ./minilibx
-
+INCLUDE = -I../include
 
 # ALL FILES.C
 MAIN := main.c
@@ -51,7 +51,7 @@ ${NAME}: ${OBJS}
 	@${MAKE} -C ${FT_PRINTF_FOLDER}
 	@${MAKE} -C ${LIBFT_FOLDER}
 	@${MAKE} -C ${MINILIBX_FOLDER}
-	@${CC} ${CFLAGS} ${OBJS} -L${LIBFT_FOLDER} -lft -L${FT_PRINTF_FOLDER} -lft_printf -L./minilibx -lmlx -framework OpenGL -framework AppKit -o $(NAME)
+	@${CC} $(INCLUDE) ${CFLAGS} ${OBJS} -L${LIBFT_FOLDER} -lft -L${FT_PRINTF_FOLDER} -lft_printf -L./minilibx -lmlx -framework OpenGL -framework AppKit -o $(NAME)
 
 clean: 
 	@${MAKE} -C ${LIBFT_FOLDER} clean

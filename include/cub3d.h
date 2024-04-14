@@ -34,7 +34,11 @@
 # define MMAP_COLOR_WALL 0x808080
 # define MMAP_COLOR_FLOOR 0xE6E6E6
 # define MMAP_COLOR_SPACE 0x404040
-#  define BUFFER_SIZE 42
+# define BUFFER_SIZE 42
+# define KEY_UP 126
+# define KEY_DOWN 125
+# define KEY_LEFT 123
+# define KEY_RIGHT 124
 
 # define ERROR_NBR_ARG "Error\n \
 	Invalid number of arguments.\n \
@@ -144,6 +148,7 @@ typedef struct s_map {
     int 		h_map;
     int 		x_pos_map;
     int 		y_pos_map;
+	int			color;
 	t_ray  		ray;
 } t_map;
 
@@ -160,11 +165,13 @@ typedef struct s_player
  	int  		up_down; // up down flag
  	int  		rotate; // rotation flag
 	char 		dir;
+	int	 		player_size;
+	int 		player_color;
 } t_player;
 
 typedef struct	s_data {
 	int			fd;
-	void		*mlx;
+	void		*mlx_ptr;
 	void		*win_ptr;
 	void		*img;
 	char		*addr;
@@ -189,7 +196,7 @@ typedef struct	s_data {
 // 	t_texture_info	ea;
 // 	t_color_info	fcolors;
 // 	t_color_info	ccolors;
-// }				t_data;
+// 				t_data;
 
 /* /\_/\_/\_/\_/\_/\_/\_/\_/\_/\_ PROTOTYPE _/\_/\_/\_/\_/\_/\_/\_/\_/\_/\ */
 
@@ -201,11 +208,10 @@ void		ft_error(char *error);
 /* -------------------- MOVEMENTS -------------------- */
 
 // Located in *player.c*
-void update_player_position(t_player *player, char **map, int map_width, int map_height);
-void draw_player(t_data *img, t_player *player);
-int key_hook(int keycode, void *param);
-
-
+void 		init_player(t_player player);
+void 		update_player_position(t_player *player, int key);
+void 		draw_player(void *mlx_ptr, void *win_ptr, t_player player);
+int 		key_hook(int keycode, void *param);
 /* -------------------- PARSING -------------------- */
 
 // Located in *parsing.c*
@@ -221,7 +227,7 @@ int			parse_textures(char *file_d, t_data *data);
 
 /* -------------------- RENDERING -------------------- */
 void 		draw_square(void *mlx_ptr, void *win_ptr, int x, int y, int color);
-void 		draw_map(/*char **map, */void *mlx_ptr, void *mlx_win_ptr/*, t_map map_data*/);
+void 		draw_map(/*char **map, */void *mlx_ptr, void *mlx_win_ptr, t_player player/*, t_map map_data*/);
 // static void init_raycasting(t_data *data);
 // static void perform_dda(t_data *data, t_ray *ray);
 // static void calculate_line_height(t_ray *ray, t_data *data, t_player *player);

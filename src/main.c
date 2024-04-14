@@ -1,14 +1,5 @@
-#include "../include/cub3d.h"
+#include "cub3d.h"
 
-// int	main(int argc, char *argv[])
-// {
-// 	// t_data	data;
-
-// 	// if (argc != 2)
-// 	// 	ft_error(ERROR_NBR_ARG);
-// 	// if (!parsing(argv, &data))
-// 	// 	return (0);
-// }
 
 // L'offset mémoire pour un pixel à une certaine position (x, y) dans l'image
 // y * line_length : cela détermine la position verticale dans l'image en prenant en compte la longueur de la ligne.
@@ -21,6 +12,18 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
 }
+
+// int	main(int argc, char *argv[])
+// {
+// 	// t_data	data;
+
+// 	// if (argc != 2)
+// 	// 	ft_error(ERROR_NBR_ARG);
+// 	// if (!parsing(argv, &data))
+// 	// 	return (0);
+// }
+
+
 
 // void	init()
 // {
@@ -45,6 +48,7 @@ int	main(void)
 	void	*mlx_ptr;
 	void	*mlx_win_ptr;
 	char 	**map;
+	t_data 	*data;
 	// t_data img;
     t_player player;
 	// char	*relative_path = "./test.xpm";
@@ -56,7 +60,7 @@ int	main(void)
 		return 1;
 
 	// Create a new window ; read from an image (PNG format leaks memory)
-    mlx_win_ptr = mlx_new_window(mlx_ptr, TILE_SIZE * MAP_WIDTH, TILE_SIZE * MAP_HEIGHT, "Cub3D");
+	mlx_win_ptr = mlx_new_window(mlx_ptr, (MAP_WIDTH + 1) * TILE_SIZE, (MAP_HEIGHT + 1) * TILE_SIZE, "Cub3D");
     if (mlx_win_ptr == NULL)
 	{
 		// mlx_destroy_display(mlx_ptr);
@@ -103,7 +107,7 @@ int	main(void)
 
 	// 5) Draw map
 	// my_mlx_pixel_put(&img, 5, 5, 0x00FF0000); // TO DO : remove red dot
-	draw_map(mlx_ptr, mlx_win_ptr);
+ 	draw_map(data->mlx_ptr, data->win_ptr, player);
 
 	// 6) Draw player
 	// draw_player(&img, &player); // Dessiner le joueur sur la carte
@@ -122,3 +126,31 @@ int	main(void)
 	
 	return (0);
 }
+
+// int main(void)
+// {
+//     void *mlx_ptr;
+//     void *mlx_win_ptr;
+// 	t_player player;
+
+// 	 // Initialiser la position du joueur
+//    	init_player(player);
+
+//     // Initialisation de la fenêtre MLX
+//     mlx_ptr = mlx_init();
+//     if (mlx_ptr == NULL)
+//         return 1;
+
+//     // Créer une nouvelle fenêtre
+//     mlx_win_ptr = mlx_new_window(mlx_ptr, MAP_WIDTH * TILE_SIZE, MAP_HEIGHT * TILE_SIZE, "Map2D");
+//     if (mlx_win_ptr == NULL)
+//         return 1;
+
+//     // Dessiner la carte
+//     draw_map(mlx_ptr, mlx_win_ptr, player);
+
+//     // Boucle MLX principale
+//     mlx_loop(mlx_ptr);
+
+//     return 0;
+// }

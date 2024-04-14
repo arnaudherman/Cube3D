@@ -13,7 +13,13 @@
         {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
     };
 
-void draw_square(void *mlx_ptr, void *win_ptr, int x, int y, int color)
+int rows = sizeof(map2d)/sizeof(map2d[0]);
+int columns = sizeof(map2d[0])/sizeof(map2d[0][0]);
+
+printf("rows: %d\n", rows);
+printf("columns: %d\n", columns);
+
+void draw_square(void *mlx_ptr, void *win_ptr, t_player *player, t_data *data, t_map *map)
 {
     int i;
     int j;
@@ -24,15 +30,16 @@ void draw_square(void *mlx_ptr, void *win_ptr, int x, int y, int color)
         j = 0;
         while (j < TILE_SIZE)
         {
-            mlx_pixel_put(mlx_ptr, win_ptr, x + i, y + j, color);
+            my_mlx_pixel_put(data, player->x_pos_px + i, player->y_pos_px + j, map->color);
             j++;
         }
         i++;
     }
 }
 
-void draw_map(void *mlx_ptr, void *win_ptr) {
-    int x = 0, y = 0;
+void draw_map(void *mlx_ptr, void *win_ptr, t_player player) {
+    int x = 0;
+    int y = 0;
 
     // Dessiner les lignes verticales
     while (x <= MAP_WIDTH * TILE_SIZE) {
@@ -55,7 +62,6 @@ void draw_map(void *mlx_ptr, void *win_ptr) {
         while (x < MAP_WIDTH) {
             if (map2d[y][x] == 1) {
                 // Dessiner une tile de mur (si map2d[y][x] est 1, cela signifie que c'est un mur)
-                // Utilisez draw_square pour dessiner un carré à la place de mlx_rectangle_put
                 draw_square(mlx_ptr, win_ptr, x * TILE_SIZE, y * TILE_SIZE, 0xFF0000);
             }
             // Ajoutez d'autres conditions pour d'autres types de tiles si nécessaire
@@ -63,4 +69,6 @@ void draw_map(void *mlx_ptr, void *win_ptr) {
         }
         y++;
     }
+    // Dessiner le joueur
+    draw_player(mlx_ptr, win_ptr, player);
 }
