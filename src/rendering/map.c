@@ -78,5 +78,5 @@ void draw_map(void *mlx_ptr, void *win_ptr, t_player player) {
         y++;
     }
     // Dessiner le joueur
-    draw_player(mlx_ptr, win_ptr, player);
+    draw_player(mlx_ptr, win_ptr, &player);
 }

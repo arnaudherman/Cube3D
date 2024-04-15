@@ -79,11 +79,12 @@ char	*ignore_texture(int fd_cub)
 	}
 }
 
-L'objectif général du code est de lire le fichier .cub
-Ce fichier contient les informations suiventes
-les chemins vers des textures (NO, SO, WE, EA) qui sont dans assests,
-les couleurs du plafond (F) et du sol (C) et
-une représentation de la carte elle-même.
+// L'objectif général du code est de lire le fichier .cub
+// Ce fichier contient les informations suiventes
+// les chemins vers des textures (NO, SO, WE, EA) qui sont dans assests,
+// les couleurs du plafond (F) et du sol (C) et
+// une représentation de la carte elle-même.
+
 void	len_map(char *file_d, t_data *data)
 {
 	char	*line;
@@ -92,7 +93,7 @@ void	len_map(char *file_d, t_data *data)
 	(void)file_d;
 	line = ignore_texture(data->fd);
 	free(line);
-	data->map.y_pos_map = 1;
+	data->map.y_map = 1;
 	next_line = get_next_line(data->fd);
 	while (next_line != NULL)
 	{

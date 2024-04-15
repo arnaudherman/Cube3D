@@ -108,11 +108,31 @@ enum e_direction
 typedef struct s_image
 {
 	void		*img;
-	int			*addr;
+	char		*addr;
 	int			bits_per_pixel;
 	int			line_length;
 	int			endian;
 }	t_image;
+
+typedef struct s_ray {
+    int 		step_x;          // Direction x du pas de grille du rayon (1 ou -1)
+    int 		step_y;          // Direction y du pas de grille du rayon (1 ou -1)
+    int 		side;            // Indicateur de côté de la carte frappée par le rayon (0: horizontal, 1: vertical)
+    int 		line_height;     // Hauteur de ligne à dessiner sur l'écran
+    int 		draw_start;      // Début de la ligne à dessiner sur l'écran
+    int 		draw_end;        // Fin de la ligne à dessiner sur l'écran
+	double 		wall_dist;       // Distance de la caméra au mur frappé par le rayon
+    double 		wall_x;          // Position exacte du mur frappé par le rayon
+	double 		pov_x;        	 // Position horizontale de la caméra sur le plan de projection
+    double 		dir_x;           // Composante x de la direction du rayon
+    double 		dir_y;           // Composante y de la direction du rayon
+    double 		map_x;           // Coordonnée x de la case de la carte frappée par le rayon
+    double 		map_y;           // Coordonnée y de la case de la carte frappée par le rayon
+    double 		deltadist_x;     // Distance entre deux intersections de rayon horizontales
+    double 		deltadist_y;     // Distance entre deux intersections de rayon verticales
+    double 		sidedist_x;      // Distance du rayon horizontal à la prochaine ligne de grille x
+    double 		sidedist_y;      // Distance du rayon vertical à la prochaine ligne de grille y
+} t_ray;
 
 typedef struct s_map {
     char 		**map2d;
@@ -134,26 +154,6 @@ typedef struct s_minimap
 	int		view_dist;
 	int		tile_size;
 }	t_minimap;
-
-typedef struct s_ray {
-    int 		step_x;          // Direction x du pas de grille du rayon (1 ou -1)
-    int 		step_y;          // Direction y du pas de grille du rayon (1 ou -1)
-    int 		side;            // Indicateur de côté de la carte frappée par le rayon (0: horizontal, 1: vertical)
-    int 		line_height;     // Hauteur de ligne à dessiner sur l'écran
-    int 		draw_start;      // Début de la ligne à dessiner sur l'écran
-    int 		draw_end;        // Fin de la ligne à dessiner sur l'écran
-	double 		wall_dist;       // Distance de la caméra au mur frappé par le rayon
-    double 		wall_x;          // Position exacte du mur frappé par le rayon
-	double 		pov_x;        	 // Position horizontale de la caméra sur le plan de projection
-    double 		dir_x;           // Composante x de la direction du rayon
-    double 		dir_y;           // Composante y de la direction du rayon
-    double 		map_x;           // Coordonnée x de la case de la carte frappée par le rayon
-    double 		map_y;           // Coordonnée y de la case de la carte frappée par le rayon
-    double 		deltadist_x;     // Distance entre deux intersections de rayon horizontales
-    double 		deltadist_y;     // Distance entre deux intersections de rayon verticales
-    double 		sidedist_x;      // Distance du rayon horizontal à la prochaine ligne de grille x
-    double 		sidedist_y;      // Distance du rayon vertical à la prochaine ligne de grille y
-} t_ray;
 
 typedef struct s_player
 {
@@ -221,41 +221,95 @@ typedef struct	s_data {
 // Located in *error.c*
 void		ft_error(char *error);
 
-/* -------------------- MOVEMENTS -------------------- */
+/* -------------------- MOVEMENT -------------------- */
 // Located in *direction.c*
-// Located in *keys.c*
-// Located in *move.c*
 static void	set_player_east_west(t_player *player);
 static void	set_player_north_south(t_player *player);
 void		set_player_direction(t_data *data);
+// Located in *keys.c*
+static int	key_press(int key, t_data *data);
+static int	key_release(int key, t_data *data);
+static void	wrap_mouse_position(t_data *data, int x, int y);
+static int	mouse_motion(int x, int y, t_data *data);
+void		listen_input(t_data *data);
+// Located in *move.c*
+static int	up(t_data *data);
+static int	down(t_data *data);
+static int	left(t_data *data);
+static int	right(t_data *data);
+int			move(t_data *data);
+// Located in *player.c*
+t_player 	init_player();
+void 		update_player_position(t_player *player, int key);
+void 		draw_player(void *mlx_ptr, void *win_ptr, t_player *player);
+int 		key_hook(int key, t_player *player, t_data *data);
+// Located in *position.c*
+static bool	is_valid_wall_collision_position(t_data *data, double x, double y);
+static bool	is_valid_map_position(t_data *data, double x, double y);
+static bool	is_valid_pos(t_data *data, double x, double y);
+bool		is_valid_move(t_data *data, double new_x, double new_y);
 // Located in *rotation.c*
 int			player_rotation(t_data *data, double rotation_direction);
 static int	rotate(t_data *data, double rotspeed);
-void 		init_player(t_player player);
-void 		update_player_position(t_player *player, int key);
-void 		draw_player(void *mlx_ptr, void *win_ptr, t_player player);
-int 		key_hook(int keycode, void *param);
-// Located in *direction.c*
-// Located in *direction.c*
+
 /* -------------------- PARSING -------------------- */
-
-// Located in *parsing.c*
-int			parsing(char *argv[], t_data *data);
-
+// Located in *color.c*
+int			encode_rgb(int r, int g, int b);
+void		save_color_data(t_color *color, char *line);
+void		found_color_data(t_data *data);
+void		is_valid_color(t_color *color);
+void		color_data(t_data *data);
+// Located in *initialize_map.c*
+void		initialize_map(t_data *data);
+void		fill_validate_and_close_map(char *file_d, t_data *data, int fd);
+int			fill_map(char *in_file, t_data *data);
+int			init_and_open(char *in_file, t_data *data);
+void		process_lines(int fd, t_data *data, int *y);
+char		*fill_with_space(char *line, t_data *data);
+void		validate_and_close(int fd, t_data *data, int y);
+int			check_walls(t_data *data);
+void		check_player_positions(t_data *data);
+int			player_pos(int x, int y, t_data *data);
+int			cross_check(t_data *data);
 // Located in *len_map.c*
+int			check_auth_char(char *line, t_data *data);
 int			process_line(char *line, t_data *data);
+char		*read_and_filter_line(int fd_cub, char **ptr);
 char		*ignore_texture(int fd_cub);
 void		len_map(char *file_d, t_data *data);
-// Located in *len_map.c*
+// Located in *map.c*
+// Located in *parsing.c*
+int			ft_check_file(char *fname, char *name);
+void		process_textures_and_colors(char *file_d, t_data *data);
+int			parsing(char *argv[], t_data *data);
 // Located in *texture_color.c*
+int			open_file_and_init(const char *file_d, int *fd, int *line_counter);
+int			check_value(char *rgb_str, unsigned int i);
+int			check_format(char *rgb_str);
+int			convert_colors(t_data *data);
+void		check_and_close(int fd, int line_counter);
+int			get_rgb(int dir, char *line, t_data *data);
+// int	get_texture_path(t_orientation dir, char *line, t_data *data);
+int			get_path_texture(char *path, char **texture_path, char *error_message);
+void		extract_info(char *trimmed_line, t_data *data, int *line_counter);
+void		check_line_type(char *trimmed_line, t_data *data, int *line_counter);
+void		trimmed_line(char *line, t_data *data, int *line_counter);
 int			parse_textures(char *file_d, t_data *data);
+// Located in *texture.c*
+void		save_texture_data(t_texture *texture, char *line);
+void		found_textures_data(t_data *data);
 
 /* -------------------- RENDERING -------------------- */
-void 		draw_square(void *mlx_ptr, void *win_ptr, int x, int y, int color);
-void 		draw_map(/*char **map, */void *mlx_ptr, void *mlx_win_ptr, t_player player/*, t_map map_data*/);
-// static void init_raycasting(t_data *data);
-// static void perform_dda(t_data *data, t_ray *ray);
-// static void calculate_line_height(t_ray *ray, t_data *data, t_player *player);
+// Located in *draw.c*
+void		my_mlx_pixel_put(t_data *data, int x, int y, int color);
+// Located in *map.c*
+void 		init_my_map();
+void 		draw_square(void *mlx_ptr, void *win_ptr, t_player *player, t_data *data, t_map *map);
+void 		draw_map(void *mlx_ptr, void *win_ptr, t_player player);
+// Located in *raycasting.c*
+static void init_raycasting(t_data *data);
+static void perform_dda(t_data *data, t_ray *ray);
+static void calculate_line_height(t_ray *ray, t_data *data, t_player *player);
 int 		raycasting(t_player *player, t_data *data);
 
 // Located in *texture.c*
@@ -290,3 +344,6 @@ void		free_tokens(char **tokens);
 
 // Located in *libft_three.c*
 char		**ft_split(char const *s, char c);
+
+/* -------------------- MAIN.C -------------------- */
+int			main(void);

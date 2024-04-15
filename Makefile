@@ -38,7 +38,7 @@ SRCS := src/main.c \
 
 # GLOBAL VARIABLES
 CC = gcc
-CFLAGS := -Wall -Wextra -Werror -O3 -g -I$(HEADER_DIRECTORY) -Imlx
+CFLAGS := -Wall -Wextra -O3 -g -I$(HEADER_DIRECTORY) -Imlx
 OBJS = $(SRCS:.c=.o)
 RM := rm -f
 
