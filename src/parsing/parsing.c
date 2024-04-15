@@ -17,26 +17,27 @@ int	ft_check_file(char *fname, char *name)
 	return (fd);
 }
 
-// void	process_textures_and_colors(char *file_d, t_data *data)
-// {
-// 	len_map(file_d, data);
-// 	if (parse_textures(file_d, data) != 0)
-// 		fail("error parse_textures");
-// 	convert_colors(data);
-// 	free(data->colors.f_color);
-// 	free(data->colors.c_color);
-// }
+void	process_textures_and_colors(char *file_d, t_data *data)
+{
+	len_map(file_d, data);
+	if (parse_textures(file_d, data) != 0)
+		fail("error parse_textures");
+	convert_colors(data);
+	free(data->color.fcolor);
+	free(data->color.ccolor);
+}
 
-// //main du parsing
-// int	parsing(char *argv[], t_data *data)
-// {
-// 	data->fd = ft_check_file(argv[1], ".cub");
-// 	process_textures_and_colors(argv[1], data);
-// 	initialize_map(data);
-// 	fill_validate_and_close_map(argv[1], data, data->fd);
-// 	return (0);
-// }
 //main du parsing
+int	parsing(char *argv[], t_data *data)
+{
+	data->fd = ft_check_file(argv[1], ".cub");
+	process_textures_and_colors(argv[1], data);
+	initialize_map(data);
+	fill_validate_and_close_map(argv[1], data, data->fd);
+	return (0);
+}
+
+// TO DO : Pourquoi 2 fois le main du parsing
 
 // int	parsing(char *argv[], t_data *data)
 // {

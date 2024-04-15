@@ -44,6 +44,8 @@
 # define RIGHT_D_D 2
 # define LEFT_A_Q 0
 # define MOUSE_BORDER_DISTANCE 20
+# define FLOOR 0xE6E6E6
+# define CEILING 0x404040
 
 # define ERROR_NBR_ARG "Error\n \
 	Invalid number of arguments.\n \
@@ -116,8 +118,8 @@ typedef struct s_map {
     char 		**map2d;
     int			w_map;
     int 		h_map;
-    int 		x_pos_map;
-    int 		y_pos_map;
+    int 		x_map;
+    int 		y_map;
 	int			color;
 	t_ray  		ray;
 } t_map;
@@ -173,7 +175,7 @@ typedef struct s_player
 	int		has_moved;
 } t_player;
 
-typedef struct s_color_info
+typedef struct s_color
 {
 	char		*string_color;
 	int			final_color;
@@ -181,10 +183,6 @@ typedef struct s_color_info
 	int			int_g;
 	int			int_b;
 	int			found_color;
-}	t_color_info;
-
-typedef struct s_color
-{
 	char		*fcolor;
 	char		*ccolor;
 	int			floor;
@@ -195,6 +193,10 @@ typedef struct s_texture
 {
 	int			texture_found;
 	char		*road;
+	char		*NO;
+	char 		*SO;
+	char 		*WE;
+	char		*EA;
 } t_texture;
 
 typedef struct	s_data {
@@ -211,17 +213,6 @@ typedef struct	s_data {
 	t_texture 	texture;
 	t_color		color;
 } t_data;
-
-// 	int				fd;
-// 	int				map_x;
-// 	int				map_y;
-// 	t_texture_info	no;
-// 	t_texture_info	so;
-// 	t_texture_info	we;
-// 	t_texture_info	ea;
-// 	t_color_info	fcolors;
-// 	t_color_info	ccolors;
-// 				t_data;
 
 /* /\_/\_/\_/\_/\_/\_/\_/\_/\_/\_ PROTOTYPE _/\_/\_/\_/\_/\_/\_/\_/\_/\_/\ */
 

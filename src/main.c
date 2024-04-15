@@ -9,7 +9,7 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
 
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	dst = data->image.addr + (y * data->image.line_length + x * (data->image.bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
 }
 
@@ -72,8 +72,8 @@ int	main(void)
 	// mlx_loop_hook(mlx, render_next_frame, YourStruct);
 
 	// 3) Initialisation du joueur
-    player.x_pos_px = 100; // Position x initiale du joueur
-    player.y_pos_px = 100; // Position y initiale du joueur
+    player.x_pos = 100; // Position x initiale du joueur
+    player.y_pos = 100; // Position y initiale du joueur
     player.speed = 5; // Vitesse de déplacement du joueur
 
 	// 4) Allouez et initialisez votre carte
