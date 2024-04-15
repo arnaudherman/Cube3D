@@ -39,12 +39,12 @@
 // Fonction pour initialiser les rayons de projection
 static void init_raycasting(t_data *data) {
     // Déterminer la direction du rayon en fonction de l'angle de vue du joueur
-    data->ray.pov_x = data->player.player_angle - (data->player.fov / 2);
+    data->ray.pov_x = data->player.angle - (data->player.fov / 2);
     data->ray.dir_x = cos(data->ray.pov_x);
     data->ray.dir_y = sin( data->ray.pov_x);
     // Initialiser les autres paramètres des rayons de projection
-    data->ray.map_x = (int)data->player.x_pos_px;
-    data->ray.map_y = (int)data->player.y_pos_px;
+    data->ray.map_x = (int)data->player.x_pos;
+    data->ray.map_y = (int)data->player.y_pos;
     data->ray.deltadist_x = fabs(1 / data->ray.dir_x);
     data->ray.deltadist_y = fabs(1 / data->ray.dir_y);
 }
@@ -74,9 +74,9 @@ static void perform_dda(t_data *data, t_ray *ray) {
 // Fonction pour calculer les hauteurs des lignes à dessiner
 static void calculate_line_height(t_ray *ray, t_data *data, t_player *player) {
 	if (ray->side == 0)
-		ray->wall_dist = fabs((ray->map_x - player->x_pos_px + (1 - ray->step_x) / 2) / ray->dir_x);
+		ray->wall_dist = fabs((ray->map_x - player->x_pos + (1 - ray->step_x) / 2) / ray->dir_x);
 	else
-		ray->wall_dist = fabs((ray->map_y - player->y_pos_px + (1 - ray->step_y) / 2) / ray->dir_y);
+		ray->wall_dist = fabs((ray->map_y - player->y_pos + (1 - ray->step_y) / 2) / ray->dir_y);
 	ray->line_height = (int)(data->win_height / ray->wall_dist);
 	ray->draw_start = -ray->line_height / 2 + data->win_height / 2;
 	if (ray->draw_start < 0)
@@ -85,9 +85,9 @@ static void calculate_line_height(t_ray *ray, t_data *data, t_player *player) {
 	if (ray->draw_end >= data->win_height)
 		ray->draw_end = data->win_height - 1;
 	if (ray->side == 0)
-		ray->wall_x = player->y_pos_px + ray->wall_dist * ray->dir_y;
+		ray->wall_x = player->y_pos + ray->wall_dist * ray->dir_y;
 	else
-		ray->wall_x = player->x_pos_px + ray->wall_dist * ray->dir_x;
+		ray->wall_x = player->x_pos + ray->wall_dist * ray->dir_x;
 	ray->wall_x -= floor(ray->wall_x);
 }
 

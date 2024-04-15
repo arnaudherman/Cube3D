@@ -1,6 +1,8 @@
 #include "cub3d.h"
 
- int map2d[MAP_WIDTH][MAP_HEIGHT] = {
+void init_my_map()
+{
+	int map2d[MAP_WIDTH][MAP_HEIGHT] = {
         {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
         {1, 0, 0, 0, 0, 0, 1, 0, 0, 1},
         {1, 0, 1, 1, 1, 1, 1, 1, 0, 1},
@@ -13,24 +15,27 @@
         {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
     };
 
-int rows = sizeof(map2d)/sizeof(map2d[0]);
-int columns = sizeof(map2d[0])/sizeof(map2d[0][0]);
+	int rows = sizeof(map2d)/sizeof(map2d[0]);
+	int columns = sizeof(map2d[0])/sizeof(map2d[0][0]);
 
-printf("rows: %d\n", rows);
-printf("columns: %d\n", columns);
+	printf("rows: %d\n", rows);
+	printf("columns: %d\n", columns);
+}
 
 void draw_square(void *mlx_ptr, void *win_ptr, t_player *player, t_data *data, t_map *map)
 {
     int i;
     int j;
 
+	init_my_map();
+
     i = 0;
-    while (i < TILE_SIZE)
+    while (i < MAP_WIDTH)
     {
         j = 0;
-        while (j < TILE_SIZE)
+        while (j < MAP_HEIGHT)
         {
-            my_mlx_pixel_put(data, player->x_pos_px + i, player->y_pos_px + j, map->color);
+            my_mlx_pixel_put(data, player->x_pos + i, player->y_pos + j, map->color);
             j++;
         }
         i++;
@@ -40,6 +45,9 @@ void draw_square(void *mlx_ptr, void *win_ptr, t_player *player, t_data *data, t
 void draw_map(void *mlx_ptr, void *win_ptr, t_player player) {
     int x = 0;
     int y = 0;
+	t_map *map;
+
+	map = (t_map *)malloc(sizeof(t_map));
 
     // Dessiner les lignes verticales
     while (x <= MAP_WIDTH * TILE_SIZE) {
@@ -60,7 +68,7 @@ void draw_map(void *mlx_ptr, void *win_ptr, t_player player) {
     while (y < MAP_HEIGHT) {
         x = 0;
         while (x < MAP_WIDTH) {
-            if (map2d[y][x] == 1) {
+            if (map->map2d[y][x] == 1) {
                 // Dessiner une tile de mur (si map2d[y][x] est 1, cela signifie que c'est un mur)
                 draw_square(mlx_ptr, win_ptr, x * TILE_SIZE, y * TILE_SIZE, 0xFF0000);
             }
