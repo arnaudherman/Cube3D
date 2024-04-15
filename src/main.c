@@ -25,22 +25,6 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 
 
 
-// void	init()
-// {
-// 	glClearColor(0.3, 0.3, 0.3, 0);
-// 	gluOrtho2D(0, 1920, 1080, 0);
-// 	// if (argc != 2)
-// 	// 	ft_error(ERROR_NBR_ARG);
-// 	// ft_bzero(&data, sizeof(t_data));
-// 	// if (!parsing(argv, &data))
-// 	// 	return (0);
-// }
-
-// clear and free
-// mlx_destroy_display(mlx);
-// free(mlx);
-
-
 // TO DO big function for mlx
 // TO DO big function for player
 int	main(void)

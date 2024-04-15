@@ -35,10 +35,14 @@
 # define MMAP_COLOR_FLOOR 0xE6E6E6
 # define MMAP_COLOR_SPACE 0x404040
 # define BUFFER_SIZE 42
-# define KEY_UP 126
+# define ROTATE_LEFT 123
+# define ROTATE_RIGHT 124
 # define KEY_DOWN 125
-# define KEY_LEFT 123
-# define KEY_RIGHT 124
+# define KEY_UP 126
+# define FORWARD_W_Z 13
+# define BACK_S_S 1
+# define RIGHT_D_D 2
+# define LEFT_A_Q 0
 # define MOUSE_BORDER_DISTANCE 20
 
 # define ERROR_NBR_ARG "Error\n \
