@@ -39,6 +39,7 @@
 # define KEY_DOWN 125
 # define KEY_LEFT 123
 # define KEY_RIGHT 124
+# define MOUSE_BORDER_DISTANCE 20
 
 # define ERROR_NBR_ARG "Error\n \
 	Invalid number of arguments.\n \
@@ -98,29 +99,35 @@ enum e_direction
 	WEST = 3
 };
 
-typedef struct s_color_info
+typedef struct s_image
 {
-	char	*string_color;
-	int		final_color;
-	int		int_r;
-	int		int_g;
-	int		int_b;
-	int		found_color;
-}	t_color_info;
+	void		*img;
+	int			*addr;
+	int			bits_per_pixel;
+	int			line_length;
+	int			endian;
+}	t_image;
 
-typedef struct s_color
-{
-	char		*fcolor;
-	char		*ccolor;
-	int			floor;
-	int			ceiling;
-} t_color;
+typedef struct s_map {
+    char 		**map2d;
+    int			w_map;
+    int 		h_map;
+    int 		x_pos_map;
+    int 		y_pos_map;
+	int			color;
+	t_ray  		ray;
+} t_map;
 
-typedef struct s_texture
+typedef struct s_minimap
 {
-	int			texture_found;
-	char		*road;
-} t_texture;
+	char	**map;
+	t_image	*img;
+	int		size;
+	int		offset_x;
+	int		offset_y;
+	int		view_dist;
+	int		tile_size;
+}	t_minimap;
 
 typedef struct s_ray {
     int 		step_x;          // Direction x du pas de grille du rayon (1 ou -1)
@@ -142,45 +149,59 @@ typedef struct s_ray {
     double 		sidedist_y;      // Distance du rayon vertical à la prochaine ligne de grille y
 } t_ray;
 
-typedef struct s_map {
-    char 		**map2d;
-    int			w_map;
-    int 		h_map;
-    int 		x_pos_map;
-    int 		y_pos_map;
-	int			color;
-	t_ray  		ray;
-} t_map;
-
 typedef struct s_player
 {
- 	int  		x_pos_px; // player x position in pixels
- 	int  		y_pos_px; // player y position in pixels
+ 	double  	x_pos; // player x position in pixels
+ 	double  	y_pos; // player y position in pixels
+	int			x_move;
+	int			y_move;	
 	double		x_dir;
 	double		y_dir;
+	double		x_plane;
+	double		y_plane;
 	double		speed;
-	float		player_angle; // player angle
+	float		angle; // player angle
 	float 		fov; // field of view in radians
- 	int  		left_right; // left right flag
- 	int  		up_down; // up down flag
  	int  		rotate; // rotation flag
-	char 		dir;
-	int	 		player_size;
-	int 		player_color;
+	char 		direction;
+	int	 		size;
+	int 		color;
+	int		has_moved;
 } t_player;
+
+typedef struct s_color_info
+{
+	char		*string_color;
+	int			final_color;
+	int			int_r;
+	int			int_g;
+	int			int_b;
+	int			found_color;
+}	t_color_info;
+
+typedef struct s_color
+{
+	char		*fcolor;
+	char		*ccolor;
+	int			floor;
+	int			ceiling;
+} t_color;
+
+typedef struct s_texture
+{
+	int			texture_found;
+	char		*road;
+} t_texture;
 
 typedef struct	s_data {
 	int			fd;
 	void		*mlx_ptr;
 	void		*win_ptr;
-	void		*img;
-	char		*addr;
 	int			win_width;
 	int			win_height;
-	int			bits_per_pixel;
-	int			line_length;
-	int			endian;
+	t_image  	image;
 	t_map		map;
+	t_minimap	minimap;
 	t_ray  		ray;
 	t_player  	player;
 	t_texture 	texture;
@@ -206,12 +227,21 @@ typedef struct	s_data {
 void		ft_error(char *error);
 
 /* -------------------- MOVEMENTS -------------------- */
-
-// Located in *player.c*
+// Located in *direction.c*
+// Located in *keys.c*
+// Located in *move.c*
+static void	set_player_east_west(t_player *player);
+static void	set_player_north_south(t_player *player);
+void		set_player_direction(t_data *data);
+// Located in *rotation.c*
+int			player_rotation(t_data *data, double rotation_direction);
+static int	rotate(t_data *data, double rotspeed);
 void 		init_player(t_player player);
 void 		update_player_position(t_player *player, int key);
 void 		draw_player(void *mlx_ptr, void *win_ptr, t_player player);
 int 		key_hook(int keycode, void *param);
+// Located in *direction.c*
+// Located in *direction.c*
 /* -------------------- PARSING -------------------- */
 
 // Located in *parsing.c*

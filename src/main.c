@@ -53,6 +53,8 @@ int	main(void)
     t_player player;
 	// char	*relative_path = "./test.xpm";
 
+	data = (t_data *)malloc(sizeof(t_data));
+
 	// 1) Initialisation de la fenêtre MLX
 	// mlx_init create a xvar struct and return a pointer to it;
 	mlx_ptr = mlx_init();

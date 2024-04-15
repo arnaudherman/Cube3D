@@ -1,12 +1,30 @@
 #include "cub3d.h"
 
-// Initialise la position du joueur
-void init_player(t_player *player) {
-    player->x_pos_px = 1;
-    player->y_pos_px = 1;
-    player->speed = SPEED;
-    player->fov = FOV;
-    player->rotate = ROTATION;
+// Init player 1
+// void init_player(t_player *player) {
+//     player->x_pos_px = 1;
+//     player->y_pos_px = 1;
+//     player->speed = SPEED;
+//     player->fov = FOV;
+//     player->rotate = ROTATION;
+// }
+
+// Init player 2
+t_player init_player() {
+    t_player player;
+
+    player.x_pos = 1;
+    player.y_pos = 1;
+    player.x_dir = 1;
+	player.y_dir = 1;
+	player.speed = SPEED;
+	player.angle = 0;
+	player.fov = FOV;
+	player.rotate = ROTATION;
+	player.direction = 'N';
+	player.size = 5;
+	player.color = 0;
+    return player;
 }
 
 // Met à jour la position du joueur en fonction de la touche pressée
@@ -14,16 +32,16 @@ void update_player_position(t_player *player, int key)
 {
     // Déplacer le joueur vers le haut
     if (key == KEY_UP)
-        player->y_pos_px -= player->speed;
+        player->y_pos -= player->speed;
     // Déplacer le joueur vers le bas
     else if (key == KEY_DOWN)
-        player->y_pos_px += player->speed;
+        player->y_pos += player->speed;
     // Déplacer le joueur vers la gauche
     else if (key == KEY_LEFT)
-        player->x_pos_px -= player->speed;
+        player->x_pos -= player->speed;
     // Déplacer le joueur vers la droite
     else if (key == KEY_RIGHT)
-        player->x_pos_px += player->speed;
+        player->x_pos += player->speed;
 }
 
 // Fonction pour dessiner le joueur sur l'image MLX
