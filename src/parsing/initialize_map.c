@@ -7,7 +7,7 @@ void	initialize_map(t_data *data)
 	i = 0;
 	data->map.map2d = malloc(data->map.y_map * sizeof(char *));
 	if (!data->map.map2d)
-		fail("Error when allocating map memory");
+		perror("Error when allocating map memory\n");
 	while (i < data->map.y_map)
 	{
 		data->map.map2d[i] = ft_calloc(data->map.x_map, sizeof(char));
@@ -18,11 +18,11 @@ void	initialize_map(t_data *data)
 void	fill_validate_and_close_map(char *file_d, t_data *data, int fd)
 {
 	if (fill_map(file_d, data) != 0)
-		fail("Error filling the map");
+		perror("Error filling the map");
 	if (check_walls(data) != 0)
-		fail("Error not enough walls in map");
+		perror("Error not enough walls in map");
 	if (data->player.x_pos == 0 || data->player.y_pos == 0)
-		fail("No start position found");
+		perror("No start position found");
 	close(fd);
 }
 
@@ -43,9 +43,9 @@ int	init_and_open(char *in_file, t_data *data)
 
 	fd = open(in_file, O_RDONLY);
 	if (fd < 0)
-		fail("fail open (init_and_open)");
+		perror("perror open (init_and_open)");
 	if (!data->map.map2d)
-		fail("malloc error (init_and_open)");
+		perror("malloc error (init_and_open)");
 	return (fd);
 }
 
@@ -59,14 +59,14 @@ void	process_lines(int fd, t_data *data, int *y)
 	if (!line)
 	{
 		free(line);
-		fail("No map found");
+		perror("No map found");
 	}
 	while (*y < data->map.y_map && line != NULL)
 	{
 		tmp = line;
 		line = ft_strtrim(line, "\n");
 		if (!line)
-			fail("Error strtrim (process_lines)");
+			perror("Error strtrim (process_lines)");
 		if (ft_strlen(line) < (size_t)data->map.x_map)
 			line = fill_with_space(line, data);
 		free(tmp);
@@ -89,7 +89,7 @@ char	*fill_with_space(char *line, t_data *data)
 		tmp = line;
 		line = ft_strjoin(line, " ");
 		if (!line)
-			fail("Error strjoin set_space");
+			perror("Error strjoin set_space");
 		free(tmp);
 		len++;
 	}
@@ -100,7 +100,7 @@ void	validate_and_close(int fd, t_data *data, int y)
 {
 	close(fd);
 	if (y != data->map.y_map)
-		fail("Map size does not match expected dimensions");
+		perror("Map size does not match expected dimensions");
 }
 
 int	check_walls(t_data *data)
@@ -111,7 +111,7 @@ int	check_walls(t_data *data)
 	check_player_positions(data);
 	if (cross_check(data) == -1)
 	{
-		fail("Not enough walls (cross_check)");
+		perror("Not enough walls (cross_check)");
 		return (-1);
 	}
 	return (0);
@@ -142,7 +142,7 @@ void	check_player_positions(t_data *data)
 int	player_pos(int x, int y, t_data *data)
 {
 	if (data->player.x_pos != 0 || data->player.y_pos != 0)
-		fail("Multiple start position for player");
+		perror("Multiple start position for player");
 	data->player.x_pos = x;
 	data->player.y_pos = y;
 	data->player.direction = data->map.map2d[y][x];

@@ -31,7 +31,7 @@ int	process_line(char *line, t_data *data)
 	if (check_auth_char(trimmed_line, data))
 	{
 		free(trimmed_line);
-		fail("char bizarre found");
+		perror("char bizarre found\n");
 		return (1);
 	}
 	free(trimmed_line);

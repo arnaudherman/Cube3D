@@ -21,7 +21,7 @@ void	process_textures_and_colors(char *file_d, t_data *data)
 {
 	len_map(file_d, data);
 	if (parse_textures(file_d, data) != 0)
-		fail("error parse_textures");
+		perror("error parse_textures\n");
 	convert_colors(data);
 	free(data->color.fcolor);
 	free(data->color.ccolor);

@@ -1,11 +1,13 @@
 #include "../../include/cub3d.h"
 
+// DONE : fail remplaced by perror everywhere
+
 int	open_file_and_init(const char *file_d, int *fd, int *line_counter)
 {
 	*line_counter = 0;
 	*fd = open(file_d, O_RDONLY);
 	if (*fd < 0)
-		fail("Error opening file (parse_texture)");
+		perror("Error opening file (parse_texture)");
 	return (0);
 }
 
@@ -19,10 +21,10 @@ int	check_value(char *rgb_str, unsigned int i)
 	while (ft_isdigit(rgb_str[i]))
 		i++;
 	if (i - j == 0 || i - j > 3)
-		fail("No number or too big.");
+		perror("No number or too big.");
 	tmp_str = ft_substr(rgb_str, j, 3);
 	if (!tmp_str)
-		fail("Error substr (check_value)");
+		perror("Error substr (check_value)");
 	tmp = ft_atoi(tmp_str);
 	free(tmp_str);
 	if (tmp < 0 || tmp > 255)
@@ -36,7 +38,7 @@ int	check_format(char *rgb_str)
 
 	i = 0;
 	if (!rgb_str)
-		fail("No color?");
+		perror("No color?");
 	i = check_value(rgb_str, (unsigned int) i);
 	if (i < 0 || rgb_str[i++] != ',')
 		return (1);
@@ -56,16 +58,16 @@ int	convert_colors(t_data *data)
 	char	**tmp;
 
 	if (check_format(data->color.ccolor))
-		fail("Wrong format for ceiling color.");
+		perror("Wrong format for ceiling color.");
 	if (check_format(data->color.fcolor))
-		fail("Wrong format for floor color.");
+		perror("Wrong format for floor color.");
 	tmp = ft_split(data->color.fcolor, ',');
 	if (tmp == NULL)
-		fail("error split (convert_colors");
+		perror("error split (convert_colors");
 	data->color.floor = convert_color(tmp);
 	tmp = ft_split(data->color.ccolor, ',');
 	if (tmp == NULL)
-		fail("error split (convert_colros)");
+		perror("error split (convert_colros)");
 	data->color.ceiling = convert_color(tmp);
 	return (0);
 }
@@ -74,7 +76,7 @@ void	check_and_close(int fd, int line_counter)
 {
 	close(fd);
 	if (line_counter != 6)
-		fail("Incorrect number of texture/color lines");
+		perror("Incorrect number of texture/color lines");
 }
 
 int	get_rgb(int dir, char *line, t_data *data)
@@ -83,19 +85,19 @@ int	get_rgb(int dir, char *line, t_data *data)
 
 	tmp = ft_split(line, ' ');
 	if (tmp == NULL)
-		fail("In get_color");
+		perror("In get_color");
 	if (dir == FLOOR)
 	{
 		data->color.fcolor = ft_strdup(tmp[1]);
 		if (data->color.fcolor == NULL)
-			fail("In get_color floor");
+			perror("In get_color floor");
 		data->color.fcolor[ft_strlen(tmp[1]) - 1] = 0;
 	}
 	else if (dir == CEILING)
 	{
 		data->color.ccolor = ft_strdup(tmp[1]);
 		if (data->color.ccolor == NULL)
-			fail("In get_color ceiling");
+			perror("In get_color ceiling");
 		data->color.ccolor[ft_strlen(tmp[1]) - 1] = 0;
 	}
 	free(tmp[0]);

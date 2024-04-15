@@ -16,7 +16,7 @@ void	save_color_data(t_color *color, char *line)
 	char	*path;
 	char	*path_start;
 	char	*newline;
-	int		fd;
+	// int		fd;
 
 	if (color->found_color == 0)
 	{
@@ -47,9 +47,9 @@ void	found_color_data(t_data *data)
 		if (ft_strncmp(line, "F ", 2) == 0 || ft_strncmp(line, "C ", 2) == 0)
 		{
 			if (ft_strncmp(line, "F ", 2) == 0)
-				save_color_data(&data->color.found_color, line);
+				save_color_data(&data->color.fcolor, line);
 			else if (ft_strncmp(line, "C ", 2) == 0)
-				save_color_data(&data->color.found_color, line);
+				save_color_data(&data->color.fcolor, line);
 		}
 	}
 	if ((data->color.found_color == 1) || (data->color.found_color == 1))
@@ -60,7 +60,7 @@ void	is_valid_color(t_color *color)
 {
 	char	**tokens;
 
-	tokens = split(color, ',');
+	tokens = ft_split(color, ',');
 	if (tokens == NULL)
 	{
 		ft_error(ERROR_SPLIT_COLOR);

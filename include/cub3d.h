@@ -221,6 +221,19 @@ typedef struct	s_data {
 // Located in *error.c*
 void		ft_error(char *error);
 
+/* -------------------- DIY LIBFT -------------------- */
+// Located in *get_next_line.c*
+char		*read_the_line(int fd, char *left_line);
+char		*join_line(char *left_line, char *s1);
+char		*go_line(char *left_line);
+char		*go_next(char *left_line);
+char		*get_next_line(int fd);
+// Located in *utils.c*
+int			ft_strcmp(char *s1, char *s2);
+char 		*ft_strcpy(char *dst, const char *src);
+void		free_tokens(char **tokens);
+static char	*in_tab(const char *s1, int c1, int c2);
+static int	number_word(const char *s1, char c);
 /* -------------------- MOVEMENT -------------------- */
 // Located in *direction.c*
 static void	set_player_east_west(t_player *player);
