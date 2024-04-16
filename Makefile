@@ -17,6 +17,12 @@ INCLUDE = -I../include
 MAIN := main.c
 SRCS := src/main.c \
 			src/error/error.c \
+			src/movement/direction.c \
+			src/movement/keys.c \
+			src/movement/move.c \
+			src/movement/player.c \
+			src/movement/position.c \
+			src/movement/rotation.c \
 			src/parsing/color.c \
 			src/parsing/initialize_map.c \
 			src/parsing/map.c \
@@ -24,6 +30,7 @@ SRCS := src/main.c \
 			src/parsing/parsing.c \
 			src/parsing/texture_color.c \
 			src/parsing/texture.c \
+			src/rendering/draw.c \
 			src/rendering/image.c \
 			src/rendering/map.c \
 			src/rendering/minimap_draw.c \

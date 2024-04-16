@@ -19,27 +19,24 @@ int	main(void)
 	void	*mlx_ptr;
 	void	*mlx_win_ptr;
 	char 	**map;
-	t_data 	*data;
-	// t_data img;
+	t_data 	data;
     t_player player;
-	// char	*relative_path = "./test.xpm";
 
-	data = (t_data *)malloc(sizeof(t_data));
+	// TO DO : Where and how to ini t_data ; (t_data *)malloc(sizeof(t_data));
 
 	// 1) Initialisation de la fenêtre MLX
 	// mlx_init create a xvar struct and return a pointer to it;
-	mlx_ptr = mlx_init();
+	data.mlx_ptr = mlx_init();
 	if (mlx_ptr == NULL)
 		return 1;
 
 	// Create a new window ; read from an image (PNG format leaks memory)
-	mlx_win_ptr = mlx_new_window(mlx_ptr, (MAP_WIDTH + 1) * TILE_SIZE, (MAP_HEIGHT + 1) * TILE_SIZE, "Cub3D");
-    if (mlx_win_ptr == NULL)
+	data.win_ptr = mlx_new_window(data.mlx_ptr, (MAP_WIDTH + 1) * TILE_SIZE, (MAP_HEIGHT + 1) * TILE_SIZE, "Cub3D");
+    if (data.win_ptr == NULL)
 	{
-		// mlx_destroy_display(mlx_ptr);
+		// TO DO : destroy window ? display ? close ? mlx_destroy_display(mlx_ptr);
 		return 1;
 	}
-
 	
 	// 2) Initialize game data (you may need to modify this according to your game structure)
     // For example, initializing the map, player position, textures, etc.
@@ -90,8 +87,10 @@ int	main(void)
 	// Attacher la fonction de gestion des touches au hook clavier de la fenêtre MLX
     // mlx_key_hook(img.win_ptr, key_hook, &player);
 
+	// 8) Hook to catch event
+	mlx_hook(data.win_ptr, 2, 1L<<0, close, &data);
 	// 8) main loop
-	mlx_loop(mlx_ptr);
+	mlx_loop(data.mlx_ptr);
 
 	// // Cleanup resources
     // mlx_destroy_window(mlx_ptr, mlx_win_ptr);
