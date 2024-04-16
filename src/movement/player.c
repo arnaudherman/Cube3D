@@ -1,4 +1,4 @@
-#include "cub3d.h"
+#include "cub3d-bis.h"
 
 // Init player 1
 // void init_player(t_player *player) {

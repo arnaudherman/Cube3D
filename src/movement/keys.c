@@ -1,4 +1,4 @@
-#include "cub3d.h"
+#include "cub3d-bis.h"
 
 static int	key_press(int key, t_data *data)
 {

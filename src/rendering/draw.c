@@ -1,4 +1,4 @@
-#include "cub3d.h"
+#include "cub3d-bis.h"
 
 // L'offset mémoire pour un pixel à une certaine position (x, y) dans l'image
 // y * line_length : cela détermine la position verticale dans l'image en prenant en compte la longueur de la ligne.

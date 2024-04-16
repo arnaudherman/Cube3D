@@ -1,4 +1,4 @@
-#include "cub3d.h"
+#include "cub3d-bis.h"
 
 static void	set_player_east_west(t_player *player)
 {
