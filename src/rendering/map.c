@@ -1,5 +1,23 @@
 #include "cub3d-bis.h"
 
+void init_map(t_data *data)
+{
+	// TO DO : Allouez et initialisez votre carte
+    data->map.map2d = (char **)malloc(MAP_HEIGHT * sizeof(char *));
+    int i = 0;
+    while (i < MAP_HEIGHT) {
+        data->map.map2d[i] = (char *)malloc((MAP_WIDTH + 1) * sizeof(char)); // +1 pour le caractère de fin de chaîne '\0'
+        int j = 0;
+        while (j < MAP_WIDTH) {
+            // Initialiser votre carte selon votre logique (par exemple, '1' pour un mur, '0' pour vide, etc.)
+            data->map.map2d[i][j] = '0'; // Par défaut, supposons que toutes les cases sont vides
+            j++;
+        }
+        data->map.map2d[i][j] = '\0'; // Terminer la chaîne de caractères
+        i++;
+	}
+}
+
 void init_my_map()
 {
 	int map2d[MAP_WIDTH][MAP_HEIGHT] = {
@@ -41,6 +59,8 @@ void draw_square(void *mlx_ptr, void *win_ptr, t_player *player, t_data *data, t
         i++;
     }
 }
+
+// TO DO : USE draw_map(data.mlx_ptr, data.win_ptr, data.player);
 
 void draw_map(void *mlx_ptr, void *win_ptr, t_player player) {
     int x = 0;
