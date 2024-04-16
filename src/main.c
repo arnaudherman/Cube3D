@@ -11,23 +11,22 @@
 // }
 
 
-
-// TO DO big function for mlx
-// TO DO big function for player
-int	main(void)
+int	main(int ac, char *av)
 {
-	void	*mlx_ptr;
-	void	*mlx_win_ptr;
-	char 	**map;
 	t_data 	data;
     t_player player;
 
-	// TO DO : Where and how to ini t_data ; (t_data *)malloc(sizeof(t_data));
+	// 0) Check error
+	if (ac != 2)
+		perror("There must be precisely 2 arguments\n");
+
+	// TO DO : FUNCTION to init t_data ; (t_data *)malloc(sizeof(t_data));
+	// init_data(&data);
 
 	// 1) Initialisation de la fenêtre MLX
 	// mlx_init create a xvar struct and return a pointer to it;
 	data.mlx_ptr = mlx_init();
-	if (mlx_ptr == NULL)
+	if (data.mlx_ptr == NULL)
 		return 1;
 
 	// Create a new window ; read from an image (PNG format leaks memory)
@@ -56,28 +55,26 @@ int	main(void)
 	// mlx_loop_hook(mlx, render_next_frame, YourStruct);
 
 	// 3) Initialisation du joueur
-    player.x_pos = 100; // Position x initiale du joueur
-    player.y_pos = 100; // Position y initiale du joueur
-    player.speed = 5; // Vitesse de déplacement du joueur
+	// init_player();
 
 	// 4) Allouez et initialisez votre carte
-    map = (char **)malloc(MAP_HEIGHT * sizeof(char *));
+    data.map.map2d = (char **)malloc(MAP_HEIGHT * sizeof(char *));
     int i = 0;
     while (i < MAP_HEIGHT) {
-        map[i] = (char *)malloc((MAP_WIDTH + 1) * sizeof(char)); // +1 pour le caractère de fin de chaîne '\0'
+        data.map.map2d[i] = (char *)malloc((MAP_WIDTH + 1) * sizeof(char)); // +1 pour le caractère de fin de chaîne '\0'
         int j = 0;
         while (j < MAP_WIDTH) {
             // Initialiser votre carte selon votre logique (par exemple, '1' pour un mur, '0' pour vide, etc.)
-            map[i][j] = '0'; // Par défaut, supposons que toutes les cases sont vides
+            data.map.map2d[i][j] = '0'; // Par défaut, supposons que toutes les cases sont vides
             j++;
         }
-        map[i][j] = '\0'; // Terminer la chaîne de caractères
+        data.map.map2d[i][j] = '\0'; // Terminer la chaîne de caractères
         i++;
     }
 
 	// 5) Draw map
 	// my_mlx_pixel_put(&img, 5, 5, 0x00FF0000); // TO DO : remove red dot
- 	draw_map(data->mlx_ptr, data->win_ptr, player);
+ 	draw_map(data.mlx_ptr, data.win_ptr, player);
 
 	// 6) Draw player
 	// draw_player(&img, &player); // Dessiner le joueur sur la carte
@@ -88,8 +85,8 @@ int	main(void)
     // mlx_key_hook(img.win_ptr, key_hook, &player);
 
 	// 8) Hook to catch event
-	mlx_hook(data.win_ptr, 2, 1L<<0, close, &data);
-	// 8) main loop
+	mlx_loop_hook(data.win_ptr, 2, 1L<<0, close, &data);
+	// 9) main loop
 	mlx_loop(data.mlx_ptr);
 
 	// // Cleanup resources
@@ -99,30 +96,22 @@ int	main(void)
 	return (0);
 }
 
-// int main(void)
-// {
-//     void *mlx_ptr;
-//     void *mlx_win_ptr;
-// 	t_player player;
 
-// 	 // Initialiser la position du joueur
-//    	init_player(player);
+int	main(int ac, char **av)
+{
+	t_data	data;
 
-//     // Initialisation de la fenêtre MLX
-//     mlx_ptr = mlx_init();
-//     if (mlx_ptr == NULL)
-//         return 1;
-
-//     // Créer une nouvelle fenêtre
-//     mlx_win_ptr = mlx_new_window(mlx_ptr, MAP_WIDTH * TILE_SIZE, MAP_HEIGHT * TILE_SIZE, "Map2D");
-//     if (mlx_win_ptr == NULL)
-//         return 1;
-
-//     // Dessiner la carte
-//     draw_map(mlx_ptr, mlx_win_ptr, player);
-
-//     // Boucle MLX principale
-//     mlx_loop(mlx_ptr);
-
-//     return 0;
-// }
+	if (ac != 2)
+		return (err_msg("Usage", ERR_USAGE, 1));
+	init_data(&data);
+	if (parse_args(&data, av) != 0)
+		return (1);
+	init_mlx(&data);
+	// init_textures(&data);
+	// print_controls();
+	//render_images(&data);
+	// listen_for_input(&data);
+	// mlx_loop_hook(data.mlx_ptr, /*function to render images*/, &data);
+	mlx_loop(data.mlx_ptr);
+	return (0);
+}

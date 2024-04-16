@@ -39,9 +39,8 @@ SRCS := src/main.c \
 			src/rendering/render.c \
 			src/rendering/texture.c \
 			src/libft/get_next_line.c \
-			src/libft/libft_one.c \
-			src/libft/libft_two.c \
-			src/libft/libft_three.c \
+			src/libft/utils.c \
+
 
 # GLOBAL VARIABLES
 CC = gcc
