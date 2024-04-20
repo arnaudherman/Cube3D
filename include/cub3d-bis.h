@@ -111,6 +111,7 @@ typedef struct s_image
 	int			bits_per_pixel;
 	int			line_length;
 	int			endian;
+	// char	*relative_path = "./test.xpm";
 }	t_image;
 
 typedef struct s_ray {
@@ -314,6 +315,8 @@ static int	rotate(t_data *data, double rotspeed);
 /* -------------------- RENDERING -------------------- */
 // Located in *draw.c*
 void		my_mlx_pixel_put(t_data *data, int x, int y, int color);
+// Located in *image.c*
+int	my_mlx_init(t_data *data);
 // Located in *map.c*
 void 		init_my_map();
 void 		draw_square(void *mlx_ptr, void *win_ptr, t_player *player, t_data *data, t_map *map);
@@ -358,4 +361,4 @@ void		free_tokens(char **tokens);
 char		**ft_split(char const *s, char c);
 
 /* -------------------- MAIN.C -------------------- */
-int			main(void);
+int			main(int ac, char **av);
