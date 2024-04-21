@@ -1,78 +1,79 @@
-# Do mind that you need the libmlx.dylib in the same 
-# directory as your build target as it is a dynamic library!
+# --------------- source files --------------- #
 
-# FINAL EXECUTABLE NAME
-NAME = Cub3D
+SRCS += srcs/main.c
+SRCS += srcs/movement/direction.c \
+        srcs/movement/keys.c \
+        srcs/movement/move.c \
+        srcs/movement/player.c \
+        srcs/movement/position.c \
+        srcs/movement/rotation.c
 
-# DIRECTORIES
-HEADER_DIRECTORY := ./include
-SRCS_DIRECTORY := ./src
-FT_PRINTF_FOLDER := ./ft_printf
-LIBFT_FOLDER := ./libft
-MAP_FOLDER := ./map
-MINILIBX_FOLDER := ./minilibx
-INCLUDE = -I$(HEADER_DIRECTORY)
+SRCS += srcs/parsing/color.c \
+        srcs/parsing/initialize_map.c \
+        srcs/parsing/len_map.c \
+        srcs/parsing/map.c \
+        srcs/parsing/parsing.c \
+        srcs/parsing/texture_color.c \
+        srcs/parsing/texture.c
 
-# ALL FILES.C
-MAIN := main.c
-SRCS := $(addprefix $(SRCS_DIRECTORY)/, \
-			main.c \
-			error/error.c \
-			movement/direction.c \
-			movement/keys.c \
-			movement/move.c \
-			movement/player.c \
-			movement/position.c \
-			movement/rotation.c \
-			parsing/color.c \
-			parsing/initialize_map.c \
-			parsing/map.c \
-			parsing/len_map.c \
-			parsing/parsing.c \
-			parsing/texture_color.c \
-			parsing/texture.c \
-			rendering/draw.c \
-			rendering/image.c \
-			rendering/map.c \
-			rendering/minimap_draw.c \
-			rendering/minimap.c \
-			rendering/raycasting.c \
-			rendering/render.c \
-			rendering/texture.c \
-			libft/get_next_line.c \
-			libft/utils.c \
-		)
+SRCS += srcs/rendering/close.c \
+        srcs/rendering/draw.c \
+        srcs/rendering/image.c \
+        srcs/rendering/init.c \
+        srcs/rendering/map.c \
+        srcs/rendering/minimap.c \
+        srcs/rendering/raycasting.c \
+        srcs/rendering/render.c \
+        srcs/rendering/texture.c
 
-# GLOBAL VARIABLES
+SRCS += srcs/utils/get_next_line.c \
+        srcs/utils/utils.c
 
-# Pour spécifier explicitement l'architecture lors de la compilation 
-# avec GCC sur macOS, vous pouvez utiliser l'option -arch suivie de 
-# l'architecture cible.
-CC = gcc -arch x86_64
-CFLAGS := -Wall -Wextra -O3 -g $(INCLUDE)
-LDFLAGS := -L$(LIBFT_FOLDER) -lft -L$(FT_PRINTF_FOLDER) -lft_printf -L$(MINILIBX_FOLDER) -lmlx -framework OpenGL -framework AppKit
-OBJS = $(SRCS:.c=.o)
-RM := rm -f
+# ---------------  --------------- #
 
-.PHONY: all clean fclean re
+NAME	=			cub3D
 
-all: $(NAME)
+OBJS	=			$(SRCS:%.c=%.o)
 
-$(NAME): $(OBJS)
-	@$(MAKE) -C $(FT_PRINTF_FOLDER)
-	@$(MAKE) -C $(LIBFT_FOLDER)
-	@$(MAKE) -C $(MINILIBX_FOLDER)
-	@$(CC) $(CFLAGS) $(LDFLAGS) $(OBJS) -o $(NAME)
+CC		=			gcc
 
-$(SRCS_DIRECTORY)/%.o: $(SRCS_DIRECTORY)/%.c
-	@$(CC) $(CFLAGS) -c $< -o $@
+RM		=			rm -f
 
-clean: 
-	@$(MAKE) -C $(LIBFT_FOLDER) clean
-	@$(MAKE) -C $(FT_PRINTF_FOLDER) clean
-	@$(RM) $(OBJS)
+CFLAGS	=			-Wall -Wextra -Werror -g -w -O2 #-fsanitize=address
 
-fclean: clean
-	@$(RM) $(NAME)
+# Platform detection
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S),Linux)
+	LIBS	=	-Llibft -lft -L./minilibx/linux -lmlx -lXext -lX11 -lm -lbsd
+	MLX_DIR = minilibx/linux
+else
+	LIBS = -Llibft -lft -L./minilibx/mac -lmlx -framework OpenGL -framework AppKit
+	MLX_DIR = minilibx/mac
+endif
 
-re: fclean all
+
+all: 				$(NAME)
+
+%.o: 				%.c
+					${CC} ${CFLAGS} -Iincls -Ilibft -I${MLX_DIR} -c $? -o $@
+
+${NAME}:			${OBJS}
+					@make -C libft
+					@make -C ${MLX_DIR}
+					${CC} ${CFLAGS} $^ ${LIBS} -o ${NAME}
+
+clean:
+					${RM} $(OBJS)
+					@make -C libft clean
+					@make -C ${MLX_DIR} clean
+
+name:
+					@echo $(MLX_DIR)
+
+fclean:				clean
+					${RM} $(NAME)
+					@make -C libft fclean
+
+re: 				fclean all
+
+.PHONY:				all  clean fclean re

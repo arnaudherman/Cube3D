@@ -1,4 +1,4 @@
-#include "cub3d-bis.h"
+#include "../include/cub3d-bis.h"
 
 // Raycasting : https://lodev.org/cgtutor/raycasting.html
 // DDA Algorithm https://lodev.org/cgtutor/raycasting.html
