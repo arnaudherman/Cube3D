@@ -55,7 +55,7 @@ endif
 all: 				$(NAME)
 
 %.o: 				%.c
-					${CC} ${CFLAGS} -Iincls -Ilibft -I${MLX_DIR} -c $? -o $@
+					${CC} ${CFLAGS} -Iinclude -Ilibft -I${MLX_DIR} -c $? -o $@
 
 ${NAME}:			${OBJS}
 					@make -C libft
