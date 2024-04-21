@@ -11,14 +11,3 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	dst = data->image.addr + (y * data->image.line_length + x * (data->image.bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
 }
-
-	// TO DO : delete because already one image ? 
-	// img.img = mlx_xpm_file_to_image(mlx_ptr, relative_path, &img.win_width, &img.win_height);
-	// img.img = mlx_new_image(mlx_ptr, MAP_WIDTH * TILE_SIZE, MAP_HEIGHT * TILE_SIZE);
-
-	// GET THE IMAGE ADRESS
-	// ** After creating an image, we can call `mlx_get_data_addr`, we pass
-	// ** `bits_per_pixel`, `line_length`, and `endian` by reference. These will
-	// ** then be set accordingly for the *current* data address.
-	// img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
-	// 							&img.endian);
