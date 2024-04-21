@@ -112,7 +112,7 @@ typedef struct s_image
 	int			bits_per_pixel;
 	int			line_length;
 	int			endian;
-	// char	*relative_path = "./test.xpm";
+	// char		*relative_path = "./test.xpm";
 }	t_image;
 
 typedef struct s_ray {
@@ -173,7 +173,7 @@ typedef struct s_player
 	char 		direction;
 	int	 		size;
 	int 		color;
-	int		has_moved;
+	int			has_moved;
 } t_player;
 
 typedef struct s_color
@@ -213,6 +213,12 @@ typedef struct	s_data {
 	t_player  	player;
 	t_texture 	texture;
 	t_color		color;
+	// t_texture_info	no;
+	// t_texture_info	so;
+	// t_texture_info	we;
+	// t_texture_info	ea;
+	// t_color_info	fcolors;
+	// t_color_info	ccolors;
 } t_data;
 
 /* /\_/\_/\_/\_/\_/\_/\_/\_/\_/\_ PROTOTYPE _/\_/\_/\_/\_/\_/\_/\_/\_/\_/\ */
@@ -362,7 +368,7 @@ char		**ft_split(char const *s, char c);
 /* -------------------- MAIN.C -------------------- */
 int			main(int ac, char **av);
 /* -------------------- INIT.C -------------------- */
-void		init_mlx_engine(t_data *data);
+int			init_mlx_engine(t_data *data);
 // void		init_game(t_data *data);
 void		init_map(t_data *data);
 // void		init_player(t_data *data);

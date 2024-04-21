@@ -18,7 +18,6 @@ SRCS += srcs/parsing/color.c \
         srcs/parsing/texture.c
 
 SRCS += srcs/rendering/close.c \
-        srcs/rendering/draw.c \
         srcs/rendering/image.c \
         srcs/rendering/map.c \
         srcs/rendering/minimap.c \
