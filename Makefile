@@ -1,6 +1,7 @@
 # --------------- source files --------------- #
 
 SRCS += srcs/main.c
+SRCS += srcs/init.c
 SRCS += srcs/movement/direction.c \
         srcs/movement/keys.c \
         srcs/movement/move.c \
@@ -19,7 +20,6 @@ SRCS += srcs/parsing/color.c \
 SRCS += srcs/rendering/close.c \
         srcs/rendering/draw.c \
         srcs/rendering/image.c \
-        srcs/rendering/init.c \
         srcs/rendering/map.c \
         srcs/rendering/minimap.c \
         srcs/rendering/raycasting.c \

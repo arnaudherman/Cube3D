@@ -203,7 +203,7 @@ typedef struct s_texture
 typedef struct	s_data {
 	int			fd;
 	void		*mlx_ptr;
-	void		*win_ptr;
+	void		*mlx_win_ptr;
 	int			win_width;
 	int			win_height;
 	t_image  	image;
@@ -316,8 +316,6 @@ static int	rotate(t_data *data, double rotspeed);
 /* -------------------- RENDERING -------------------- */
 // Located in *draw.c*
 void		my_mlx_pixel_put(t_data *data, int x, int y, int color);
-// Located in *image.c*
-int	my_mlx_init(t_data *data);
 // Located in *map.c*
 void 		init_my_map();
 void 		draw_square(void *mlx_ptr, void *win_ptr, t_player *player, t_data *data, t_map *map);
@@ -363,3 +361,10 @@ char		**ft_split(char const *s, char c);
 
 /* -------------------- MAIN.C -------------------- */
 int			main(int ac, char **av);
+/* -------------------- INIT.C -------------------- */
+void		init_mlx_engine(t_data *data);
+// void		init_game(t_data *data);
+void		init_map(t_data *data);
+// void		init_player(t_data *data);
+// void		init_textures(t_data *data);
+void		init_data(t_data *data);

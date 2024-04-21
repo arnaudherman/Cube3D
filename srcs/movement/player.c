@@ -1,6 +1,7 @@
 // #include "cub3d-bis.h"
 
 	// 6) Draw player
+	// draw_player(mlx_ptr, win_ptr, &player);
 	// draw_player(&img, &player); // Dessiner le joueur sur la carte
 	// mlx_put_image_to_window(mlx_ptr, mlx_win_ptr, img.img, 0, 0);
 
