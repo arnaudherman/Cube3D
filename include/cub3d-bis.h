@@ -246,6 +246,16 @@ char 		*ft_strcpy(char *dst, const char *src);
 void		free_tokens(char **tokens);
 static char	*in_tab(const char *s1, int c1, int c2);
 static int	number_word(const char *s1, char c);
+/* -------------------- INIT -------------------- */
+void		init_data(t_data *data);
+void		init_color(t_data *data);
+int			init_mlx_engine(t_data *data);
+// void		init_image(t_data *data);
+void		init_map(t_data *data);
+// void		init_minimap(t_data *data);
+void		init_player(t_data *data);
+// void		init_ray(t_data *data);
+void		init_texture(t_data *data);
 /* -------------------- MOVEMENT -------------------- */
 // Located in *direction.c*
 static void	set_player_east_west(t_player *player);
@@ -328,8 +338,8 @@ static int	rotate(t_data *data, double rotspeed);
 // Located in *draw.c*
 void		my_mlx_pixel_put(t_data *data, int x, int y, int color);
 // Located in *map.c*
-void 		init_my_map();
-void 		draw_square(void *mlx_ptr, void *win_ptr, t_player *player, t_data *data, t_map *map);
+void 		init_my_map_bis(t_data *data);
+void 		draw_square(t_data *data);
 void 		draw_map(t_data *data);
 // Located in *raycasting.c*
 static void init_raycasting(t_data *data);
@@ -372,10 +382,4 @@ char		**ft_split(char const *s, char c);
 
 /* -------------------- MAIN.C -------------------- */
 int			main(int ac, char **av);
-/* -------------------- INIT.C -------------------- */
-int			init_mlx_engine(t_data *data);
-// void		init_game(t_data *data);
-void		init_map(t_data *data);
-// void		init_player(t_data *data);
-// void		init_textures(t_data *data);
-void		init_data(t_data *data);
+
