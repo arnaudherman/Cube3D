@@ -330,7 +330,7 @@ void		my_mlx_pixel_put(t_data *data, int x, int y, int color);
 // Located in *map.c*
 void 		init_my_map();
 void 		draw_square(void *mlx_ptr, void *win_ptr, t_player *player, t_data *data, t_map *map);
-void 		draw_map(void *mlx_ptr, void *win_ptr, t_player player);
+void 		draw_map(t_data *data);
 // Located in *raycasting.c*
 static void init_raycasting(t_data *data);
 static void perform_dda(t_data *data, t_ray *ray);

@@ -16,11 +16,6 @@ int	main(int ac, char **av)
 	// 	perror("There must be precisely 2 arguments\n");
 
 	// 2) INIT ALL DATA
-	// data = (t_data *)malloc(sizeof(t_data));
-	// if (data == NULL) {
-    //     perror("Failed to allocate memory for data\n");
-    //     return 1; // Exit the program with an error code
-    // }
 	// Main init function globale qui init la structre t_data
 	// + call toutes les fonctions d'init dans cette fonction
 	init_data(&data);
@@ -34,6 +29,7 @@ int	main(int ac, char **av)
 	// int	render_next_frame(void *YourStruct);
 	// mlx_loop_hook(data.mlx_ptr, render_next_frame, &data);
 	// 	Main events loop
+	draw_map(&data);
 	mlx_loop(data.mlx_ptr);
 	// 5) TO DO ? Cleanup resources
 	// mlx_destroy_window(mlx_ptr, mlx_win_ptr);	

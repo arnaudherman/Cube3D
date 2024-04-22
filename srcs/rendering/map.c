@@ -40,24 +40,23 @@
 
 // // TO DO : USE draw_map(data.mlx_ptr, data.win_ptr, data.player);
 
-void draw_map(void *mlx_ptr, void *win_ptr, t_player player) {
+void draw_map(t_data *data) {
     int x = 0;
     int y = 0;
-	t_map *map;
 
-	map = (t_map *)malloc(sizeof(t_map));
+	// data->map = (t_map *)malloc(sizeof(t_map));
 
     // Dessiner les lignes verticales
     while (x <= MAP_WIDTH * TILE_SIZE) {
-        mlx_pixel_put(mlx_ptr, win_ptr, x, 0, 0xFFFFFF); // Ligne en haut
-        mlx_pixel_put(mlx_ptr, win_ptr, x, MAP_HEIGHT * TILE_SIZE, 0xFFFFFF); // Ligne en bas
+        mlx_pixel_put(data->mlx_ptr, data->mlx_win_ptr, x, 0, 0xFFFFFF); // Ligne en haut
+        mlx_pixel_put(data->mlx_ptr, data->mlx_win_ptr, x, MAP_HEIGHT * TILE_SIZE, 0xFFFFFF); // Ligne en bas
         x += TILE_SIZE;
     }
 
     // Dessiner les lignes horizontales
     while (y <= MAP_HEIGHT * TILE_SIZE) {
-        mlx_pixel_put(mlx_ptr, win_ptr, 0, y, 0xFFFFFF); // Ligne à gauche
-        mlx_pixel_put(mlx_ptr, win_ptr, MAP_WIDTH * TILE_SIZE, y, 0xFFFFFF); // Ligne à droite
+        mlx_pixel_put(data->mlx_ptr, data->mlx_win_ptr, 0, y, 0xFFFFFF); // Ligne à gauche
+        mlx_pixel_put(data->mlx_ptr, data->mlx_win_ptr, MAP_WIDTH * TILE_SIZE, y, 0xFFFFFF); // Ligne à droite
         y += TILE_SIZE;
     }
 
@@ -66,9 +65,9 @@ void draw_map(void *mlx_ptr, void *win_ptr, t_player player) {
     while (y < MAP_HEIGHT) {
         x = 0;
         while (x < MAP_WIDTH) {
-            if (map->map2d[y][x] == 1) {
+            if (data->map.map2d[y][x] == 1) {
                 // Dessiner une tile de mur (si map2d[y][x] est 1, cela signifie que c'est un mur)
-                draw_square(mlx_ptr, win_ptr, x * TILE_SIZE, y * TILE_SIZE, 0xFF0000);
+                draw_square(data->mlx_ptr, data->mlx_win_ptr, x * TILE_SIZE, y * TILE_SIZE, 0xFF0000);
             }
             // Ajoutez d'autres conditions pour d'autres types de tiles si nécessaire
             x++;
