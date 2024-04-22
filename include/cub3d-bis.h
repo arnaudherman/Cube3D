@@ -46,6 +46,7 @@
 # define MOUSE_BORDER_DISTANCE 20
 # define FLOOR 0xE6E6E6
 # define CEILING 0x404040
+# define TEXTURE 42
 
 # define ERROR_NBR_ARG "Error\n \
 	Invalid number of arguments.\n \
@@ -177,27 +178,31 @@ typedef struct s_player
 } t_player;
 
 typedef struct s_color
-{
-	char		*string_color;
-	int			final_color;
-	int			int_r;
-	int			int_g;
-	int			int_b;
-	int			found_color;
-	char		*fcolor;
-	char		*ccolor;
-	int			floor;
-	int			ceiling;
+	{
+		char			*string_color;
+		char			*fcolor;
+		char 			*ccolor;
+		int				final_color;
+		int				r;
+		int				g;
+		int				b;
+		int				found;
+		int				floor;
+		unsigned long	floor_hexa;
+		int				ceiling;
+		unsigned long	ceiling_hexa;
 } t_color;
 
 typedef struct s_texture
 {
-	int			texture_found;
+	int			found;
+	int			size;
 	char		*road;
-	char		*NO;
-	char 		*SO;
-	char 		*WE;
-	char		*EA;
+	char		**NO;
+	char 		**SO;
+	char 		**WE;
+	char		**EA;
+	// char 		**xpm_data;
 } t_texture;
 
 typedef struct	s_data {
@@ -259,7 +264,7 @@ static int	left(t_data *data);
 static int	right(t_data *data);
 int			move(t_data *data);
 // Located in *player.c*
-t_player 	init_player();
+void	 	init_player(t_data *data);
 void 		update_player_position(t_player *player, int key);
 void 		draw_player(void *mlx_ptr, void *win_ptr, t_player *player);
 int 		key_hook(int key, t_player *player, t_data *data);

@@ -1,7 +1,17 @@
 # --------------- source files --------------- #
 
 SRCS += srcs/main.c
-SRCS += srcs/init.c
+
+SRCS += srcs/init/all.c \
+		srcs/init/color.c \
+		srcs/init/engine.c \
+		srcs/init/image.c \
+		srcs/init/map.c \
+		srcs/init/minimap.c \
+		srcs/init/player.c \
+		srcs/init/ray.c \
+		srcs/init/texture.c
+
 SRCS += srcs/movement/direction.c \
         srcs/movement/keys.c \
         srcs/movement/move.c \
@@ -76,3 +86,6 @@ fclean:				clean
 re: 				fclean all
 
 .PHONY:				all  clean fclean re
+
+# find error with : 	valgrind ./prog
+# Debug with :  		gdb ./prog --tui
