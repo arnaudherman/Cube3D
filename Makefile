@@ -2,6 +2,8 @@
 
 SRCS += srcs/main.c
 
+SRCS += srcs/error/error.c
+
 SRCS += srcs/init/all.c \
 		srcs/init/color.c \
 		srcs/init/engine.c \

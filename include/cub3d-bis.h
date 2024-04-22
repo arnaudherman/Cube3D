@@ -207,10 +207,10 @@ typedef struct s_texture
 
 typedef struct	s_data {
 	int			fd;
-	void		*mlx_ptr;
-	void		*mlx_win_ptr;
 	int			win_width;
 	int			win_height;
+	void		*mlx_ptr;
+	void		*mlx_win_ptr;
 	t_image  	image;
 	t_map		map;
 	t_minimap	minimap;
