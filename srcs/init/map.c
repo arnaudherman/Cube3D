@@ -2,7 +2,7 @@
 
 void	init_map(t_data *data)
 {
-	char map_data[MAP_WIDTH][MAP_HEIGHT] = {
+	char map_data[MAP_HEIGHT][MAP_WIDTH] = {
         {'1', '1', '1', '1', '1', '1', '1', '1', '1', '1'},
         {'1', '0', '0', '0', '0', '0', '1', '0', '0', '1'},
         {'1', '0', '1', '1', '1', '1', '1', '1', '0', '1'},
@@ -20,7 +20,7 @@ void	init_map(t_data *data)
     data->map.h_map = MAP_HEIGHT;
 
     // Allocation de mémoire pour la carte 2D
-    data->map.map2d = malloc(MAP_WIDTH * sizeof(char *));
+    data->map.map2d = malloc(MAP_HEIGHT * sizeof(char *));
     if (data->map.map2d == NULL) {
         // Gestion de l'erreur d'allocation de mémoire
 		// mlx_destroy_display(data->mlx_ptr); // Clean up
@@ -29,9 +29,9 @@ void	init_map(t_data *data)
     }
 
     int i = 0;
-    while (i < MAP_WIDTH)
+    while (i < MAP_HEIGHT)
     {
-        data->map.map2d[i] = malloc(MAP_HEIGHT * sizeof(char));
+        data->map.map2d[i] = malloc(MAP_WIDTH * sizeof(char));
         if (data->map.map2d[i] == NULL) {
             // Gestion de l'erreur d'allocation de mémoire
             // (à implémenter selon les besoins)
@@ -39,7 +39,7 @@ void	init_map(t_data *data)
         }
         
         int j = 0;
-        while (j < MAP_HEIGHT)
+        while (j < MAP_WIDTH)
         {
             data->map.map2d[i][j] = map_data[i][j];
             j++;

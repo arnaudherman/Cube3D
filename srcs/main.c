@@ -28,9 +28,10 @@ int	main(int ac, char **av)
 	// create function render_next_frame function to render images
 	// int	render_next_frame(void *YourStruct);
 	// mlx_loop_hook(data.mlx_ptr, render_next_frame, &data);
+
 	// 	Main events loop
-	draw_map(&data);
 	mlx_loop(data.mlx_ptr);
+	
 	// 5) TO DO ? Cleanup resources
 	// mlx_destroy_window(mlx_ptr, mlx_win_ptr);	
 	// mlx_destroy_display(mlx_ptr);

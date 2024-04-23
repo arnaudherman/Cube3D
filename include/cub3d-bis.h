@@ -117,23 +117,23 @@ typedef struct s_image
 }	t_image;
 
 typedef struct s_ray {
-    int 		step_x;          // Direction x du pas de grille du rayon (1 ou -1)
-    int 		step_y;          // Direction y du pas de grille du rayon (1 ou -1)
-    int 		side;            // Indicateur de côté de la carte frappée par le rayon (0: horizontal, 1: vertical)
-    int 		line_height;     // Hauteur de ligne à dessiner sur l'écran
-    int 		draw_start;      // Début de la ligne à dessiner sur l'écran
-    int 		draw_end;        // Fin de la ligne à dessiner sur l'écran
-	double 		wall_dist;       // Distance de la caméra au mur frappé par le rayon
-    double 		wall_x;          // Position exacte du mur frappé par le rayon
-	double 		pov_x;        	 // Position horizontale de la caméra sur le plan de projection
-    double 		dir_x;           // Composante x de la direction du rayon
-    double 		dir_y;           // Composante y de la direction du rayon
-    double 		map_x;           // Coordonnée x de la case de la carte frappée par le rayon
-    double 		map_y;           // Coordonnée y de la case de la carte frappée par le rayon
-    double 		deltadist_x;     // Distance entre deux intersections de rayon horizontales
-    double 		deltadist_y;     // Distance entre deux intersections de rayon verticales
-    double 		sidedist_x;      // Distance du rayon horizontal à la prochaine ligne de grille x
-    double 		sidedist_y;      // Distance du rayon vertical à la prochaine ligne de grille y
+    int 		step_x;
+    int 		step_y;
+    int 		side;
+    int 		line_height;
+    int 		draw_start;
+    int 		draw_end;
+	double 		wall_dist;
+    double 		wall_x;
+	double 		pov_x;
+    double 		dir_x;
+    double 		dir_y;
+    double 		map_x;
+    double 		map_y;
+    double 		deltadist_x;
+    double 		deltadist_y;
+    double 		sidedist_x;
+    double 		sidedist_y;
 } t_ray;
 
 typedef struct s_map {
@@ -335,6 +335,7 @@ static int	rotate(t_data *data, double rotspeed);
 // void		found_textures_data(t_data *data);
 
 /* -------------------- RENDERING -------------------- */
+
 // Located in *draw.c*
 void		my_mlx_pixel_put(t_data *data, int x, int y, int color);
 // Located in *map.c*
@@ -342,14 +343,11 @@ void 		init_my_map_bis(t_data *data);
 void 		draw_square(t_data *data);
 void 		draw_map(t_data *data);
 // Located in *raycasting.c*
-static void init_raycasting(t_data *data);
-static void perform_dda(t_data *data, t_ray *ray);
-static void calculate_line_height(t_ray *ray, t_data *data, t_player *player);
-int 		raycasting(t_player *player, t_data *data);
-
+static void perform_dda(t_data *data);
+static void calculate_line_height(t_data *data);
+int 		raycasting(t_data *data);
 // Located in *texture.c*
 void		found_textures_data(t_data *data);
-
 // Located in *color.c*
 void		color_data(t_data *data);
 

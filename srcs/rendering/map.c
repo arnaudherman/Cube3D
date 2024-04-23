@@ -38,13 +38,9 @@ void draw_square(t_data *data)
     }
 }
 
-// // TO DO : USE draw_map(data.mlx_ptr, data.win_ptr, data.player);
-
 void draw_map(t_data *data) {
     int x = 0;
     int y = 0;
-
-	// data->map = (t_map *)malloc(sizeof(t_map));
 
     // Dessiner les lignes verticales
     while (x <= MAP_WIDTH * TILE_SIZE) {

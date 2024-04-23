@@ -12,7 +12,7 @@
 //     float dx;
 //     float dy;
 //     float xinc;
-//     float xinc;
+//     float yinc;
 //     float step;
 //     int i;
 
@@ -36,93 +36,62 @@
 //     }
 // }
 
-// Fonction pour initialiser les rayons de projection
-static void init_raycasting(t_data *data) {
-    // Déterminer la direction du rayon en fonction de l'angle de vue du joueur
-    data->ray.pov_x = data->player.angle - (data->player.fov / 2);
-    data->ray.dir_x = cos(data->ray.pov_x);
-    data->ray.dir_y = sin( data->ray.pov_x);
-    // Initialiser les autres paramètres des rayons de projection
-    data->ray.map_x = (int)data->player.x_pos;
-    data->ray.map_y = (int)data->player.y_pos;
-    data->ray.deltadist_x = fabs(1 / data->ray.dir_x);
-    data->ray.deltadist_y = fabs(1 / data->ray.dir_y);
-}
+// // Fonction pour exécuter l'algorithme DDA
+// static void perform_dda(t_data *data) {
+// 	int hit = 0;
+// 	while (hit == 0) {
+// 		if (data->ray.sidedist_x < data->ray.sidedist_y) {
+// 			data->ray.sidedist_x += data->ray.deltadist_x;
+// 			data->ray.map_x += data->ray.step_x;
+// 			data->ray.side = 0;
+// 		} else {
+// 			data->ray.sidedist_y += data->ray.deltadist_y;
+// 			data->ray.map_y += data->ray.step_y;
+// 			data->ray.side = 1;
+// 		}
+// 		if (data->ray.map_y < 0.25 || data->ray.map_x < 0.25 ||
+// 		    data->ray.map_y > data->map.h_map - 0.25 ||
+// 		    data->ray.map_x > data->map.w_map - 1.25)
+// 			break;
+// 		else if (data->map.map2d[(int)data->ray.map_y][(int)data->ray.map_x] != '0')
+// 			hit = 1;
+// 	}
+// }
 
-// Fonction pour exécuter l'algorithme DDA
-static void perform_dda(t_data *data, t_ray *ray) {
-	int hit = 0;
-	while (hit == 0) {
-		if (ray->sidedist_x < ray->sidedist_y) {
-			ray->sidedist_x += ray->deltadist_x;
-			ray->map_x += ray->step_x;
-			ray->side = 0;
-		} else {
-			ray->sidedist_y += ray->deltadist_y;
-			ray->map_y += ray->step_y;
-			ray->side = 1;
-		}
-		if (ray->map_y < 0.25 || ray->map_x < 0.25 ||
-		    ray->map_y > data->map.h_map - 0.25 ||
-		    ray->map_x > data->map.w_map - 1.25)
-			break;
-		else if (data->map.map2d[(int)ray->map_y][(int)ray->map_x] != '0')
-			hit = 1;
-	}
-}
+// // Fonction pour calculer les hauteurs des lignes à dessiner
+// static void calculate_line_height(t_data *data) 
+// {
+// 	if (data->ray.side == 0)
+// 		data->ray.wall_dist = fabs((data->ray.map_x - data->player.x_pos + (1 - data->ray.step_x) / 2) / data->ray.dir_x);
+// 	else
+// 		data->ray.wall_dist = fabs((data->ray.map_y - data->player.y_pos + (1 - data->ray.step_y) / 2) / data->ray.dir_y);
+// 	data->ray.line_height = (int)(data->win_height / data->ray.wall_dist);
+// 	data->ray.draw_start = -data->ray.line_height / 2 + data->win_height / 2;
+// 	if (data->ray.draw_start < 0)
+// 		data->ray.draw_start = 0;
+// 	data->ray.draw_end = data->ray.line_height / 2 + data->win_height / 2;
+// 	if (data->ray.draw_end >= data->win_height)
+// 		data->ray.draw_end = data->win_height - 1;
+// 	if (data->ray.side == 0)
+// 		data->ray.wall_x = data->player.y_pos + data->ray.wall_dist * data->ray.dir_y;
+// 	else
+// 		data->ray.wall_x = data->player.x_pos + data->ray.wall_dist * data->ray.dir_x;
+// 	data->ray.wall_x -= floor(data->ray.wall_x);
+// }
 
-// Fonction pour calculer les hauteurs des lignes à dessiner
-static void calculate_line_height(t_ray *ray, t_data *data, t_player *player) {
-	if (ray->side == 0)
-		ray->wall_dist = fabs((ray->map_x - player->x_pos + (1 - ray->step_x) / 2) / ray->dir_x);
-	else
-		ray->wall_dist = fabs((ray->map_y - player->y_pos + (1 - ray->step_y) / 2) / ray->dir_y);
-	ray->line_height = (int)(data->win_height / ray->wall_dist);
-	ray->draw_start = -ray->line_height / 2 + data->win_height / 2;
-	if (ray->draw_start < 0)
-		ray->draw_start = 0;
-	ray->draw_end = ray->line_height / 2 + data->win_height / 2;
-	if (ray->draw_end >= data->win_height)
-		ray->draw_end = data->win_height - 1;
-	if (ray->side == 0)
-		ray->wall_x = player->y_pos + ray->wall_dist * ray->dir_y;
-	else
-		ray->wall_x = player->x_pos + ray->wall_dist * ray->dir_x;
-	ray->wall_x -= floor(ray->wall_x);
-}
-
-// Fonction principale du raycasting
-int raycasting(t_player *player, t_data *data) {
-	t_ray ray;
-	int x;
+// int launch_raycasting(t_data *data) {
     
-    x = 0;
-	while (x < data->win_width) {
-		init_raycasting(data);
-		perform_dda(data, &ray);
-		calculate_line_height(&ray, data, player);
-		//update_texture_pixels(data, &data->texinfo, &ray, x);
-		x++;
-	}
-	return (0);
-}
-
-// int main() {
-//     // Initialisation des données du jeu
-//     t_data game_data;
-//     // (à compléter avec l'initialisation des données du jeu)
+// 	while (data->ray.step_x < data->win_width)
+// 	{
+// 		perform_dda(&data);
+//     	// Calcul des intersections avec les murs
+//     	// calculate_wall_intersection(&data);
     
-//     // Initialisation des rayons de projection
-//     init_raycasting(&game_data);
-    
-//     // Calcul des intersections avec les murs
-//     calculate_wall_intersections(&game_data);
-    
-//     // Calcul des hauteurs des lignes à dessiner
-//     calculate_line_heights(&game_data);
-    
-//     // Dessin des murs sur l'écran
-//     // (à compléter avec la fonction de dessin)
-    
+//     	// Calcul des hauteurs des lignes à dessiner
+//     	calculate_line_height(&data);
+// 		// Edit textures
+// 		// update_texture_pixels(&data);
+// 		data->ray.step_x++;	
+// 	}
 //     return 0;
 // }
