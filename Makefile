@@ -2,7 +2,9 @@
 
 SRCS += srcs/main.c
 
-SRCS += srcs/error/error.c
+SRCS += srcs/clean/all.c \
+		srcs/clean/error.c \
+		srcs/clean/map.c
 
 SRCS += srcs/init/all.c \
 		srcs/init/color.c \

@@ -137,9 +137,9 @@ typedef struct s_ray {
 } t_ray;
 
 typedef struct s_map {
-    char 		**map2d;
     int			w_map;
     int 		h_map;
+	char 		**map2d;
     int 		x_map;
     int 		y_map;
 	int			color;
@@ -228,10 +228,13 @@ typedef struct	s_data {
 
 /* /\_/\_/\_/\_/\_/\_/\_/\_/\_/\_ PROTOTYPE _/\_/\_/\_/\_/\_/\_/\_/\_/\_/\ */
 
-/* -------------------- ERROR -------------------- */
-
+/* -------------------- CLEAN -------------------- */
+// Located in *all.c*
+int 		clean_all(t_data *data);
 // Located in *error.c*
 void		ft_error(char *error);
+// Located in *map.c*
+void 		free_map(t_map *map);
 
 /* -------------------- DIY LIBFT -------------------- */
 // Located in *get_next_line.c*
@@ -247,14 +250,25 @@ void		free_tokens(char **tokens);
 static char	*in_tab(const char *s1, int c1, int c2);
 static int	number_word(const char *s1, char c);
 /* -------------------- INIT -------------------- */
+// Located in *all.c*
 void		init_data(t_data *data);
+// Located in *color.c*
 void		init_color(t_data *data);
+// Located in *engine.c*
 int			init_mlx_engine(t_data *data);
+// Located in *image.c*
 // void		init_image(t_data *data);
-void		init_map(t_data *data);
+// Located in *map.c*
+int			malloc_map2d(t_map *map);
+void		fill_map(t_map *map);
+int			init_map(t_data *data);
+// Located in *minimap.c*
 // void		init_minimap(t_data *data);
+// Located in *player.c*
 void		init_player(t_data *data);
+// Located in *ray.c*
 // void		init_ray(t_data *data);
+// Located in *texture.c*
 void		init_texture(t_data *data);
 /* -------------------- MOVEMENT -------------------- */
 // Located in *direction.c*

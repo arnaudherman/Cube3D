@@ -10,7 +10,6 @@
 int	main(int ac, char **av)
 {
 	t_data	data;
-	t_map map;
 
 	// 1) CHECKER
 	// if (ac != 2)
@@ -23,9 +22,6 @@ int	main(int ac, char **av)
 
 	// ???) TO DO : parser les args	
 
-	// CONSTRUCTOR
-	map = create_map(&data);
-
 	// LISTENER
 
 	// RENDERER
@@ -37,7 +33,7 @@ int	main(int ac, char **av)
 	mlx_loop(data.mlx_ptr);
 	
 	// CLEANER
-	clean_all(&data);
+	// clean_all(&data);
 
 	return (0);
 }

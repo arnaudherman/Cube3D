@@ -1,107 +1,121 @@
 #include "cub3d-bis.h"
 
-// MAP INITIALISER
-void	init_map(t_data *data)
+char map_data[MAP_HEIGHT][MAP_WIDTH] = {
+    {'1', '1', '1', '1', '1', '1', '1', '1', '1', '1'},
+    {'1', '0', '0', '0', '0', '0', '1', '0', '0', '1'},
+    {'1', '0', '1', '1', '1', '1', '1', '1', '0', '1'},
+    {'1', '0', '1', '0', '0', '0', '0', '1', '0', '1'},
+    {'1', '0', '1', '1', '1', '1', '0', '1', '0', '1'},
+    {'1', '0', '1', '0', '1', '1', '0', '1', '0', '1'},
+    {'1', '0', '1', '0', '0', '0', '0', '1', '0', '1'},
+    {'1', '0', '1', '1', '1', '1', '1', '1', '0', '1'},
+    {'1', '0', '0', '1', '0', '0', '0', '0', '0', '1'},
+    {'1', '1', '1', '1', '1', '1', '1', '1', '1', '1'}
+};
+
+int	malloc_map2d(t_map *map)
 {
-	char map_data[MAP_HEIGHT][MAP_WIDTH] = {
-        {'1', '1', '1', '1', '1', '1', '1', '1', '1', '1'},
-        {'1', '0', '0', '0', '0', '0', '1', '0', '0', '1'},
-        {'1', '0', '1', '1', '1', '1', '1', '1', '0', '1'},
-        {'1', '0', '1', '0', '0', '0', '0', '1', '0', '1'},
-        {'1', '0', '1', '1', '1', '1', '0', '1', '0', '1'},
-        {'1', '0', '1', '0', '1', '1', '0', '1', '0', '1'},
-        {'1', '0', '1', '0', '0', '0', '0', '1', '0', '1'},
-        {'1', '0', '1', '1', '1', '1', '1', '1', '0', '1'},
-        {'1', '0', '0', '1', '0', '0', '0', '0', '0', '1'},
-        {'1', '1', '1', '1', '1', '1', '1', '1', '1', '1'}
-    };
-
-    // Définition des dimensions de la carte
-    data->map.w_map = MAP_WIDTH;
-    data->map.h_map = MAP_HEIGHT;
-
-    // Allocation de mémoire pour la carte 2D
-    data->map.map2d = (char **)malloc(MAP_HEIGHT * sizeof(char *));
-    if (data->map.map2d == NULL) {
-        // Gestion de l'erreur d'allocation de mémoire
+    map->map2d = (char **)malloc(MAP_HEIGHT * sizeof(char *));
+    if (map->map2d == NULL) {
 		perror("fail in init_map\n");
-		// mlx_destroy_display(data->mlx_ptr); // Clean up
-        // (à implémenter selon les besoins)
-        return;
+        return -1;
     }
+	return (0);
+}
 
-    int i = 0;
-    while (i < MAP_HEIGHT)
-    {
-        data->map.map2d[i] = (char *)malloc(MAP_WIDTH + 1 * sizeof(char));
-        if (data->map.map2d[i] == NULL) {
-            // Gestion de l'erreur d'allocation de mémoire
-            // (à implémenter selon les besoins)
+// Mmalloc lign by lign and i += 1 go to next lign
+void	fill_map(t_map *map)
+{
+    int i;
+
+	i = 0;
+    while (i < MAP_HEIGHT) {
+        map->map2d[i] = (char *)malloc((MAP_WIDTH + 1) * sizeof(char));
+        if (map->map2d[i] == NULL) {
+            perror("fail in fill_map\n");
             return;
         }
         
         int j = 0;
-        while (j < MAP_WIDTH)
-        {
-            data->map.map2d[i][j] = '0';
+        while (j < MAP_WIDTH) {
+            map->map2d[i][j] = map_data[i][j];
             j++;
         }
-		data->map.map2d[i][j] = '\0';
+        map->map2d[i][MAP_WIDTH] = '\0';
         i++;
     }
 }
 
-// MAP CONSTRUCTOR
-t_map create_map(t_data *data) {
-    t_map map;
-    map.w_map = MAP_WIDTH;
-    map.h_map = MAP_HEIGHT;
 
-    // Allouer de la mémoire pour la grille
-    map.map2d = (int **)malloc(MAP_HEIGHT * sizeof(int *));
-    if (map.map2d == NULL) {
-        fprintf(stderr, "Erreur lors de l'allocation de mémoire pour la grille\n");
-        exit(EXIT_FAILURE);
-    }
-
-    // Allouer de la mémoire pour chaque ligne de la grille
-    int i = 0;
-    while (i < MAP_HEIGHT) {
-        map.map2d[i] = (int *)malloc(MAP_WIDTH * sizeof(int));
-        if (map.map2d[i] == NULL) {
-            fprintf(stderr, "Erreur lors de l'allocation de mémoire pour une ligne de la grille\n");
-            exit(EXIT_FAILURE);
-        }
-        i++;
-    }
-
-    // Initialisation de la carte avec des valeurs par défaut (0 pour espace vide)
-    int j = 0;
-    while (j < MAP_WIDTH) {
-        int i = 0;
-        while (i < MAP_HEIGHT) {
-            map.map2d[i][j] = 0;
-            i++;
-        }
-        j++;
-    }
-
-    return map;
-}
-
-
-
-// MAP LAUNCHER
-int	launch_map(t_data &data) 
+int	init_map(t_data *data)
 {
-    t_map map = creat_map(&data);
-    // Initialiser la carte avec des valeurs (1 pour les murs, 0 pour les espaces vides)
-    map.map2d[1][1] = 1; // Exemple : placer un mur à la position (1, 1)
-
-    // Utilisation de la carte...
-
-    // Libérer la mémoire lorsque vous avez terminé avec la carte
-    freeMap(&map);
-
-    return 0;
+    data->map.w_map = MAP_WIDTH;
+    data->map.h_map = MAP_HEIGHT;
+	// TO DO :
+	// malloc_map2d(data->map.map2d);
+	malloc_map2d(&data->map);
+	if (malloc_map2d(&data->map) == -1) {
+		perror("fail in init_map to malloc_map\n");
+        return -1;
+    }
+	data->map.x_map = 0;
+	data->map.y_map = 0;
+	data->map.color = 0;
+	// TO DO : 
+    // fill_map(data->map.map2d);
+	fill_map(&data->map);
+	return (0);
 }
+
+// // MAP CONSTRUCTOR
+// t_map create_map(t_data *data) {
+//     t_map map;
+//     map.w_map = MAP_WIDTH;
+//     map.h_map = MAP_HEIGHT;
+
+//     // Allouer de la mémoire pour la grille
+//     map.map2d = (int **)malloc(MAP_HEIGHT * sizeof(int *));
+//     if (map.map2d == NULL) {
+//         fprintf(stderr, "Erreur lors de l'allocation de mémoire pour la grille\n");
+//         exit(EXIT_FAILURE);
+//     }
+
+//     // Allouer de la mémoire pour chaque ligne de la grille
+//     int i = 0;
+//     while (i < MAP_HEIGHT) {
+//         map.map2d[i] = (int *)malloc(MAP_WIDTH * sizeof(int));
+//         if (map.map2d[i] == NULL) {
+//             fprintf(stderr, "Erreur lors de l'allocation de mémoire pour une ligne de la grille\n");
+//             exit(EXIT_FAILURE);
+//         }
+//         i++;
+//     }
+
+//     // Initialisation de la carte avec des valeurs par défaut (0 pour espace vide)
+//     int j = 0;
+//     while (j < MAP_WIDTH) {
+//         int i = 0;
+//         while (i < MAP_HEIGHT) {
+//             map.map2d[i][j] = 0;
+//             i++;
+//         }
+//         j++;
+//     }
+
+//     return map;
+// }
+
+
+
+// // MAP LAUNCHER
+// int	launch_map(t_data *data) 
+// {
+//     t_map map;
+	
+// 	map = create_map(&data);
+// 	// TO DO : map already init in init_data main
+// 	init_map(&data);
+//     free_map(&map);
+
+//     return 0;
+// }
