@@ -213,11 +213,11 @@ typedef struct	s_data {
 	void		*mlx_win_ptr;
 	t_image  	image;
 	t_map		map;
-	t_minimap	minimap;
-	t_ray  		ray;
+	// t_minimap	minimap;
+	// t_ray  		ray;
 	t_player  	player;
-	t_texture 	texture;
-	t_color		color;
+	// t_texture 	texture;
+	// t_color		color;
 	// t_texture_info	no;
 	// t_texture_info	so;
 	// t_texture_info	we;

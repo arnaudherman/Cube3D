@@ -18,7 +18,7 @@ int	main(int ac, char **av)
 	// 2) INITIALISER
 	// Main init function globale qui init la structre t_data
 	// + call toutes les fonctions d'init dans cette fonction
-	init_data(&data);
+	// init_data(&data);
 
 	// ???) TO DO : parser les args	
 
@@ -30,6 +30,7 @@ int	main(int ac, char **av)
 	// mlx_loop_hook(data.mlx_ptr, render_next_frame, &data);
 
 	// LOOPER
+	init_mlx_engine(&data);
 	mlx_loop(data.mlx_ptr);
 	
 	// CLEANER

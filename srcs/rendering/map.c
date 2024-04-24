@@ -38,36 +38,36 @@ void draw_square(t_data *data)
     }
 }
 
-void draw_map(t_data *data) {
-    int x = 0;
-    int y = 0;
+// void draw_map(t_data *data) {
+//     int x = 0;
+//     int y = 0;
 
-    // Dessiner les lignes verticales
-    while (x <= MAP_WIDTH * TILE_SIZE) {
-        my_mlx_pixel_put(data, x, 0, 0xFFFFFF); // Ligne en haut
-        my_mlx_pixel_put(data, x, MAP_HEIGHT * TILE_SIZE, 0xFFFFFF); // Ligne en bas
-        x += TILE_SIZE;
-    }
+//     // Dessiner les lignes verticales
+//     while (x <= MAP_WIDTH * TILE_SIZE) {
+//         my_mlx_pixel_put(data, x, 0, 0xFFFFFF); // Ligne en haut
+//         my_mlx_pixel_put(data, x, MAP_HEIGHT * TILE_SIZE, 0xFFFFFF); // Ligne en bas
+//         x += TILE_SIZE;
+//     }
 
-    // Dessiner les lignes horizontales
-    while (y <= MAP_HEIGHT * TILE_SIZE) {
-        my_mlx_pixel_put(data, 0, y, 0xFFFFFF); // Ligne à gauche
-        my_mlx_pixel_put(data, MAP_WIDTH * TILE_SIZE, y, 0xFFFFFF); // Ligne à droite
-        y += TILE_SIZE;
-    }
+//     // Dessiner les lignes horizontales
+//     while (y <= MAP_HEIGHT * TILE_SIZE) {
+//         my_mlx_pixel_put(data, 0, y, 0xFFFFFF); // Ligne à gauche
+//         my_mlx_pixel_put(data, MAP_WIDTH * TILE_SIZE, y, 0xFFFFFF); // Ligne à droite
+//         y += TILE_SIZE;
+//     }
 
-    // Dessiner les tiles
-    y = 0;
-    while (y < MAP_HEIGHT) {
-        x = 0;
-        while (x < MAP_WIDTH) {
-            if (data->map.map2d[y][x] == '1') {
-                // Dessiner une tile de mur (si map2d[y][x] est '1', cela signifie que c'est un mur)
-                draw_square(data);
-            }
-            // Ajoutez d'autres conditions pour d'autres types de tiles si nécessaire
-            x++;
-        }
-        y++;
-    }
-}
+//     // Dessiner les tiles
+//     y = 0;
+//     while (y < MAP_HEIGHT) {
+//         x = 0;
+//         while (x < MAP_WIDTH) {
+//             if (data->map.map2d[y][x] == '1') {
+//                 // Dessiner une tile de mur (si map2d[y][x] est '1', cela signifie que c'est un mur)
+//                 draw_square(data);
+//             }
+//             // Ajoutez d'autres conditions pour d'autres types de tiles si nécessaire
+//             x++;
+//         }
+//         y++;
+//     }
+// }

@@ -46,26 +46,52 @@ void	fill_map(t_map *map)
     }
 }
 
-
-int	init_map(t_data *data)
+int init_map(t_data *data)
 {
-    data->map.w_map = MAP_WIDTH;
-    data->map.h_map = MAP_HEIGHT;
-	// TO DO :
-	// malloc_map2d(data->map.map2d);
-	malloc_map2d(&data->map);
-	if (malloc_map2d(&data->map) == -1) {
-		perror("fail in init_map to malloc_map\n");
+    // Création d'une instance de t_map
+    t_map map;
+
+    // Initialisation des champs de la structure t_map
+    map.w_map = MAP_WIDTH;
+    map.h_map = MAP_HEIGHT;
+
+    // Allocation de mémoire pour la carte 2D
+    map.map2d = (char **)malloc(MAP_HEIGHT * sizeof(char *));
+    if (map.map2d == NULL) {
+        perror("Failed to allocate memory for map2d\n");
         return -1;
     }
-	data->map.x_map = 0;
-	data->map.y_map = 0;
-	data->map.color = 0;
-	// TO DO : 
-    // fill_map(data->map.map2d);
-	fill_map(&data->map);
-	return (0);
+
+    // Allocation et remplissage de chaque ligne de la carte 2D
+    for (int i = 0; i < MAP_HEIGHT; i++) {
+        map.map2d[i] = (char *)malloc((MAP_WIDTH + 1) * sizeof(char));
+        if (map.map2d[i] == NULL) {
+            perror("Failed to allocate memory for map2d row\n");
+            // Si l'allocation échoue, libérez la mémoire précédemment allouée
+            for (int j = 0; j < i; j++) {
+                free(map.map2d[j]);
+            }
+            free(map.map2d);
+            return -1;
+        }
+        // Copie des données de map_data dans la carte 2D
+        for (int j = 0; j < MAP_WIDTH; j++) {
+            map.map2d[i][j] = map_data[i][j];
+        }
+        map.map2d[i][MAP_WIDTH] = '\0'; // Ajout du caractère de fin de chaîne
+    }
+
+    // Initialisation des autres champs de la structure t_map
+    map.x_map = 0;
+    map.y_map = 0;
+    map.color = 0;
+
+    // Affectation de la structure t_map à l'objet data
+    data->map = map;
+
+    return 0;
 }
+
 
 // // MAP CONSTRUCTOR
 // t_map create_map(t_data *data) {
