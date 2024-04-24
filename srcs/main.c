@@ -10,31 +10,34 @@
 int	main(int ac, char **av)
 {
 	t_data	data;
+	t_map map;
 
-	// 1) CHECK ARGS
+	// 1) CHECKER
 	// if (ac != 2)
 	// 	perror("There must be precisely 2 arguments\n");
 
-	// 2) INIT ALL DATA
+	// 2) INITIALISER
 	// Main init function globale qui init la structre t_data
 	// + call toutes les fonctions d'init dans cette fonction
 	init_data(&data);
 
 	// ???) TO DO : parser les args	
 
-	// 3) TO DO : LISTEN FOR INPUTS
+	// CONSTRUCTOR
+	map = create_map(&data);
 
-	// 4) TO DO : RENDER IMAGES with hook to catch event
+	// LISTENER
+
+	// RENDERER
 	// create function render_next_frame function to render images
 	// int	render_next_frame(void *YourStruct);
 	// mlx_loop_hook(data.mlx_ptr, render_next_frame, &data);
 
-	// 	Main events loop
+	// LOOPER
 	mlx_loop(data.mlx_ptr);
 	
-	// 5) TO DO ? Cleanup resources
-	// mlx_destroy_window(mlx_ptr, mlx_win_ptr);	
-	// mlx_destroy_display(mlx_ptr);
+	// CLEANER
+	clean_all(&data);
 
 	return (0);
 }
