@@ -113,7 +113,7 @@ typedef struct s_image
 	int			bits_per_pixel;
 	int			line_length;
 	int			endian;
-	// char		*relative_path = "./test.xpm";
+	char		*relative_path;
 }	t_image;
 
 typedef struct s_ray {
