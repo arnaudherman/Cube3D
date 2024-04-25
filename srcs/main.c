@@ -19,7 +19,7 @@ int	main(int ac, char **av)
 	// Main init function globale qui init la structre t_data
 	// + call toutes les fonctions d'init dans cette fonction
 	init_data(&data);
-
+	draw_map(&data);
 	// ???) TO DO : parser les args	
 
 	// LISTENER

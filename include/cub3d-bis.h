@@ -251,7 +251,7 @@ static char	*in_tab(const char *s1, int c1, int c2);
 static int	number_word(const char *s1, char c);
 /* -------------------- INIT -------------------- */
 // Located in *all.c*
-void		init_data(t_data *data);
+int			init_data(t_data *data);
 // Located in *color.c*
 void		init_color(t_data *data);
 // Located in *engine.c*
@@ -351,9 +351,9 @@ static int	rotate(t_data *data, double rotspeed);
 /* -------------------- RENDERING -------------------- */
 
 // Located in *draw.c*
-void		my_mlx_pixel_put(t_data *data, int x, int y, int color);
 // Located in *map.c*
-void 		draw_square(t_data *data);
+void		my_mlx_pixel_put(t_data *data, int x, int y, int color);
+void 		draw_square(t_data *data, int x, int y, int color);
 void 		draw_map(t_data *data);
 // Located in *raycasting.c*
 static void perform_dda(t_data *data);

@@ -1,65 +1,65 @@
-#include "cub3d-bis.h"
+// #include "cub3d-bis.h"
 
-void init_map_bis(t_data *data)
-{
-	// TO DO : Allouez et initialisez votre carte
-    data->map.map2d = (char **)malloc(MAP_HEIGHT * sizeof(char *));
-    int i = 0;
-    while (i < MAP_HEIGHT) {
-        data->map.map2d[i] = (char *)malloc((MAP_WIDTH + 1) * sizeof(char)); // +1 pour le caractère de fin de chaîne '\0'
-        int j = 0;
-        while (j < MAP_WIDTH) {
-            // Initialiser votre carte selon votre logique (par exemple, '1' pour un mur, '0' pour vide, etc.)
-            data->map.map2d[i][j] = '0'; // Par défaut, supposons que toutes les cases sont vides
-            j++;
-        }
-        data->map.map2d[i][j] = '\0'; // Terminer la chaîne de caractères
-        i++;
-	}
-}
+// // L'offset mémoire pour un pixel à une certaine position (x, y) dans l'image
+// // y * line_length : cela détermine la position verticale dans l'image en prenant en compte la longueur de la ligne.
+// // x * (bits_per_pixel / 8) : cela détermine la position horizontale en prenant en compte le nombre de bits par pixel et le divisant par 8 pour obtenir le nombre d'octets.
+// // int offset = (y * line_length + x * (bits_per_pixel / 8));
+// void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+// {
+// 	char	*dst;
 
-void draw_square(t_data *data)
-{
-    int i;
-    int j;
+// 	dst = data->image.addr + (y * data->image.line_length + x * (data->image.bits_per_pixel / 8));
+// 	*(unsigned int*)dst = color;
+// }
 
-	init_map_bis(data);
+// void	draw_vertical_lign(t_data *data)
+// {
+//     while (data->map.x_map <= MAP_WIDTH * TILE_SIZE) {
+//         my_mlx_pixel_put(data, data->map.x_map, 0, 0xFFFFFF); // Ligne en haut
+//         my_mlx_pixel_put(data, data->map.x_map, MAP_HEIGHT * TILE_SIZE, 0xFFFFFF); // Ligne en bas
+//         data->map.x_map += TILE_SIZE;
+//     }
+// }
 
-    i = 0;
-    while (i < MAP_WIDTH)
-    {
-        j = 0;
-        while (j < MAP_HEIGHT)
-        {
-            my_mlx_pixel_put(data, data->player.x_pos + i, data->player.y_pos + j, data->map.color);
-            j++;
-        }
-        i++;
-    }
-}
+// void	draw_horizontal_lign(t_data *data)
+// {
+//   while (data->map.y_map <= MAP_HEIGHT * TILE_SIZE) {
+//         my_mlx_pixel_put(data, 0, data->map.y_map, 0xFFFFFF); // Ligne à gauche
+//         my_mlx_pixel_put(data, MAP_WIDTH * TILE_SIZE, data->map.y_map, 0xFFFFFF); // Ligne à droite
+//         data->map.y_map += TILE_SIZE;
+//     }
+// }
+
+// // draw_square(data, x * TILE_SIZE, y * TILE_SIZE)
+// void draw_square(t_data *data)
+// {
+//     int i;
+//     int j;
+
+// 	// init_map_bis(data);
+
+//     i = 0;
+//     while (i < MAP_WIDTH)
+//     {
+//         j = 0;
+//         while (j < MAP_HEIGHT)
+//         {
+//             my_mlx_pixel_put(data, data->map.x_map + i, data->map.y_map + j, data->map.color);
+//             j++;
+//         }
+//         i++;
+//     }
+// }
 
 // void draw_map(t_data *data) {
-//     int x = 0;
+//     // Draw ligns
+// 	draw_vertical_lign(data);
+// 	draw_horizontal_lign(data);
+
+//     // Draw tiles
 //     int y = 0;
-
-//     // Dessiner les lignes verticales
-//     while (x <= MAP_WIDTH * TILE_SIZE) {
-//         my_mlx_pixel_put(data, x, 0, 0xFFFFFF); // Ligne en haut
-//         my_mlx_pixel_put(data, x, MAP_HEIGHT * TILE_SIZE, 0xFFFFFF); // Ligne en bas
-//         x += TILE_SIZE;
-//     }
-
-//     // Dessiner les lignes horizontales
-//     while (y <= MAP_HEIGHT * TILE_SIZE) {
-//         my_mlx_pixel_put(data, 0, y, 0xFFFFFF); // Ligne à gauche
-//         my_mlx_pixel_put(data, MAP_WIDTH * TILE_SIZE, y, 0xFFFFFF); // Ligne à droite
-//         y += TILE_SIZE;
-//     }
-
-//     // Dessiner les tiles
-//     y = 0;
 //     while (y < MAP_HEIGHT) {
-//         x = 0;
+//         int x = 0;
 //         while (x < MAP_WIDTH) {
 //             if (data->map.map2d[y][x] == '1') {
 //                 // Dessiner une tile de mur (si map2d[y][x] est '1', cela signifie que c'est un mur)
