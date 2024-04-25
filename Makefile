@@ -36,7 +36,7 @@ SRCS += srcs/rendering/close.c \
         srcs/rendering/map.c \
         srcs/rendering/minimap.c \
         srcs/rendering/raycasting.c \
-        srcs/rendering/render.c \
+        srcs/rendering/draw.c \
         srcs/rendering/texture.c
 
 SRCS += srcs/utils/get_next_line.c \

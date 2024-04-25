@@ -351,15 +351,17 @@ static int	rotate(t_data *data, double rotspeed);
 /* -------------------- RENDERING -------------------- */
 
 // Located in *draw.c*
+void 		draw_floor(t_data *data);
+void 		draw_ceiling(t_data *data);
 // Located in *map.c*
 void		my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void 		draw_square(t_data *data, int x, int y, int color);
 int 		draw_map(t_data *data);
-void draw_tile(t_data *data, int x, int y);
-void draw_vertical_lines(t_data *data);
-void draw_horizontal_lines(t_data *data);
-void draw_vertical_line(t_data *data, int x, int start_y, int color);
-void draw_horizontal_line(t_data *data, int start_x, int y, int color);
+void 		draw_tile(t_data *data, int x, int y);
+void 		draw_vertical_lines(t_data *data);
+void 		draw_horizontal_lines(t_data *data);
+void 		draw_vertical_line(t_data *data, int x, int start_y, int color);
+void 		draw_horizontal_line(t_data *data, int start_x, int y, int color);
 // Located in *raycasting.c*
 static void perform_dda(t_data *data);
 static void calculate_line_height(t_data *data);
