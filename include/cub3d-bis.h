@@ -261,7 +261,7 @@ int			init_mlx_engine(t_data *data);
 // Located in *map.c*
 int			malloc_map2d(t_map *map);
 void		fill_map(t_map *map);
-int			init_map(t_data *data);
+int init_map(t_map *map);
 // Located in *minimap.c*
 // void		init_minimap(t_data *data);
 // Located in *player.c*
@@ -354,7 +354,12 @@ static int	rotate(t_data *data, double rotspeed);
 // Located in *map.c*
 void		my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void 		draw_square(t_data *data, int x, int y, int color);
-void 		draw_map(t_data *data);
+int 		draw_map(t_data *data);
+void draw_tile(t_data *data, int x, int y);
+void draw_vertical_lines(t_data *data);
+void draw_horizontal_lines(t_data *data);
+void draw_vertical_line(t_data *data, int x, int start_y, int color);
+void draw_horizontal_line(t_data *data, int start_x, int y, int color);
 // Located in *raycasting.c*
 static void perform_dda(t_data *data);
 static void calculate_line_height(t_data *data);
