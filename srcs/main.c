@@ -1,4 +1,3 @@
-// #include "cub3d-bis.h"
 #include "cub3d-bis.h"
 
 	// int rows = sizeof(data->map.map2d)/sizeof(data->map.map2d[0]);
@@ -22,20 +21,18 @@ int	main(int ac, char **av)
 
 	// ???) TO DO : parser les args	
 
-	// LISTENER
-	// event_listener(&data);
-
-
 	// RENDERER
 	// create function render_next_frame function to render images
 	// int	render_next_frame(void *YourStruct);
 	// mlx_loop_hook(data.mlx_ptr, render_next_frame, &data);
 
+	// LISTENER
+	event_listener(&data);
+
 	// LOOPER
-	mlx_loop_hook(data.mlx_ptr, &draw_map, &data);
 	mlx_loop(data.mlx_ptr);
 	
-	// // CLEANER
+	// CLEANER
 	// clean_all(&data);
 
 	return (0);

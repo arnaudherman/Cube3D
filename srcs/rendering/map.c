@@ -49,8 +49,7 @@ void my_mlx_pixel_put(t_data *data, int x, int y, int color) {
     dst = data->image.addr + (y * data->image.line_length + x * (data->image.bits_per_pixel / 8));
     *(unsigned int*)dst = color;
 }
-
-
+ 
 void draw_square(t_data *data, int x, int y, int color)
 {
     for (int i = 0; i < TILE_SIZE; i++) {

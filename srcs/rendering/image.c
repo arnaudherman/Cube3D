@@ -35,3 +35,8 @@
 // Converts an xpm file to a new image instance.
 // void	*mlx_xpm_file_to_image(void *mlx_ptr, char *filename, int *width, int *height);
 
+// int	render_image(t_data *data)
+// {
+	
+// 	return 0;
+// }

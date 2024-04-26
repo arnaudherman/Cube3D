@@ -18,6 +18,7 @@ SRCS += srcs/setup/all.c \
 
 SRCS += srcs/moving/direction.c \
         srcs/moving/keys.c \
+		srcs/moving/listener.c \
         srcs/moving/move.c \
         srcs/moving/player.c \
         srcs/moving/position.c \
@@ -32,6 +33,7 @@ SRCS += srcs/parsing/color.c \
         srcs/parsing/texture.c
 
 SRCS += srcs/rendering/close.c \
+		srcs/rendering/draw.c \
         srcs/rendering/image.c \
         srcs/rendering/map.c \
         srcs/rendering/minimap.c \

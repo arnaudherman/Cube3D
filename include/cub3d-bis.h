@@ -47,6 +47,7 @@
 # define FLOOR 0xE6E6E6
 # define CEILING 0x404040
 # define TEXTURE 42
+# define ESC_KEY 53
 
 # define ERROR_NBR_ARG "Error\n \
 	Invalid number of arguments.\n \
@@ -271,7 +272,7 @@ void		init_player(t_data *data);
 // Located in *texture.c*
 void		init_texture(t_data *data);
 
-/* -------------------- MOVEMENT -------------------- */
+/* -------------------- MOVING -------------------- */
 // Located in *direction.c*
 static void	set_player_east_west(t_player *player);
 static void	set_player_north_south(t_player *player);
@@ -283,7 +284,8 @@ static void	wrap_mouse_position(t_data *data, int x, int y);
 static int	mouse_motion(int x, int y, t_data *data);
 void		listen_input(t_data *data);
 // Located in *listener.c*
-static void event_listener(t_data *data);
+int			key_hook_close_window(int keycode, t_data *data);
+void		event_listener(t_data *data);
 // Located in *move.c*
 static int	up(t_data *data);
 static int	down(t_data *data);
