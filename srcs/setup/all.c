@@ -4,7 +4,6 @@ int	init_data(t_data *data)
 {
 	
 	init_image(&data->image);
-	// Initialisation de la structure t_data
 	if (init_map(&data->map) != 0) {
 		perror("Failed to initialize map\n");
 		return 1;

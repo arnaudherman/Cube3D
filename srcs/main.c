@@ -19,10 +19,12 @@ int	main(int ac, char **av)
 	// Main init function globale qui init la structre t_data
 	// + call toutes les fonctions d'init dans cette fonction
 	init_data(&data);
-	
+
 	// ???) TO DO : parser les args	
 
 	// LISTENER
+	// event_listener(&data);
+
 
 	// RENDERER
 	// create function render_next_frame function to render images
@@ -30,10 +32,10 @@ int	main(int ac, char **av)
 	// mlx_loop_hook(data.mlx_ptr, render_next_frame, &data);
 
 	// LOOPER
-	mlx_loop_hook(data.mlx_ptr, &draw_map, &data); // Appel de draw_map à chaque boucle MLX
+	mlx_loop_hook(data.mlx_ptr, &draw_map, &data);
 	mlx_loop(data.mlx_ptr);
 	
-	// CLEANER
+	// // CLEANER
 	// clean_all(&data);
 
 	return (0);

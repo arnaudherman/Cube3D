@@ -260,8 +260,8 @@ int			init_mlx_engine(t_data *data);
 // void		init_image(t_data *data);
 // Located in *map.c*
 int			malloc_map2d(t_map *map);
-void		fill_map(t_map *map);
-int init_map(t_map *map);
+int			fill_map(t_map *map);
+int 		init_map(t_map *map);
 // Located in *minimap.c*
 // void		init_minimap(t_data *data);
 // Located in *player.c*
@@ -270,6 +270,7 @@ void		init_player(t_data *data);
 // void		init_ray(t_data *data);
 // Located in *texture.c*
 void		init_texture(t_data *data);
+
 /* -------------------- MOVEMENT -------------------- */
 // Located in *direction.c*
 static void	set_player_east_west(t_player *player);
@@ -281,6 +282,8 @@ static int	key_release(int key, t_data *data);
 static void	wrap_mouse_position(t_data *data, int x, int y);
 static int	mouse_motion(int x, int y, t_data *data);
 void		listen_input(t_data *data);
+// Located in *listener.c*
+static void event_listener(t_data *data);
 // Located in *move.c*
 static int	up(t_data *data);
 static int	down(t_data *data);
