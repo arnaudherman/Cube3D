@@ -252,7 +252,7 @@ static char	*in_tab(const char *s1, int c1, int c2);
 static int	number_word(const char *s1, char c);
 /* -------------------- INIT -------------------- */
 // Located in *all.c*
-int			init_data(t_data *data);
+int			init_all(t_data *data);
 // Located in *color.c*
 void		init_color(t_data *data);
 // Located in *engine.c*

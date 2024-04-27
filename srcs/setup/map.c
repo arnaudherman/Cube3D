@@ -23,32 +23,33 @@ int malloc_map2d(t_map *map)
     return 0;
 }
 
-int	fill_map(t_map *map)
+int fill_map(t_map *map)
 {
     int i;
 
-	i = 0;
-    while (i < map->h_map) {
+    // Allocation de mémoire pour chaque ligne de la carte 2D
+    for (i = 0; i < map->h_map; i++) {
         map->map2d[i] = (char *)malloc((map->w_map + 1) * sizeof(char));
         if (map->map2d[i] == NULL) {
             perror("fail in fill_map\n");
-			// Libérer la mémoire allouée pour les lignes précédentes
+            // Libérer la mémoire allouée pour les lignes précédentes
             while (i > 0) {
                 free(map->map2d[--i]);
             }
             free(map->map2d);
             return -1;
         }
-        
-        int j = 0;
-        while (j < map->w_map) {
+    }
+
+    // Remplissage des données de la carte 2D
+    for (i = 0; i < map->h_map; i++) {
+        for (int j = 0; j < map->w_map; j++) {
             map->map2d[i][j] = map_data[i][j];
-            j++;
         }
         map->map2d[i][map->w_map] = '\0';
-        i++;
     }
-	return 0;
+
+    return 0;
 }
 
 
@@ -64,7 +65,6 @@ int init_map(t_map *map)
         perror("Failed to allocate memory for map2d\n");
         return -1;
     }
-
     // Remplissage des données de la carte 2D
     if (fill_map(map) != 0) {
 		i = -1;
@@ -74,7 +74,6 @@ int init_map(t_map *map)
         free(map->map2d);
         return -1;
     }
-
     map->color = 0x000000;
 
     return 0;

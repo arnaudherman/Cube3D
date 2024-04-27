@@ -13,36 +13,23 @@ void draw_tile(t_data *data, int x, int y) {
 }
 
 void draw_vertical_lines(t_data *data) {
-    while (data->map.x_map <= MAP_WIDTH * TILE_SIZE) {
-        draw_vertical_line(data, data->map.x_map, 0, 0xFFFFFF); // Draw line at the top
-        draw_vertical_line(data, data->map.x_map, MAP_HEIGHT * TILE_SIZE, 0xFFFFFF); // Draw line at the bottom
-        data->map.x_map += TILE_SIZE;
+    int x = 0;
+    while (x < WINDOW_WIDTH) {
+        draw_vertical_line(data, x, 0, 0xFFFFFF); // Draw line at the top
+        draw_vertical_line(data, x, WINDOW_HEIGHT, 0xFFFFFF); // Draw line at the bottom
+        x += TILE_SIZE;
     }
 }
 
 void draw_horizontal_lines(t_data *data) {
-    while (data->map.y_map <= MAP_HEIGHT * TILE_SIZE) {
-        draw_horizontal_line(data, 0, data->map.y_map, 0xFFFFFF); // Draw line on the left
-        draw_horizontal_line(data, MAP_WIDTH * TILE_SIZE, data->map.y_map, 0xFFFFFF); // Draw line on the right
-        data->map.y_map += TILE_SIZE;
+    int y = 0;
+    while (y < WINDOW_HEIGHT) {
+        draw_horizontal_line(data, 0, y, 0xFFFFFF); // Draw line on the left
+        draw_horizontal_line(data, WINDOW_WIDTH, y, 0xFFFFFF); // Draw line on the right
+        y += TILE_SIZE;
     }
 }
 
-void draw_vertical_line(t_data *data, int x, int start_y, int color) {
-    int y = start_y;
-    while (y <= (MAP_HEIGHT * TILE_SIZE)) {
-        my_mlx_pixel_put(data, x, y, color);
-        y++;
-    }
-}
-
-void draw_horizontal_line(t_data *data, int start_x, int y, int color) {
-    int x = start_x;
-    while (x <= (MAP_WIDTH * TILE_SIZE)) {
-        my_mlx_pixel_put(data, x, y, color);
-        x++;
-    }
-}
 
 void my_mlx_pixel_put(t_data *data, int x, int y, int color) {
     char *dst;
@@ -59,14 +46,36 @@ void draw_square(t_data *data, int x, int y, int color)
     }
 }
 
+
+// Définir une fonction pour dessiner une ligne verticale à une position x avec une couleur donnée
+void draw_vertical_line(t_data *data, int x, int start_y, int color) {
+    int y = start_y;
+    while (y <= (MAP_HEIGHT * TILE_SIZE)) {
+        my_mlx_pixel_put(data, x, y, color);
+        y++;
+    }
+}
+
+// Définir une fonction pour dessiner une ligne horizontale à une position y avec une couleur donnée
+void draw_horizontal_line(t_data *data, int start_x, int y, int color) {
+    int x = start_x;
+    while (x <= (MAP_WIDTH * TILE_SIZE)) {
+        my_mlx_pixel_put(data, x, y, color);
+        x++;
+    }
+}
+
+// Fonction de dessin de la carte
 int draw_map(t_data *data) {
-    // Draw vertical lines
+    // Initialiser les variables de position à zéro
+    data->map.x_map = 0;
+    data->map.y_map = 0;
+
+    // Dessiner les lignes verticales et horizontales
     draw_vertical_lines(data);
-	
-    // Draw horizontal lines
     draw_horizontal_lines(data);
 
-    // Draw tiles
+    // Dessiner les tuiles de la carte
     int y = 0;
     while (y < MAP_HEIGHT) {
         int x = 0;
@@ -78,5 +87,6 @@ int draw_map(t_data *data) {
         }
         y++;
     }
-	return (0);
+
+    return (0);
 }
