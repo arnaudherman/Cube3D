@@ -114,7 +114,7 @@ typedef struct s_image
 	int			bits_per_pixel;
 	int			line_length;
 	int			endian;
-	char		*relative_path;
+	//char		*relative_path;
 }	t_image;
 
 typedef struct s_ray {
@@ -216,7 +216,7 @@ typedef struct	s_data {
 	t_map		map;
 	// t_minimap	minimap;
 	// t_ray  		ray;
-	t_player  	player;
+	// t_player  	player;
 	// t_texture 	texture;
 	// t_color		color;
 	// t_texture_info	no;
@@ -256,6 +256,7 @@ int			init_all(t_data *data);
 // Located in *color.c*
 void		init_color(t_data *data);
 // Located in *engine.c*
+int 		render_next_frame(t_data *data);
 int			init_mlx_engine(t_data *data);
 // Located in *image.c*
 // void		init_image(t_data *data);
@@ -343,7 +344,7 @@ static int	rotate(t_data *data, double rotspeed);
 // int			convert_colors(t_data *data);
 // void		check_and_close(int fd, int line_counter);
 // int			get_rgb(int dir, char *line, t_data *data);
-// // int	get_texture_path(t_orientation dir, char *line, t_data *data);
+// int	get_texture_path(t_orientation dir, char *line, t_data *data);
 // int			get_path_texture(char *path, char **texture_path, char *error_message);
 // void		extract_info(char *trimmed_line, t_data *data, int *line_counter);
 // void		check_line_type(char *trimmed_line, t_data *data, int *line_counter);
@@ -371,6 +372,7 @@ void 		draw_horizontal_line(t_data *data, int start_x, int y, int color);
 static void perform_dda(t_data *data);
 static void calculate_line_height(t_data *data);
 int 		raycasting(t_data *data);
+
 // Located in *texture.c*
 void		found_textures_data(t_data *data);
 // Located in *color.c*

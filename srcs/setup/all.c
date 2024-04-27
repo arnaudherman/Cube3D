@@ -4,7 +4,7 @@ int	init_all(t_data *data)
 {
 	// Handle Image
 	init_image(&data->image);
-	data->image.img = mlx_new_image(data->mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT);
+	data->image.img = mlx_new_image(&data->mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT);
 	if (data->image.img == NULL) {
         perror("Failed to create image\n");
         return 1;
