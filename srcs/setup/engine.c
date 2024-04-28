@@ -1,20 +1,5 @@
 #include "cub3d-bis.h"
 
-int render_next_frame(t_data *data)
-{
-	// Effacer l'image précédente (peut-être nécessaire si vous dessinez par-dessus)
-	// mlx_clear_window(data->mlx_ptr, data->mlx_win_ptr);
-
-	// Appeler votre fonction de rendu pour dessiner la prochaine image
-	draw_map(data);
-	draw_player(&data);
-
-	// Mettre à jour la fenêtre avec la nouvelle image
-	mlx_put_image_to_window(data->mlx_ptr, data->mlx_win_ptr, data->image.img, 0, 0);
-
-	return (0);
-}
-
 int	init_mlx_engine(t_data *data)
 {
 	data->fd = 0;

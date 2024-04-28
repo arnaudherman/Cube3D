@@ -23,6 +23,7 @@ int	init_all(t_data *data)
 		perror("Failed to initialize player\n");
 		return 1;
 	}
+
 	// Handle other structs
 	// init_minimap(&data->minimap);
 	// init_ray(&data->ray);
