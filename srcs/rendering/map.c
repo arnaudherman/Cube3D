@@ -30,23 +30,6 @@ void draw_horizontal_lines(t_data *data) {
     }
 }
 
-
-void my_mlx_pixel_put(t_data *data, int x, int y, int color) {
-    char *dst;
-    dst = data->image.addr + (y * data->image.line_length + x * (data->image.bits_per_pixel / 8));
-    *(unsigned int*)dst = color;
-}
- 
-void draw_square(t_data *data, int x, int y, int color)
-{
-    for (int i = 0; i < TILE_SIZE; i++) {
-        for (int j = 0; j < TILE_SIZE; j++) {
-            my_mlx_pixel_put(data, x + i, y + j, color);
-        }
-    }
-}
-
-
 // Définir une fonction pour dessiner une ligne verticale à une position x avec une couleur donnée
 void draw_vertical_line(t_data *data, int x, int start_y, int color) {
     int y = start_y;

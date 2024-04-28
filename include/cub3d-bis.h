@@ -214,9 +214,9 @@ typedef struct	s_data {
 	void		*mlx_win_ptr;
 	t_image  	image;
 	t_map		map;
+	t_player  	player;
 	// t_minimap	minimap;
 	// t_ray  		ray;
-	// t_player  	player;
 	// t_texture 	texture;
 	// t_color		color;
 	// t_texture_info	no;
@@ -267,7 +267,7 @@ int 		init_map(t_map *map);
 // Located in *minimap.c*
 // void		init_minimap(t_data *data);
 // Located in *player.c*
-void		init_player(t_data *data);
+int			init_player(t_data *data);
 // Located in *ray.c*
 // void		init_ray(t_data *data);
 // Located in *texture.c*
@@ -294,9 +294,7 @@ static int	left(t_data *data);
 static int	right(t_data *data);
 int			move(t_data *data);
 // Located in *player.c*
-void	 	init_player(t_data *data);
 void 		update_player_position(t_player *player, int key);
-void 		draw_player(void *mlx_ptr, void *win_ptr, t_player *player);
 int 		key_hook(int key, t_player *player, t_data *data);
 // Located in *position.c*
 static bool	is_valid_wall_collision_position(t_data *data, double x, double y);
@@ -357,17 +355,20 @@ static int	rotate(t_data *data, double rotspeed);
 /* -------------------- RENDERING -------------------- */
 
 // Located in *draw.c*
+void		my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void 		draw_floor(t_data *data);
 void 		draw_ceiling(t_data *data);
-// Located in *map.c*
-void		my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void 		draw_square(t_data *data, int x, int y, int color);
+// Located in *map.c*
 int 		draw_map(t_data *data);
 void 		draw_tile(t_data *data, int x, int y);
 void 		draw_vertical_lines(t_data *data);
 void 		draw_horizontal_lines(t_data *data);
 void 		draw_vertical_line(t_data *data, int x, int start_y, int color);
 void 		draw_horizontal_line(t_data *data, int start_x, int y, int color);
+// Located in *minimap.c*
+// Located in *player.c*
+int			draw_player(t_data *data);
 // Located in *raycasting.c*
 static void perform_dda(t_data *data);
 static void calculate_line_height(t_data *data);

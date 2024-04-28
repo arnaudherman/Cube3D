@@ -18,6 +18,11 @@ int	init_all(t_data *data)
 		return 1;
 	}
 
+	// Handle player
+	if (init_player(&data->player) != 0) {
+		perror("Failed to initialize player\n");
+		return 1;
+	}
 	// Handle other structs
 	// init_minimap(&data->minimap);
 	// init_ray(&data->ray);
