@@ -22,7 +22,7 @@ int	init_player(t_data *data)
 		data->player.has_moved = 0;
 		return 0;
 }
-s
+
 // TO DO : Global function for player
 // int setup_player_ready(t_data *data)
 // {
