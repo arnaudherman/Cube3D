@@ -4,8 +4,8 @@ int	draw_player(t_data *data)
 {
     // Calcul des coordonnées de début et de fin du joueur
     int x_start = (int)(data->player.x_pos) - (data->player.size / 2);
-	printf("effae%d\n",  data->player.x_pos);
-	printf("effae%d\n",  x_start);
+	// printf("data->player.x_pos is : %d\n",  data->player.x_pos);
+	// printf("x_start is : %d\n",  x_start);
 
     int y_start = (int)(data->player.y_pos) - (data->player.size / 2);
 

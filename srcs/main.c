@@ -15,7 +15,11 @@ int	main(int ac, char **av)
 
 	// 2) INITIALISER
 	init_default_all(&data);
+	printf("data->player.x_pos is : %d\n",  data.player.x_pos);
+	printf("x_start is : %d\n",  data.player.x_pos);
 	init_specific_all(&data);
+	printf("data->player.x_pos is : %d\n",  data.player.x_pos);
+	printf("x_start is : %d\n",  data.player.x_pos);
 
 	// ???) TO DO : parser les args	
 
