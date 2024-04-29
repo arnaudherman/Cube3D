@@ -14,8 +14,8 @@ int	main(int ac, char **av)
 	// 	perror("There must be precisely 2 arguments\n");
 
 	// 2) INITIALISER
-	init_default(&data);
-	init_all(&data);
+	init_default_all(&data);
+	init_specific_all(&data);
 
 	// ???) TO DO : parser les args	
 

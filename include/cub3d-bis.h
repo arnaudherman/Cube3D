@@ -143,7 +143,7 @@ typedef struct s_map {
 	char 		**map2d;
     int 		x_map;
     int 		y_map;
-	int			color;
+	unsigned int color;
 	t_ray  		ray;
 } t_map;
 
@@ -151,7 +151,7 @@ typedef struct s_minimap
 {
 	char	**map;
 	t_image	*img;
-	int		size;
+	double	size;
 	int		offset_x;
 	int		offset_y;
 	int		view_dist;
@@ -173,8 +173,8 @@ typedef struct s_player
 	float 		fov; // field of view in radians
  	int  		rotate; // rotation flag
 	char 		direction;
-	int	 		size;
-	int 		color;
+	double	 	size;
+	unsigned int color;
 	int			has_moved;
 } t_player;
 
@@ -254,7 +254,8 @@ static int	number_word(const char *s1, char c);
 // Located in *all.c*
 int 		malloc_struct(t_data **data);
 int			malloc_all(t_data *data);
-int			init_all(t_data *data);
+int			init_default_all(t_data *data);
+int			init_specific_all(t_data *data);
 // Located in *color.c*
 void		init_color(t_data *data);
 // Located in *engine.c*

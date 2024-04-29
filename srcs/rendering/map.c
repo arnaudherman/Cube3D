@@ -5,7 +5,7 @@ void draw_tile(t_data *data, int x, int y) {
     while (i < TILE_SIZE) {
         int j = 0;
         while (j < TILE_SIZE) {
-            my_mlx_pixel_put(data, x + i, y + j, 0x808080); // wall color here
+            my_mlx_pixel_put(data, x + i, y + j, 0xFFFFF); // wall color here wtf
             j++;
         }
         i++;
