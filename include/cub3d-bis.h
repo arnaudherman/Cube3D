@@ -215,10 +215,10 @@ typedef struct	s_data {
 	t_image  	image;
 	t_map		map;
 	t_player  	player;
-	// t_minimap	minimap;
-	// t_ray  		ray;
-	// t_texture 	texture;
-	// t_color		color;
+	t_minimap	minimap;
+	t_ray  		ray;
+	t_texture 	texture;
+	t_color		color;
 	// t_texture_info	no;
 	// t_texture_info	so;
 	// t_texture_info	we;
@@ -252,6 +252,8 @@ static char	*in_tab(const char *s1, int c1, int c2);
 static int	number_word(const char *s1, char c);
 /* -------------------- SETUP -------------------- */
 // Located in *all.c*
+int 		malloc_struct(t_data **data);
+int			malloc_all(t_data *data);
 int			init_all(t_data *data);
 // Located in *color.c*
 void		init_color(t_data *data);

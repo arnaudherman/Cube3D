@@ -1,5 +1,6 @@
 #include "cub3d-bis.h"
 
+
 int	init_mlx_engine(t_data *data)
 {
 	data->fd = 0;

@@ -1,9 +1,18 @@
 #include "cub3d-bis.h"
 
+// Check effectué pour le player
+// couleur ok
+// size ok
+// position ok
+// struct init ok
+// fonction draw ok
+// mlx_loop_hook avec render_next_frame ok
+// my_mlx_pixel_put ok
 int	init_player(t_data *data)
 {
 		data->player.x_pos = 1;
 		data->player.y_pos = 1;
+
 		data->player.x_move = 1;
 		data->player.y_move = 1;
 		data->player.x_dir = 1;
@@ -16,8 +25,7 @@ int	init_player(t_data *data)
 		data->player.rotate = ROTATION;
 		// TO DO : GO recup la direction N E S W
 		data->player.direction = 'N';
-		// data->player.size = TILE_SIZE / 2;
-		data->player.size = 50;
+		data->player.size = 64;
 		data->player.color = 0x7FFF00;
 		data->player.has_moved = 0;
 		return 0;

@@ -6,15 +6,15 @@
 	// printf("columns: %d\n", columns);
 
 	
-int	main(int ac, char **av)
+int	main(int ac, char **av) 
 {
 	t_data	data;
-
 	// 1) CHECKER
 	// if (ac != 2)
 	// 	perror("There must be precisely 2 arguments\n");
 
 	// 2) INITIALISER
+	init_default(&data);
 	init_all(&data);
 
 	// ???) TO DO : parser les args	
