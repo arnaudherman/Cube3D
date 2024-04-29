@@ -1,28 +1,40 @@
 #include "cub3d-bis.h"
 
-int malloc_struct(t_data **data) {
-    *data = malloc(sizeof(t_data));
-    if (*data == NULL) {
-        perror("Allocation for struct failed\n"); 
+int malloc_struct(void **ptr, size_t size) {
+    *ptr = malloc(size);
+    if (*ptr == NULL) {
+        perror("Allocation for struct failed\n");
         return -1;
     }
     return 0;
 }
 
-int	malloc_all(t_data *data)
-{
-	if (malloc_struct(&(data->image)) == -1 ||
-		malloc_struct(&(data->map)) == -1 ||
-        malloc_struct(&(data->player)) == -1 ||
-        malloc_struct(&(data->minimap)) == -1 ||
-		malloc_struct(&(data->ray)) == -1 ||
-		malloc_struct(&(data->texture)) == -1 ||
-		malloc_struct(&(data->color)) == -1) {
-		perror("error while mallocing all structs in malloc_all\n");
+int malloc_all(t_data *data) {
+    // Allocation de chaque structure
+    if (malloc_struct((void **)&(data->image), sizeof(t_image)) == -1 ||
+        malloc_struct((void **)&(data->map), sizeof(t_map)) == -1 ||
+        malloc_struct((void **)&(data->player), sizeof(t_player)) == -1 ||
+        // TO DO : Minimap problem, pointer is : 0x0
+        // malloc_struct((void **)&(data->minimap), sizeof(t_minimap)) == -1 ||
+        malloc_struct((void **)&(data->ray), sizeof(t_ray)) == -1 ||
+        malloc_struct((void **)&(data->texture), sizeof(t_texture)) == -1 ||
+        malloc_struct((void **)&(data->color), sizeof(t_color)) == -1) {
+        perror("Error while mallocing all structs in malloc_all\n");
         return -1;
     }
-	return 0;
+
+    // Vérification si les pointeurs ont été correctement alloués
+    if ((&data->image) == NULL || (&data->map) == NULL || (&data->player) == NULL ||
+        // TO DO : handle minimap pointer 0x0
+        // data->minimap == NULL || 
+        (&data->ray) == NULL || (&data->texture) == NULL || (&data->color) == NULL) {
+        perror("One or more structure pointers are NULL after malloc_all\n");
+        return -1;
+    }
+	data->player.x_pos = 100;
+    return 0;
 }
+
 
 int init_default_all(t_data *data)
 {
@@ -36,9 +48,6 @@ int init_default_all(t_data *data)
     data->ray = (t_ray){0};
     data->texture = (t_texture){0};
     data->color = (t_color){0};
-	// Malloc all struct bro
-	malloc_all(data);
-
     return 0;
 }
 

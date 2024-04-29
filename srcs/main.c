@@ -12,14 +12,24 @@ int	main(int ac, char **av)
 	// 1) CHECKER
 	// if (ac != 2)
 	// 	perror("There must be precisely 2 arguments\n");
+	printf("1) data->player.x_pos is : %d\n",  data.player.x_pos);
 
 	// 2) INITIALISER
 	init_default_all(&data);
-	printf("data->player.x_pos is : %d\n",  data.player.x_pos);
-	printf("x_start is : %d\n",  data.player.x_pos);
+	printf("After init_default data->player.x_pos is : %d\n",  data.player.x_pos);
+
+	malloc_all(&data);
+	printf("After malloc_all data->player.x_pos is : %d\n",  data.player.x_pos);
+
 	init_specific_all(&data);
-	printf("data->player.x_pos is : %d\n",  data.player.x_pos);
-	printf("x_start is : %d\n",  data.player.x_pos);
+	printf("After init_specific data->player.x_pos is : %d\n",  data.player.x_pos);
+
+	// printf("Image pointer: %p\n", data.image);
+    // printf("Map pointer: %p\n", data.map);
+    // printf("Player pointer: %p\n", data.player);
+    // printf("Ray pointer: %p\n", data.ray);
+    // printf("Texture pointer: %p\n", data.texture);
+    // printf("Color pointer: %p\n", data.color);
 
 	// ???) TO DO : parser les args	
 

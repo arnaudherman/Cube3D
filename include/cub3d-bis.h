@@ -109,6 +109,7 @@ enum e_direction
 
 typedef struct s_image
 {
+	char 			*ptr;
 	void		*img;
 	char		*addr;
 	int			bits_per_pixel;
@@ -118,6 +119,7 @@ typedef struct s_image
 }	t_image;
 
 typedef struct s_ray {
+	char 			*ptr;
     int 		step_x;
     int 		step_y;
     int 		side;
@@ -138,6 +140,7 @@ typedef struct s_ray {
 } t_ray;
 
 typedef struct s_map {
+	char 			*ptr;
     int			w_map;
     int 		h_map;
 	char 		**map2d;
@@ -149,6 +152,7 @@ typedef struct s_map {
 
 typedef struct s_minimap
 {
+	char 			*ptr;
 	char	**map;
 	t_image	*img;
 	double	size;
@@ -160,6 +164,7 @@ typedef struct s_minimap
 
 typedef struct s_player
 {
+	char 			*ptr;
  	double  	x_pos; // player x position in pixels
  	double  	y_pos; // player y position in pixels
 	int			x_move;
@@ -180,6 +185,7 @@ typedef struct s_player
 
 typedef struct s_color
 	{
+		char 			*ptr;
 		char			*string_color;
 		char			*fcolor;
 		char 			*ccolor;
@@ -196,6 +202,7 @@ typedef struct s_color
 
 typedef struct s_texture
 {
+	char 			*ptr;
 	int			found;
 	int			size;
 	char		*road;
@@ -207,6 +214,7 @@ typedef struct s_texture
 } t_texture;
 
 typedef struct	s_data {
+	char 			*ptr;
 	int			fd;
 	int			win_width;
 	int			win_height;
@@ -252,7 +260,7 @@ static char	*in_tab(const char *s1, int c1, int c2);
 static int	number_word(const char *s1, char c);
 /* -------------------- SETUP -------------------- */
 // Located in *all.c*
-int 		malloc_struct(t_data **data);
+int 		malloc_struct(void **ptr, size_t size);
 int			malloc_all(t_data *data);
 int			init_default_all(t_data *data);
 int			init_specific_all(t_data *data);

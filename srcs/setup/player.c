@@ -10,15 +10,14 @@
 // my_mlx_pixel_put ok
 int	init_player(t_data *data)
 {
-		data->player.x_pos = 1;
-		data->player.y_pos = 1;
-
+		data->player.x_pos = MAP_WIDTH / 2;
+		data->player.y_pos = MAP_HEIGHT / 2;
 		data->player.x_move = 1;
 		data->player.y_move = 1;
-		data->player.x_dir = 1;
-		data->player.y_dir = 1; 
-		data->player.x_plane = 0;
-		data->player.y_plane = 0;
+		data->player.x_dir = 0;
+		data->player.y_dir = -1; 
+		data->player.x_plane = 0.66;
+		data->player.y_plane = 0.66;
 		data->player.speed = SPEED;
 		data->player.angle = 0;
 		data->player.fov = FOV;
