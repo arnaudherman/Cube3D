@@ -1,5 +1,20 @@
 #include "cub3d-bis.h"
 
+t_image	*malloc_t_image(void)
+{
+	t_image *image;
+
+	if (!(image = (t_image *)malloc(sizeof(t_image))))
+		return (NULL);
+	image->img = NULL;
+	image->addr = NULL;
+	image->bits_per_pixel = 0;
+	image->line_length = 0;
+	image->endian = 0;
+	image->relative_path = NULL;
+	return (image);
+}
+
 int init_image(t_data *data)
 {
     // Création d'une nouvelle image avec les dimensions de la fenêtre

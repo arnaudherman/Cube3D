@@ -1,7 +1,7 @@
 #include "cub3d-bis.h"
 
 // Allocation d'une structure t_minimap
-t_minimap *allocate_minimap() 
+t_minimap *malloc_minimap(void) 
 {
     t_minimap *minimap;
 	

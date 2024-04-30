@@ -115,7 +115,7 @@ typedef struct s_image
 	int			line_length;
 	int			endian;
 	char		*relative_path;
-}	t_image;
+} t_image;
 
 typedef struct s_ray {
     int 		step_x;
@@ -156,14 +156,12 @@ typedef struct s_minimap
 	int		offset_y;
 	int		view_dist;
 	int		tile_size;
-}	t_minimap;
+} t_minimap;
 
 typedef struct s_player
 {
  	double  	x_pos; // position is in pixels
  	double  	y_pos;
-	int			x_move;
-	int			y_move;	
 	double		x_dir;
 	double		y_dir;
 	double		x_plane;
@@ -175,8 +173,18 @@ typedef struct s_player
 	char 		direction;
 	double	 	size;
 	unsigned int color;
-	int			has_moved;
 } t_player;
+
+typedef struct	s_keys
+{
+	int	w;
+	int	a;
+	int	s;
+	int	d;
+	int	esc;
+	int	left;
+	int	right;
+} t_keys;
 
 typedef struct s_color
 	{
@@ -206,7 +214,8 @@ typedef struct s_texture
 	char 		**xpm_data;
 } t_texture;
 
-typedef struct	s_mlx {
+typedef struct	s_mlx
+{
 	int			fd;
 	int			win_width;
 	int			win_height;
@@ -221,6 +230,7 @@ typedef struct s_data
 	t_minimap	minimap;
 	t_image  	*image;
 	t_player	*player;
+	t_keys		*keys;
 	t_ray  		*ray;
 	t_texture 	*texture;
 	t_color		*color;
@@ -230,7 +240,7 @@ typedef struct s_data
 	// t_texture_info	ea;
 	// t_color_info	fcolors;
 	// t_color_info	ccolors;
-}	t_data;
+} t_data;
 
 /* /\_/\_/\_/\_/\_/\_/\_/\_/\_/\_ PROTOTYPE _/\_/\_/\_/\_/\_/\_/\_/\_/\_/\ */
 
@@ -266,9 +276,8 @@ int			init_custom_all(t_data *data);
 t_color 	*allocate_color();
 // Located in *engine.c*
 int			init_data(t_data *data);
-// Located in *frame.c"
-int			render_next_frame(t_data *data);
 // Located in *image.c*
+t_image		*malloc_t_image(void);
 int			init_image(t_data *data);
 t_image 	*allocate_image();
 // Located in *map.c*
@@ -276,15 +285,15 @@ int			malloc_map2d(t_map *map);
 int			fill_map(t_map *map);
 int 		init_map(t_map *map);
 // Located in *minimap.c*
-t_minimap 	*allocate_minimap();
+t_minimap 	*malloc_minimap(void); 
 // Located in *player.c*
+t_player	*malloc_player(void);
 static void	default_player(t_player *player);
-t_player 	*allocate_player();
 int			init_player(t_player *player);
 // Located in *ray.c*
-t_ray 		*allocate_ray();
+t_ray 		*allocate_ray(void);
 // Located in *texture.c*
-t_texture 	*allocate_texture();
+t_texture 	*allocate_texture(void);
 
 /* -------------------- MOVING -------------------- */
 // Located in *direction.c*
@@ -372,6 +381,8 @@ void		my_mlx_pixel_put(t_image *image, int x, int y, int color);
 void 		draw_floor(t_data *data);
 void 		draw_ceiling(t_data *data);
 void 		draw_square(t_data *data, int x, int y, int color);
+// Located in *frame.c"
+int			render_next_frame(t_data *data);
 // Located in *map.c*
 int 		draw_map(t_data *data, t_map *map);
 void 		draw_tile(t_data *data, int x, int y);

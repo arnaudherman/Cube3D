@@ -1,7 +1,6 @@
 #include "cub3d-bis.h"
 
-// Allocation d'une structure t_ray
-t_ray *allocate_ray() 
+t_ray *allocate_ray(void) 
 {
     t_ray *ray;
 	

@@ -24,14 +24,16 @@ int malloc_all(t_data *data) {
         perror("t_data pointer is NULL in malloc_all\n");
         return -1;
     }    
-	data->image = malloc(sizeof(t_image));
-    data->player = malloc(sizeof(t_player));
-    data->ray = malloc(sizeof(t_ray));
-    data->texture = malloc(sizeof(t_texture));
-    data->color = malloc(sizeof(t_color));
+	data->image = image_struct_init();
+    data->player = player_struct_init();
+	data->keys = keys_struct_init();
+    data->ray = ray_struct_init();
+    data->texture = texture_struct_init();
+    data->color = color_struct_init();
 
     if (data->image == NULL || data->player == NULL ||
-        data->ray == NULL || data->texture == NULL || data->color == NULL) {
+        data->ray == NULL || data->texture == NULL || 
+		data->color == NULL || data->keys == NULL) {
 		perror("Malloc of one ore more structures failed in malloc_all\n");
 		// TO DO FREE HERE
         return -1;
@@ -42,22 +44,23 @@ int malloc_all(t_data *data) {
 int init_default_all(t_data *data)
 {
 	// memset(&data, 0, sizeof(data)); // attention jeune les pointeurs non définis sur des allocations de mémoire valides
-    *data = (t_data){0};
-
+    // *data = (t_data){0};
+	if (!(data = (t_data *)malloc(sizeof(t_data))))
+		return (NULL);
 	// Init no pointer structure
-	data->mlx = (t_mlx){0};
-    data->map = (t_map){0};
-	data->minimap = (t_minimap){0};
+	// data->mlx = (t_mlx){0};
+    // data->map = (t_map){0};
+	// data->minimap = (t_minimap){0};
 
 	// Malloc
 	malloc_all(data);
 
-	// Init pointer structures
-	*data->image = (t_image){0};
-    *data->player = (t_player){0};
-    *data->ray = (t_ray){0};
-    *data->texture = (t_texture){0};
-    *data->color = (t_color){0};
+	// // Init pointer structures
+	// *data->image = (t_image){0};
+    // *data->player = (t_player){0};
+    // *data->ray = (t_ray){0};
+    // *data->texture = (t_texture){0};
+    // *data->color = (t_color){0};
     return 0;
 }
 

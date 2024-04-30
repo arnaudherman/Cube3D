@@ -1,7 +1,6 @@
 #include "cub3d-bis.h"
 
-// Allocation d'une structure t_color
-t_color *allocate_color() 
+t_color *allocate_color(void) 
 {
     t_color *color;
 	
@@ -11,7 +10,6 @@ t_color *allocate_color()
         perror("Allocation for color failed\n");
         exit(EXIT_FAILURE);
     }
-    // Initialisation des membres de la structure ici si nécessaire
     color->string_color = NULL;
     color->fcolor = NULL;
     color->ccolor = NULL;

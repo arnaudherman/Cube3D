@@ -11,7 +11,7 @@
 // }
 
 // Allocation d'une structure t_texture
-t_texture *allocate_texture() 
+t_texture *allocate_texture(void) 
 {
     t_texture *texture;
 	
@@ -20,7 +20,6 @@ t_texture *allocate_texture()
         perror("Allocation for texture failed\n");
         exit(EXIT_FAILURE);
     }
-    // Initialisation des membres de la structure ici si nécessaire
     texture->found = 0;
     texture->size = 0;
     texture->road = NULL;
