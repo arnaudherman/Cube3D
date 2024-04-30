@@ -9,7 +9,8 @@
 # include <stdio.h>
 # include <stdbool.h>
 # include <fcntl.h>
-# include "../minilibx/mlx.h"
+# include "../minilibx/linux/mlx.h"
+# include "../minilibx/mac/mlx.h"
 # include "../libft/libft.h"
 # include "../ft_printf/include/ft_printf.h"
 # include "../include/colors.h"
@@ -45,6 +46,8 @@
 # define MOUSE_BORDER_DISTANCE 20
 # define FLOOR 0xE6E6E6
 # define CEILING 0x404040
+# define TEXTURE 42
+# define ESC_KEY 53
 
 # define ERROR_NBR_ARG "Error\n \
 	Invalid number of arguments.\n \
@@ -111,35 +114,36 @@ typedef struct s_image
 	int			bits_per_pixel;
 	int			line_length;
 	int			endian;
+	char		*relative_path;
 }	t_image;
 
 typedef struct s_ray {
-    int 		step_x;          // Direction x du pas de grille du rayon (1 ou -1)
-    int 		step_y;          // Direction y du pas de grille du rayon (1 ou -1)
-    int 		side;            // Indicateur de côté de la carte frappée par le rayon (0: horizontal, 1: vertical)
-    int 		line_height;     // Hauteur de ligne à dessiner sur l'écran
-    int 		draw_start;      // Début de la ligne à dessiner sur l'écran
-    int 		draw_end;        // Fin de la ligne à dessiner sur l'écran
-	double 		wall_dist;       // Distance de la caméra au mur frappé par le rayon
-    double 		wall_x;          // Position exacte du mur frappé par le rayon
-	double 		pov_x;        	 // Position horizontale de la caméra sur le plan de projection
-    double 		dir_x;           // Composante x de la direction du rayon
-    double 		dir_y;           // Composante y de la direction du rayon
-    double 		map_x;           // Coordonnée x de la case de la carte frappée par le rayon
-    double 		map_y;           // Coordonnée y de la case de la carte frappée par le rayon
-    double 		deltadist_x;     // Distance entre deux intersections de rayon horizontales
-    double 		deltadist_y;     // Distance entre deux intersections de rayon verticales
-    double 		sidedist_x;      // Distance du rayon horizontal à la prochaine ligne de grille x
-    double 		sidedist_y;      // Distance du rayon vertical à la prochaine ligne de grille y
+    int 		step_x;
+    int 		step_y;
+    int 		side;
+    int 		line_height;
+    int 		draw_start;
+    int 		draw_end;
+	double 		wall_dist;
+    double 		wall_x;
+	double 		pov_x;
+    double 		dir_x;
+    double 		dir_y;
+    double 		map_x;
+    double 		map_y;
+    double 		deltadist_x;
+    double 		deltadist_y;
+    double 		sidedist_x;
+    double 		sidedist_y;
 } t_ray;
 
 typedef struct s_map {
-    char 		**map2d;
     int			w_map;
     int 		h_map;
+	char 		**map2d;
     int 		x_map;
     int 		y_map;
-	int			color;
+	unsigned int color;
 	t_ray  		ray;
 } t_map;
 
@@ -147,7 +151,7 @@ typedef struct s_minimap
 {
 	char	**map;
 	t_image	*img;
-	int		size;
+	double	size;
 	int		offset_x;
 	int		offset_y;
 	int		view_dist;
@@ -156,8 +160,8 @@ typedef struct s_minimap
 
 typedef struct s_player
 {
- 	double  	x_pos; // player x position in pixels
- 	double  	y_pos; // player y position in pixels
+ 	double  	x_pos; // position is in pixels
+ 	double  	y_pos;
 	int			x_move;
 	int			y_move;	
 	double		x_dir;
@@ -165,60 +169,78 @@ typedef struct s_player
 	double		x_plane;
 	double		y_plane;
 	double		speed;
-	float		angle; // player angle
+	float		angle;
 	float 		fov; // field of view in radians
- 	int  		rotate; // rotation flag
+ 	int  		rotate;
 	char 		direction;
-	int	 		size;
-	int 		color;
-	int		has_moved;
+	double	 	size;
+	unsigned int color;
+	int			has_moved;
 } t_player;
 
 typedef struct s_color
-{
-	char		*string_color;
-	int			final_color;
-	int			int_r;
-	int			int_g;
-	int			int_b;
-	int			found_color;
-	char		*fcolor;
-	char		*ccolor;
-	int			floor;
-	int			ceiling;
+	{
+		char			*string_color;
+		char			*fcolor;
+		char 			*ccolor;
+		int				final_color;
+		int				r;
+		int				g;
+		int				b;
+		int				found;
+		int				floor;
+		unsigned long	floor_hexa;
+		int				ceiling;
+		unsigned long	ceiling_hexa;
 } t_color;
 
 typedef struct s_texture
 {
-	int			texture_found;
+	int			found;
+	int			size;
 	char		*road;
-	char		*NO;
-	char 		*SO;
-	char 		*WE;
-	char		*EA;
+	char		**NO;
+	char 		**SO;
+	char 		**WE;
+	char		**EA;
+	char 		**xpm_data;
 } t_texture;
 
-typedef struct	s_data {
+typedef struct	s_mlx {
 	int			fd;
-	void		*mlx_ptr;
-	void		*win_ptr;
 	int			win_width;
 	int			win_height;
-	t_image  	image;
+	void		*mlx_ptr;
+	void		*mlx_win_ptr;
+} t_mlx;
+
+typedef struct s_data
+{
+	t_mlx		mlx;
 	t_map		map;
 	t_minimap	minimap;
-	t_ray  		ray;
-	t_player  	player;
-	t_texture 	texture;
-	t_color		color;
-} t_data;
+	t_image  	*image;
+	t_player	*player;
+	t_ray  		*ray;
+	t_texture 	*texture;
+	t_color		*color;
+	// t_texture_info	no;
+	// t_texture_info	so;
+	// t_texture_info	we;
+	// t_texture_info	ea;
+	// t_color_info	fcolors;
+	// t_color_info	ccolors;
+}	t_data;
 
 /* /\_/\_/\_/\_/\_/\_/\_/\_/\_/\_ PROTOTYPE _/\_/\_/\_/\_/\_/\_/\_/\_/\_/\ */
 
-/* -------------------- ERROR -------------------- */
-
+/* -------------------- CLEAN -------------------- */
+// Located in *all.c*
+int 		clean_all(t_data *data);
 // Located in *error.c*
 void		ft_error(char *error);
+// Located in *map.c*
+void 		free_map(t_map *map);
 
 /* -------------------- DIY LIBFT -------------------- */
 // Located in *get_next_line.c*
@@ -233,7 +255,38 @@ char 		*ft_strcpy(char *dst, const char *src);
 void		free_tokens(char **tokens);
 static char	*in_tab(const char *s1, int c1, int c2);
 static int	number_word(const char *s1, char c);
-/* -------------------- MOVEMENT -------------------- */
+/* -------------------- SETUP -------------------- */
+// Located in *all.c*
+int			check_allocations(t_data *data);
+int 		malloc_struct(void **ptr, size_t size);
+int			malloc_all(t_data *data);
+int			init_default_all(t_data *data);
+int			init_custom_all(t_data *data);
+// Located in *color.c*
+t_color 	*allocate_color();
+// Located in *engine.c*
+int			init_data(t_data *data);
+// Located in *frame.c"
+int			render_next_frame(t_data *data);
+// Located in *image.c*
+int			init_image(t_data *data);
+t_image 	*allocate_image();
+// Located in *map.c*
+int			malloc_map2d(t_map *map);
+int			fill_map(t_map *map);
+int 		init_map(t_map *map);
+// Located in *minimap.c*
+t_minimap 	*allocate_minimap();
+// Located in *player.c*
+static void	default_player(t_player *player);
+t_player 	*allocate_player();
+int			init_player(t_player *player);
+// Located in *ray.c*
+t_ray 		*allocate_ray();
+// Located in *texture.c*
+t_texture 	*allocate_texture();
+
+/* -------------------- MOVING -------------------- */
 // Located in *direction.c*
 static void	set_player_east_west(t_player *player);
 static void	set_player_north_south(t_player *player);
@@ -244,6 +297,9 @@ static int	key_release(int key, t_data *data);
 static void	wrap_mouse_position(t_data *data, int x, int y);
 static int	mouse_motion(int x, int y, t_data *data);
 void		listen_input(t_data *data);
+// Located in *listener.c*
+int			key_hook_close_window(int keycode, t_data *data);
+void		event_listener(t_data *data);
 // Located in *move.c*
 static int	up(t_data *data);
 static int	down(t_data *data);
@@ -251,9 +307,7 @@ static int	left(t_data *data);
 static int	right(t_data *data);
 int			move(t_data *data);
 // Located in *player.c*
-t_player 	init_player();
 void 		update_player_position(t_player *player, int key);
-void 		draw_player(void *mlx_ptr, void *win_ptr, t_player *player);
 int 		key_hook(int key, t_player *player, t_data *data);
 // Located in *position.c*
 static bool	is_valid_wall_collision_position(t_data *data, double x, double y);
@@ -301,7 +355,7 @@ static int	rotate(t_data *data, double rotspeed);
 // int			convert_colors(t_data *data);
 // void		check_and_close(int fd, int line_counter);
 // int			get_rgb(int dir, char *line, t_data *data);
-// // int	get_texture_path(t_orientation dir, char *line, t_data *data);
+// int	get_texture_path(t_orientation dir, char *line, t_data *data);
 // int			get_path_texture(char *path, char **texture_path, char *error_message);
 // void		extract_info(char *trimmed_line, t_data *data, int *line_counter);
 // void		check_line_type(char *trimmed_line, t_data *data, int *line_counter);
@@ -312,21 +366,29 @@ static int	rotate(t_data *data, double rotspeed);
 // void		found_textures_data(t_data *data);
 
 /* -------------------- RENDERING -------------------- */
+
 // Located in *draw.c*
-void		my_mlx_pixel_put(t_data *data, int x, int y, int color);
+void		my_mlx_pixel_put(t_image *image, int x, int y, int color);
+void 		draw_floor(t_data *data);
+void 		draw_ceiling(t_data *data);
+void 		draw_square(t_data *data, int x, int y, int color);
 // Located in *map.c*
-void 		init_my_map();
-void 		draw_square(void *mlx_ptr, void *win_ptr, t_player *player, t_data *data, t_map *map);
-void 		draw_map(void *mlx_ptr, void *win_ptr, t_player player);
+int 		draw_map(t_data *data, t_map *map);
+void 		draw_tile(t_data *data, int x, int y);
+void 		draw_vertical_lines(t_data *data);
+void 		draw_horizontal_lines(t_data *data);
+void 		draw_vertical_line(t_data *data, int x, int start_y, int color);
+void 		draw_horizontal_line(t_data *data, int start_x, int y, int color);
+// Located in *minimap.c*
+// Located in *player.c*
+int			draw_player(t_data *data);
 // Located in *raycasting.c*
-static void init_raycasting(t_data *data);
-static void perform_dda(t_data *data, t_ray *ray);
-static void calculate_line_height(t_ray *ray, t_data *data, t_player *player);
-int 		raycasting(t_player *player, t_data *data);
+static void perform_dda(t_data *data);
+static void calculate_line_height(t_data *data);
+int 		raycasting(t_data *data);
 
 // Located in *texture.c*
 void		found_textures_data(t_data *data);
-
 // Located in *color.c*
 void		color_data(t_data *data);
 
@@ -358,4 +420,5 @@ void		free_tokens(char **tokens);
 char		**ft_split(char const *s, char c);
 
 /* -------------------- MAIN.C -------------------- */
-int			main(void);
+int			main(int ac, char **av);
+

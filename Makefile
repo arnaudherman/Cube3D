@@ -1,70 +1,99 @@
-# Do mind that you need the libmlx.dylib in the same 
-# directory as your build target as it is a dynamic library!
+# --------------- source files --------------- #
 
-# FINAL EXECUTABLE NAME
-NAME = Cub3D
+SRCS += srcs/main.c
 
-# DIRECTORIES
-HEADER_DIRECTORY := ./include
-SRCS_DIRECTORY := ./src
-FT_PRINTF_FOLDER := ./ft_printf
-LIBFT_FOLDER := ./libft
-MAP_FOLDER := ./map
-MINILIBX_FOLDER := ./minilibx
-INCLUDE = -I../include
+SRCS += srcs/clean/all.c \
+		srcs/clean/error.c \
+		srcs/clean/map.c
 
-# ALL FILES.C
-MAIN := main.c
-SRCS := src/main.c \
-			src/error/error.c \
-			src/movement/direction.c \
-			src/movement/keys.c \
-			src/movement/move.c \
-			src/movement/player.c \
-			src/movement/position.c \
-			src/movement/rotation.c \
-			src/parsing/color.c \
-			src/parsing/initialize_map.c \
-			src/parsing/map.c \
-			src/parsing/len_map.c \
-			src/parsing/parsing.c \
-			src/parsing/texture_color.c \
-			src/parsing/texture.c \
-			src/rendering/draw.c \
-			src/rendering/image.c \
-			src/rendering/map.c \
-			src/rendering/minimap_draw.c \
-			src/rendering/minimap.c \
-			src/rendering/raycasting.c \
-			src/rendering/render.c \
-			src/rendering/texture.c \
-			src/libft/get_next_line.c \
-			src/libft/utils.c \
+SRCS += srcs/setup/all.c \
+		srcs/setup/color.c \
+		srcs/setup/engine.c \
+		srcs/setup/image.c \
+		srcs/setup/map.c \
+		srcs/setup/minimap.c \
+		srcs/setup/player.c \
+		srcs/setup/ray.c \
+		srcs/setup/texture.c
+
+SRCS += srcs/moving/direction.c \
+        srcs/moving/keys.c \
+		srcs/moving/listener.c \
+        srcs/moving/move.c \
+        srcs/moving/player.c \
+        srcs/moving/position.c \
+        srcs/moving/rotation.c
+
+SRCS += srcs/parsing/color.c \
+        srcs/parsing/initialize_map.c \
+        srcs/parsing/len_map.c \
+        srcs/parsing/map.c \
+        srcs/parsing/parsing.c \
+        srcs/parsing/texture_color.c \
+        srcs/parsing/texture.c
+
+SRCS += srcs/rendering/close.c \
+		srcs/rendering/draw.c \
+		srcs/rendering/frame.c \
+        srcs/rendering/image.c \
+        srcs/rendering/map.c \
+        srcs/rendering/minimap.c \
+		srcs/rendering/player.c \
+        srcs/rendering/raycasting.c \
+        srcs/rendering/draw.c \
+        srcs/rendering/texture.c
+
+SRCS += srcs/utils/get_next_line.c \
+        srcs/utils/utils.c
+
+# ---------------  --------------- #
+
+NAME	=			cub3D
+
+OBJS	=			$(SRCS:%.c=%.o)
+
+CC		=			gcc
+
+RM		=			rm -f
+
+CFLAGS	=			-Wall -Wextra -Werror -g -w -O2 -fsanitize=address
+
+# Platform detection
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S),Linux)
+	LIBS	=	-Llibft -lft -L./minilibx/linux -lmlx -lXext -lX11 -lm -lbsd
+	MLX_DIR = minilibx/linux
+else
+	LIBS = -Llibft -lft -L./minilibx/mac -lmlx -framework OpenGL -framework AppKit
+	MLX_DIR = minilibx/mac
+endif
 
 
-# GLOBAL VARIABLES
-CC = gcc
-CFLAGS := -Wall -Wextra -O3 -g -I$(HEADER_DIRECTORY) -Imlx
-OBJS = $(SRCS:.c=.o)
-RM := rm -f
+all: 				$(NAME)
 
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+%.o: 				%.c
+					${CC} ${CFLAGS} -Iinclude -Ilibft -I${MLX_DIR} -c $? -o $@
 
-all: ${NAME}
+${NAME}:			${OBJS}
+					@make -C libft
+					@make -C ${MLX_DIR}
+					${CC} ${CFLAGS} $^ ${LIBS} -o ${NAME}
 
-${NAME}: ${OBJS}
-	@${MAKE} -C ${FT_PRINTF_FOLDER}
-	@${MAKE} -C ${LIBFT_FOLDER}
-	@${MAKE} -C ${MINILIBX_FOLDER}
-	@${CC} $(INCLUDE) ${CFLAGS} ${OBJS} -L${LIBFT_FOLDER} -lft -L${FT_PRINTF_FOLDER} -lft_printf -L./minilibx -lmlx -framework OpenGL -framework AppKit -o $(NAME)
+clean:
+					${RM} $(OBJS)
+					@make -C libft clean
+					@make -C ${MLX_DIR} clean
 
-clean: 
-	@${MAKE} -C ${LIBFT_FOLDER} clean
-	@${MAKE} -C ${FT_PRINTF_FOLDER} clean
-	@${RM} ${OBJS}
+name:
+					@echo $(MLX_DIR)
 
-fclean: clean
-	@${RM} ${NAME}
+fclean:				clean
+					${RM} $(NAME)
+					@make -C libft fclean
 
-re: fclean all
+re: 				fclean all
+
+.PHONY:				all  clean fclean re
+
+# find error with : 	valgrind ./prog
+# Debug with :  		gdb ./prog --tui
