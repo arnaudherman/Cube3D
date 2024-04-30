@@ -10,7 +10,7 @@ int	render_next_frame(t_data *data)
 	draw_player(data);
 
 	// Mettre à jour la fenêtre avec la nouvelle image
-	mlx_put_image_to_window(data->mlx_ptr, data->mlx_win_ptr, data->image.img, 0, 0);
+	mlx_put_image_to_window(data->mlx.mlx_ptr, data->mlx.mlx_win_ptr, data->image.img, 0, 0);
 
 	return (0);
 }

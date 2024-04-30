@@ -206,13 +206,18 @@ typedef struct s_texture
 	char 		**xpm_data;
 } t_texture;
 
-typedef struct	s_data {
+typedef struct	s_mlx {
 	int			fd;
 	int			win_width;
 	int			win_height;
 	void		*mlx_ptr;
 	void		*mlx_win_ptr;
+} t_mlx;
+
+typedef struct s_data
+{
 	t_image  	image;
+	t_mlx		mlx;
 	t_map		map;
 	t_player	player;
 	t_minimap	minimap;
@@ -225,7 +230,7 @@ typedef struct	s_data {
 	// t_texture_info	ea;
 	// t_color_info	fcolors;
 	// t_color_info	ccolors;
-} t_data;
+}	t_data;
 
 /* /\_/\_/\_/\_/\_/\_/\_/\_/\_/\_ PROTOTYPE _/\_/\_/\_/\_/\_/\_/\_/\_/\_/\ */
 
@@ -256,15 +261,15 @@ int			check_allocations(t_data *data);
 int 		malloc_struct(void **ptr, size_t size);
 int			malloc_all(t_data *data);
 int			init_default_all(t_data *data);
-int			init_data_all(t_data *data);
+int			init_custom_all(t_data *data);
 // Located in *color.c*
 t_color 	*allocate_color();
 // Located in *engine.c*
-int			init_mlx_engine(t_data *data);
+int			init_data(t_data *data);
 // Located in *frame.c"
 int			render_next_frame(t_data *data);
 // Located in *image.c*
-int			init_image(t_data *data);
+int			init_image(t_data *data, t_image *image);
 t_image 	*allocate_image();
 // Located in *map.c*
 int			malloc_map2d(t_map *map);

@@ -18,7 +18,7 @@ int	draw_player(t_data *data)
         for (int x = x_start; x < x_end; x++)
         {
             // Utilisation de la fonction de dessin de pixel de MLX
-            mlx_pixel_put(data->mlx_ptr, data->mlx_win_ptr, x, y, data->player.color);
+            mlx_pixel_put(data->mlx.mlx_ptr, data->mlx.mlx_win_ptr, x, y, data->player.color);
         }
     }
 	return 0;

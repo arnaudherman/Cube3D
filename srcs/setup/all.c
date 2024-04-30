@@ -43,10 +43,12 @@
 
 int init_default_all(t_data *data)
 {
+	// memset(&data, 0, sizeof(data)); // attention jeune les pointeurs non définis sur des allocations de mémoire valides
     // Initialise toutes les instances de t_data à zéro
-    *data = (t_data){0};
+    // *data = (t_data){0};
     // Initialise les membres de la structure t_data à zéro ou à NULL
     data->image = (t_image){0};
+	data->mlx = (t_mlx){0};
     data->map = (t_map){0}; 
     data->player = (t_player){0};
     data->minimap = (t_minimap){0};
@@ -56,16 +58,16 @@ int init_default_all(t_data *data)
     return 0;
 }
 
-int	init_data_all(t_data *data)
+int	init_custom_all(t_data *data)
 {
 	// Handle MLX
-	if (init_mlx_engine(data) != 0) {
+	if (init_mlx_engine(&data->mlx) != 0) {
 		perror("Failed to initialize mlx_engine\n");
 		return 1;
 	}
 
 	// Handle Image
-	if (init_image(&data->image) != 0) {
+	if (init_image(&data, &data->image) != 0) {
 		perror("Failed to initialize map\n");
 		return 1;
 	}
