@@ -49,10 +49,11 @@ void draw_horizontal_line(t_data *data, int start_x, int y, int color) {
 }
 
 // Fonction de dessin de la carte
-int draw_map(t_data *data) {
+int draw_map(t_data *data, t_map *map) {
     // Initialiser les variables de position à zéro
-    data->map.x_map = 0;
-    data->map.y_map = 0;
+    map->x_map = 0;
+		printf("5) Afterdfsdfdsfsdfsfd : %d\n",  data->player->x_pos);
+    map->y_map = 0;
 
     // Dessiner les lignes verticales et horizontales
     draw_vertical_lines(data);
@@ -63,8 +64,8 @@ int draw_map(t_data *data) {
     while (y < MAP_HEIGHT) {
         int x = 0;
         while (x < MAP_WIDTH) {
-            if (data->map.map2d[y][x] == '1') {
-                draw_tile(data, x * TILE_SIZE, y * TILE_SIZE);
+            if (map->map2d[y][x] == '1') {
+                draw_tile(map, x * TILE_SIZE, y * TILE_SIZE);
             }
             x++;
         }

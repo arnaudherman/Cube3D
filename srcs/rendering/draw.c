@@ -1,8 +1,8 @@
 #include "cub3d-bis.h"
 
-void my_mlx_pixel_put(t_data *data, int x, int y, int color) {
+void my_mlx_pixel_put(t_image *image, int x, int y, int color) {
     char *dst;
-    dst = data->image.addr + (y * data->image.line_length + x * (data->image.bits_per_pixel / 8));
+    dst = image->addr + (y * image->line_length + x * (image->bits_per_pixel / 8));
     *(unsigned int*)dst = color;
 }
 

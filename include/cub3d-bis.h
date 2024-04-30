@@ -216,14 +216,14 @@ typedef struct	s_mlx {
 
 typedef struct s_data
 {
-	t_image  	image;
 	t_mlx		mlx;
 	t_map		map;
-	t_player	player;
 	t_minimap	minimap;
-	t_ray  		ray;
-	t_texture 	texture;
-	t_color		color;
+	t_image  	*image;
+	t_player	*player;
+	t_ray  		*ray;
+	t_texture 	*texture;
+	t_color		*color;
 	// t_texture_info	no;
 	// t_texture_info	so;
 	// t_texture_info	we;
@@ -269,22 +269,22 @@ int			init_data(t_data *data);
 // Located in *frame.c"
 int			render_next_frame(t_data *data);
 // Located in *image.c*
-int			init_image(t_data *data, t_image *image);
+int			init_image(t_data *data);
 t_image 	*allocate_image();
 // Located in *map.c*
 int			malloc_map2d(t_map *map);
 int			fill_map(t_map *map);
 int 		init_map(t_map *map);
 // Located in *minimap.c*
-t_minimap *allocate_minimap();
+t_minimap 	*allocate_minimap();
 // Located in *player.c*
 static void	default_player(t_player *player);
 t_player 	*allocate_player();
-int			init_player(t_data *data);
+int			init_player(t_player *player);
 // Located in *ray.c*
 t_ray 		*allocate_ray();
 // Located in *texture.c*
-t_texture *allocate_texture();
+t_texture 	*allocate_texture();
 
 /* -------------------- MOVING -------------------- */
 // Located in *direction.c*
@@ -368,12 +368,12 @@ static int	rotate(t_data *data, double rotspeed);
 /* -------------------- RENDERING -------------------- */
 
 // Located in *draw.c*
-void		my_mlx_pixel_put(t_data *data, int x, int y, int color);
+void		my_mlx_pixel_put(t_image *image, int x, int y, int color);
 void 		draw_floor(t_data *data);
 void 		draw_ceiling(t_data *data);
 void 		draw_square(t_data *data, int x, int y, int color);
 // Located in *map.c*
-int 		draw_map(t_data *data);
+int 		draw_map(t_data *data, t_map *map);
 void 		draw_tile(t_data *data, int x, int y);
 void 		draw_vertical_lines(t_data *data);
 void 		draw_horizontal_lines(t_data *data);

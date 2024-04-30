@@ -19,42 +19,41 @@
 //     return 0;
 // }
 
+int malloc_all(t_data *data) {
+    data->image = malloc(sizeof(t_image));
+    data->player = malloc(sizeof(t_player));
+    data->ray = malloc(sizeof(t_ray));
+    data->texture = malloc(sizeof(t_texture));
+    data->color = malloc(sizeof(t_color));
 
-// int malloc_all(t_data *data) {
-//     // Allocation dynamique pour les membres de t_data
-//     data->image = malloc(sizeof(t_image));
-//     data->map = malloc(sizeof(t_map));
-//     data->player = malloc(sizeof(t_player));
-//     data->minimap = malloc(sizeof(t_minimap));
-//     data->ray = malloc(sizeof(t_ray));
-//     data->texture = malloc(sizeof(t_texture));
-//     data->color = malloc(sizeof(t_color));
-
-//     // Vérifiez si l'allocation a réussi
-//     if (data->image == NULL || data->map == NULL || data->player == NULL ||
-//         data->minimap == NULL || data->ray == NULL || data->texture == NULL || data->color == NULL) {
-//         // Gestion de l'échec de l'allocation
-//         // Assurez-vous de libérer toute mémoire allouée précédemment avant de retourner -1
-//         return -1;
-//     }
-//     return 0;
-// }
-
+    if (data->image == NULL || data->player == NULL ||
+        data->ray == NULL || data->texture == NULL || data->color == NULL) {
+		perror("Malloc of one ore more structures failed in malloc_all\n");
+		// TO DO FREE HERE
+        return -1;
+    }
+    return 0;
+}
 
 int init_default_all(t_data *data)
 {
 	// memset(&data, 0, sizeof(data)); // attention jeune les pointeurs non définis sur des allocations de mémoire valides
-    // Initialise toutes les instances de t_data à zéro
-    // *data = (t_data){0};
-    // Initialise les membres de la structure t_data à zéro ou à NULL
-    data->image = (t_image){0};
+    *data = (t_data){0};
+
+	// Init no pointer structure
 	data->mlx = (t_mlx){0};
-    data->map = (t_map){0}; 
-    data->player = (t_player){0};
-    data->minimap = (t_minimap){0};
-    data->ray = (t_ray){0};
-    data->texture = (t_texture){0};
-    data->color = (t_color){0};
+    data->map = (t_map){0};
+	data->minimap = (t_minimap){0};
+
+	// Malloc
+	malloc_all(data);
+
+	// Init pointer structures
+	*data->image = (t_image){0};
+    *data->player = (t_player){0};
+    *data->ray = (t_ray){0};
+    *data->texture = (t_texture){0};
+    *data->color = (t_color){0};
     return 0;
 }
 
@@ -67,7 +66,7 @@ int	init_custom_all(t_data *data)
 	}
 
 	// Handle Image
-	if (init_image(&data, &data->image) != 0) {
+	if (init_image(&data) != 0) {
 		perror("Failed to initialize map\n");
 		return 1;
 	}
@@ -107,8 +106,5 @@ int	init_custom_all(t_data *data)
 	// 	perror("Failed to initialize color\n");
 	// 	return 1;
 	// }
-
-	
-
 	return (0);
 }
