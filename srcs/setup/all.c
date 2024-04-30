@@ -1,39 +1,44 @@
 #include "cub3d-bis.h"
 
-int malloc_struct(void **ptr, size_t size) {
-    *ptr = malloc(size);
-    if (*ptr == NULL) {
-        perror("Allocation for struct failed\n");
-        return -1;
-    }
-    return 0;
-}
+// int check_allocations(t_data *data) 
+// {
+//     if (data->image == NULL || data->player == NULL || data->minimap == NULL ||
+//         data->ray == NULL || data->texture == NULL || data->color == NULL) {
+       
+//         perror("You failed to allocate memory for 1 or + struct in check_allocations\n");
+        
+//         free(data->image);
+//         // free(data->map); // Libérez la mémoire si vous avez alloué la structure map
+//         free(data->player);
+//         free(data->minimap);
+//         free(data->ray);
+//         free(data->texture);
+//         free(data->color);
+//         return -1;
+//     }
+//     return 0;
+// }
 
-int malloc_all(t_data *data) {
-    // Allocation de chaque structure
-    if (malloc_struct((void **)&(data->image), sizeof(t_image)) == -1 ||
-        malloc_struct((void **)&(data->map), sizeof(t_map)) == -1 ||
-        malloc_struct((void **)&(data->player), sizeof(t_player)) == -1 ||
-        // TO DO : Minimap problem, pointer is : 0x0
-        // malloc_struct((void **)&(data->minimap), sizeof(t_minimap)) == -1 ||
-        malloc_struct((void **)&(data->ray), sizeof(t_ray)) == -1 ||
-        malloc_struct((void **)&(data->texture), sizeof(t_texture)) == -1 ||
-        malloc_struct((void **)&(data->color), sizeof(t_color)) == -1) {
-        perror("Error while mallocing all structs in malloc_all\n");
-        return -1;
-    }
 
-    // Vérification si les pointeurs ont été correctement alloués
-    if ((&data->image) == NULL || (&data->map) == NULL || (&data->player) == NULL ||
-        // TO DO : handle minimap pointer 0x0
-        // data->minimap == NULL || 
-        (&data->ray) == NULL || (&data->texture) == NULL || (&data->color) == NULL) {
-        perror("One or more structure pointers are NULL after malloc_all\n");
-        return -1;
-    }
-	data->player.x_pos = 100;
-    return 0;
-}
+// int malloc_all(t_data *data) {
+//     // Allocation dynamique pour les membres de t_data
+//     data->image = malloc(sizeof(t_image));
+//     data->map = malloc(sizeof(t_map));
+//     data->player = malloc(sizeof(t_player));
+//     data->minimap = malloc(sizeof(t_minimap));
+//     data->ray = malloc(sizeof(t_ray));
+//     data->texture = malloc(sizeof(t_texture));
+//     data->color = malloc(sizeof(t_color));
+
+//     // Vérifiez si l'allocation a réussi
+//     if (data->image == NULL || data->map == NULL || data->player == NULL ||
+//         data->minimap == NULL || data->ray == NULL || data->texture == NULL || data->color == NULL) {
+//         // Gestion de l'échec de l'allocation
+//         // Assurez-vous de libérer toute mémoire allouée précédemment avant de retourner -1
+//         return -1;
+//     }
+//     return 0;
+// }
 
 
 int init_default_all(t_data *data)
@@ -51,18 +56,20 @@ int init_default_all(t_data *data)
     return 0;
 }
 
-int	init_specific_all(t_data *data)
+int	init_data_all(t_data *data)
 {
-	// Handle Image
-	init_image(&data->image);
-	data->image.img = mlx_new_image(&data->mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT);
-	if (data->image.img == NULL) {
-        perror("Failed to create image\n");
-        return 1;
-    }
-	data->image.addr = (int *)mlx_get_data_addr(data->image.img, &data->image.bits_per_pixel,
-			&data->image.line_length, &data->image.endian);
+	// Handle MLX
+	if (init_mlx_engine(data) != 0) {
+		perror("Failed to initialize mlx_engine\n");
+		return 1;
+	}
 
+	// Handle Image
+	if (init_image(&data->image) != 0) {
+		perror("Failed to initialize map\n");
+		return 1;
+	}
+	
 	// Handle Map
 	if (init_map(&data->map) != 0) {
 		perror("Failed to initialize map\n");
@@ -99,11 +106,7 @@ int	init_specific_all(t_data *data)
 	// 	return 1;
 	// }
 
-	// Handle MLX
-	if (init_mlx_engine(data) != 0) {
-		perror("Failed to initialize mlx_engine\n");
-		return 1;
-	}
+	
 
 	return (0);
 }

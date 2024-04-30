@@ -109,17 +109,15 @@ enum e_direction
 
 typedef struct s_image
 {
-	char 			*ptr;
 	void		*img;
 	char		*addr;
 	int			bits_per_pixel;
 	int			line_length;
 	int			endian;
-	//char		*relative_path;
+	char		*relative_path;
 }	t_image;
 
 typedef struct s_ray {
-	char 			*ptr;
     int 		step_x;
     int 		step_y;
     int 		side;
@@ -140,7 +138,6 @@ typedef struct s_ray {
 } t_ray;
 
 typedef struct s_map {
-	char 			*ptr;
     int			w_map;
     int 		h_map;
 	char 		**map2d;
@@ -152,7 +149,6 @@ typedef struct s_map {
 
 typedef struct s_minimap
 {
-	char 			*ptr;
 	char	**map;
 	t_image	*img;
 	double	size;
@@ -164,9 +160,8 @@ typedef struct s_minimap
 
 typedef struct s_player
 {
-	char 			*ptr;
- 	double  	x_pos; // player x position in pixels
- 	double  	y_pos; // player y position in pixels
+ 	double  	x_pos; // position is in pixels
+ 	double  	y_pos;
 	int			x_move;
 	int			y_move;	
 	double		x_dir;
@@ -174,9 +169,9 @@ typedef struct s_player
 	double		x_plane;
 	double		y_plane;
 	double		speed;
-	float		angle; // player angle
+	float		angle;
 	float 		fov; // field of view in radians
- 	int  		rotate; // rotation flag
+ 	int  		rotate;
 	char 		direction;
 	double	 	size;
 	unsigned int color;
@@ -185,7 +180,6 @@ typedef struct s_player
 
 typedef struct s_color
 	{
-		char 			*ptr;
 		char			*string_color;
 		char			*fcolor;
 		char 			*ccolor;
@@ -202,7 +196,6 @@ typedef struct s_color
 
 typedef struct s_texture
 {
-	char 			*ptr;
 	int			found;
 	int			size;
 	char		*road;
@@ -210,11 +203,10 @@ typedef struct s_texture
 	char 		**SO;
 	char 		**WE;
 	char		**EA;
-	// char 		**xpm_data;
+	char 		**xpm_data;
 } t_texture;
 
 typedef struct	s_data {
-	char 			*ptr;
 	int			fd;
 	int			win_width;
 	int			win_height;
@@ -222,7 +214,7 @@ typedef struct	s_data {
 	void		*mlx_win_ptr;
 	t_image  	image;
 	t_map		map;
-	t_player  	player;
+	t_player	player;
 	t_minimap	minimap;
 	t_ray  		ray;
 	t_texture 	texture;
@@ -260,30 +252,34 @@ static char	*in_tab(const char *s1, int c1, int c2);
 static int	number_word(const char *s1, char c);
 /* -------------------- SETUP -------------------- */
 // Located in *all.c*
+int			check_allocations(t_data *data);
 int 		malloc_struct(void **ptr, size_t size);
 int			malloc_all(t_data *data);
 int			init_default_all(t_data *data);
-int			init_specific_all(t_data *data);
+int			init_data_all(t_data *data);
 // Located in *color.c*
-void		init_color(t_data *data);
+t_color 	*allocate_color();
 // Located in *engine.c*
 int			init_mlx_engine(t_data *data);
 // Located in *frame.c"
 int			render_next_frame(t_data *data);
 // Located in *image.c*
-// void		init_image(t_data *data);
+int			init_image(t_data *data);
+t_image 	*allocate_image();
 // Located in *map.c*
 int			malloc_map2d(t_map *map);
 int			fill_map(t_map *map);
 int 		init_map(t_map *map);
 // Located in *minimap.c*
-// void		init_minimap(t_data *data);
+t_minimap *allocate_minimap();
 // Located in *player.c*
+static void	default_player(t_player *player);
+t_player 	*allocate_player();
 int			init_player(t_data *data);
 // Located in *ray.c*
-// void		init_ray(t_data *data);
+t_ray 		*allocate_ray();
 // Located in *texture.c*
-void		init_texture(t_data *data);
+t_texture *allocate_texture();
 
 /* -------------------- MOVING -------------------- */
 // Located in *direction.c*

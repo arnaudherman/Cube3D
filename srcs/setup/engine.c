@@ -1,6 +1,5 @@
 #include "cub3d-bis.h"
 
-
 int	init_mlx_engine(t_data *data)
 {
 	data->fd = 0;
@@ -11,9 +10,6 @@ int	init_mlx_engine(t_data *data)
 		return 1;	
 	data->mlx_win_ptr = mlx_new_window(data->mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT, "Hello Cub3D!");
 	if (!data->mlx_win_ptr)
-		return err("What the fuck is that\n");
-
-	mlx_put_image_to_window(data->mlx_ptr, data->mlx_win_ptr, data->image.img, 0, 0);
-	mlx_loop_hook(data->mlx_ptr, &render_next_frame, data);
+		return err("Youuuu failed to create a winnnndooooow\n");
 	return (0);
 }

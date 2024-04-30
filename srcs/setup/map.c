@@ -1,5 +1,25 @@
 #include "cub3d-bis.h"
 
+// // Allocation d'une structure t_map
+// t_map *allocate_map() {
+//     t_map *map;
+	
+// 	map = malloc(sizeof(t_map));
+//     if (map == NULL) {
+//         perror("Allocation for map failed\n");
+//         exit(EXIT_FAILURE);
+//     }
+//     // Initialisation des membres de la structure ici si nécessaire
+//     map->w_map = 0;
+//     map->h_map = 0;
+//     map->map2d = NULL;
+//     map->x_map = 0;
+//     map->y_map = 0;
+//     map->color = 0;
+//     map->ray = NULL; // Attention, t_ray doit être alloué séparément si nécessaire
+//     return map;
+// }
+
 char map_data[MAP_HEIGHT][MAP_WIDTH] = {
     {'1', '1', '1', '1', '1', '1', '1', '1', '1', '1'},
     {'1', '0', '0', '0', '0', '0', '1', '0', '0', '1'},
