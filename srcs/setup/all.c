@@ -20,7 +20,11 @@
 // }
 
 int malloc_all(t_data *data) {
-    data->image = malloc(sizeof(t_image));
+	if (data == NULL) {
+        perror("t_data pointer is NULL in malloc_all\n");
+        return -1;
+    }    
+	data->image = malloc(sizeof(t_image));
     data->player = malloc(sizeof(t_player));
     data->ray = malloc(sizeof(t_ray));
     data->texture = malloc(sizeof(t_texture));
@@ -66,7 +70,7 @@ int	init_custom_all(t_data *data)
 	}
 
 	// Handle Image
-	if (init_image(&data) != 0) {
+	if (init_image(data->image) != 0) {
 		perror("Failed to initialize map\n");
 		return 1;
 	}
@@ -82,6 +86,8 @@ int	init_custom_all(t_data *data)
 		perror("Failed to initialize player\n");
 		return 1;
 	}
+	return 0;
+}
 
 	// // Handle Minimap
 	// if (init_minimap(&data->minimap) != 0) {
@@ -106,5 +112,5 @@ int	init_custom_all(t_data *data)
 	// 	perror("Failed to initialize color\n");
 	// 	return 1;
 	// }
-	return (0);
-}
+// 	return (0);
+// }
