@@ -388,12 +388,12 @@ void 		draw_square(t_data *data, int x, int y, int color);
 // Located in *frame.c"
 int			render_next_frame(t_data *data);
 // Located in *map.c*
-int 		draw_map(t_data *data, t_map *map);
-void 		draw_tile(t_data *data, int x, int y);
-void 		draw_vertical_lines(t_data *data);
-void 		draw_horizontal_lines(t_data *data);
-void 		draw_vertical_line(t_data *data, int x, int start_y, int color);
-void 		draw_horizontal_line(t_data *data, int start_x, int y, int color);
+int 		draw_map(t_image *image, t_map *map);
+void 		draw_tile(t_image *image, int x, int y);
+void 		draw_vertical_lines(t_image *image);
+void 		draw_horizontal_lines(t_image *image);
+void 		draw_vertical_line(t_image *image, int x, int start_y, int color);
+void 		draw_horizontal_line(t_image *image, int start_x, int y, int color);
 // Located in *minimap.c*
 // Located in *player.c*
 int			draw_player(t_data *data);

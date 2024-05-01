@@ -9,6 +9,7 @@
 int	main(int ac, char **av) 
 {
 	t_data	data;
+	// sleep(10);
 
 	// CHECK
 	// if (ac != 2)
@@ -28,19 +29,12 @@ int	main(int ac, char **av)
 	// // printf("After malloc_all data->player.x_pos is : %d\n",  data.player.x_pos);
 
 	init_custom_all(&data);
-	printf("3) After init_custom_all data->player.x_pos is : %d\n",  data.player->x_pos);
 
 	// mlx_put_image_to_window(data.mlx.mlx_ptr, data.mlx.mlx_win_ptr, data.image.img, 0, 0);
 	
 	mlx_loop_hook(data.mlx.mlx_ptr, render_next_frame, &data);
-
-	// TEST
-	// printf("Image pointer: %p\n", data.image);
-    // printf("Map pointer: %p\n", data.map);
-    // printf("Player pointer: %p\n", data.player);
-    // printf("Ray pointer: %p\n", data.ray);
-    // printf("Texture pointer: %p\n", data.texture);
-    // printf("Color pointer: %p\n", data.color);
+	// printf("Face to face mlx_loop_hook line_length = %d, bits_per_pixel = %d\n", data.image->line_length, data.image->bits_per_pixel);
+	// HERE :line_length = 7680, bits_per_pixel = 32
 
 	// PARSE ARGS	TO DO : ???) 
 
@@ -56,7 +50,7 @@ int	main(int ac, char **av)
 	mlx_loop(data.mlx.mlx_ptr);
 	
 	// CLEAN
-	// clean_all(&data);
+	free_all(&data);
 
 	return (0);
 }

@@ -14,6 +14,8 @@ void draw_tile(t_image *image, int x, int y) {
 
 void draw_vertical_lines(t_image *image) {
     int x = 0;
+
+
     while (x < WINDOW_WIDTH) {
         draw_vertical_line(image, x, 0, 0xFFFFFF); // Draw line at the top
         draw_vertical_line(image, x, WINDOW_HEIGHT, 0xFFFFFF); // Draw line at the bottom
@@ -48,27 +50,38 @@ void draw_horizontal_line(t_image *image, int start_x, int y, int color) {
     }
 }
 
-// Fonction de dessin de la carte
-int draw_map(t_data *data, t_map *map) {
+int draw_map(t_image *image, t_map *map) {
    
-	printf("in daw map line_length = %d, bits_per_pixel = %d\n", data->image->line_length, data->image->bits_per_pixel);
+	printf("start draw map line_length = %d, bits_per_pixel = %d\n", image->line_length, image->bits_per_pixel);
+	// line_length = 7680, bits_per_pixel = 32
 
-    // Dessiner les lignes verticales et horizontales
-    draw_vertical_lines(data);
-    draw_horizontal_lines(data);
 
-    // Dessiner les tuiles de la carte
+    draw_vertical_lines(image);
+	// line_length = 7680, bits_per_pixel = 32
+
+    draw_horizontal_lines(image);
+	// line_length = 7680, bits_per_pixel = 32
+
+
+    // draw tiles
     int y = 0;
     while (y < MAP_HEIGHT) {
         int x = 0;
         while (x < MAP_WIDTH) {
+			printf("start draw map line_length = %d, bits_per_pixel = %d\n", image->line_length, image->bits_per_pixel);
             if (map->map2d[y][x] == '1') {
                 draw_tile(map, x * TILE_SIZE, y * TILE_SIZE);
             }
-            x++;
+			printf("a draw map line_length = %d, bits_per_pixel = %d\n", image->line_length, image->bits_per_pixel);
+            // line_length = 7680, bits_per_pixel = 32
+			x++;
+			printf("b draw map line_length = %d, bits_per_pixel = %d\n", image->line_length, image->bits_per_pixel);
+			// line_length = 7680, bits_per_pixel = 32
         }
+		printf("c draw map line_length = %d, bits_per_pixel = %d\n", image->line_length, image->bits_per_pixel);
         y++;
+		printf("d draw map line_length = %d, bits_per_pixel = %d\n", image->line_length, image->bits_per_pixel);
     }
-
+	printf("e draw map line_length = %d, bits_per_pixel = %d\n", image->line_length, image->bits_per_pixel);
     return (0);
 }
