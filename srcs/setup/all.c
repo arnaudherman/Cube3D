@@ -76,18 +76,11 @@ int	init_custom_all(t_data *data)
 	}
 
 	// Handle Player
-	printf("Before init_player, player->x_pos is : %f\n",  data->player->x_pos);
-	//print value of the pointer
+
 	if (init_player(data->player) != 0) {
 		perror("Failed to initialize player\n");
 		return 1;
 	}
-
-	printf("After init_player, player->x_pos is : %f\n",  data->player->x_pos);
-
-	printf("bis After init_player, player->x_pos is : %f\n",  data->player->x_pos);
-
-	// After init_player, player->x_pos is : 0 or 73896
 
 	return 0;
 }

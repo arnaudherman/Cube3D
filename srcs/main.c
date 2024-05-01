@@ -29,9 +29,6 @@ int	main(int ac, char **av)
         return -1;
     }
 
-	printf("after init_cutom_all, player->x_pos is : %f\n",  data->player->x_pos);
-	// player->x_pos is : 73896
-
 
 	// mlx_put_image_to_window(data.mlx.mlx_ptr, data.mlx.mlx_win_ptr, data.image.img, 0, 0);
 	
