@@ -4,28 +4,29 @@ t_player	*allocate_player(void)
 {
 	t_player *player;
 
-	if (!(player = (t_player *)malloc(sizeof(t_player))))
+	if (!(player = (t_player *)calloc(sizeof(t_player), 1)))
 		return (NULL);
-	player->x_pos = 0.0;
-	player->y_pos = 0.0;
-	player->x_dir = 0.;
-	player->y_dir = 0.;
-	player->x_plane = 0.;
-	player->y_plane = 0.;
-	player->speed = 0.;
-	player->angle = 0.0;
-	player->fov = 0.0;
-	player->rotate = 0;
-	player->direction = '0';
-	player->size = 0.0;
-	player->color = 0;
+	// player->x_pos = 0.0;
+	// player->y_pos = 0.0;
+	// player->x_dir = 0.0;
+	// player->y_dir = 0.0;
+	// player->x_plane = 0.0;
+	// player->y_plane = 0.0;
+	// player->speed = 0.0;
+	// player->angle = 0.0;
+	// player->fov = 0.0;
+	// player->rotate = 0;
+	// player->direction = '0';
+	// player->size = 0.0;
+	// player->color = 0;
 	return (player);
 }
 
 int	init_player(t_player *player)
 {
-		player->x_pos = MAP_WIDTH / 2;
-		player->y_pos = MAP_HEIGHT / 2;
+		// Address of player->x_pos: 0x120a8
+		player->x_pos = 250;
+		player->y_pos = 250;
 		player->x_dir = 0;
 		player->y_dir = -1; 
 		player->x_plane = 0.66;

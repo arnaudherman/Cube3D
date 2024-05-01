@@ -43,35 +43,20 @@ int malloc_all(t_data *data) {
 
 int init_default_all(t_data *data)
 {
-	// memset(&data, 0, sizeof(data)); // attention jeune les pointeurs non définis sur des allocations de mémoire valides
-    // *data = (t_data){0};
-	// if (!(data = (t_data *)malloc(sizeof(t_data))))
-	// 	return (NULL);
-	// Init no pointer structure
 	data->mlx = (t_mlx){0};
     data->map = (t_map){0};
 	data->minimap = (t_minimap){0};
 
-	// Malloc
 	if (malloc_all(data) != 0) {
         perror("Failed to malloc_all in init_default_all\n");
         return -1;
     }
-	// printf("a) player->x_pos is : %d\n",  data->player->x_pos);
-	// 0 
-
-
-	// // Init pointer structures
-	// *data->image = (t_image){0};
-    // *data->player = (t_player){0};
-    // *data->ray = (t_ray){0};
-    // *data->texture = (t_texture){0};
-    // *data->color = (t_color){0};
     return 0;
 }
 
 int	init_custom_all(t_data *data)
 {
+	
 	// Handle MLX
 	if (init_mlx_engine(&data->mlx) != 0) {
 		perror("Failed to initialize mlx_engine\n");
@@ -91,13 +76,18 @@ int	init_custom_all(t_data *data)
 	}
 
 	// Handle Player
-		printf("b ) player->x_pos is : %d\n",  data->player->x_pos);
-
+	printf("Before init_player, player->x_pos is : %f\n",  data->player->x_pos);
+	//print value of the pointer
 	if (init_player(data->player) != 0) {
 		perror("Failed to initialize player\n");
 		return 1;
 	}
-		printf("c ) player->x_pos is : %d\n",  data->player->x_pos);
+
+	printf("After init_player, player->x_pos is : %f\n",  data->player->x_pos);
+
+	printf("bis After init_player, player->x_pos is : %f\n",  data->player->x_pos);
+
+	// After init_player, player->x_pos is : 0 or 73896
 
 	return 0;
 }
