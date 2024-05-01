@@ -396,7 +396,7 @@ void 		draw_vertical_line(t_image *image, int x, int start_y, int color);
 void 		draw_horizontal_line(t_image *image, int start_x, int y, int color);
 // Located in *minimap.c*
 // Located in *player.c*
-int			draw_player(t_data *data);
+int			draw_player(t_player *player, t_mlx *mlx);
 // Located in *raycasting.c*
 static void perform_dda(t_data *data);
 static void calculate_line_height(t_data *data);

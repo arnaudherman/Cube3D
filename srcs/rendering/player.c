@@ -1,16 +1,16 @@
 #include "cub3d-bis.h"
 
-int	draw_player(t_data *data)
+int	draw_player(t_player *player, t_mlx *mlx)
 {
     // Calcul des coordonnées de début et de fin du joueur
-    int x_start = (int)(data->player->x_pos) - (data->player->size / 2);
-	// printf("data->player->x_pos is : %d\n",  data->player->x_pos);
+    int x_start = (int)(player->x_pos) - (player->size / 2);
+	// printf("player->x_pos is : %d\n",  player->x_pos);
 	// printf("x_start is : %d\n",  x_start);
 
-    int y_start = (int)(data->player->y_pos) - (data->player->size / 2);
+    int y_start = (int)(player->y_pos) - (player->size / 2);
 
-    int x_end = x_start + data->player->size;
-    int y_end = y_start + data->player->size;
+    int x_end = x_start + player->size;
+    int y_end = y_start + player->size;
     
     // Dessin du joueur
     for (int y = y_start; y < y_end; y++)
@@ -18,7 +18,7 @@ int	draw_player(t_data *data)
         for (int x = x_start; x < x_end; x++)
         {
             // Utilisation de la fonction de dessin de pixel de MLX
-            mlx_pixel_put(data->mlx.mlx_ptr, data->mlx.mlx_win_ptr, x, y, data->player->color);
+            mlx_pixel_put(mlx->mlx_ptr, mlx->mlx_win_ptr, x, y, player->color);
         }
     }
 	return 0;
