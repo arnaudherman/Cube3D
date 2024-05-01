@@ -66,20 +66,13 @@ int draw_map(t_image *image, t_map *map) {
     while (y < MAP_HEIGHT) {
         x = 0;
         while (x < MAP_WIDTH) {
-			printf("kiss line_length = %d, bits_per_pixel = %d\n", image->line_length, image->bits_per_pixel);
-			// // line_length = 7680, bits_per_pixel = 32
             if (map->map2d[y][x] == '1') {
-				printf("slap line_length = %d, bits_per_pixel = %d\n", image->line_length, image->bits_per_pixel);
                 draw_tile(image, x * TILE_SIZE, y * TILE_SIZE);
-				printf("you line_length = %d, bits_per_pixel = %d\n", image->line_length, image->bits_per_pixel);
             }
 			x++;
 			// line_length = 7680, bits_per_pixel = 32
         }
-		printf("c draw map line_length = %d, bits_per_pixel = %d\n", image->line_length, image->bits_per_pixel);
         y++;
-		printf("d draw map line_length = %d, bits_per_pixel = %d\n", image->line_length, image->bits_per_pixel);
     }
-	printf("e draw map line_length = %d, bits_per_pixel = %d\n", image->line_length, image->bits_per_pixel);
     return (0);
 }

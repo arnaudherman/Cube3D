@@ -22,15 +22,6 @@ t_player	*allocate_player(void)
 	return (player);
 }
 
-// Check effectué pour le player
-// couleur ok
-// size ok
-// position ok
-// struct init ok
-// fonction draw ok
-// mlx_loop_hook avec render_next_frame ok
-// my_mlx_pixel_put ok
-
 int	init_player(t_player *player)
 {
 		player->x_pos = MAP_WIDTH / 2;

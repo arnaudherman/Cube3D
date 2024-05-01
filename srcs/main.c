@@ -15,20 +15,21 @@ int	main(int ac, char **av)
 	// if (ac != 2)
 	// 	perror("There must be precisely 2 arguments\n");
 
-	printf("1) data->player.x_pos is : %d\n",  data.player->x_pos);
-
 	// INIT
 	if (init_default_all(&data) != 0) {
         perror("Failed to init_default_all in main\n");
         return -1;
     }
-	printf("2) After init_default_all data->player.x_pos is : %d\n",  data.player->x_pos);
+	printf("A) After init_default_all data->player.x_pos is : %d\n",  data.player->x_pos);
+	// 73896
 
 	// TO DO : MALLOC ?
 	// // malloc_all(&data);
 	// // printf("After malloc_all data->player.x_pos is : %d\n",  data.player.x_pos);
 
 	init_custom_all(&data);
+	printf("3) data->player.x_pos is : %d\n",  data.player->x_pos);
+	// 73896
 
 	// mlx_put_image_to_window(data.mlx.mlx_ptr, data.mlx.mlx_win_ptr, data.image.img, 0, 0);
 	

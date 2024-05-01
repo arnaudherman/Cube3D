@@ -57,6 +57,9 @@ int init_default_all(t_data *data)
         perror("Failed to malloc_all in init_default_all\n");
         return -1;
     }
+	// printf("a) player->x_pos is : %d\n",  data->player->x_pos);
+	// 0 
+
 
 	// // Init pointer structures
 	// *data->image = (t_image){0};
@@ -74,17 +77,12 @@ int	init_custom_all(t_data *data)
 		perror("Failed to initialize mlx_engine\n");
 		return 1;
 	}
-	printf("Debug before init custom all: line_length = %d, bits_per_pixel = %d\n", data->image->line_length, data->image->bits_per_pixel);
-	// Debug before init custom all: line_length = 0, bits_per_pixel = 0
 
 	// Handle Image
 	if (init_image(data->image, &data->mlx) != 0) {
 		perror("Failed to initialize map\n");
 		return 1;
 	}
-	printf("Debug after init custom all: line_length = %d, bits_per_pixel = %d\n", data->image->line_length, data->image->bits_per_pixel);
-	// Debug after init custom all: line_length = 7680, bits_per_pixel = 32
-
 
 	// Handle Map
 	if (init_map(&data->map) != 0) {
@@ -93,10 +91,13 @@ int	init_custom_all(t_data *data)
 	}
 
 	// Handle Player
+		printf("b ) player->x_pos is : %d\n",  data->player->x_pos);
+
 	if (init_player(data->player) != 0) {
 		perror("Failed to initialize player\n");
 		return 1;
 	}
+		printf("c ) player->x_pos is : %d\n",  data->player->x_pos);
 
 	return 0;
 }

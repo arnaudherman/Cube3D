@@ -10,6 +10,8 @@ int	render_next_frame(t_data *data)
 
 	draw_map(data->image, &data->map);
 
+	// HERE player->x_pos is : 639
+
 	draw_player(data->player, &data->mlx);
 
 	mlx_put_image_to_window(data->mlx.mlx_ptr, data->mlx.mlx_win_ptr, data->image->img, 0, 0);
