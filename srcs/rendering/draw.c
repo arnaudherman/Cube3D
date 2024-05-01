@@ -3,6 +3,8 @@
 void my_mlx_pixel_put(t_image *image, int x, int y, int color) {
     char *dst;
     dst = image->addr + (y * image->line_length + x * (image->bits_per_pixel / 8));
+	printf("Debug: x = %d, y = %d, line_length = %d, bits_per_pixel = %d\n", x, y, image->line_length, image->bits_per_pixel);
+    printf("Debug: Calculated address: %p\n", (void*)dst); // Afficher l'adresse calculée
     *(unsigned int*)dst = color;
 }
 

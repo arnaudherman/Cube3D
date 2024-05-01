@@ -94,7 +94,10 @@ int init_map(t_map *map)
         free(map->map2d);
         return -1;
     }
+	map->x_map = 0;
+    map->y_map = 0;
     map->color = 0x000000;
+	map->ray = allocate_ray();
 
     return 0;
 }

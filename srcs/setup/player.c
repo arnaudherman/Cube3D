@@ -1,6 +1,6 @@
 #include "cub3d-bis.h"
 
-t_player	*malloc_player(void)
+t_player	*allocate_player(void)
 {
 	t_player *player;
 
@@ -35,8 +35,6 @@ int	init_player(t_player *player)
 {
 		player->x_pos = MAP_WIDTH / 2;
 		player->y_pos = MAP_HEIGHT / 2;
-		player->x_move = 1;
-		player->y_move = 1;
 		player->x_dir = 0;
 		player->y_dir = -1; 
 		player->x_plane = 0.66;
@@ -49,7 +47,6 @@ int	init_player(t_player *player)
 		player->direction = 'N';
 		player->size = 64;
 		player->color = 0x7FFF00;
-		player->has_moved = 0;
 		return 0;
 }
 

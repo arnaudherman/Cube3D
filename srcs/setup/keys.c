@@ -1,6 +1,6 @@
 #include "cub3d-bis.h"
 
-t_keys	*keys_struct_init(void)
+t_keys	*allocate_keys(void)
 {
 	t_keys *keys;
 

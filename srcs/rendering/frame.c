@@ -6,13 +6,10 @@ int	render_next_frame(t_data *data)
 	// mlx_clear_window(data->mlx_ptr, data->mlx_win_ptr);
 	// printf("X) After : %d\n",  data->player.x_pos);
 
-	// Call render functions to draw next frame
-	draw_map(&data, &data->map);
-		// printf("3) After : %d\n",  data->player.x_pos);
+	draw_map(data, &data->map);
 
 	draw_player(data);
 
-	// Mettre à jour la fenêtre avec la nouvelle image
 	mlx_put_image_to_window(data->mlx.mlx_ptr, data->mlx.mlx_win_ptr, data->image->img, 0, 0);
 
 	return (0);

@@ -33,3 +33,31 @@
 //     // Libérer la mémoire de la structure principale
 //     free(data);
 // }
+
+void	free_if_malloc_failed(t_data *data)
+{
+    // Libération de la mémoire allouée dynamiquement
+    free(data->image);
+    free(data->player);
+    free(data->keys);
+    free(data->ray);
+    free(data->texture);
+    free(data->color);
+}
+
+
+void	free_all(t_data *data)
+{
+    // Free pointers 
+    free(data->image);
+    free(data->player);
+    free(data->keys);
+    free(data->ray);
+    free(data->texture);
+    free(data->color);
+	// Free instances
+	for (int i = 0; i < data->map.h_map; ++i) {
+        free(data->map.map2d[i]);
+    }
+    free(data->map.map2d);
+}

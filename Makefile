@@ -10,6 +10,7 @@ SRCS += srcs/setup/all.c \
 		srcs/setup/color.c \
 		srcs/setup/engine.c \
 		srcs/setup/image.c \
+		srcs/setup/keys.c \
 		srcs/setup/map.c \
 		srcs/setup/minimap.c \
 		srcs/setup/player.c \

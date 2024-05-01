@@ -144,7 +144,7 @@ typedef struct s_map {
     int 		x_map;
     int 		y_map;
 	unsigned int color;
-	t_ray  		ray;
+	t_ray  		*ray;
 } t_map;
 
 typedef struct s_minimap
@@ -247,6 +247,8 @@ typedef struct s_data
 /* -------------------- CLEAN -------------------- */
 // Located in *all.c*
 int 		clean_all(t_data *data);
+void		free_if_malloc_failed(t_data *data);
+void		free_all(t_data *data);
 // Located in *error.c*
 void		ft_error(char *error);
 // Located in *map.c*
@@ -277,17 +279,19 @@ t_color 	*allocate_color();
 // Located in *engine.c*
 int			init_data(t_data *data);
 // Located in *image.c*
-t_image		*malloc_t_image(void);
-int			init_image(t_data *data);
-t_image 	*allocate_image();
+t_image		*allocate_image(void);
+int			init_image(t_image *image, t_mlx *mlx);
+t_image 	*allocate_image(void);
+// Located in *keys.c*
+t_keys		*allocate_keys(void);
 // Located in *map.c*
 int			malloc_map2d(t_map *map);
 int			fill_map(t_map *map);
 int 		init_map(t_map *map);
 // Located in *minimap.c*
-t_minimap 	*malloc_minimap(void); 
+t_minimap 	*allocate_minimap(void); 
 // Located in *player.c*
-t_player	*malloc_player(void);
+t_player	*allocate_player(void);
 static void	default_player(t_player *player);
 int			init_player(t_player *player);
 // Located in *ray.c*

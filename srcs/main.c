@@ -17,7 +17,10 @@ int	main(int ac, char **av)
 	printf("1) data->player.x_pos is : %d\n",  data.player->x_pos);
 
 	// INIT
-	init_default_all(&data);
+	if (init_default_all(&data) != 0) {
+        perror("Failed to init_default_all in main\n");
+        return -1;
+    }
 	printf("2) After init_default_all data->player.x_pos is : %d\n",  data.player->x_pos);
 
 	// TO DO : MALLOC ?
