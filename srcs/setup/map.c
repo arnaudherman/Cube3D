@@ -99,6 +99,14 @@ int init_map(t_map *map)
     map->color = 0x000000;
 	map->ray = allocate_ray();
 
+	// LOOP to print map data
+	// for (int i = 0; i < map->h_map; i++) {
+	// 	for (int j = 0; j < map->w_map; j++) {
+	// 		printf("%c ", map->map2d[i][j]);
+	// 	}
+	// 	printf("\n");
+	// }
+
     return 0;
 }
 

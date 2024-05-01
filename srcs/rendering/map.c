@@ -51,10 +51,9 @@ void draw_horizontal_line(t_image *image, int start_x, int y, int color) {
 }
 
 int draw_map(t_image *image, t_map *map) {
-   
-	printf("start draw map line_length = %d, bits_per_pixel = %d\n", image->line_length, image->bits_per_pixel);
-	// line_length = 7680, bits_per_pixel = 32
 
+	int x;
+	int y;
 
     draw_vertical_lines(image);
 	// line_length = 7680, bits_per_pixel = 32
@@ -62,20 +61,19 @@ int draw_map(t_image *image, t_map *map) {
     draw_horizontal_lines(image);
 	// line_length = 7680, bits_per_pixel = 32
 
-
     // draw tiles
-    int y = 0;
+    y = 0;
     while (y < MAP_HEIGHT) {
-        int x = 0;
+        x = 0;
         while (x < MAP_WIDTH) {
-			printf("start draw map line_length = %d, bits_per_pixel = %d\n", image->line_length, image->bits_per_pixel);
+			printf("kiss line_length = %d, bits_per_pixel = %d\n", image->line_length, image->bits_per_pixel);
+			// // line_length = 7680, bits_per_pixel = 32
             if (map->map2d[y][x] == '1') {
-                draw_tile(map, x * TILE_SIZE, y * TILE_SIZE);
+				printf("slap line_length = %d, bits_per_pixel = %d\n", image->line_length, image->bits_per_pixel);
+                draw_tile(image, x * TILE_SIZE, y * TILE_SIZE);
+				printf("you line_length = %d, bits_per_pixel = %d\n", image->line_length, image->bits_per_pixel);
             }
-			printf("a draw map line_length = %d, bits_per_pixel = %d\n", image->line_length, image->bits_per_pixel);
-            // line_length = 7680, bits_per_pixel = 32
 			x++;
-			printf("b draw map line_length = %d, bits_per_pixel = %d\n", image->line_length, image->bits_per_pixel);
 			// line_length = 7680, bits_per_pixel = 32
         }
 		printf("c draw map line_length = %d, bits_per_pixel = %d\n", image->line_length, image->bits_per_pixel);
