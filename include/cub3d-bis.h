@@ -48,6 +48,18 @@
 # define CEILING 0x404040
 # define TEXTURE 42
 # define ESC_KEY 53
+/* CONSTANTS */
+# define KEY_W 13
+# define KEY_A 0
+# define KEY_S 1
+# define KEY_D 2
+# define KEY_ESC 53
+# define LEFT_ARR 123
+# define RIGHT_ARR 124
+# define KEY_PRESS 2
+# define KEY_RELEASE 3
+# define BUTTON_PRESS 4
+# define BUTTON_RELEASE 5
 
 # define ERROR_NBR_ARG "Error\n \
 	Invalid number of arguments.\n \
@@ -396,7 +408,8 @@ void 		draw_vertical_line(t_image *image, int x, int start_y, int color);
 void 		draw_horizontal_line(t_image *image, int start_x, int y, int color);
 // Located in *minimap.c*
 // Located in *player.c*
-int			draw_player(t_player *player, t_mlx *mlx);
+// int			draw_player(t_player *player, t_mlx *mlx);
+int			draw_player(t_image *image, t_player *player);
 // Located in *raycasting.c*
 static void perform_dda(t_data *data);
 static void calculate_line_height(t_data *data);

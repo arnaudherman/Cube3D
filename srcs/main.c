@@ -28,13 +28,20 @@ int	main(int ac, char **av)
         perror("Failed to init_custom_all in init_default_all\n");
         return -1;
     }
-
-
-	// mlx_put_image_to_window(data.mlx.mlx_ptr, data.mlx.mlx_win_ptr, data.image.img, 0, 0);
 	
 	// PARSE ARGS	TO DO : ???) 
 
+	// RAYCASTING
+
 	// RENDER
+	// mlx_hook(data->mlx.mlx_win_ptr, KEY_PRESS, 1L << 0, key_press, data);
+	// mlx_hook(data->mlx.mlx_win_ptr, KEY_RELEASE, 1L << 1, key_release, data);
+	// mlx_hook(data->mlx.mlx_win_ptr, 17, 1L << 17, exit_game, data);
+
+	
+	// printf("test player x_pos : %f\n", data->player->x_pos);
+	// printf("test player y_pos : %f\n", data->player->y_pos);
+
 	mlx_loop_hook(data->mlx.mlx_ptr, render_next_frame, data);
 
 	// LISTENER
@@ -48,4 +55,9 @@ int	main(int ac, char **av)
 
 	return (0);
 }
-
+	
+	// raycasting(game, game->player, game->window, game->ray);
+	// mlx_hook(game->window->win_ptr, KEY_PRESS, 1L << 0, key_press, game);
+	// mlx_hook(game->window->win_ptr, KEY_RELEASE, 1L << 1, key_release, game);
+	// mlx_hook(game->window->win_ptr, 17, 1L << 17, destroy_window, game);
+	

@@ -53,7 +53,7 @@ int init_default_all(t_data *data)
     }
     return 0;
 }
-
+ 
 int	init_custom_all(t_data *data)
 {
 	

@@ -1,14 +1,4 @@
-// #include "cub3d-bis.h"
-
-	// 6) Draw player
-	// draw_player(mlx_ptr, win_ptr, &player);
-	// draw_player(&img, &player); // Dessiner le joueur sur la carte
-	// mlx_put_image_to_window(mlx_ptr, mlx_win_ptr, img.img, 0, 0);
-
-	// 7) player movement
-	// Attacher la fonction de gestion des touches au hook clavier de la fenêtre MLX
-    // mlx_key_hook(img.win_ptr, key_hook, &player);
-
+#include "cub3d-bis.h"
 
 // // Met à jour la position du joueur en fonction de la touche pressée
 // void update_player_position(t_player *player, int key) 
