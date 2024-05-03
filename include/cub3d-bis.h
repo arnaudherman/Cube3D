@@ -263,6 +263,12 @@ void		free_if_malloc_failed(t_data *data);
 void		free_all(t_data *data);
 // Located in *error.c*
 void		ft_error(char *error);
+// Located in *exit.c*
+int			exit_game(t_data *data);
+void		clear_map(t_data *data);
+void		clear_window(t_mlx *mlx);
+void		clear_image(t_image *image, t_mlx *mlx);
+void		destroy_data(t_data *data);
 // Located in *map.c*
 void 		free_map(t_map *map);
 

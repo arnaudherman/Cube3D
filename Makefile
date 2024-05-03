@@ -4,6 +4,7 @@ SRCS += srcs/main.c
 
 SRCS += srcs/clean/all.c \
 		srcs/clean/error.c \
+		srcs/clean/exit.c \
 		srcs/clean/map.c
 
 SRCS += srcs/setup/all.c \

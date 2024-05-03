@@ -14,17 +14,9 @@ int	key_hook_close_window(int keycode, t_data *data)
     return (0);
 }
 
-// int	render_next_frame(void *YourStruct);
-// Prototype
-// void mlx_hook(mlx_win_list_t *win_ptr, int x_event, int x_mask, int (*f)(), void *param)
-// void mlx_hook(pointeur sur mlx_window, Event, Mask, Function, Struct);
-void	event_listener(t_data *data)
-{
-	// mlx_key_hook(data->mlx_win_ptr, ft_keyboard, data);
-	// mlx_mouse_hook(data->mlx_win_ptr, ft_mouse, data);
-	// mlx_key_hook(data->mlx.mlx_win_ptr, key_hook_close_window, &data);
-	// mlx_loop_hook(data->mlx_ptr, function, data);
-	mlx_loop_hook(data->mlx.mlx_ptr, render_next_frame, &data);
-	// mlx_loop_hook(data->mlx.mlx_ptr, draw_map, &data); // Appel de draw_map à chaque boucle MLX
-}
-
+// void	event_listener(t_data *data)
+// {
+// 	// mlx_key_hook(data->mlx_win_ptr, ft_keyboard, data);
+// 	// mlx_mouse_hook(data->mlx_win_ptr, ft_mouse, data);
+// 	// mlx_key_hook(data->mlx.mlx_win_ptr, key_hook_close_window, &data);
+// }
