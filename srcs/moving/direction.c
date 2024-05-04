@@ -25,14 +25,14 @@ static void	set_north_south(t_player *player)
 	if (player->direction == 'N')
 	{
 		player->x_dir = 0;
-		player->y_dir = -1;
+		player->y_dir = 1;
 		player->x_plane = 0.66;
 		player->y_plane = 0;
 	}
 	else if (player->direction == 'S')
 	{
 		player->x_dir = 0;
-		player->y_dir = 1;
+		player->y_dir = -1;
 		player->x_plane = -0.66;
 		player->y_plane = 0;
 	}

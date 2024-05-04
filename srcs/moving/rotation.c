@@ -1,6 +1,6 @@
-// #include "cub3d-bis.h"
+#include "cub3d-bis.h"
 
-// static int	rotate(t_data *data, double rotation_speed)
+// int	player_rotation(t_data *data, double rotation_speed)
 // {
 // 	t_player	*player;
 // 	double		tmp;
@@ -15,7 +15,7 @@
 // 	return (1);
 // }
 
-// int	player_rotation(t_data *data, double rotation_direction)
+// int	go_rotate(t_data *data, double rotation_direction)
 // {
 // 	int		movement;
 // 	double	rotation_speed;

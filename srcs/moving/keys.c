@@ -1,57 +1,57 @@
 #include "cub3d-bis.h"
 
-int		key_press(int key_code, t_data *data)
+int		key_press(int key, t_data *data)
 {
-	if (key_code == KEY_W)
+	if (key == KEY_W)
 		data->keys->w = 1;
-	else if (key_code == KEY_A)
+	else if (key == KEY_A)
 		data->keys->a = 1;
-	else if (key_code == KEY_S)
+	else if (key == KEY_S)
 		data->keys->s = 1;
-	else if (key_code == KEY_D)
+	else if (key == KEY_D)
 		data->keys->d = 1;
-	else if (key_code == KEY_ESC)
+	else if (key == KEY_ESC)
 		data->keys->esc = 1;
-	else if (key_code == LEFT_ARR)
+	else if (key == LEFT_ARR)
 		data->keys->left = 1;
-	else if (key_code == RIGHT_ARR)
+	else if (key == RIGHT_ARR)
 		data->keys->right = 1;
 	return (0);
 }
 
-int		key_release(int key_code, t_data *data)
+int		key_release(int key, t_data *data)
 {
-	if (key_code == KEY_W)
+	if (key == KEY_W)
 		data->keys->w = 0;
-	else if (key_code == KEY_A)
+	else if (key == KEY_A)
 		data->keys->a = 0;
-	else if (key_code == KEY_S)
+	else if (key == KEY_S)
 		data->keys->s = 0;
-	else if (key_code == KEY_D)
+	else if (key == KEY_D)
 		data->keys->d = 0;
-	else if (key_code == KEY_ESC)
+	else if (key == KEY_ESC)
 		data->keys->esc = 0;
-	else if (key_code == LEFT_ARR)
+	else if (key == LEFT_ARR)
 		data->keys->left = 0;
-	else if (key_code == RIGHT_ARR)
+	else if (key == RIGHT_ARR)
 		data->keys->right = 0;
 	return (0);
 }
 
-void	event_listener(t_data *data)
+void	move_player(t_data *data)
 {
 	if (data->keys->w == 1)
-		move_forward(data->map, data->player);
+		go_up(data);
 	else if (data->keys->a == 1)
-		move_left(data->map, data->player);
+		go_left(data);
 	else if (data->keys->s == 1)
-		move_backward(data->map, data->player);
+		go_down(data);
 	else if (data->keys->d == 1)
-		move_right(data->map, data->player);
-	else if (data->keys->left == 1)
-		rotate_left(data->player);
-	else if (data->keys->right == 1)
-		rotate_right(data->player);
+		go_right(data);
+	// else if (data->keys->left == 1)
+	// 	rotate_left(data);
+	// else if (data->keys->right == 1)
+	// 	rotate_right(data);
 	else if (data->keys->esc == 1)
 		exit_game(data);
 }
@@ -123,12 +123,3 @@ void	event_listener(t_data *data)
 // 	return (0);
 // }
 
-// void	listen_input(t_data *data)
-// {
-// 	mlx_hook(data->win_ptr, ClientMessage, NoEventMask, quit_cub3d, data);
-// 	mlx_hook(data->win_ptr, KeyPress, KeyPressMask, key_press_handler, data);
-// 	mlx_hook(data->win_ptr, KeyRelease, KeyReleaseMask, key_release_handler, data);
-// 	if (BONUS)
-// 		mlx_hook(data->win_ptr, MotionNotify, PointerMotionMask,
-// 			mouse_motion, data);
-// }

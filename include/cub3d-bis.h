@@ -176,6 +176,8 @@ typedef struct s_player
  	double  	y_pos;
 	double		x_dir;
 	double		y_dir;
+	double		x_move;
+	double 		y_move;
 	double		x_plane;
 	double		y_plane;
 	double		speed;
@@ -319,35 +321,33 @@ t_texture 	*allocate_texture(void);
 
 /* -------------------- MOVING -------------------- */
 // Located in *direction.c*
-static void	set_player_east_west(t_player *player);
-static void	set_player_north_south(t_player *player);
-void		set_player_direction(t_data *data);
+static void	set_east_west(t_player *player);
+static void	set_north_south(t_player *player);
+void		set_direction(t_data *data);
 // Located in *keys.c*
-static int	key_press(int key, t_data *data);
-static int	key_release(int key, t_data *data);
-static void	wrap_mouse_position(t_data *data, int x, int y);
-static int	mouse_motion(int x, int y, t_data *data);
-void		listen_input(t_data *data);
+int			key_release(int key, t_data *data);
+int			key_press(int key, t_data *data);
+void		move_player(t_data *data);
+// static void	wrap_mouse_position(t_data *data, int x, int y);
+// static int	mouse_motion(int x, int y, t_data *data);
+// void		listen_input(t_data *data);
 // Located in *listener.c*
-int			key_hook_close_window(int keycode, t_data *data);
 void		event_listener(t_data *data);
 // Located in *move.c*
-static int	up(t_data *data);
-static int	down(t_data *data);
-static int	left(t_data *data);
-static int	right(t_data *data);
+int			go_up(t_data *data);
+int			go_left(t_data *data);
+int			go_down(t_data *data);
+int			go_right(t_data *data);
 int			move(t_data *data);
 // Located in *player.c*
-void 		update_player_position(t_player *player, int key);
-int 		key_hook(int key, t_player *player, t_data *data);
 // Located in *position.c*
-static bool	is_valid_wall_collision_position(t_data *data, double x, double y);
-static bool	is_valid_map_position(t_data *data, double x, double y);
-static bool	is_valid_pos(t_data *data, double x, double y);
-bool		is_valid_move(t_data *data, double new_x, double new_y);
+static bool	good_map_pos(t_data *data, double x, double y);
+static bool	good_wall_pos(t_data *data, double x, double y);
+static bool	good_pos(t_data *data, double x, double y);
+bool		good_move(t_data *data, double new_x, double new_y);
 // Located in *rotation.c*
-int			player_rotation(t_data *data, double rotation_direction);
-static int	rotate(t_data *data, double rotspeed);
+int			player_rotation(t_data *data, double rotation_speed);
+int			go_rotate(t_data *data, double rotation_direction);
 
 /* -------------------- PARSING -------------------- */
 // Located in *color.c*
