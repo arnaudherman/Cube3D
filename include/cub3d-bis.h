@@ -332,7 +332,7 @@ void		move_player(t_data *data);
 // static int	mouse_motion(int x, int y, t_data *data);
 // void		listen_input(t_data *data);
 // Located in *listener.c*
-void		event_listener(t_data *data);
+void		loop(t_data *data);
 // Located in *move.c*
 int			go_up(t_data *data);
 int			go_left(t_data *data);

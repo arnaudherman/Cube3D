@@ -33,13 +33,12 @@ int	main(int ac, char **av)
 
 	// RAYCASTING
 
-	// LISTENER
-	mlx_key_hook(data->mlx.mlx_win_ptr, event_listener, data);
-	
 	// LOOP
-	mlx_loop_hook(data->mlx.mlx_ptr, render_next_frame, data);
-	mlx_loop(data->mlx.mlx_ptr);
-	
+	// 0x60300001abf0
+	// mlx_key_hook(data->mlx.mlx_win_ptr, event_listener, &data);
+	// 0x60300001abf0
+	loop(data);
+
 	// CLEAN
 	free_all(data);
 

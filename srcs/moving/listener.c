@@ -14,11 +14,14 @@
 // }
 
 // Handle key press events && exit game
-void	event_listener(t_data *data)
+void	loop(t_data *data)
 {
 	mlx_hook(data->mlx.mlx_win_ptr, KEY_PRESS, 1L << 0, key_press, data);
 	mlx_hook(data->mlx.mlx_win_ptr, KEY_RELEASE, 1L << 1, key_release, data);
 	mlx_hook(data->mlx.mlx_win_ptr, 17, 1L << 17, exit_game, data);
+	mlx_loop_hook(data->mlx.mlx_ptr, render_next_frame, data);
+	mlx_loop(data->mlx.mlx_ptr);
+}
 
 	// TO DO : or close window 
 	// mlx_key_hook(data->mlx.mlx_win_ptr, key_hook_close_window, &data);
@@ -26,8 +29,6 @@ void	event_listener(t_data *data)
 	// mlx_key_hook(data->mlx_win_ptr, ft_keyboard, data);
 	// mlx_mouse_hook(data->mlx_win_ptr, ft_mouse, data);
 	// mlx_key_hook(data->mlx.mlx_win_ptr, key_hook_close_window, &data);
-}
-
 
 // int key_hook(int key, t_player *player, t_data *data) {
 //     update_player_position(&player, key);
