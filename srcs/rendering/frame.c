@@ -19,7 +19,6 @@ int	render_next_frame(t_data *data)
 	draw_map(data->image, &data->map);
 	draw_player(data->image, data->player);
 	key_move(data);
-
 	mlx_put_image_to_window(data->mlx.mlx_ptr, data->mlx.mlx_win_ptr, data->image->img, 0, 0);
 	
 	// TO DO : 

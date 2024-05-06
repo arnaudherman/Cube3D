@@ -342,10 +342,12 @@ int			go_right(t_data *data);
 int			go_move(t_data *data);
 // Located in *player.c*
 // Located in *position.c*
-static bool	good_map_pos(t_data *data, double x, double y);
-static bool	good_wall_pos(t_data *data, double x, double y);
-static bool	good_pos(t_data *data, double x, double y);
-bool		good_move(t_data *data, double x_new, double y_new);
+// bool is_wall(t_map *map, double x, double y);
+bool check_collision(t_map *map, double x, double y);
+// bool	check_map_pos(t_data *data, double x, double y);
+// bool	check_wall_pos(t_data *data, double x, double y);
+// bool	check_pos(t_data *data, double x, double y);
+// bool	check_move(t_data *data, double x_new, double y_new);
 // Located in *rotation.c*
 int			player_rotation(t_data *data, double rotation_speed);
 int			go_rotate(t_data *data, double rotation_direction);

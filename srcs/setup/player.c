@@ -24,7 +24,6 @@ t_player	*allocate_player(void)
 
 int	init_player(t_player *player)
 {
-		// Address of player->x_pos: 0x120a8
 		player->x_pos = 250;
 		player->y_pos = 250;
 		player->x_dir = 1;
@@ -35,9 +34,10 @@ int	init_player(t_player *player)
 		player->angle = 0;
 		player->fov = FOV;
 		player->rotate = ROTATION;
-		// TO DO : GO recup la direction N E S W
+		// TO DO : GO recup la directon N E S W
+		// player->direction = get_direction(player);
 		player->direction = 'N';
-		player->size = 32;
+		player->size = 24;
 		player->color = 0x7F0FFF;
 		return 0;
 }

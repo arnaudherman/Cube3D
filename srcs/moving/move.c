@@ -1,35 +1,15 @@
 #include "cub3d-bis.h"
 
-int	go_up(t_data *data)
+int go_up(t_data *data)
 {
-	double	x_new;
-	double	y_new;
-
-	// x_new = data->player->x_pos + data->player->x_dir * SPEED;
-	x_new = data->player->x_pos;
-	y_new = data->player->y_pos + data->player->y_dir * SPEED;
-	// x_new : 254.200000
-	// y_new : 245.800000
-
-	// TO DO : good move function block updating x_pos and y_pos values
-	// Vérifiez si le déplacement est autorisé avant de mettre à jour la position
-	// if (good_move(data, x_new, y_new)) {
-	// 	data->player->x_pos = x_new;
-	// 	data->player->y_pos = y_new;
-	// }
+    double x_new;
+    double y_new;
 	
-	data->player->x_pos = x_new;
-	data->player->y_pos = y_new;
-	
-	printf("bis x_new : %f\n", x_new);
-	printf("bis y_new : %f\n", y_new);
-	// x_new : 254.200000
-	// y_new : 245.800000
-	printf("after go_up data->player->x_pos: %f\n", data->player->x_pos);
-	printf("after go_up data->player->y_pos: %f\n", data->player->y_pos);
-	// 250.000000
-	// 250.000000
-	return (0);
+    y_new = data->player->y_pos + data->player->y_dir * SPEED;
+
+    data->player->y_pos = y_new;
+
+    return 0;
 }
 
 int	go_left(t_data *data)
@@ -37,14 +17,9 @@ int	go_left(t_data *data)
 	double	x_new;
 	double	y_new;
 
-	x_new = data->player->x_pos + data->player->y_dir * SPEED;
-	y_new = data->player->y_pos - data->player->x_dir * SPEED;
-
-	// Vérifiez si le déplacement est autorisé avant de mettre à jour la position
-	if (good_move(data, x_new, y_new)) {
-		data->player->x_pos = x_new;
-		data->player->y_pos = y_new;
-	}
+	x_new = data->player->x_pos - data->player->x_dir * SPEED;
+	
+	data->player->x_pos = x_new;
 
 	return (0);
 }
@@ -54,14 +29,9 @@ int	go_down(t_data *data)
 	double	x_new;
 	double	y_new;
 
-	x_new = data->player->x_pos - data->player->x_dir * SPEED;
 	y_new = data->player->y_pos - data->player->y_dir * SPEED;
 
-	// Vérifiez si le déplacement est autorisé avant de mettre à jour la position
-	if (good_move(data, x_new, y_new)) {
-		data->player->x_pos = x_new;
-		data->player->y_pos = y_new;
-	}
+	data->player->y_pos = y_new;
 
 	return (0);
 }
@@ -72,18 +42,8 @@ int	go_right(t_data *data)
 	double	y_new;
 
 	x_new = data->player->x_pos - data->player->y_dir * SPEED;
-	y_new = data->player->y_pos + data->player->x_dir * SPEED;
 
-	// Vérifiez si le déplacement est autorisé avant de mettre à jour la position
-	if (good_move(data, x_new, y_new)) {
-		printf("1) before x_new : %f\n", data->player->x_pos);
-		data->player->x_pos = x_new;
-		printf("2) after x_new : %f\n", data->player->x_pos);
-
-		printf("3) before x_new : %f\n", data->player->y_pos);
-		data->player->y_pos = y_new;
-		printf("4) afer y_new : %f\n", data->player->y_pos);
-	}
+	data->player->x_pos = x_new;
 
 	return (0);
 }
