@@ -16,6 +16,7 @@ int		key_press(int key, t_data *data)
 		data->keys->left = 1;
 	else if (key == RIGHT_ARR)
 		data->keys->right = 1;
+	printf("press key = %d\n", data->keys->w);
 	return (0);
 }
 
@@ -35,11 +36,13 @@ int		key_release(int key, t_data *data)
 		data->keys->left = 0;
 	else if (key == RIGHT_ARR)
 		data->keys->right = 0;
+	printf("release key = %d\n", data->keys->w);
 	return (0);
 }
 
-void	move_player(t_data *data)
+void	key_move(t_data *data)
 {
+	printf("move key = %d\n", data->keys->w);
 	if (data->keys->w == 1)
 		go_up(data);
 	else if (data->keys->a == 1)

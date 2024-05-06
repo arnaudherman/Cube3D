@@ -27,7 +27,7 @@ int	init_player(t_player *player)
 		// Address of player->x_pos: 0x120a8
 		player->x_pos = 250;
 		player->y_pos = 250;
-		player->x_dir = 0;
+		player->x_dir = 1;
 		player->y_dir = -1; 
 		player->x_plane = 0.66;
 		player->y_plane = 0.66;
@@ -37,8 +37,8 @@ int	init_player(t_player *player)
 		player->rotate = ROTATION;
 		// TO DO : GO recup la direction N E S W
 		player->direction = 'N';
-		player->size = 64;
-		player->color = 0x7FFF00;
+		player->size = 32;
+		player->color = 0x7F0FFF;
 		return 0;
 }
 

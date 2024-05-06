@@ -52,7 +52,7 @@ int draw_player(t_image *image, t_player *player) {
     // Dessiner le joueur en parcourant les pixels du rectangle
     for (y = y_start; y < y_end; y++) {
         for (x = x_start; x < x_end; x++) {
-            my_mlx_pixel_put(image, x, y, 0x7FFF00);
+            my_mlx_pixel_put(image, x, y, player->color);
         }
     }
     

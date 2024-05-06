@@ -25,16 +25,16 @@
 // 	return (false);
 // }
 
-// bool	good_move(t_data *data, double new_x, double new_y)
+// bool	good_move(t_data *data, double x_new, double y_new)
 // {
-// 	if (good_pos(data, new_x, data->player->y_pos))
+// 	if (good_pos(data, x_new, data->player->y_pos))
 // 	{
-// 		data->player->x_pos = new_x;
+// 		data->player->x_pos = x_new;
 // 		return (false);
 // 	}
-// 	if (good_pos(data, data->player->x_pos, new_y))
+// 	if (good_pos(data, data->player->x_pos, y_new))
 // 	{
-// 		data->player->y_pos = new_y;
+// 		data->player->y_pos = y_new;
 // 		return (false);
 // 	}
 // 	return (true);
@@ -51,7 +51,7 @@ static bool good_wall_pos(t_data *data, double x, double y)
     return (data->map.map2d[(int)y][(int)x] == '0');
 }
 
-bool good_move(t_data *data, double new_x, double new_y)
+bool good_move(t_data *data, double x_new, double y_new)
 {
-    return (good_map_pos(data, new_x, new_y) && good_wall_pos(data, new_x, new_y));
+    return (good_map_pos(data, x_new, y_new) && good_wall_pos(data, x_new, y_new));
 }

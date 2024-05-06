@@ -37,6 +37,10 @@ int	main(int ac, char **av)
 	// 0x60300001abf0
 	// mlx_key_hook(data->mlx.mlx_win_ptr, event_listener, &data);
 	// 0x60300001abf0
+
+	draw_map(data->image, &data->map);
+	draw_player(data->image, data->player);
+	
 	loop(data);
 
 	// CLEAN
@@ -44,9 +48,3 @@ int	main(int ac, char **av)
 
 	return (0);
 }
-	
-	// raycasting(game, game->player, game->window, game->ray);
-	// mlx_hook(game->window->win_ptr, KEY_PRESS, 1L << 0, key_press, game);
-	// mlx_hook(game->window->win_ptr, KEY_RELEASE, 1L << 1, key_release, game);
-	// mlx_hook(game->window->win_ptr, 17, 1L << 17, destroy_window, game);
-	

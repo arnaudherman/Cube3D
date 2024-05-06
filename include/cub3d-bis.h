@@ -287,6 +287,7 @@ char 		*ft_strcpy(char *dst, const char *src);
 void		free_tokens(char **tokens);
 static char	*in_tab(const char *s1, int c1, int c2);
 static int	number_word(const char *s1, char c);
+
 /* -------------------- SETUP -------------------- */
 // Located in *all.c*
 int			check_allocations(t_data *data);
@@ -327,7 +328,7 @@ void		set_direction(t_data *data);
 // Located in *keys.c*
 int			key_release(int key, t_data *data);
 int			key_press(int key, t_data *data);
-void		move_player(t_data *data);
+void		key_move(t_data *data);
 // static void	wrap_mouse_position(t_data *data, int x, int y);
 // static int	mouse_motion(int x, int y, t_data *data);
 // void		listen_input(t_data *data);
@@ -338,13 +339,13 @@ int			go_up(t_data *data);
 int			go_left(t_data *data);
 int			go_down(t_data *data);
 int			go_right(t_data *data);
-int			move(t_data *data);
+int			go_move(t_data *data);
 // Located in *player.c*
 // Located in *position.c*
 static bool	good_map_pos(t_data *data, double x, double y);
 static bool	good_wall_pos(t_data *data, double x, double y);
 static bool	good_pos(t_data *data, double x, double y);
-bool		good_move(t_data *data, double new_x, double new_y);
+bool		good_move(t_data *data, double x_new, double y_new);
 // Located in *rotation.c*
 int			player_rotation(t_data *data, double rotation_speed);
 int			go_rotate(t_data *data, double rotation_direction);
