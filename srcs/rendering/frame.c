@@ -14,8 +14,10 @@ int	render_next_frame(t_data *data)
 
 	// printf("data->player->x_pos : %f\n", data->player->x_pos);
 	// printf("data->player->y_pos : %f\n", data->player->y_pos);
-	
+	mlx_clear_window(data->mlx.mlx_ptr, data->mlx.mlx_win_ptr);
 
+	draw_map(data->image, &data->map);
+	draw_player(data->image, data->player);
 	key_move(data);
 
 	mlx_put_image_to_window(data->mlx.mlx_ptr, data->mlx.mlx_win_ptr, data->image->img, 0, 0);

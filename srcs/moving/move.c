@@ -2,25 +2,25 @@
 
 int	go_up(t_data *data)
 {
-	printf("before go_up data->player->x_pos: %f\n", data->player->x_pos);
-	printf("before go_up data->player->y_pos: %f\n", data->player->y_pos);
-	// 250.000000
-	// 250.000000
 	double	x_new;
 	double	y_new;
 
-	x_new = data->player->x_pos + data->player->x_dir * SPEED;
+	// x_new = data->player->x_pos + data->player->x_dir * SPEED;
+	x_new = data->player->x_pos;
 	y_new = data->player->y_pos + data->player->y_dir * SPEED;
-	printf("x_new : %f\n", x_new);
-	printf("y_new : %f\n", y_new);
 	// x_new : 254.200000
 	// y_new : 245.800000
 
+	// TO DO : good move function block updating x_pos and y_pos values
 	// Vérifiez si le déplacement est autorisé avant de mettre à jour la position
-	if (good_move(data, x_new, y_new)) {
-		data->player->x_pos = x_new;
-		data->player->y_pos = y_new;
-	}
+	// if (good_move(data, x_new, y_new)) {
+	// 	data->player->x_pos = x_new;
+	// 	data->player->y_pos = y_new;
+	// }
+	
+	data->player->x_pos = x_new;
+	data->player->y_pos = y_new;
+	
 	printf("bis x_new : %f\n", x_new);
 	printf("bis y_new : %f\n", y_new);
 	// x_new : 254.200000
