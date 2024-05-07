@@ -35,20 +35,21 @@
 # define MMAP_COLOR_FLOOR 0xE6E6E6
 # define MMAP_COLOR_SPACE 0x404040
 # define BUFFER_SIZE 42
-# define ROTATE_LEFT 123
-# define ROTATE_RIGHT 124
-# define KEY_DOWN 125
-# define KEY_UP 126
-# define FORWARD_W_Z 13
-# define BACK_S_S 1
-# define RIGHT_D_D 2
-# define LEFT_A_Q 0
+// # define ROTATE_LEFT 123
+// # define ROTATE_RIGHT 124
+// # define KEY_DOWN 125
+// # define KEY_UP 126
+// # define FORWARD_W_Z 13
+// # define BACK_S_S 1
+// # define RIGHT_D_D 2
+// # define LEFT_A_Q 0
+# define RAY_LENGTH 300
 # define MOUSE_BORDER_DISTANCE 20
 # define FLOOR 0xE6E6E6
 # define CEILING 0x404040
 # define TEXTURE 42
+/* KEYS CONSTANTS */
 # define ESC_KEY 53
-/* CONSTANTS */
 # define KEY_W 13
 # define KEY_A 0
 # define KEY_S 1
@@ -172,7 +173,7 @@ typedef struct s_minimap
 
 typedef struct s_player
 {
- 	double  	x_pos; // position is in pixels
+ 	double  	x_pos; // in pixels
  	double  	y_pos;
 	double		x_dir;
 	double		y_dir;
@@ -181,8 +182,8 @@ typedef struct s_player
 	double		x_plane;
 	double		y_plane;
 	double		speed;
-	float		angle;
-	float 		fov; // field of view in radians
+	float		angle; // in radians
+	float 		fov; // in radians
  	int  		rotate;
 	char 		direction;
 	double	 	size;
@@ -324,7 +325,7 @@ t_texture 	*allocate_texture(void);
 // Located in *direction.c*
 static void	set_east_west(t_player *player);
 static void	set_north_south(t_player *player);
-void		set_direction(t_data *data);
+void		set_direction(t_player *player);
 // Located in *keys.c*
 int			key_release(int key, t_data *data);
 int			key_press(int key, t_data *data);
@@ -343,14 +344,14 @@ int			go_move(t_data *data);
 // Located in *player.c*
 // Located in *position.c*
 // bool is_wall(t_map *map, double x, double y);
-bool check_collision(t_map *map, double x, double y);
+bool 		check_collision(t_map *map, double x, double y);
 // bool	check_map_pos(t_data *data, double x, double y);
 // bool	check_wall_pos(t_data *data, double x, double y);
 // bool	check_pos(t_data *data, double x, double y);
 // bool	check_move(t_data *data, double x_new, double y_new);
 // Located in *rotation.c*
-int			player_rotation(t_data *data, double rotation_speed);
-int			go_rotate(t_data *data, double rotation_direction);
+void 		rotate_left(t_data *data);
+void 		rotate_right(t_data *data);
 
 /* -------------------- PARSING -------------------- */
 // Located in *color.c*

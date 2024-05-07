@@ -51,10 +51,10 @@ void	key_move(t_data *data)
 		go_down(data);
 	else if (data->keys->d == 1)
 		go_right(data);
-	// else if (data->keys->left == 1)
-	// 	rotate_left(data);
-	// else if (data->keys->right == 1)
-	// 	rotate_right(data);
+	else if (data->keys->left == 1)
+		rotate_left(data);
+	else if (data->keys->right == 1)
+		rotate_right(data);
 	else if (data->keys->esc == 1)
 		exit_game(data);
 	if (check_collision(&data->map, data->player->x_pos, data->player->y_pos))

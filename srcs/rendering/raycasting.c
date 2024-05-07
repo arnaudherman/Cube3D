@@ -5,7 +5,7 @@
 // Video https://www.youtube.com/watch?v=NbSee-XM7WA&t=1s&ab_channel=javidx9
 // GO learn vectors
 
-// // https://www.youtube.com/watch?v=W5P8GlaEOSI&ab_channel=AbdulBari
+// https://www.youtube.com/watch?v=W5P8GlaEOSI&ab_channel=AbdulBari
 // static void dda_algo(float x1, float y1, float x2, float y2)
 // {
 //     // Get the Deltas
@@ -95,3 +95,9 @@
 // 	}
 //     return 0;
 // }
+
+int raycasting(t_data *data)
+{
+	cast_ray(data->image, data->player);	
+	return 0;
+}

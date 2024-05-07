@@ -24,19 +24,23 @@ t_player	*allocate_player(void)
 
 int	init_player(t_player *player)
 {
+		// TO DO : GO recup la position de départ
+		// set_position(player);
 		player->x_pos = 240;
 		player->y_pos = 240;
-		player->x_dir = 1;
-		player->y_dir = -1; 
-		player->x_plane = 0.66;
-		player->y_plane = 0.66;
 		player->speed = SPEED;
-		player->angle = 0;
 		player->fov = FOV;
 		player->rotate = ROTATION;
 		// TO DO : GO recup la directon N E S W
 		// player->direction = get_direction(player);
 		player->direction = 'N';
+		// set_direction function's gonna init following values
+		// set_direction(player); // from direction.c
+		player->angle = 2.0f;
+		player->x_dir = 1;
+		player->y_dir = -1; 
+		player->x_plane = 0.66;
+		player->y_plane = 0.66;
 		player->size = 24;
 		player->color = 0x992800;
 		return 0;

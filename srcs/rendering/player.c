@@ -59,9 +59,6 @@ int draw_player(t_image *image, t_player *player) {
     return 0;
 }
 
-
-// POURQUOI ICI x_pos est 0 et y_pos est 0
-
 // int draw_player(t_image *image, t_player *player) 
 // {
 //     int x, y;
