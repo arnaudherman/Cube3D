@@ -1,5 +1,11 @@
 #include "cub3d-bis.h"
 
+// en fonction de son angle
+// void update_player_pos(t_player *player, double move_distance) {
+//     player->x_pos += move_distance * cos(player->angle);
+//     player->y_pos += move_distance * sin(player->angle);
+// }
+
 bool is_wall(t_map *map, int x, int y) 
 {
     if (x < 0 || y < 0 || x >= MAP_WIDTH || y >= MAP_HEIGHT)

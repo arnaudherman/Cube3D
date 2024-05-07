@@ -22,7 +22,6 @@ SRCS += srcs/moving/direction.c \
         srcs/moving/keys.c \
 		srcs/moving/listener.c \
         srcs/moving/move.c \
-        srcs/moving/player.c \
         srcs/moving/position.c \
         srcs/moving/rotation.c
 
