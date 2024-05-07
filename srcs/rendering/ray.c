@@ -67,6 +67,9 @@ void fov_rays(int hauteur_image, int largeur_image, float fov_horizontal_deg)
     printf("FOV vertical calculé : %f degrés\n", fov_vertical_deg);
 }
 
+
+#include <math.h>
+
 void draw_ray(t_image *image, int x_start, int y_start, int x_end, int y_end)
 {
     int x, y;
@@ -87,19 +90,72 @@ void draw_ray(t_image *image, int x_start, int y_start, int x_end, int y_end)
     // Initialize the starting position
     float current_x = x_start;
     float current_y = y_start;
-    
+
+    // Couleur de départ et de fin pour le dégradé
+    int color_start = 0xffff80; // Jaune
+    int color_end = 0xb6d7a8; // Vert
+
     // Draw the ray by iterating through each step
     for (int i = 0; i <= steps; i++)
     {
         x = (int)current_x;
         y = (int)current_y;
-        my_mlx_pixel_put(image, x, y, 0xe19239);
+
+        // Calculer la distance entre le point actuel du rayon et le joueur
+        float distance = sqrt((current_x - x_start) * (current_x - x_start) + (current_y - y_start) * (current_y - y_start));
+        
+        // Calculer le dégradé de couleur en fonction de la distance
+        int red = ((color_start >> 16) & 0xFF) * (1 - distance / RAY_LENGTH) + ((color_end >> 16) & 0xFF) * (distance / RAY_LENGTH);
+        int green = ((color_start >> 8) & 0xFF) * (1 - distance / RAY_LENGTH) + ((color_end >> 8) & 0xFF) * (distance / RAY_LENGTH);
+        int blue = (color_start & 0xFF) * (1 - distance / RAY_LENGTH) + (color_end & 0xFF) * (distance / RAY_LENGTH);
+        int color = (red << 16) | (green << 8) | blue;
+        
+        // Dessiner le pixel avec la couleur calculée
+        my_mlx_pixel_put(image, x, y, color);
         
         // Move to the next position along each dimension
         current_x += step_x;
         current_y += step_y;
     }
 }
+
+
+
+
+// NOT DELETE
+// void draw_ray(t_image *image, int x_start, int y_start, int x_end, int y_end)
+// {
+//     int x, y;
+//     int dx = x_end - x_start;
+//     int dy = y_end - y_start;
+    
+//     // Determine the sign of the step (i.e., +1 or -1) for each dimension
+//     int sign_x = (dx > 0) ? 1 : -1;
+//     int sign_y = (dy > 0) ? 1 : -1;
+    
+//     // Determine the number of steps required along each dimension
+//     int steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy);
+    
+//     // Calculate the increment for each dimension per step
+//     float step_x = (float)dx / steps;
+//     float step_y = (float)dy / steps;
+    
+//     // Initialize the starting position
+//     float current_x = x_start;
+//     float current_y = y_start;
+    
+//     // Draw the ray by iterating through each step
+//     for (int i = 0; i <= steps; i++)
+//     {
+//         x = (int)current_x;
+//         y = (int)current_y;
+//         my_mlx_pixel_put(image, x, y, 0xe19239);
+        
+//         // Move to the next position along each dimension
+//         current_x += step_x;
+//         current_y += step_y;
+//     }
+// }
 
 void shoot_rays(t_image *image, t_player *player)
 {
@@ -130,9 +186,6 @@ void shoot_rays(t_image *image, t_player *player)
     }
 }
 
-
-
-
 // void cast_ray(t_image *image, t_player *player) 
 // {
 //     int x_start, x_end, y_start, y_end;
@@ -152,3 +205,4 @@ void shoot_rays(t_image *image, t_player *player)
     
 //     draw_ray(image, x_start, y_start, x_end, y_end);
 // }
+
