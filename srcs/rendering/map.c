@@ -1,11 +1,20 @@
 #include "cub3d-bis.h"
 
+void draw_map_background(t_image *image, int color) {
+    // Remplir la zone de la carte avec la couleur spécifiée
+    for (int y = 0; y < WINDOW_HEIGHT; y++) {
+        for (int x = 0; x < WINDOW_WIDTH; x++) {
+            my_mlx_pixel_put(image, x, y, color);
+        }
+    }
+}
+
 void draw_tile(t_image *image, int x, int y) {
     int i = 0;
     while (i < TILE_SIZE) {
         int j = 0;
         while (j < TILE_SIZE) {
-            my_mlx_pixel_put(image, x + i, y + j, 0xFFFFF); // wall color here wtf
+            my_mlx_pixel_put(image, x + i, y + j, 0xb6d7a8); // wall color here wtf
             j++;
         }
         i++;
@@ -55,6 +64,7 @@ int draw_map(t_image *image, t_map *map) {
 	int x;
 	int y;
 
+	draw_map_background(image, 0xa1b65e);
     draw_vertical_lines(image);
 	// line_length = 7680, bits_per_pixel = 32
 
@@ -66,7 +76,7 @@ int draw_map(t_image *image, t_map *map) {
     while (y < MAP_HEIGHT) {
         x = 0;
         while (x < MAP_WIDTH) {
-            if (map->map2d[y][x] == '1') {
+            if (map->map2d[y][x] == '0') {
                 draw_tile(image, x * TILE_SIZE, y * TILE_SIZE);
             }
 			x++;

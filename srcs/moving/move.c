@@ -5,10 +5,11 @@ int go_up(t_data *data)
     double x_new;
     double y_new;
 	
-    y_new = data->player->y_pos + data->player->y_dir * SPEED;
-
-    data->player->y_pos = y_new;
-
+	if (!check_collision(&data->map, data->player->x_pos, data->player->y_pos + data->player->y_dir * SPEED))
+	{
+		y_new = data->player->y_pos + data->player->y_dir * SPEED;
+		data->player->y_pos = y_new;
+	}
     return 0;
 }
 
@@ -17,10 +18,11 @@ int	go_left(t_data *data)
 	double	x_new;
 	double	y_new;
 
-	x_new = data->player->x_pos - data->player->x_dir * SPEED;
-	
-	data->player->x_pos = x_new;
-
+	if (!check_collision(&data->map, data->player->x_pos - data->player->x_dir * SPEED, data->player->y_pos))
+	{
+		x_new = data->player->x_pos - data->player->x_dir * SPEED;
+		data->player->x_pos = x_new;
+	}
 	return (0);
 }
 
@@ -29,9 +31,11 @@ int	go_down(t_data *data)
 	double	x_new;
 	double	y_new;
 
-	y_new = data->player->y_pos - data->player->y_dir * SPEED;
-
-	data->player->y_pos = y_new;
+	if (!check_collision(&data->map, data->player->x_pos, data->player->y_pos - data->player->y_dir * SPEED))
+	{
+		y_new = data->player->y_pos - data->player->y_dir * SPEED;
+		data->player->y_pos = y_new;
+	}
 
 	return (0);
 }
@@ -41,9 +45,11 @@ int	go_right(t_data *data)
 	double	x_new;
 	double	y_new;
 
-	x_new = data->player->x_pos - data->player->y_dir * SPEED;
-
-	data->player->x_pos = x_new;
+	if (!check_collision(&data->map, data->player->x_pos + data->player->x_dir * SPEED, data->player->y_pos))
+	{
+		x_new = data->player->x_pos + data->player->x_dir * SPEED;
+		data->player->x_pos = x_new;
+	}
 
 	return (0);
 }

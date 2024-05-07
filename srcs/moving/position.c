@@ -9,13 +9,24 @@ bool is_wall(t_map *map, int x, int y)
 
 bool check_collision(t_map *map, double x, double y) 
 {
-    int tile_x;
-    int tile_y;
-    tile_x = (int)(x / TILE_SIZE);
-    tile_y = (int)(y / TILE_SIZE);
-	printf("x = %d, y = %d\n", tile_x, tile_y);
+    int x_tile_left;
+    int x_tile_right;
+    int y_tile_top;
+    int y_tile_bottom;
 
-    return is_wall(map, tile_x, tile_y);
+    x_tile_left = (int)((x - 24 / 2) / TILE_SIZE);
+    x_tile_right = (int)((x + 24 / 2) / TILE_SIZE);
+    y_tile_top = (int)((y - 24 / 2) / TILE_SIZE);
+    y_tile_bottom = (int)((y + 24 / 2) / TILE_SIZE);
+
+    if (is_wall(map, x_tile_left, (int)(y / TILE_SIZE)) ||
+        is_wall(map, x_tile_right, (int)(y / TILE_SIZE)) ||
+        is_wall(map, (int)(x / TILE_SIZE), y_tile_top) ||
+        is_wall(map, (int)(x / TILE_SIZE), y_tile_bottom)) {
+        return true;
+    }
+	
+    return false;
 }
 
 // static bool	check_map_pos(t_data *data, double x, double y)

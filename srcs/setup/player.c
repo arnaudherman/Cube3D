@@ -24,8 +24,8 @@ t_player	*allocate_player(void)
 
 int	init_player(t_player *player)
 {
-		player->x_pos = 250;
-		player->y_pos = 250;
+		player->x_pos = 240;
+		player->y_pos = 240;
 		player->x_dir = 1;
 		player->y_dir = -1; 
 		player->x_plane = 0.66;
@@ -38,7 +38,7 @@ int	init_player(t_player *player)
 		// player->direction = get_direction(player);
 		player->direction = 'N';
 		player->size = 24;
-		player->color = 0x7F0FFF;
+		player->color = 0x992800;
 		return 0;
 }
 
