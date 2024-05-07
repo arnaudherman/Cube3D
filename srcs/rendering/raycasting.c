@@ -98,6 +98,7 @@
 
 int raycasting(t_data *data)
 {
-	cast_ray(data->image, data->player);	
+	shoot_rays(data->image, data->player);
+	// cast_ray(data->image, data->player);	
 	return 0;
 }
