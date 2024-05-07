@@ -66,12 +66,9 @@ int draw_map(t_image *image, t_map *map) {
 
 	draw_map_background(image, 0xa1b65e);
     draw_vertical_lines(image);
-	// line_length = 7680, bits_per_pixel = 32
 
     draw_horizontal_lines(image);
-	// line_length = 7680, bits_per_pixel = 32
 
-    // draw tiles
     y = 0;
     while (y < MAP_HEIGHT) {
         x = 0;
@@ -80,7 +77,6 @@ int draw_map(t_image *image, t_map *map) {
                 draw_tile(image, x * TILE_SIZE, y * TILE_SIZE);
             }
 			x++;
-			// line_length = 7680, bits_per_pixel = 32
         }
         y++;
     }

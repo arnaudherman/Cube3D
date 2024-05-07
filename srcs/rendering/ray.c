@@ -41,6 +41,6 @@ void cast_ray(t_image *image, t_player *player)
 	// // To do : fin du rayon en fonction de l'angle du joueur
 	// x_end = x_start + (int)cos(degrees_to_radians(player->angle)) * RAY_LENGTH;
     // y_end = y_start + (int)sin(degrees_to_radians(player->angle)) * RAY_LENGTH;
-	printf("-----------x_end: %f, y_end: %f\n", x_end, y_end);
+	printf("-----------x_end: %d, y_end: %d\n", x_end, y_end);
     draw_ray(image, x_start, y_start, x_end, y_end);
 }

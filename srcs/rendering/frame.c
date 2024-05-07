@@ -19,9 +19,21 @@ int	render_next_frame(t_data *data)
 	draw_map(data->image, &data->map);
 	draw_player(data->image, data->player);
 	key_move(data);
+	printf(" between frames : %f\n", data->player->angle);
+
 	// TO DO : remove double mlx_clear_window ??
-	mlx_clear_window(data->mlx.mlx_ptr, data->mlx.mlx_win_ptr);
+	// mlx_clear_window(data->mlx.mlx_ptr, data->mlx.mlx_win_ptr);
 	raycasting(data);
+	// printf(" 1) x_pos : %f\n", data->player->x_pos);
+	// printf(" 1) y_pos : %f\n", data->player->y_pos);
+
+	// printf(" 2) x_dir : %f\n", data->player->x_dir);
+	// printf(" 2) y_dir : %f\n", data->player->y_dir);
+
+	// printf(" 3 ) x_plane : %f\n", data->player->x_plane);
+	// printf(" 3 ) y_plane : %f\n", data->player->y_plane);
+
+	// printf(" 4 ) Angle : %f\n", data->player->angle);
 	mlx_put_image_to_window(data->mlx.mlx_ptr, data->mlx.mlx_win_ptr, data->image->img, 0, 0);
 	
 	// TO DO : 

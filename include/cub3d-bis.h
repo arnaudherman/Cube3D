@@ -177,8 +177,8 @@ typedef struct s_player
  	double  	y_pos;
 	double		x_dir;
 	double		y_dir;
-	double		x_move;
-	double 		y_move;
+	// double		x_move;
+	// double 		y_move;
 	double		x_plane;
 	double		y_plane;
 	double		speed;

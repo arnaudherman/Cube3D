@@ -45,12 +45,3 @@ int	init_player(t_player *player)
 		player->color = 0x992800;
 		return 0;
 }
-
-// TO DO : Global function for player
-// int setup_player_ready(t_data *data)
-// {
-// 	init_player(&data);
-// 	set_direction(&data);
-// 	// draw_player(&data);
-// 	return 0;
-// }
