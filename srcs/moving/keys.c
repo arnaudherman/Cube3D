@@ -57,7 +57,7 @@ void	key_move(t_data *data)
 		rotate_right(data);
 	else if (data->keys->esc == 1)
 		exit_game(data);
-	if (check_collision(&data->map, data->player->x_pos, data->player->y_pos))
+	if (player_wall_collision(&data->map, data->player->x_pos, data->player->y_pos))
 		printf("Collision détectée!\n");
 	else
 		printf("Aucune collision.\n");

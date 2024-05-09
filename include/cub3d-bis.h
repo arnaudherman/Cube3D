@@ -24,7 +24,7 @@
 # define MAPYX 8
 # define MAP_HEIGHT 10
 # define MAP_WIDTH 10
-# define FOV 60
+# define FOV 66
 # define SPEED 4.2
 # define ROTATION 0.042
 /* MINIMAP MACROS */
@@ -144,8 +144,8 @@ typedef struct s_ray {
     double 		dir_y;
     double 		map_x;
     double 		map_y;
-    double 		deltadist_x;
-    double 		deltadist_y;
+    double 		dx;
+    double 		dy;
     double 		sidedist_x;
     double 		sidedist_y;
 } t_ray;
@@ -344,7 +344,7 @@ int			go_move(t_data *data);
 // Located in *player.c*
 // Located in *position.c*
 // bool is_wall(t_map *map, double x, double y);
-bool 		check_collision(t_map *map, double x, double y);
+bool 		player_wall_collision(t_map *map, double x, double y);
 // bool	check_map_pos(t_data *data, double x, double y);
 // bool	check_wall_pos(t_data *data, double x, double y);
 // bool	check_pos(t_data *data, double x, double y);

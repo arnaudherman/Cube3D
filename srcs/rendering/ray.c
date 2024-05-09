@@ -10,40 +10,6 @@ float radians_to_degrees(float angle)
     return angle * (180.0 / M_PI);
 }
 
-// void draw_ray(t_image *image, int x_start, int y_start, int x_end, int y_end)
-// {
-// 	for (int y = y_start; y < y_end; y++)
-// 	{
-// 		for (int x = x_start; x < x_end; x++)
-// 		{
-// 			my_mlx_pixel_put(image, x, y, 0xe19239);
-// 		}
-// 	}
-// }
-
-// void cast_ray(t_image *image, t_player *player) 
-// {
-//     int x_start;
-// 	int x_end;
-// 	int y_start;
-// 	int y_end;
-	
-// 	x_start = (int)(player->x_pos);
-//     y_start = (int)(player->y_pos);
-
-// 	double angle_rad = player->angle * (M_PI / 180.0);
-	
-// 	x_end = x_start + (int)(cos(angle_rad) * RAY_LENGTH);
-//     y_end = y_start + (int)(sin(angle_rad) * RAY_LENGTH);
-// 	// x_end = x_start + 100;
-//     // y_end = y_start + 100;
-
-// 	// // To do : fin du rayon en fonction de l'angle du joueur
-// 	// x_end = x_start + (int)cos(degrees_to_radians(player->angle)) * RAY_LENGTH;
-//     // y_end = y_start + (int)sin(degrees_to_radians(player->angle)) * RAY_LENGTH;
-// 	printf("before draw ray : x_end = %d, y_end = %d\n, angle = %f", x_end, y_end, player->angle);
-//     draw_ray(image, x_start, y_start, x_end, y_end);
-// }
 
 // TEST
 void fov_rays(int hauteur_image, int largeur_image, float fov_horizontal_deg) 
@@ -67,9 +33,6 @@ void fov_rays(int hauteur_image, int largeur_image, float fov_horizontal_deg)
     printf("FOV vertical calculé : %f degrés\n", fov_vertical_deg);
 }
 
-
-#include <math.h>
-
 void draw_ray(t_image *image, int x_start, int y_start, int x_end, int y_end)
 {
     int x, y;
@@ -92,8 +55,8 @@ void draw_ray(t_image *image, int x_start, int y_start, int x_end, int y_end)
     float current_y = y_start;
 
     // Couleur de départ et de fin pour le dégradé
-    int color_start = 0xffff80; // Jaune
-    int color_end = 0xb6d7a8; // Vert
+    int color_start = 0xffd55c; // Jaune
+    int color_end = 0xffff80; // Vert
 
     // Draw the ray by iterating through each step
     for (int i = 0; i <= steps; i++)
@@ -119,8 +82,34 @@ void draw_ray(t_image *image, int x_start, int y_start, int x_end, int y_end)
     }
 }
 
+void shoot_rays(t_image *image, t_player *player)
+{
+    // Angle de départ pour tirer les rayons
+    double start_angle = player->angle - (player->fov / 2.0);
+    
+    // Angle entre chaque rayon
+    double angle_increment = player->fov / WINDOW_WIDTH; // Un rayon par pixel sur l'écran
 
-
+    // Tirer des rayons pour chaque pixel dans la FOV du joueur
+    for (int i = 0; i < WINDOW_WIDTH; i++)
+    {
+        // Calculer l'angle pour ce rayon
+        double angle_rad = (start_angle + i * angle_increment) * (M_PI / 180.0);
+        
+        // Calculer les coordonnées de fin du rayon
+        int x_end = (int)(player->x_pos + cos(angle_rad) * RAY_LENGTH);
+        int y_end = (int)(player->y_pos + sin(angle_rad) * RAY_LENGTH);
+        
+        // Assurez-vous que les coordonnées de fin sont à l'intérieur des limites de la carte
+        if (x_end < 0) x_end = 0;
+        if (x_end >= (MAP_WIDTH * TILE_SIZE)) x_end = (MAP_WIDTH * TILE_SIZE) - 1;
+        if (y_end < 0) y_end = 0;
+        if (y_end >= (MAP_HEIGHT * TILE_SIZE)) y_end = (MAP_HEIGHT * TILE_SIZE) - 1;
+        
+        // Dessiner le rayon
+        draw_ray(image, (int)(player->x_pos), (int)(player->y_pos), x_end, y_end);
+    }
+}
 
 // NOT DELETE
 // void draw_ray(t_image *image, int x_start, int y_start, int x_end, int y_end)
@@ -156,35 +145,6 @@ void draw_ray(t_image *image, int x_start, int y_start, int x_end, int y_end)
 //         current_y += step_y;
 //     }
 // }
-
-void shoot_rays(t_image *image, t_player *player)
-{
-    // Angle de départ pour tirer les rayons
-    double start_angle = player->angle - (player->fov / 2.0);
-    
-    // Angle entre chaque rayon
-    double angle_increment = player->fov / WINDOW_WIDTH; // Un rayon par pixel sur l'écran
-
-    // Tirer des rayons pour chaque pixel dans la FOV du joueur
-    for (int i = 0; i < WINDOW_WIDTH; i++)
-    {
-        // Calculer l'angle pour ce rayon
-        double angle_rad = (start_angle + i * angle_increment) * (M_PI / 180.0);
-        
-        // Calculer les coordonnées de fin du rayon
-        int x_end = (int)(player->x_pos + cos(angle_rad) * RAY_LENGTH);
-        int y_end = (int)(player->y_pos + sin(angle_rad) * RAY_LENGTH);
-        
-        // Assurez-vous que les coordonnées de fin sont à l'intérieur des limites de la carte
-        if (x_end < 0) x_end = 0;
-        if (x_end >= (MAP_WIDTH * TILE_SIZE)) x_end = (MAP_WIDTH * TILE_SIZE) - 1;
-        if (y_end < 0) y_end = 0;
-        if (y_end >= (MAP_HEIGHT * TILE_SIZE)) y_end = (MAP_HEIGHT * TILE_SIZE) - 1;
-        
-        // Dessiner le rayon
-        draw_ray(image, (int)(player->x_pos), (int)(player->y_pos), x_end, y_end);
-    }
-}
 
 // void cast_ray(t_image *image, t_player *player) 
 // {

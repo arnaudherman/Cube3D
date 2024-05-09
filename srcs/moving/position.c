@@ -13,7 +13,7 @@ bool is_wall(t_map *map, int x, int y)
     return map->map2d[y][x] == '1';
 }
 
-bool check_collision(t_map *map, double x, double y) 
+bool player_wall_collision(t_map *map, double x, double y) 
 {
     int x_tile_left;
     int x_tile_right;
