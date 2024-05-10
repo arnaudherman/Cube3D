@@ -255,7 +255,9 @@ void draw_ray(t_image *image, int x1, int y1, int x2, int y2, t_map *map)
 
 		// TO DO : DEBUG HERE
         // Check for intersection with walls using DDA algorithm
-        if (map->map2d[y][x] != '0')
+		
+		// Here x = 240 and y = 240
+        if (map->map2d[y / 64][x / 64] != '0')
         {
             printf("Wall found at (%d, %d)\n", x, y);
             break;
