@@ -217,7 +217,7 @@ void fov_rays(int hauteur_image, int largeur_image, float fov_horizontal_deg)
 // }
 
 
-void draw_ray(t_image *image, int x1, int y1, int x2, int y2, t_data *data)
+void draw_ray(t_image *image, int x1, int y1, int x2, int y2, t_map *map)
 {
     int x, y;
     int dx = x2 - x1;
@@ -255,11 +255,11 @@ void draw_ray(t_image *image, int x1, int y1, int x2, int y2, t_data *data)
 
 		// TO DO : DEBUG HERE
         // Check for intersection with walls using DDA algorithm
-        // if (data->map.map2d[y][x] != '0')
-        // {
-        //     printf("Wall found at (%d, %d)\n", x, y);
-        //     break;
-        // }
+        if (map->map2d[y][x] != '0')
+        {
+            printf("Wall found at (%d, %d)\n", x, y);
+            break;
+        }
 
         // Calculer la distance entre le point actuel du rayon et le joueur
         float distance = sqrt((current_x - x1) * (current_x - x1) + (current_y - y1) * (current_y - y1));
@@ -279,7 +279,7 @@ void draw_ray(t_image *image, int x1, int y1, int x2, int y2, t_data *data)
     }
 }
 
-void shoot_rays(t_image *image, t_player *player, t_data *data)
+void shoot_rays(t_image *image, t_player *player, t_map *map)
 {
     // Angle de départ pour tirer les rayons
     double start_angle = player->angle - (player->fov / 2.0);
@@ -304,7 +304,7 @@ void shoot_rays(t_image *image, t_player *player, t_data *data)
         if (y_end >= (MAP_HEIGHT * TILE_SIZE)) y_end = (MAP_HEIGHT * TILE_SIZE) - 1;
         
         // Dessiner le rayon
-        draw_ray(image, (int)(player->x_pos), (int)(player->y_pos), x_end, y_end, data);
+        draw_ray(image, (int)(player->x_pos), (int)(player->y_pos), x_end, y_end, map);
     }
 }
 

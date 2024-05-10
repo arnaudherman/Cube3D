@@ -156,25 +156,25 @@ static void dda_algo(t_data *data)
 // }
 
 // Fonction pour calculer les hauteurs des lignes à dessiner
-static void calculate_line_height(t_data *data) 
-{
-	if (data->ray->side == 0)
-		data->ray->wall_dist = fabs((data->ray->map_x - data->player->x_pos + (1 - data->ray->step_x) / 2) / data->ray->dir_x);
-	else
-		data->ray->wall_dist = fabs((data->ray->map_y - data->player->y_pos + (1 - data->ray->step_y) / 2) / data->ray->dir_y);
-	data->ray->line_height = (int)(data->mlx.win_height / data->ray->wall_dist);
-	data->ray->draw_start = -data->ray->line_height / 2 + data->mlx.win_height / 2;
-	if (data->ray->draw_start < 0)
-		data->ray->draw_start = 0;
-	data->ray->draw_end = data->ray->line_height / 2 + data->mlx.win_height / 2;
-	if (data->ray->draw_end >= data->mlx.win_height)
-		data->ray->draw_end = data->mlx.win_height - 1;
-	if (data->ray->side == 0)
-		data->ray->wall_x = data->player->y_pos + data->ray->wall_dist * data->ray->dir_y;
-	else
-		data->ray->wall_x = data->player->x_pos + data->ray->wall_dist * data->ray->dir_x;
-	data->ray->wall_x -= floor(data->ray->wall_x);
-}
+// static void calculate_line_height(t_data *data) 
+// {
+// 	if (data->ray->side == 0)
+// 		data->ray->wall_dist = fabs((data->ray->map_x - data->player->x_pos + (1 - data->ray->step_x) / 2) / data->ray->dir_x);
+// 	else
+// 		data->ray->wall_dist = fabs((data->ray->map_y - data->player->y_pos + (1 - data->ray->step_y) / 2) / data->ray->dir_y);
+// 	data->ray->line_height = (int)(data->mlx.win_height / data->ray->wall_dist);
+// 	data->ray->draw_start = -data->ray->line_height / 2 + data->mlx.win_height / 2;
+// 	if (data->ray->draw_start < 0)
+// 		data->ray->draw_start = 0;
+// 	data->ray->draw_end = data->ray->line_height / 2 + data->mlx.win_height / 2;
+// 	if (data->ray->draw_end >= data->mlx.win_height)
+// 		data->ray->draw_end = data->mlx.win_height - 1;
+// 	if (data->ray->side == 0)
+// 		data->ray->wall_x = data->player->y_pos + data->ray->wall_dist * data->ray->dir_y;
+// 	else
+// 		data->ray->wall_x = data->player->x_pos + data->ray->wall_dist * data->ray->dir_x;
+// 	data->ray->wall_x -= floor(data->ray->wall_x);
+// }
 
 // int launch_raycasting(t_data *data) {
     
@@ -197,8 +197,7 @@ int raycasting(t_data *data)
 {
 	printf("angle, %f\n", data->player->angle);
 	printf("fov, %f\n", data->player->fov);
-	shoot_rays(data->image, data->player, data);
+	shoot_rays(data->image, data->player, &data->map);
 	// cast_ray(data->image, data->player);	
 	return 0;
 }
-s
