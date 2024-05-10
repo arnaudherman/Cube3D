@@ -1,4 +1,18 @@
-// #include "cub3d-bis.h"
+#include "cub3d-bis.h"
+
+// Fonction pour dessiner un mur
+void draw_wall(t_image *image, t_ray *ray, int x2, int y2, t_map *map)
+{
+    // Calculer la distance entre le joueur et le mur
+    float distance = sqrt((ray->wall_x - ray->x) * (ray->wall_x - ray->x) + (ray->wall_y - ray->y) * (ray->wall_y - ray->y));
+
+    // Calculer la hauteur du mur en fonction de la distance
+    int wall_height = (int)(WALL_HEIGHT / distance);
+
+    // Dessiner le mur
+    // (Utilise une fonction de dessin de mur appropriée selon ta méthode de rendu)
+    // draw_wall_texture(image, wall_x, wall_y, wall_height, map);
+}
 
 // void draw_walls(t_data *data) {
 //     int column = 0;

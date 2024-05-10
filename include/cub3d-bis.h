@@ -139,6 +139,7 @@ typedef struct s_ray {
     int 		draw_end;
 	double 		wall_dist;
     double 		wall_x;
+	double 		wall_y;
 	double 		pov_x;
     double 		dir_x;
     double 		dir_y;
