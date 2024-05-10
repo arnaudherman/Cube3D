@@ -131,8 +131,8 @@ typedef struct s_image
 } t_image;
 
 typedef struct s_ray {
-    int 		step_x;
-    int 		step_y;
+    int 		x;
+    int 		y;
     int 		side;
     int 		line_height;
     int 		draw_start;
@@ -148,6 +148,7 @@ typedef struct s_ray {
     double 		dy;
     double 		sidedist_x;
     double 		sidedist_y;
+	double 		camera_x;
 } t_ray;
 
 typedef struct s_map {

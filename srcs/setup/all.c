@@ -57,30 +57,31 @@ int init_default_all(t_data *data)
 int	init_custom_all(t_data *data)
 {
 	
-	// Handle MLX
 	if (init_mlx_engine(&data->mlx) != 0) {
 		perror("Failed to initialize mlx_engine\n");
 		return 1;
 	}
 
-	// Handle Image
 	if (init_image(data->image, &data->mlx) != 0) {
 		perror("Failed to initialize map\n");
 		return 1;
 	}
 
-	// Handle Map
 	if (init_map(&data->map) != 0) {
 		perror("Failed to initialize map\n");
 		return 1;
 	}
 
-	// Handle Player
-
 	if (init_player(data->player) != 0) {
 		perror("Failed to initialize player\n");
 		return 1;
 	}
+
+	if (init_rays(data->ray, data->player) != 0) {
+		perror("Failed to initialize rays\n");
+		return 1;
+	}
+
 
 	return 0;
 }

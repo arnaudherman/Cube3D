@@ -131,29 +131,29 @@ static void dda_algo(t_data *data)
 // }
 
 // Fonction pour exécuter l'algorithme DDA
-static void perform_dda(t_data *data) 
-{
-	int hit;
+// static void perform_dda(t_data *data) 
+// {
+// 	int hit;
 	
-	hit = 0;
-	while (hit == 0) {
-		if (data->ray->sidedist_x < data->ray->sidedist_y) {
-			data->ray->sidedist_x += data->ray->dx;
-			data->ray->map_x += data->ray->step_x;
-			data->ray->side = 0;
-		} else {
-			data->ray->sidedist_y += data->ray->dy;
-			data->ray->map_y += data->ray->step_y;
-			data->ray->side = 1;
-		}
-		if (data->ray->map_y < 0.25 || data->ray->map_x < 0.25 ||
-		    data->ray->map_y > data->map.h_map - 0.25 ||
-		    data->ray->map_x > data->map.w_map - 1.25)
-			break;
-		else if (data->map.map2d[(int)data->ray->map_y][(int)data->ray->map_x] != '0')
-			hit = 1;
-	}
-}
+// 	hit = 0;
+// 	while (hit == 0) {
+// 		if (data->ray->sidedist_x < data->ray->sidedist_y) {
+// 			data->ray->sidedist_x += data->ray->dx;
+// 			data->ray->map_x += data->ray->step_x;
+// 			data->ray->side = 0;
+// 		} else {
+// 			data->ray->sidedist_y += data->ray->dy;
+// 			data->ray->map_y += data->ray->step_y;
+// 			data->ray->side = 1;
+// 		}
+// 		if (data->ray->map_y < 0.25 || data->ray->map_x < 0.25 ||
+// 		    data->ray->map_y > data->map.h_map - 0.25 ||
+// 		    data->ray->map_x > data->map.w_map - 1.25)
+// 			break;
+// 		else if (data->map.map2d[(int)data->ray->map_y][(int)data->ray->map_x] != '0')
+// 			hit = 1;
+// 	}
+// }
 
 // Fonction pour calculer les hauteurs des lignes à dessiner
 static void calculate_line_height(t_data *data) 
@@ -176,33 +176,29 @@ static void calculate_line_height(t_data *data)
 	data->ray->wall_x -= floor(data->ray->wall_x);
 }
 
-int launch_raycasting(t_data *data) {
+// int launch_raycasting(t_data *data) {
     
-	while (data->ray->step_x < data->mlx.win_width)
-	{
-		perform_dda(&data);
-    	// Calcul des intersections avec les murs
-    	// calculate_wall_intersection(&data);
+// 	while (data->ray->step_x < data->mlx.win_width)
+// 	{
+// 		perform_dda(&data);
+//     	// Calcul des intersections avec les murs
+//     	// calculate_wall_intersection(&data);
     
-    	// Calcul des hauteurs des lignes à dessiner
-    	calculate_line_height(&data);
-		// Edit textures
-		// update_texture_pixels(&data);
-		data->ray->step_x++;	
-	}
-    return 0;
-}
+//     	// Calcul des hauteurs des lignes à dessiner
+//     	calculate_line_height(&data);
+// 		// Edit textures
+// 		// update_texture_pixels(&data);
+// 		data->ray->step_x++;	
+// 	}
+//     return 0;
+// }
 
 int raycasting(t_data *data)
 {
 	printf("angle, %f\n", data->player->angle);
 	printf("fov, %f\n", data->player->fov);
-	shoot_rays(data->image, data->player);
+	shoot_rays(data->image, data->player, data);
 	// cast_ray(data->image, data->player);	
 	return 0;
 }
-
-void rays_wall_collision()
-{
-
-}
+s
