@@ -34,6 +34,7 @@ SRCS += srcs/parsing/color.c \
         srcs/parsing/texture.c
 
 SRCS += srcs/rendering/close.c \
+		srcs/rendering/color.c \
 		srcs/rendering/draw.c \
 		srcs/rendering/frame.c \
         srcs/rendering/image.c \
