@@ -43,7 +43,6 @@
 // # define BACK_S_S 1
 // # define RIGHT_D_D 2
 // # define LEFT_A_Q 0
-# define RAY_LENGTH 300
 # define MOUSE_BORDER_DISTANCE 20
 # define FLOOR 0xE6E6E6
 # define CEILING 0x404040
@@ -157,6 +156,7 @@ typedef struct s_ray {
     double 		sidedist_x;
     double 		sidedist_y;
 	double 		camera_x;
+	float		ray_length;
 } t_ray;
 
 typedef struct s_map {

@@ -1,15 +1,24 @@
 #include "cub3d-bis.h"
 
-// CONVERSION BETWEEN DEGRESS AND RADIANS
-float degrees_to_radians(float angle)
+float get_ray_length(int map_width, int map_height, int window_width, int window_height, float field_of_view) 
 {
-    return angle * (M_PI / 180.0);
+    // Convert the field of view from degrees to radians
+    float fov_rad = field_of_view * M_PI / 180.0;
+
+    // Calculate the horizontal and vertical field of view
+    float horizontal_fov = fov_rad;
+    float vertical_fov = 2.0 * atan(tan(fov_rad / 2.0) * ((float)window_height / window_width));
+
+    // Calculate the horizontal and vertical ray lengths
+    float horizontal_ray_length = map_width / (2.0 * tan(horizontal_fov / 2.0));
+    float vertical_ray_length = map_height / (2.0 * tan(vertical_fov / 2.0));
+
+    // Choose the larger of the two ray lengths
+    float ray_length = (horizontal_ray_length > vertical_ray_length) ? horizontal_ray_length : vertical_ray_length;
+
+    return ray_length;
 }
 
-float radians_to_degrees(float angle)
-{
-    return angle * (180.0 / M_PI);
-}
 
 void fov_rays(int hauteur_image, int largeur_image, float fov_horizontal_deg) 
 {
@@ -35,6 +44,7 @@ void fov_rays(int hauteur_image, int largeur_image, float fov_horizontal_deg)
 // DRAW RAY SUCCESS
 void draw_ray(t_image *image, int x1, int y1, int x2, int y2, t_map *map)
 {
+	int i;
     int x, y;
     int dx = x2 - x1;
     int dy = y2 - y1;
@@ -59,11 +69,12 @@ void draw_ray(t_image *image, int x1, int y1, int x2, int y2, t_map *map)
     // int y2 = y1 + (int)data->ray->dy;
 
     // Couleur de départ et de fin pour le dégradé
-    int color_start = 0xffd55c; // Jaune
-    int color_end = 0xffff80; // Vert
+    // int color_start = 0xffd55c; // Jaune
+    // int color_end = 0xffff80; // Vert
 
     // Draw the ray by iterating through each step
-    for (int i = 0; i <= steps; i++)
+	i = 0;
+    while (i <= steps)
     {
         x = (int)current_x;
         y = (int)current_y;
@@ -79,10 +90,12 @@ void draw_ray(t_image *image, int x1, int y1, int x2, int y2, t_map *map)
         float distance = sqrt((current_x - x1) * (current_x - x1) + (current_y - y1) * (current_y - y1));
 
         // Calculer le dégradé de couleur en fonction de la distance
-        int red = ((color_start >> 16) & 0xFF) * (1 - distance / RAY_LENGTH) + ((color_end >> 16) & 0xFF) * (distance / RAY_LENGTH);
-        int green = ((color_start >> 8) & 0xFF) * (1 - distance / RAY_LENGTH) + ((color_end >> 8) & 0xFF) * (distance / RAY_LENGTH);
-        int blue = (color_start & 0xFF) * (1 - distance / RAY_LENGTH) + (color_end & 0xFF) * (distance / RAY_LENGTH);
-        int color = (red << 16) | (green << 8) | blue;
+        // int red = ((color_start >> 16) & 0xFF) * (1 - distance / RAY_LENGTH) + ((color_end >> 16) & 0xFF) * (distance / RAY_LENGTH);
+        // int green = ((color_start >> 8) & 0xFF) * (1 - distance / RAY_LENGTH) + ((color_end >> 8) & 0xFF) * (distance / RAY_LENGTH);
+        // int blue = (color_start & 0xFF) * (1 - distance / RAY_LENGTH) + (color_end & 0xFF) * (distance / RAY_LENGTH);
+        // int color = (red << 16) | (green << 8) | blue;
+
+		int color = ray_color(distance);
 
         // Dessiner le pixel avec la couleur calculée
         my_mlx_pixel_put(image, x, y, color);
@@ -90,26 +103,32 @@ void draw_ray(t_image *image, int x1, int y1, int x2, int y2, t_map *map)
         // Move to the next position along each dimension
         current_x += step_x;
         current_y += step_y;
+		i++;
     }
 }
 
-void shoot_rays(t_image *image, t_player *player, t_map *map)
+void shoot_rays(t_image *image, t_player *player, t_map *map, t_ray *ray)
 {
-    // Angle de départ pour tirer les rayons
-    double start_angle = player->angle - (player->fov / 2.0);
-    
-    // Angle entre chaque rayon
-    double angle_increment = player->fov / WINDOW_WIDTH; // Un rayon par pixel sur l'écran
+	int i;
+	double start_angle;
+	double angle_increment;
+	double angle_rad;
 
-    // Tirer des rayons pour chaque pixel dans la FOV du joueur
-    for (int i = 0; i < WINDOW_WIDTH; i++)
+    // Start angle to shoot my rays
+    start_angle = player->angle - (player->fov / 2.0);
+    
+    // Angle bewteen each ray (one ray per pixel in the FOV of the player)
+    angle_increment = player->fov / WINDOW_WIDTH;
+
+	i = 0;
+    while (i < WINDOW_WIDTH)
     {
         // Calculer l'angle pour ce rayon
-        double angle_rad = (start_angle + i * angle_increment) * (M_PI / 180.0);
+        angle_rad = (start_angle + i * angle_increment) * (M_PI / 180.0);
         
         // Calculer les coordonnées de fin du rayon
-        int x_end = (int)(player->x_pos + cos(angle_rad) * RAY_LENGTH);
-        int y_end = (int)(player->y_pos + sin(angle_rad) * RAY_LENGTH);
+        int x_end = (int)(player->x_pos + cos(angle_rad) * ray->ray_length);
+        int y_end = (int)(player->y_pos + sin(angle_rad) * ray->ray_length);
         
         // Assurez-vous que les coordonnées de fin sont à l'intérieur des limites de la carte
         if (x_end < 0) x_end = 0;
@@ -117,7 +136,16 @@ void shoot_rays(t_image *image, t_player *player, t_map *map)
         if (y_end < 0) y_end = 0;
         if (y_end >= (MAP_HEIGHT * TILE_SIZE)) y_end = (MAP_HEIGHT * TILE_SIZE) - 1;
         
-        // Dessiner le rayon
         draw_ray(image, (int)(player->x_pos), (int)(player->y_pos), x_end, y_end, map);
+		i++;
     }
+}
+
+int raycasting(t_data *data)
+{
+	printf("angle, %f\n", data->player->angle);
+	printf("fov, %f\n", data->player->fov);
+	shoot_rays(data->image, data->player, &data->map, data->ray);
+	// cast_ray(data->image, data->player);	
+	return 0;
 }

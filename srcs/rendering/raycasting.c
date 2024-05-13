@@ -1,5 +1,15 @@
 #include "../include/cub3d-bis.h"
 
+float degrees_to_radians(float angle)
+{
+    return angle * (M_PI / 180.0);
+}
+
+float radians_to_degrees(float angle)
+{
+    return angle * (180.0 / M_PI);
+}
+
 // RESSOURCES : 
 // Raycasting : https://lodev.org/cgtutor/raycasting.html
 // DDA Algorithm https://lodev.org/cgtutor/raycasting.html
@@ -59,16 +69,6 @@
 //         my_mlx_pixel_put(&data->image, data->ray->x, data->ray->y, 0xBDEDDF);
 // }
 // **********************************************************
-
-// Main function to cast rays
-int raycasting(t_data *data)
-{
-	printf("angle, %f\n", data->player->angle);
-	printf("fov, %f\n", data->player->fov);
-	shoot_rays(data->image, data->player, &data->map);
-	// cast_ray(data->image, data->player);	
-	return 0;
-}
 
 // **********************************************************
 // THIRD VERSION 
