@@ -90,8 +90,10 @@ t_ray *allocate_ray(void)
 	// ray->side = 0;
     // ray->draw_start = 0;
     // ray->draw_end = 0;
-    // ray->wall_dist = 0.0;
+    ray->wall_dist = 0.0;
+	ray->wall_height = 0.0;
     // ray->wall_x = 0.0;
+	// ray->wall_y = 0.0;
     // ray->pov_x = 0.0;
     ray->dir_x = 0.0;
     ray->dir_y = 0.0;

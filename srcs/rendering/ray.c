@@ -32,6 +32,7 @@ void fov_rays(int hauteur_image, int largeur_image, float fov_horizontal_deg)
     printf("FOV vertical calculé : %f degrés\n", fov_vertical_deg);
 }
 
+// DRAW RAY SUCCESS
 void draw_ray(t_image *image, int x1, int y1, int x2, int y2, t_map *map)
 {
     int x, y;

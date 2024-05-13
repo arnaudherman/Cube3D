@@ -6,60 +6,73 @@
 // Video https://www.youtube.com/watch?v=NbSee-XM7WA&t=1s&ab_channel=javidx9
 // https://www.youtube.com/watch?v=W5P8GlaEOSI&ab_channel=AbdulBari
 
+// **********************************************************
+// Try to decompose the raycasting algorithm into smaller functions
 // From player to wall hit
-float calculate_distance(t_player *player, t_ray *ray)
-{
-    float dx = ray->x_end - player->x_pos;
-    float dy = ray->y_end - player->y_pos;
-    float distance = sqrt(dx * dx + dy * dy);
-    return distance;
-}
+// float calculate_distance(t_player *player, t_ray *ray)
+// {
+//     float dx = ray->x_end - player->x_pos;
+//     float dy = ray->y_end - player->y_pos;
+//     float distance = sqrt(dx * dx + dy * dy);
+//     return distance;
+// }
 
-// Increment each step
-static void calculate_step_increment(t_ray *ray)
-{
-    if (fabs(ray->dx) > fabs(ray->dy))
-        ray->step = fabs(ray->dx);
-    else 
-        ray->step = fabs(ray->dy);
+// // Increment each step
+// static void calculate_step_increment(t_ray *ray)
+// {
+//     if (fabs(ray->dx) > fabs(ray->dy))
+//         ray->step = fabs(ray->dx);
+//     else 
+//         ray->step = fabs(ray->dy);
 
-    ray->xinc = ray->dx / ray->step;
-    ray->yinc = ray->dy / ray->step;
-}
+//     ray->xinc = ray->dx / ray->step;
+//     ray->yinc = ray->dy / ray->step;
+// }
 
-static void dda_algorithm(t_data *data)
-{
-    int i;
-	i = 0;
-    data->ray->x = (float)data->player->x_pos;
-    data->ray->y = (float)data->player->y_pos;
+// static void dda_algorithm(t_data *data)
+// {
+//     int i;
+// 	i = 0;
+//     data->ray->x = (float)data->player->x_pos;
+//     data->ray->y = (float)data->player->y_pos;
 
-    calculate_step_increment(data->ray);
+//     calculate_step_increment(data->ray);
 
-    while (i < data->ray->step)
-    {
-        if (data->map.map2d[data->ray->y][data->ray->x] != '0')
-        {
-            printf("Wall found at (%d, %d)\n", data->ray->x, data->ray->y);
-            break;
-        }
+//     while (i < data->ray->step)
+//     {
+//         if (data->map.map2d[data->ray->y / 64][data->ray->x / 64] != '0')
+//         {
+//             printf("Wall found at (%d, %d)\n", data->ray->x, data->ray->y);
+//             break;
+//         }
 		
-        float distance = calculate_distance(data->player, data->ray);
+//         float distance = calculate_distance(data->player, data->ray);
 
-        my_mlx_pixel_put(&data->image, data->ray->x, data->ray->y, ray_color(distance));
+//         my_mlx_pixel_put(&data->image, data->ray->x, data->ray->y, ray_color(distance));
 
-        data->ray->x += data->ray->xinc;
-        data->ray->y += data->ray->yinc;
-        i++;
-    }
+//         data->ray->x += data->ray->xinc;
+//         data->ray->y += data->ray->yinc;
+//         i++;
+//     }
 
-    if (data->map.map2d[data->ray->y][data->ray->x] != '0')
-        my_mlx_pixel_put(&data->image, data->ray->x, data->ray->y, 0xBDEDDF);
+//     if (data->map.map2d[data->ray->y][data->ray->x] != '0')
+//         my_mlx_pixel_put(&data->image, data->ray->x, data->ray->y, 0xBDEDDF);
+// }
+// **********************************************************
+
+// Main function to cast rays
+int raycasting(t_data *data)
+{
+	printf("angle, %f\n", data->player->angle);
+	printf("fov, %f\n", data->player->fov);
+	shoot_rays(data->image, data->player, &data->map);
+	// cast_ray(data->image, data->player);	
+	return 0;
 }
 
-
+// **********************************************************
+// THIRD VERSION 
 // TO DO : USE INTS INSTEAD OF FLOATS for map coordinates x1, y1, x2, y2
-// SUCCESSSSSSS THIRD VERSION
 // static void dda_algo(t_data *data)
 // {
 //     float xinc;
@@ -108,8 +121,10 @@ static void dda_algorithm(t_data *data)
 // 	// Draw hits here if wall found
 //     my_mlx_pixel_put(&data->image, (int)x1, (int)y1, 0xBDEDDF);
 // }
+// **********************************************************
 
 
+// **********************************************************
 // SECOND VERSION
 // (x1, y1) is player position, (x2, y2) is the intersection point
 // static void dda_algo(t_data *data, float x2, float y2)
@@ -149,7 +164,10 @@ static void dda_algorithm(t_data *data)
 //         i++;
 //     }
 // }
+// **********************************************************
 
+
+// **********************************************************
 // FIRST VERSION
 // static void dda_algo(float x1, float y1, float x2, float y2)
 // {
@@ -205,6 +223,7 @@ static void dda_algorithm(t_data *data)
 // 			hit = 1;
 // 	}
 // }
+// **********************************************************
 
 // Fonction pour calculer les hauteurs des lignes à dessiner
 // static void calculate_line_height(t_data *data) 
@@ -226,29 +245,3 @@ static void dda_algorithm(t_data *data)
 // 		data->ray->wall_x = data->player->x_pos + data->ray->wall_dist * data->ray->dir_x;
 // 	data->ray->wall_x -= floor(data->ray->wall_x);
 // }
-
-// int launch_raycasting(t_data *data) {
-    
-// 	while (data->ray->step_x < data->mlx.win_width)
-// 	{
-// 		perform_dda(&data);
-//     	// Calcul des intersections avec les murs
-//     	// calculate_wall_intersection(&data);
-    
-//     	// Calcul des hauteurs des lignes à dessiner
-//     	calculate_line_height(&data);
-// 		// Edit textures
-// 		// update_texture_pixels(&data);
-// 		data->ray->step_x++;	
-// 	}
-//     return 0;
-// }
-
-int raycasting(t_data *data)
-{
-	printf("angle, %f\n", data->player->angle);
-	printf("fov, %f\n", data->player->fov);
-	shoot_rays(data->image, data->player, &data->map);
-	// cast_ray(data->image, data->player);	
-	return 0;
-}

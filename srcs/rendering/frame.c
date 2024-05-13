@@ -25,6 +25,7 @@ int	render_next_frame(t_data *data)
 	// TO DO : remove double mlx_clear_window ??
 	// mlx_clear_window(data->mlx.mlx_ptr, data->mlx.mlx_win_ptr);
 	raycasting(data);
+	draw_wall(data);
 	// printf(" 1) x_pos : %f\n", data->player->x_pos);
 	// printf(" 1) y_pos : %f\n", data->player->y_pos);
 

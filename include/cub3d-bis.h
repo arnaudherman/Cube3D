@@ -48,6 +48,7 @@
 # define FLOOR 0xE6E6E6
 # define CEILING 0x404040
 # define TEXTURE 42
+# define WALL_HEIGHT (WINDOW_HEIGHT / 2)
 /* KEYS CONSTANTS */
 # define ESC_KEY 53
 # define KEY_W 13
@@ -143,6 +144,7 @@ typedef struct s_ray {
     int 		x_end;
 	int			y_end;
 	double 		wall_dist;
+	double 		wall_height;
     double 		wall_x;
 	double 		wall_y;
 	double 		pov_x;
