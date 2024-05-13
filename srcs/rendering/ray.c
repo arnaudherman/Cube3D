@@ -42,7 +42,7 @@ void fov_rays(int hauteur_image, int largeur_image, float fov_horizontal_deg)
 }
 
 // DRAW RAY SUCCESS
-void draw_ray(t_image *image, int x1, int y1, int x2, int y2, t_map *map)
+void draw_ray(t_image *image, int x1, int y1, int x2, int y2, t_map *map, t_ray *ray)
 {
 	int i;
     int x, y;
@@ -69,8 +69,8 @@ void draw_ray(t_image *image, int x1, int y1, int x2, int y2, t_map *map)
     // int y2 = y1 + (int)data->ray->dy;
 
     // Couleur de départ et de fin pour le dégradé
-    // int color_start = 0xffd55c; // Jaune
-    // int color_end = 0xffff80; // Vert
+    int color_start = 0xffd55c; // Jaune
+    int color_end = 0xffff80; // Vert
 
     // Draw the ray by iterating through each step
 	i = 0;
@@ -90,12 +90,12 @@ void draw_ray(t_image *image, int x1, int y1, int x2, int y2, t_map *map)
         float distance = sqrt((current_x - x1) * (current_x - x1) + (current_y - y1) * (current_y - y1));
 
         // Calculer le dégradé de couleur en fonction de la distance
-        // int red = ((color_start >> 16) & 0xFF) * (1 - distance / RAY_LENGTH) + ((color_end >> 16) & 0xFF) * (distance / RAY_LENGTH);
-        // int green = ((color_start >> 8) & 0xFF) * (1 - distance / RAY_LENGTH) + ((color_end >> 8) & 0xFF) * (distance / RAY_LENGTH);
-        // int blue = (color_start & 0xFF) * (1 - distance / RAY_LENGTH) + (color_end & 0xFF) * (distance / RAY_LENGTH);
-        // int color = (red << 16) | (green << 8) | blue;
+        int red = ((color_start >> 16) & 0xFF) * (1 - distance / ray->ray_length) + ((color_end >> 16) & 0xFF) * (distance / ray->ray_length);
+        int green = ((color_start >> 8) & 0xFF) * (1 - distance / ray->ray_length) + ((color_end >> 8) & 0xFF) * (distance / ray->ray_length);
+        int blue = (color_start & 0xFF) * (1 - distance / ray->ray_length) + (color_end & 0xFF) * (distance / ray->ray_length);
+        int color = (red << 16) | (green << 8) | blue;
 
-		int color = ray_color(distance);
+		// int color = ray_color(distance);
 
         // Dessiner le pixel avec la couleur calculée
         my_mlx_pixel_put(image, x, y, color);
@@ -136,7 +136,7 @@ void shoot_rays(t_image *image, t_player *player, t_map *map, t_ray *ray)
         if (y_end < 0) y_end = 0;
         if (y_end >= (MAP_HEIGHT * TILE_SIZE)) y_end = (MAP_HEIGHT * TILE_SIZE) - 1;
         
-        draw_ray(image, (int)(player->x_pos), (int)(player->y_pos), x_end, y_end, map);
+        draw_ray(image, (int)(player->x_pos), (int)(player->y_pos), x_end, y_end, map, ray);
 		i++;
     }
 }
