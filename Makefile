@@ -44,7 +44,8 @@ SRCS += srcs/rendering/close.c \
         srcs/rendering/ray.c \
         srcs/rendering/raycasting.c \
         srcs/rendering/draw.c \
-        srcs/rendering/texture.c
+        srcs/rendering/texture.c \
+		srcs/rendering/wall.c
 
 SRCS += srcs/utils/get_next_line.c \
         srcs/utils/utils.c

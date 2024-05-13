@@ -6,57 +6,108 @@
 // Video https://www.youtube.com/watch?v=NbSee-XM7WA&t=1s&ab_channel=javidx9
 // https://www.youtube.com/watch?v=W5P8GlaEOSI&ab_channel=AbdulBari
 
-
-// TO DO : USE INTS INSTEAD OF FLOATS for map coordinates x1, y1, x2, y2
-// THIRD VERSION
-static void dda_algo(t_data *data)
+// From player to wall hit
+float calculate_distance(t_player *player, t_ray *ray)
 {
-    float xinc;
-    float yinc;
-    float step;
-	float distance;
-    int i;
+    float dx = ray->x_end - player->x_pos;
+    float dy = ray->y_end - player->y_pos;
+    float distance = sqrt(dx * dx + dy * dy);
+    return distance;
+}
 
-    float x1 = (float)data->player->x_pos;
-    float y1 = (float)data->player->y_pos;
-
-    data->ray->dx = cos(data->player->angle);
-    data->ray->dy = sin(data->player->angle);
-
-	float x2 = x1 + data->ray->dx;
-	float y2 = y1 + data->ray->dy;
-
-    if(abs(data->ray->dx) > abs(data->ray->dy))
-        step = abs(data->ray->dx);
+// Increment each step
+static void calculate_step_increment(t_ray *ray)
+{
+    if (fabs(ray->dx) > fabs(ray->dy))
+        ray->step = fabs(ray->dx);
     else 
-        step = abs(data->ray->dy);
+        ray->step = fabs(ray->dy);
 
-	// TO DO : passer de double a float check
-	// conversion peut entraîner une perte de précision
-    xinc = (float)data->ray->dx / step;
-    yinc = (float)data->ray->dy / step;
+    ray->xinc = ray->dx / ray->step;
+    ray->yinc = ray->dy / ray->step;
+}
 
-    i = 0;
-    while (i < step)
+static void dda_algorithm(t_data *data)
+{
+    int i;
+	i = 0;
+    data->ray->x = (float)data->player->x_pos;
+    data->ray->y = (float)data->player->y_pos;
+
+    calculate_step_increment(data->ray);
+
+    while (i < data->ray->step)
     {
-        if (data->map.map2d[(int)y1][(int)x1] != '0')
+        if (data->map.map2d[data->ray->y][data->ray->x] != '0')
         {
-            printf("Wall found at (%d, %d)\n", (int)x1, (int)y1);
+            printf("Wall found at (%d, %d)\n", data->ray->x, data->ray->y);
             break;
         }
+		
+        float distance = calculate_distance(data->player, data->ray);
 
-		// Calculer la distance entre le point actuel du rayon et le joueur
-        distance = sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+        my_mlx_pixel_put(&data->image, data->ray->x, data->ray->y, ray_color(distance));
 
-        // En fonction de la couleur calculee par ma fonct ray_color();
-        my_mlx_pixel_put(&data->image, x1, y1, ray_color(distance));
-        x1 += xinc;
-        y1 += yinc;
+        data->ray->x += data->ray->xinc;
+        data->ray->y += data->ray->yinc;
         i++;
     }
-	// Draw hits here if wall found
-    my_mlx_pixel_put(&data->image, (int)x1, (int)y1, 0xBDEDDF);
+
+    if (data->map.map2d[data->ray->y][data->ray->x] != '0')
+        my_mlx_pixel_put(&data->image, data->ray->x, data->ray->y, 0xBDEDDF);
 }
+
+
+// TO DO : USE INTS INSTEAD OF FLOATS for map coordinates x1, y1, x2, y2
+// SUCCESSSSSSS THIRD VERSION
+// static void dda_algo(t_data *data)
+// {
+//     float xinc;
+//     float yinc;
+//     float step;
+//	   float distance;
+//     int i;
+
+//     float x1 = (float)data->player->x_pos;
+//     float y1 = (float)data->player->y_pos;
+
+//     data->ray->dx = cos(data->player->angle);
+//     data->ray->dy = sin(data->player->angle);
+
+// 	float x2 = x1 + data->ray->dx;
+// 	float y2 = y1 + data->ray->dy;
+
+//     if(abs(data->ray->dx) > abs(data->ray->dy))
+//         step = abs(data->ray->dx);
+//     else 
+//         step = abs(data->ray->dy);
+
+// 	// TO DO : passer de double a float check
+// 	// conversion peut entraîner une perte de précision
+//     xinc = (float)data->ray->dx / step;
+//     yinc = (float)data->ray->dy / step;
+
+//     i = 0;
+//     while (i < step)
+//     {
+//         if (data->map.map2d[(int)y1][(int)x1] != '0')
+//         {
+//             printf("Wall found at (%d, %d)\n", (int)x1, (int)y1);
+//             break;
+//         }
+
+// 		// Calculer la distance entre le point actuel du rayon et le joueur
+//         distance = delta_player_hits(data->player, data->ray);
+
+//         // En fonction de la couleur calculee par ma fonct ray_color();
+//         my_mlx_pixel_put(&data->image, x1, y1, ray_color(distance));
+//         x1 += xinc;
+//         y1 += yinc;
+//         i++;
+//     }
+// 	// Draw hits here if wall found
+//     my_mlx_pixel_put(&data->image, (int)x1, (int)y1, 0xBDEDDF);
+// }
 
 
 // SECOND VERSION

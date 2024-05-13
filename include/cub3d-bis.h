@@ -133,10 +133,15 @@ typedef struct s_image
 typedef struct s_ray {
     int 		x;
     int 		y;
+	int 		xinc;
+	int 		yinc;
+	int 		step;
     int 		side;
     int 		line_height;
-    int 		draw_start;
-    int 		draw_end;
+    int 		x_start;
+	int 		y_start;
+    int 		x_end;
+	int			y_end;
 	double 		wall_dist;
     double 		wall_x;
 	double 		wall_y;
@@ -431,6 +436,8 @@ int 		raycasting(t_data *data);
 void		found_textures_data(t_data *data);
 // Located in *color.c*
 void		color_data(t_data *data);
+// Located in *wall.c*
+float delta_player_hits(t_player *player, t_ray *ray);
 
 /* -------------------- LIBFT -------------------- */
 
