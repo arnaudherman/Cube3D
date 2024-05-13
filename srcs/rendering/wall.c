@@ -42,7 +42,7 @@ void draw_wall_column(t_data *data, int column, float angle)
     }
 }
 
-void draw_wall(t_data *data)
+void draw_wall(t_data *data, int x, int y)
 {
     int column = 0;
     float angle = data->player->angle - (FOV / 2);

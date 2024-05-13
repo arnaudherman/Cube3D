@@ -7,6 +7,7 @@ float get_ray_length(int map_width, int map_height, int window_width, int window
 
     // Calculate the horizontal and vertical field of view
     float horizontal_fov = fov_rad;
+	// TO DO : check if use of atan2 is better
     float vertical_fov = 2.0 * atan(tan(fov_rad / 2.0) * ((float)window_height / window_width));
 
     // Calculate the horizontal and vertical ray lengths
@@ -42,16 +43,17 @@ void fov_rays(int hauteur_image, int largeur_image, float fov_horizontal_deg)
 }
 
 // DRAW RAY SUCCESS
-void draw_ray(t_image *image, int x1, int y1, int x2, int y2, t_map *map, t_ray *ray)
+void draw_ray(t_image *image, int x1, int y1, int x2, int y2, t_map *map, t_ray *ray,  t_data *data)
 {
 	int i;
     int x, y;
     int dx = x2 - x1;
     int dy = y2 - y1;
 
+	// TO DO : delete ???
     // Determine the sign of the step (i.e., +1 or -1) for each dimension
-    int sign_x = (dx > 0) ? 1 : -1;
-    int sign_y = (dy > 0) ? 1 : -1;
+    // int sign_x = (dx > 0) ? 1 : -1;
+    // int sign_y = (dy > 0) ? 1 : -1;
 
     // Determine the number of steps required along each dimension
     int steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy);
@@ -64,14 +66,6 @@ void draw_ray(t_image *image, int x1, int y1, int x2, int y2, t_map *map, t_ray 
     float current_x = x1;
     float current_y = y1;
 
-	// TO DO : x2 and y2 already passed in paramater
-    // int x2 = x1 + (int)data->ray->dx;
-    // int y2 = y1 + (int)data->ray->dy;
-
-    // Couleur de départ et de fin pour le dégradé
-    int color_start = 0xffd55c; // Jaune
-    int color_end = 0xffff80; // Vert
-
     // Draw the ray by iterating through each step
 	i = 0;
     while (i <= steps)
@@ -82,23 +76,15 @@ void draw_ray(t_image *image, int x1, int y1, int x2, int y2, t_map *map, t_ray 
 		// Yooooo, here x = 240 and y = 240, divide by 64 to get the right position
         if (map->map2d[y / 64][x / 64] != '0')
         {
-            printf("Wall found at (%d, %d)\n", x, y);
+            printf("Wall found at (%d, %d)\n", (x / 64), (y / 64));
+			draw_wall(data, x, y);
             break;
         }
 
         // Calculer la distance entre le point actuel du rayon et le joueur
         float distance = sqrt((current_x - x1) * (current_x - x1) + (current_y - y1) * (current_y - y1));
 
-        // Calculer le dégradé de couleur en fonction de la distance
-        int red = ((color_start >> 16) & 0xFF) * (1 - distance / ray->ray_length) + ((color_end >> 16) & 0xFF) * (distance / ray->ray_length);
-        int green = ((color_start >> 8) & 0xFF) * (1 - distance / ray->ray_length) + ((color_end >> 8) & 0xFF) * (distance / ray->ray_length);
-        int blue = (color_start & 0xFF) * (1 - distance / ray->ray_length) + (color_end & 0xFF) * (distance / ray->ray_length);
-        int color = (red << 16) | (green << 8) | blue;
-
-		// int color = ray_color(distance);
-
-        // Dessiner le pixel avec la couleur calculée
-        my_mlx_pixel_put(image, x, y, color);
+        my_mlx_pixel_put(image, x, y, 0xffd55c);
 
         // Move to the next position along each dimension
         current_x += step_x;
@@ -107,7 +93,7 @@ void draw_ray(t_image *image, int x1, int y1, int x2, int y2, t_map *map, t_ray 
     }
 }
 
-void shoot_rays(t_image *image, t_player *player, t_map *map, t_ray *ray)
+void shoot_rays(t_image *image, t_player *player, t_map *map, t_ray *ray, t_data *data)
 {
 	int i;
 	double start_angle;
@@ -136,7 +122,7 @@ void shoot_rays(t_image *image, t_player *player, t_map *map, t_ray *ray)
         if (y_end < 0) y_end = 0;
         if (y_end >= (MAP_HEIGHT * TILE_SIZE)) y_end = (MAP_HEIGHT * TILE_SIZE) - 1;
         
-        draw_ray(image, (int)(player->x_pos), (int)(player->y_pos), x_end, y_end, map, ray);
+        draw_ray(image, (int)(player->x_pos), (int)(player->y_pos), x_end, y_end, map, ray, data);
 		i++;
     }
 }
@@ -145,7 +131,7 @@ int raycasting(t_data *data)
 {
 	printf("angle, %f\n", data->player->angle);
 	printf("fov, %f\n", data->player->fov);
-	shoot_rays(data->image, data->player, &data->map, data->ray);
+	shoot_rays(data->image, data->player, &data->map, data->ray, data);
 	// cast_ray(data->image, data->player);	
 	return 0;
 }
