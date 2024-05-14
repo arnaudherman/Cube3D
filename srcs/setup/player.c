@@ -32,8 +32,8 @@ int	init_player(t_player *player)
 {
 		// TO DO : GO recup la position de départ
 		// set_position(player);
-		player->x_pos = 240;
-		player->y_pos = 240;
+		player->x_pos = 110;
+		player->y_pos = 110;
 		player->speed = SPEED;
 		player->fov = FOV;
 		player->rotate = ROTATION;
@@ -47,7 +47,7 @@ int	init_player(t_player *player)
 		player->y_dir = 0; 
 		player->x_plane = 0.66;
 		player->y_plane = 0.66;
-		player->size = 24;
+		player->size = 20;
 		player->color = 0x992800;
 		return 0;
 }

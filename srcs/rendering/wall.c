@@ -5,55 +5,67 @@ void	get_wall_dist(t_player *player, t_ray *ray)
 {
     float dx;
 	float dy;
-	float distance;
 
 	dx = ray->x_end - player->x_pos;
     dy = ray->y_end - player->y_pos;
-    distance = sqrt(dx * dx + dy * dy);
-
-    ray->wall_dist = distance;
-	return ;
+    ray->wall_dist = sqrt(dx * dx + dy * dy);
 }
 
 void	get_wall_height(t_ray *ray)
 {
-    int wall_height;
-	
 	if (ray->wall_dist == 0)
 		ray->wall_dist = 1;
-	wall_height = (int)(WALL_HEIGHT / ray->wall_dist);
-	ray->wall_height = wall_height;
-    return ;
+	ray->wall_height = (int)(WALL_HEIGHT / ray->wall_dist);
 }
 
-void draw_wall_column(t_data *data, int column, float angle)
+void draw_wall_column(t_data *data, int column, int wall_height)
 {
     int top;
 	int bottom;
 	int y;
 	
-	top = (WINDOW_HEIGHT - data->ray->wall_height) / 2;
-    bottom = top + data->ray->wall_height;
+	top = (WINDOW_HEIGHT - wall_height) / 2;
+    bottom = top + wall_height;
     y = top;
     while (y < bottom)
     {
-        my_mlx_pixel_put(data->image, column, y, 0x808080);
+        my_mlx_pixel_put(data->image, column, y, 0xBBA498);
         y++;
     }
 }
 
+// void draw_wall(t_data *data, int x, int y)
+// {
+//     int column = 0;
+//     float angle = data->player->angle - (FOV / 2);
+    
+//     while (column < WINDOW_WIDTH)
+//     {
+//         get_wall_dist(data->player, data->ray);
+//         get_wall_height(data->ray);
+//         draw_wall_column(data, column, angle);
+//         angle += (FOV / WINDOW_WIDTH);
+// 		column++;
+//     }
+// }
+
 void draw_wall(t_data *data, int x, int y)
 {
-    int column = 0;
-    float angle = data->player->angle - (FOV / 2);
-    
-    while (column < WINDOW_WIDTH)
-    {
-        get_wall_dist(data->player, data->ray);
-        get_wall_height(data->ray);
-        draw_wall_column(data, column, angle);
-        
-        column++;
-        angle += (FOV / WINDOW_WIDTH);
-    }
+    // Convertir les coordonnées de la grille en coordonnées du monde
+    float world_x = data->player->x_pos + x * TILE_SIZE;
+    float world_y = data->player->y_pos + y * TILE_SIZE;
+
+    // Convertir les coordonnées du monde en coordonnées de l'écran
+    float screen_x = (world_x - data->player->x_pos) * cos(data->player->angle) - (world_y - data->player->y_pos) * sin(data->player->angle) + data->player->x_pos;
+    float screen_y = (world_x - data->player->x_pos) * sin(data->player->angle) + (world_y - data->player->y_pos) * cos(data->player->angle) + data->player->y_pos;
+
+    // Calculer la distance entre le mur et le joueur (à titre d'exemple, vous pouvez utiliser une autre méthode pour cela)
+    float distance = sqrt((screen_x - data->player->x_pos) * (screen_x - data->player->x_pos) + (screen_y - data->player->y_pos) * (screen_y - data->player->y_pos));
+
+    // Calculer la hauteur du mur sur l'écran en fonction de sa distance
+    int wall_height = (int)(WALL_HEIGHT / distance);
+
+    // Dessiner le mur sur l'écran
+    draw_wall_column(data, x, wall_height);
 }
+

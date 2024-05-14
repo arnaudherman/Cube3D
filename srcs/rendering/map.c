@@ -1,5 +1,14 @@
 #include "cub3d-bis.h"
 
+void draw_minimap_background(t_image *image, int color) {
+    // Remplir la zone de la carte avec la couleur spécifiée
+    for (int y = 0; y < MAP_HEIGHT*TILE_SIZE; y++) {
+        for (int x = 0; x < MAP_HEIGHT*TILE_SIZE; x++) {
+            my_mlx_pixel_put(image, x, y, 0xbba498);
+        }
+    }
+}
+
 void draw_map_background(t_image *image, int color) {
     // Remplir la zone de la carte avec la couleur spécifiée
     for (int y = 0; y < WINDOW_HEIGHT; y++) {
@@ -65,6 +74,7 @@ int draw_map(t_image *image, t_map *map) {
 	int y;
 
 	draw_map_background(image, 0xa1b65e);
+	draw_minimap_background(image, 0xbba498);
     draw_vertical_lines(image);
 
     draw_horizontal_lines(image);

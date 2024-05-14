@@ -18,10 +18,10 @@
 /* /\_/\_/\_/\_/\_/\_/\_/\_/\_/\_ MACRO _/\_/\_/\_/\_/\_/\_/\_/\_/\_/\ */
 
 # define WINDOW_WIDTH 1920
-# define WINDOW_HEIGHT 1000
-# define TILE_SIZE 64
-# define MAPX 8
-# define MAPYX 8
+# define WINDOW_HEIGHT 1080
+# define TILE_SIZE 32
+// # define MAPX 8
+// # define MAPY 8
 # define MAP_HEIGHT 10
 # define MAP_WIDTH 10
 # define FOV 66

@@ -74,10 +74,10 @@ void draw_ray(t_image *image, int x1, int y1, int x2, int y2, t_map *map, t_ray 
         y = (int)current_y;
 		
 		// Hey dont forget to divide by 64 to get the right position on your grid
-        if (map->map2d[y / 64][x / 64] != '0')
+        if (map->map2d[y / 32][x / 32] != '0')
         {
-            printf("Wall found at (%d, %d)\n", (x / 64), (y / 64));
-			// draw_wall(data, x, y);
+            printf("Wall found at (%d, %d)\n", (x / 32), (y / 32));
+			draw_wall(data, x, y);
             break;
         }
 
