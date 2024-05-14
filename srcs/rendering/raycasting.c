@@ -10,6 +10,11 @@ float radians_to_degrees(float angle)
     return angle * (180.0 / M_PI);
 }
 
+// void draw_world(t_image *image, t_map *map, t_player *player, t_ray *ray)
+// {
+
+// }
+
 // RESSOURCES : 
 // Raycasting : https://lodev.org/cgtutor/raycasting.html
 // DDA Algorithm https://lodev.org/cgtutor/raycasting.html

@@ -1,21 +1,35 @@
 #include "cub3d-bis.h"
 
-void draw_minimap_background(t_image *image, int color) {
-    // Remplir la zone de la carte avec la couleur spécifiée
-    for (int y = 0; y < MAP_HEIGHT*TILE_SIZE; y++) {
-        for (int x = 0; x < MAP_HEIGHT*TILE_SIZE; x++) {
-            my_mlx_pixel_put(image, x, y, 0xbba498);
-        }
-    }
+void draw_map_bg(t_image *image, int color) 
+{
+	int x;
+	int y;
+
+	y = 0;
+    while (y < WINDOW_HEIGHT) {
+		x = 0;
+		while (x < WINDOW_WIDTH) {
+			my_mlx_pixel_put(image, x, y, color);
+			x++;
+		}
+		y++;
+	}
 }
 
-void draw_map_background(t_image *image, int color) {
-    // Remplir la zone de la carte avec la couleur spécifiée
-    for (int y = 0; y < WINDOW_HEIGHT; y++) {
-        for (int x = 0; x < WINDOW_WIDTH; x++) {
-            my_mlx_pixel_put(image, x, y, color);
-        }
-    }
+void draw_minimap_bg(t_image *image, int color) 
+{
+	int x;
+	int y;
+
+	y = 0;
+    while (y < MAP_HEIGHT * TILE_SIZE) {
+		x = 0;
+		while (x < MAP_WIDTH * TILE_SIZE) {
+			my_mlx_pixel_put(image, x, y, color);
+			x++;
+		}
+		y++;
+	}
 }
 
 void draw_tile(t_image *image, int x, int y) {
@@ -73,8 +87,8 @@ int draw_map(t_image *image, t_map *map) {
 	int x;
 	int y;
 
-	draw_map_background(image, 0xa1b65e);
-	draw_minimap_background(image, 0xbba498);
+	draw_map_bg(image, 0xa1b65e);
+	draw_minimap_bg(image, 0xbba498);
     draw_vertical_lines(image);
 
     draw_horizontal_lines(image);

@@ -29,7 +29,7 @@ void draw_wall_column(t_data *data, int column, int wall_height)
     y = top;
     while (y < bottom)
     {
-        my_mlx_pixel_put(data->image, column, y, 0xBBA498);
+        my_mlx_pixel_put(data->map2d, column, y, 0xBBA498);
         y++;
     }
 }

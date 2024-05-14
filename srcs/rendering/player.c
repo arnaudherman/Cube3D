@@ -24,11 +24,10 @@
 int draw_player(t_image *image, t_player *player) 
 {
     int x, y;
-    int x_center = (int)player->x_pos; // Coordonnée x du centre du joueur
-    int y_center = (int)player->y_pos; // Coordonnée y du centre du joueur
-    int half_size = player->size / 2; // Moitié de la taille du joueur
+    int x_center = (int)player->x_pos;
+    int y_center = (int)player->y_pos;
+    int half_size = player->size / 2;
 
-    // Calcul des coordonnées de début et de fin du rectangle représentant le joueur
     int x_start = x_center - half_size;
     int y_start = y_center - half_size;
     int x_end = x_center + half_size;

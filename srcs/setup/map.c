@@ -76,7 +76,6 @@ int fill_map(t_map *map)
 int init_map(t_map *map)
 {
 	int i;
-    // Initialisation des champs de la structure t_map
     map->w_map = MAP_WIDTH;
     map->h_map = MAP_HEIGHT;
 

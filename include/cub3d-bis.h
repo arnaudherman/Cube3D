@@ -169,16 +169,19 @@ typedef struct s_map {
 	t_ray  		*ray;
 } t_map;
 
-typedef struct s_minimap
-{
-	char	**map;
-	t_image	*img;
-	double	size;
-	int		offset_x;
-	int		offset_y;
-	int		view_dist;
-	int		tile_size;
-} t_minimap;
+// typedef struct s_minimap
+// {
+//     int			w_minimap;
+//     int 		h_minimap;
+// 	char 		**minimap2d;
+// 	int			tile_size;
+//     int 		x_minimap;
+//     int 		y_minimap;
+// 	unsigned int color;
+// 	t_image	*img;
+// 	t_ray 	*ray;
+	
+// } t_minimap;
 
 typedef struct s_player
 {
@@ -251,8 +254,9 @@ typedef struct s_data
 {
 	t_mlx		mlx;
 	t_map		map;
-	t_minimap	minimap;
-	t_image  	*image;
+	// t_minimap	minimap;
+	t_image  	*map2d;
+	t_image 	*world;
 	t_player	*player;
 	t_keys		*keys;
 	t_ray  		*ray;
@@ -320,7 +324,7 @@ int			malloc_map2d(t_map *map);
 int			fill_map(t_map *map);
 int 		init_map(t_map *map);
 // Located in *minimap.c*
-t_minimap 	*allocate_minimap(void); 
+// t_minimap 	*allocate_minimap(void); 
 // Located in *player.c*
 t_player	*allocate_player(void);
 static void	default_player(t_player *player);

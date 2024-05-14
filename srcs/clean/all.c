@@ -37,7 +37,8 @@
 void	free_if_malloc_failed(t_data *data)
 {
     // Libération de la mémoire allouée dynamiquement
-    free(data->image);
+    free(data->map2d);
+	free(data->world);
     free(data->player);
     free(data->keys);
     free(data->ray);
@@ -49,7 +50,8 @@ void	free_if_malloc_failed(t_data *data)
 void	free_all(t_data *data)
 {
     // Free pointers 
-    free(data->image);
+    free(data->map2d);
+	free(data->world);
     free(data->player);
     free(data->keys);
     free(data->ray);

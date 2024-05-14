@@ -5,20 +5,18 @@
 	// printf("rows: %d\n", rows);
 	// printf("columns: %d\n", columns);
 
+	// Use sleep() to test leaks with Instrument
+	// sleep(10);
+
 // TO DO free all allocated structs when not needed anymroe
 int	main(int ac, char **av) 
 {
 	t_data	*data;
 
-	// Use sleep() to test leaks with Instrument
-	// sleep(10);
-
-	// CHECK
 	// if (ac != 2)
 	// 	perror("There must be precisely 2 arguments\n");
 	data = malloc(sizeof(t_data));
 
-	// INIT
 	if (init_default_all(data) != 0) {
         perror("Failed to init_default_all in main\n");
         return -1;
@@ -29,17 +27,8 @@ int	main(int ac, char **av)
         return -1;
     }
 	
-	// PARSE ARGS	TO DO : ???) 
-
-	// RAYCASTING
-
-	// LOOP
-	// 0x60300001abf0
-	// mlx_key_hook(data->mlx.mlx_win_ptr, event_listener, &data);
-	// 0x60300001abf0
 	loop(data);
 
-	// CLEAN
 	free_all(data);
 
 	return (0);

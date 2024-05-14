@@ -73,7 +73,7 @@ void draw_ray(t_image *image, int x1, int y1, int x2, int y2, t_map *map, t_ray 
         x = (int)current_x;
         y = (int)current_y;
 		
-		// Hey dont forget to divide by 64 to get the right position on your grid
+		// Hey dont forget to divide by TILE SIZE to get the right position on your grid
         if (map->map2d[y / 32][x / 32] != '0')
         {
             printf("Wall found at (%d, %d)\n", (x / 32), (y / 32));
@@ -129,9 +129,8 @@ void shoot_rays(t_image *image, t_player *player, t_map *map, t_ray *ray, t_data
 
 int raycasting(t_data *data)
 {
-	printf("angle, %f\n", data->player->angle);
-	printf("fov, %f\n", data->player->fov);
-	shoot_rays(data->image, data->player, &data->map, data->ray, data);
-	// cast_ray(data->image, data->player);	
+
+	shoot_rays(data->map2d, data->player, &data->map, data->ray, data);
+
 	return 0;
 }
