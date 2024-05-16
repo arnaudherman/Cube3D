@@ -20,19 +20,15 @@ t_image	*allocate_image()
 
 int init_map2d(t_image *map2d, t_mlx *mlx)
 {
-	printf("map2d address: %p\n", (void *)map2d);
-	//  0x604000001a50
-	printf("mlx->mlx_ptr: %p\n", mlx->mlx_ptr);
-	// 0x6060000015e0
-	map2d->width = 320;
-	map2d->height = 320;
-    map2d->img = mlx_new_image(mlx->mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT);
+    map2d->width = 320;
+    map2d->height = 320;
+    map2d->img = mlx_new_image(mlx->mlx_ptr, map2d->width, map2d->height);
     if (map2d->img == NULL) {
         perror("Failed to create map2d\n");
         return 1;
     }
     map2d->addr = mlx_get_data_addr(map2d->img, &(map2d->bits_per_pixel),
-                                         &(map2d->line_length), &(map2d->endian));
+                                     &(map2d->line_length), &(map2d->endian));
     if (map2d->addr == NULL) {
         perror("Failed to get map2d data address\n");
         mlx_destroy_image(mlx->mlx_ptr, map2d->img);
@@ -43,12 +39,9 @@ int init_map2d(t_image *map2d, t_mlx *mlx)
 }
 
 
+
 int init_world(t_image *world, t_mlx *mlx)
 {
-	printf("world address: %p\n", (void *)world);
-	// 0x604000001a90
-	printf("mlx->mlx_ptr: %p\n", mlx->mlx_ptr);
-	// 0x6060000015e0
 	world->width = WINDOW_WIDTH;
 	world->height = WINDOW_HEIGHT;
     world->img = mlx_new_image(mlx->mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT);
