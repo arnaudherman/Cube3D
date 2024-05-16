@@ -61,7 +61,6 @@ int fill_map(t_map *map)
         }
     }
 
-    // Remplissage des données de la carte 2D
     for (i = 0; i < map->h_map; i++) {
         for (int j = 0; j < map->w_map; j++) {
             map->map2d[i][j] = map_data[i][j];
@@ -79,15 +78,12 @@ int init_map(t_map *map)
     map->w_map = MAP_WIDTH;
     map->h_map = MAP_HEIGHT;
 
-    // Allocation de mémoire pour la carte 2D
     if (malloc_map2d(map) == -1) {
         perror("Failed to allocate memory for map2d\n");
         return -1;
     }
-    // Remplissage des données de la carte 2D
     if (fill_map(map) != 0) {
 		i = -1;
-		// En cas d'échec, libérer la mémoire allouée précédemment
 		while (++i < map->h_map)
             free(map->map2d[i]);
         free(map->map2d);
@@ -95,16 +91,8 @@ int init_map(t_map *map)
     }
 	map->x_map = 0;
     map->y_map = 0;
-    map->color = 0x000000;
+    map->color = 0xC03865; // majenta
 	map->ray = allocate_ray();
-
-	// LOOP to print map data
-	// for (int i = 0; i < map->h_map; i++) {
-	// 	for (int j = 0; j < map->w_map; j++) {
-	// 		printf("%c ", map->map2d[i][j]);
-	// 	}
-	// 	printf("\n");
-	// }
 
     return 0;
 }

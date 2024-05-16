@@ -7,6 +7,8 @@ t_image	*allocate_image()
         perror("Failed to allocate t_image");
         return NULL;
     }
+	image->width = 0;
+	image->height = 0;
 	image->img = NULL;
 	image->addr = NULL;
 	image->bits_per_pixel = 0;
@@ -22,6 +24,8 @@ int init_map2d(t_image *map2d, t_mlx *mlx)
 	//  0x604000001a50
 	printf("mlx->mlx_ptr: %p\n", mlx->mlx_ptr);
 	// 0x6060000015e0
+	map2d->width = 320;
+	map2d->height = 320;
     map2d->img = mlx_new_image(mlx->mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT);
     if (map2d->img == NULL) {
         perror("Failed to create map2d\n");
@@ -45,6 +49,8 @@ int init_world(t_image *world, t_mlx *mlx)
 	// 0x604000001a90
 	printf("mlx->mlx_ptr: %p\n", mlx->mlx_ptr);
 	// 0x6060000015e0
+	world->width = WINDOW_WIDTH;
+	world->height = WINDOW_HEIGHT;
     world->img = mlx_new_image(mlx->mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT);
     if (world->img == NULL) {
         perror("Failed to create image\n");

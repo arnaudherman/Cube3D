@@ -1,252 +1,136 @@
-#include "../include/cub3d-bis.h"
+#include "cub3d-bis.h"
 
-float degrees_to_radians(float angle)
+float get_ray_length(int map_width, int map_height, int window_width, int window_height, float field_of_view) 
 {
-    return angle * (M_PI / 180.0);
+    // Convert the field of view from degrees to radians
+    float fov_rad = field_of_view * M_PI / 180.0;
+
+    // Calculate the horizontal and vertical field of view
+    float horizontal_fov = fov_rad;
+	// TO DO : check if use of atan2 is better
+    float vertical_fov = 2.0 * atan(tan(fov_rad / 2.0) * ((float)window_height / window_width));
+
+    // Calculate the horizontal and vertical ray lengths
+    float horizontal_ray_length = map_width / (2.0 * tan(horizontal_fov / 2.0));
+    float vertical_ray_length = map_height / (2.0 * tan(vertical_fov / 2.0));
+
+    // Choose the larger of the two ray lengths
+    float ray_length = (horizontal_ray_length > vertical_ray_length) ? horizontal_ray_length : vertical_ray_length;
+
+    return ray_length;
 }
 
-float radians_to_degrees(float angle)
+
+void fov_rays(int hauteur_image, int largeur_image, float fov_horizontal_deg) 
 {
-    return angle * (180.0 / M_PI);
+    // Convertir le FOV horizontal en radians
+    float fov_horizontal_rad = fov_horizontal_deg * M_PI / 180.0;
+
+    // Calculer le rayon horizontal nécessaire pour couvrir toute l'image
+    float rayon_horizontal = largeur_image / (2.0 * tan(fov_horizontal_rad / 2.0));
+
+    // Calculer le FOV vertical en fonction du rapport de l'image
+    float fov_vertical_rad = 2.0 * atan(tan(fov_horizontal_rad / 2.0) * ((float)hauteur_image / largeur_image));
+    float fov_vertical_deg = fov_vertical_rad * 180.0 / M_PI;
+
+    // Calculer le rayon vertical nécessaire pour couvrir toute l'image
+    float rayon_vertical = hauteur_image / (2.0 * tan(fov_vertical_rad / 2.0));
+
+    // Afficher les résultats
+    printf("Rayon horizontal nécessaire : %f\n", rayon_horizontal);
+    printf("Rayon vertical nécessaire : %f\n", rayon_vertical);
+    printf("FOV vertical calculé : %f degrés\n", fov_vertical_deg);
 }
 
-// void draw_world(t_image *world, t_map *map, t_player *player, t_ray *ray)
-// {
-// 	draw_wall(data);
-// }
+// DRAW RAY SUCCESS
+void draw_ray(t_image *map2d, t_image *world, int x1, int y1, int x2, int y2, t_map *map, t_ray *ray,  t_data *data)
+{
+	int i;
+    int x, y;
+    int dx = x2 - x1;
+    int dy = y2 - y1;
 
-// RESSOURCES : 
-// Raycasting : https://lodev.org/cgtutor/raycasting.html
-// DDA Algorithm https://lodev.org/cgtutor/raycasting.html
-// Video https://www.youtube.com/watch?v=NbSee-XM7WA&t=1s&ab_channel=javidx9
-// https://www.youtube.com/watch?v=W5P8GlaEOSI&ab_channel=AbdulBari
+	// TO DO : delete ???
+    // Determine the sign of the step (i.e., +1 or -1) for each dimension
+    // int sign_x = (dx > 0) ? 1 : -1;
+    // int sign_y = (dy > 0) ? 1 : -1;
 
-// **********************************************************
-// Try to decompose the raycasting algorithm into smaller functions
-// From player to wall hit
-// float calculate_distance(t_player *player, t_ray *ray)
-// {
-//     float dx = ray->x_end - player->x_pos;
-//     float dy = ray->y_end - player->y_pos;
-//     float distance = sqrt(dx * dx + dy * dy);
-//     return distance;
-// }
+    // Determine the number of steps required along each dimension
+    int steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy);
 
-// // Increment each step
-// static void calculate_step_increment(t_ray *ray)
-// {
-//     if (fabs(ray->dx) > fabs(ray->dy))
-//         ray->step = fabs(ray->dx);
-//     else 
-//         ray->step = fabs(ray->dy);
+    // Calculate the increment for each dimension per step
+    float step_x = (float)dx / steps;
+    float step_y = (float)dy / steps;
 
-//     ray->xinc = ray->dx / ray->step;
-//     ray->yinc = ray->dy / ray->step;
-// }
+    // Initialize the starting position
+    float current_x = x1;
+    float current_y = y1;
 
-// static void dda_algorithm(t_data *data)
-// {
-//     int i;
-// 	i = 0;
-//     data->ray->x = (float)data->player->x_pos;
-//     data->ray->y = (float)data->player->y_pos;
-
-//     calculate_step_increment(data->ray);
-
-//     while (i < data->ray->step)
-//     {
-//         if (data->map.map2d[data->ray->y / 64][data->ray->x / 64] != '0')
-//         {
-//             printf("Wall found at (%d, %d)\n", data->ray->x, data->ray->y);
-//             break;
-//         }
+    // Draw the ray by iterating through each step
+	i = 0;
+    while (i <= steps)
+    {
+        x = (int)current_x;
+        y = (int)current_y;
 		
-//         float distance = calculate_distance(data->player, data->ray);
+		// Hey dont forget to divide by TILE SIZE to get the right position on your grid
+         if (map->map2d[y / TILE_SIZE][x / TILE_SIZE] != '0')
+        {
+            // Calculate the distance to the wall
+            float distance = sqrt((current_x - x1) * (current_x - x1) + (current_y - y1) * (current_y - y1));
+            ray->wall_dist = distance;
+            ray->wall_height = (int)(WALL_HEIGHT / distance);
+            draw_wall_column(world, x / TILE_SIZE, ray->wall_height);
+            break;
+        }
 
-//         my_mlx_pixel_put(&data->image, data->ray->x, data->ray->y, ray_color(distance));
+        my_mlx_pixel_put(map2d, x, y, 0xffd55c);
 
-//         data->ray->x += data->ray->xinc;
-//         data->ray->y += data->ray->yinc;
-//         i++;
-//     }
+        // Move to the next position along each dimension
+        current_x += step_x;
+        current_y += step_y;
+		i++;
+    }
+}
 
-//     if (data->map.map2d[data->ray->y][data->ray->x] != '0')
-//         my_mlx_pixel_put(&data->image, data->ray->x, data->ray->y, 0xBDEDDF);
-// }
-// **********************************************************
+void shoot_rays(t_image *map2d, t_image *world, t_player *player, t_map *map, t_ray *ray, t_data *data)
+{
+	int i;
+	double start_angle;
+	double angle_increment;
+	double angle_rad;
 
-// **********************************************************
-// THIRD VERSION 
-// TO DO : USE INTS INSTEAD OF FLOATS for map coordinates x1, y1, x2, y2
-// static void dda_algo(t_data *data)
-// {
-//     float xinc;
-//     float yinc;
-//     float step;
-//	   float distance;
-//     int i;
+    // Start angle to shoot my rays
+    start_angle = player->angle - (player->fov / 2.0);
+    
+    // Angle bewteen each ray (one ray per pixel in the FOV of the player)
+    angle_increment = player->fov / WINDOW_WIDTH;
 
-//     float x1 = (float)data->player->x_pos;
-//     float y1 = (float)data->player->y_pos;
+	i = 0;
+    while (i < WINDOW_WIDTH)
+    {
+        // Calculer l'angle pour ce rayon
+        angle_rad = (start_angle + i * angle_increment) * (M_PI / 180.0);
+        
+        // Calculer les coordonnées de fin du rayon
+        int x_end = (int)(player->x_pos + cos(angle_rad) * ray->ray_length);
+        int y_end = (int)(player->y_pos + sin(angle_rad) * ray->ray_length);
+        
+        // Assurez-vous que les coordonnées de fin sont à l'intérieur des limites de la carte
+        if (x_end < 0) x_end = 0;
+        if (x_end >= (MAP_WIDTH * TILE_SIZE)) x_end = (MAP_WIDTH * TILE_SIZE) - 1;
+        if (y_end < 0) y_end = 0;
+        if (y_end >= (MAP_HEIGHT * TILE_SIZE)) y_end = (MAP_HEIGHT * TILE_SIZE) - 1;
+        
+        draw_ray(map2d, world, (int)(player->x_pos), (int)(player->y_pos), x_end, y_end, map, ray, data);
+		i++;
+    }
+}
 
-//     data->ray->dx = cos(data->player->angle);
-//     data->ray->dy = sin(data->player->angle);
+int raycasting(t_data *data)
+{
 
-// 	float x2 = x1 + data->ray->dx;
-// 	float y2 = y1 + data->ray->dy;
+	shoot_rays(data->map2d, data->world, data->player, &data->map, data->ray, data);
 
-//     if(abs(data->ray->dx) > abs(data->ray->dy))
-//         step = abs(data->ray->dx);
-//     else 
-//         step = abs(data->ray->dy);
-
-// 	// TO DO : passer de double a float check
-// 	// conversion peut entraîner une perte de précision
-//     xinc = (float)data->ray->dx / step;
-//     yinc = (float)data->ray->dy / step;
-
-//     i = 0;
-//     while (i < step)
-//     {
-//         if (data->map.map2d[(int)y1][(int)x1] != '0')
-//         {
-//             printf("Wall found at (%d, %d)\n", (int)x1, (int)y1);
-//             break;
-//         }
-
-// 		// Calculer la distance entre le point actuel du rayon et le joueur
-//         distance = delta_player_hits(data->player, data->ray);
-
-//         // En fonction de la couleur calculee par ma fonct ray_color();
-//         my_mlx_pixel_put(&data->image, x1, y1, ray_color(distance));
-//         x1 += xinc;
-//         y1 += yinc;
-//         i++;
-//     }
-// 	// Draw hits here if wall found
-//     my_mlx_pixel_put(&data->image, (int)x1, (int)y1, 0xBDEDDF);
-// }
-// **********************************************************
-
-
-// **********************************************************
-// SECOND VERSION
-// (x1, y1) is player position, (x2, y2) is the intersection point
-// static void dda_algo(t_data *data, float x2, float y2)
-// {
-//     float dx;
-//     float dy;
-//     float xinc;
-//     float yinc;
-//     float step;
-//     int i;
-
-// 	// Temporary coordinates
-// 	float x = (float)data->player->x_pos;
-//     float y = (float)data->player->y_pos;
-
-// 	// Get the Deltas
-//     dx = x2 - (float)data->player->x_pos;
-//     dy = y2 - (float)data->player->y_pos;
-
-// 	// Get the number of steps
-//     if(abs(dx) > abs(dy))
-//         step = abs(dx);
-//     else 
-//         step = abs(dy);
-
-//     // Get the incrementations
-//     xinc = dx / step;
-//     yinc = dy / step;
-
-//     i = 0;
-//     // Draw pixel
-//     while (i < step)
-//     {
-//         my_mlx_pixel_put(&data->image, (int)x, (int)y, 0xBDEDDF);
-//         x += xinc;
-//     	y += yinc;
-//         i++;
-//     }
-// }
-// **********************************************************
-
-
-// **********************************************************
-// FIRST VERSION
-// static void dda_algo(float x1, float y1, float x2, float y2)
-// {
-//     // Get the Deltas
-//     float dx;
-//     float dy;
-//     float xinc;
-//     float yinc;
-//     float step;
-//     int i;
-
-//     dx = x2 - x1;
-//     dy = y2 - y1;
-//     if(abs(dx) > abs(dy))
-//         step = abs(dx);
-//     else 
-//         step = abs(dy);
-//     // Get the incrementations
-//     xinc = dx / step;
-//     yinc = dy / step;
-//     i = 1;
-//     // Draw pixel
-//     while (i <= step)
-//     {
-//         putpixel(x1, y1);
-//         x1 = x1 + xinc;
-//         y1 = y1 + yinc;
-//         i++;
-//     }
-// }
-
-// Fonction pour exécuter l'algorithme DDA
-// static void perform_dda(t_data *data) 
-// {
-// 	int hit;
-	
-// 	hit = 0;
-// 	while (hit == 0) {
-// 		if (data->ray->sidedist_x < data->ray->sidedist_y) {
-// 			data->ray->sidedist_x += data->ray->dx;
-// 			data->ray->map_x += data->ray->step_x;
-// 			data->ray->side = 0;
-// 		} else {
-// 			data->ray->sidedist_y += data->ray->dy;
-// 			data->ray->map_y += data->ray->step_y;
-// 			data->ray->side = 1;
-// 		}
-// 		if (data->ray->map_y < 0.25 || data->ray->map_x < 0.25 ||
-// 		    data->ray->map_y > data->map.h_map - 0.25 ||
-// 		    data->ray->map_x > data->map.w_map - 1.25)
-// 			break;
-// 		else if (data->map.map2d[(int)data->ray->map_y][(int)data->ray->map_x] != '0')
-// 			hit = 1;
-// 	}
-// }
-// **********************************************************
-
-// Fonction pour calculer les hauteurs des lignes à dessiner
-// static void calculate_line_height(t_data *data) 
-// {
-// 	if (data->ray->side == 0)
-// 		data->ray->wall_dist = fabs((data->ray->map_x - data->player->x_pos + (1 - data->ray->step_x) / 2) / data->ray->dir_x);
-// 	else
-// 		data->ray->wall_dist = fabs((data->ray->map_y - data->player->y_pos + (1 - data->ray->step_y) / 2) / data->ray->dir_y);
-// 	data->ray->line_height = (int)(data->mlx.win_height / data->ray->wall_dist);
-// 	data->ray->draw_start = -data->ray->line_height / 2 + data->mlx.win_height / 2;
-// 	if (data->ray->draw_start < 0)
-// 		data->ray->draw_start = 0;
-// 	data->ray->draw_end = data->ray->line_height / 2 + data->mlx.win_height / 2;
-// 	if (data->ray->draw_end >= data->mlx.win_height)
-// 		data->ray->draw_end = data->mlx.win_height - 1;
-// 	if (data->ray->side == 0)
-// 		data->ray->wall_x = data->player->y_pos + data->ray->wall_dist * data->ray->dir_y;
-// 	else
-// 		data->ray->wall_x = data->player->x_pos + data->ray->wall_dist * data->ray->dir_x;
-// 	data->ray->wall_x -= floor(data->ray->wall_x);
-// }
+	return 0;
+}
