@@ -79,7 +79,7 @@ void draw_ray(t_image *map2d, t_image *world, int x1, int y1, int x2, int y2, t_
             // Calculate the distance to the wall
             float distance = sqrt((current_x - x1) * (current_x - x1) + (current_y - y1) * (current_y - y1));
             ray->wall_dist = distance;
-            ray->wall_height = (int)(WINDOW_HEIGHT / distance);
+            ray->wall_height = (int)(WALL_HEIGHT / distance);
             draw_wall_column(world, x / TILE_SIZE, ray->wall_height);
             break;
         }

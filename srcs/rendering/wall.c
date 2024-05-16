@@ -34,28 +34,13 @@ void draw_wall_column(t_image *world, int column, int wall_height)
     }
 }
 
-// void draw_wall(t_data *data, int x, int y)
-// {
-//     int column = 0;
-//     float angle = data->player->angle - (FOV / 2);
-    
-//     while (column < WINDOW_WIDTH)
-//     {
-//         get_wall_dist(data->player, data->ray);
-//         get_wall_height(data->ray);
-//         draw_wall_column(data, column, angle);
-//         angle += (FOV / WINDOW_WIDTH);
-// 		column++;
+// void yoooodraw_wall(t_image *image, int x, int y) {
+//     for (int i = y; i < y + TILE_SIZE; i++) {
+//         for (int j = x; j < x + TILE_SIZE; j++) {
+//             my_mlx_pixel_put(image, j, i, 0x02471A); // White color for walls
+//         }
 //     }
 // }
-
-void yoooodraw_wall(t_image *image, int x, int y) {
-    for (int i = y; i < y + TILE_SIZE; i++) {
-        for (int j = x; j < x + TILE_SIZE; j++) {
-            my_mlx_pixel_put(image, j, i, 0x02471A); // White color for walls
-        }
-    }
-}
 
 void draw_wall(t_data *data, int x, int y)
 {

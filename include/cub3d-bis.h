@@ -422,7 +422,7 @@ void 		draw_square(t_data *data, int x, int y, int color);
 // Located in *frame.c"
 int			render_next_frame(t_data *data);
 // Located in *map.c*
-int 		draw_map(t_image *image, t_map *map);
+int 		draw_map(t_image *map2d, t_image *world, t_map *map);
 void 		draw_tile(t_image *image, int x, int y);
 void 		draw_vertical_lines(t_image *image);
 void 		draw_horizontal_lines(t_image *image);
