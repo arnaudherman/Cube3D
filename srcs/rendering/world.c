@@ -16,10 +16,18 @@ void draw_world_bg(t_image *world, int color)
 	int y;
 
 	y = 0;
-    while (y < WINDOW_HEIGHT) {
+    while (y < WINDOW_HEIGHT / 2) {
 		x = 0;
 		while (x < WINDOW_WIDTH) {
 			my_mlx_pixel_put(world, x, y, color);
+			x++;
+		}
+		y++;
+	}
+	while (y < WINDOW_HEIGHT) {
+		x = 0;
+		while (x < WINDOW_WIDTH) {
+			my_mlx_pixel_put(world, x, y, 0xFFD700);
 			x++;
 		}
 		y++;
