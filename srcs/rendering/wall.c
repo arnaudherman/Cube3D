@@ -18,7 +18,7 @@ void	get_wall_height(t_ray *ray)
 	ray->wall_height = (int)(WALL_HEIGHT / ray->wall_dist);
 }
 
-void draw_wall_column(t_data *data, int column, int wall_height)
+void draw_wall_column(t_image *world, int column, int wall_height)
 {
     int top;
 	int bottom;
@@ -29,7 +29,7 @@ void draw_wall_column(t_data *data, int column, int wall_height)
     y = top;
     while (y < bottom)
     {
-        my_mlx_pixel_put(data->map2d, column, y, 0xBBA498);
+        my_mlx_pixel_put(world, column, y, 0xBBA498);
         y++;
     }
 }
@@ -48,6 +48,14 @@ void draw_wall_column(t_data *data, int column, int wall_height)
 // 		column++;
 //     }
 // }
+
+void yoooodraw_wall(t_image *image, int x, int y) {
+    for (int i = y; i < y + TILE_SIZE; i++) {
+        for (int j = x; j < x + TILE_SIZE; j++) {
+            my_mlx_pixel_put(image, j, i, 0x02471A); // White color for walls
+        }
+    }
+}
 
 void draw_wall(t_data *data, int x, int y)
 {

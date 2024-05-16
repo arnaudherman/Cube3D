@@ -43,7 +43,7 @@ void fov_rays(int hauteur_image, int largeur_image, float fov_horizontal_deg)
 }
 
 // DRAW RAY SUCCESS
-void draw_ray(t_image *image, int x1, int y1, int x2, int y2, t_map *map, t_ray *ray,  t_data *data)
+void draw_ray(t_image *map2d, t_image *world, int x1, int y1, int x2, int y2, t_map *map, t_ray *ray,  t_data *data)
 {
 	int i;
     int x, y;
@@ -74,17 +74,17 @@ void draw_ray(t_image *image, int x1, int y1, int x2, int y2, t_map *map, t_ray 
         y = (int)current_y;
 		
 		// Hey dont forget to divide by TILE SIZE to get the right position on your grid
-        if (map->map2d[y / 32][x / 32] != '0')
+         if (map->map2d[y / TILE_SIZE][x / TILE_SIZE] != '0')
         {
-            printf("Wall found at (%d, %d)\n", (x / 32), (y / 32));
-			draw_wall(data, x, y);
+            // Calculate the distance to the wall
+            float distance = sqrt((current_x - x1) * (current_x - x1) + (current_y - y1) * (current_y - y1));
+            ray->wall_dist = distance;
+            ray->wall_height = (int)(WINDOW_HEIGHT / distance);
+            draw_wall_column(world, x / TILE_SIZE, ray->wall_height);
             break;
         }
 
-        // Calculer la distance entre le point actuel du rayon et le joueur
-        float distance = sqrt((current_x - x1) * (current_x - x1) + (current_y - y1) * (current_y - y1));
-
-        my_mlx_pixel_put(image, x, y, 0xffd55c);
+        my_mlx_pixel_put(map2d, x, y, 0xffd55c);
 
         // Move to the next position along each dimension
         current_x += step_x;
@@ -93,7 +93,7 @@ void draw_ray(t_image *image, int x1, int y1, int x2, int y2, t_map *map, t_ray 
     }
 }
 
-void shoot_rays(t_image *image, t_player *player, t_map *map, t_ray *ray, t_data *data)
+void shoot_rays(t_image *map2d, t_image *world, t_player *player, t_map *map, t_ray *ray, t_data *data)
 {
 	int i;
 	double start_angle;
@@ -122,7 +122,7 @@ void shoot_rays(t_image *image, t_player *player, t_map *map, t_ray *ray, t_data
         if (y_end < 0) y_end = 0;
         if (y_end >= (MAP_HEIGHT * TILE_SIZE)) y_end = (MAP_HEIGHT * TILE_SIZE) - 1;
         
-        draw_ray(image, (int)(player->x_pos), (int)(player->y_pos), x_end, y_end, map, ray, data);
+        draw_ray(map2d, world, (int)(player->x_pos), (int)(player->y_pos), x_end, y_end, map, ray, data);
 		i++;
     }
 }
@@ -130,7 +130,7 @@ void shoot_rays(t_image *image, t_player *player, t_map *map, t_ray *ray, t_data
 int raycasting(t_data *data)
 {
 
-	shoot_rays(data->map2d, data->player, &data->map, data->ray, data);
+	shoot_rays(data->map2d, data->world, data->player, &data->map, data->ray, data);
 
 	return 0;
 }

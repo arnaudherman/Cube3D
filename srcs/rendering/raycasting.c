@@ -10,9 +10,9 @@ float radians_to_degrees(float angle)
     return angle * (180.0 / M_PI);
 }
 
-// void draw_world(t_image *image, t_map *map, t_player *player, t_ray *ray)
+// void draw_world(t_image *world, t_map *map, t_player *player, t_ray *ray)
 // {
-
+// 	draw_wall(data);
 // }
 
 // RESSOURCES : 

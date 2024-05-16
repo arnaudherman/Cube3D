@@ -18,6 +18,8 @@ t_image	*allocate_image()
 
 int init_map2d(t_image *map2d, t_mlx *mlx)
 {
+	printf("map2d address: %p\n", (void *)map2d);
+	//  0x604000001a50
 	printf("mlx->mlx_ptr: %p\n", mlx->mlx_ptr);
 	// 0x6060000015e0
     map2d->img = mlx_new_image(mlx->mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -39,6 +41,8 @@ int init_map2d(t_image *map2d, t_mlx *mlx)
 
 int init_world(t_image *world, t_mlx *mlx)
 {
+	printf("world address: %p\n", (void *)world);
+	// 0x604000001a90
 	printf("mlx->mlx_ptr: %p\n", mlx->mlx_ptr);
 	// 0x6060000015e0
     world->img = mlx_new_image(mlx->mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT);
