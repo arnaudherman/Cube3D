@@ -5,8 +5,8 @@ int malloc_all(t_data *data) {
         perror("t_data pointer is NULL in malloc_all\n");
         return -1;
     }    
-	data->map2d = allocate_map2d();
-	data->world = allocate_world();
+	data->map2d = allocate_image();
+	data->world = allocate_image();
     data->player = allocate_player();
 	data->keys = allocate_keys();
     data->ray = allocate_ray();

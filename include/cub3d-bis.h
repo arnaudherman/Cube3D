@@ -314,9 +314,8 @@ t_color 	*allocate_color();
 // Located in *engine.c*
 int			init_data(t_data *data);
 // Located in *image.c*
-t_image		*allocate_image(void);
+t_image		*allocate_image();
 int			init_image(t_image *image, t_mlx *mlx);
-t_image 	*allocate_image(void);
 // Located in *keys.c*
 t_keys		*allocate_keys(void);
 // Located in *map.c*

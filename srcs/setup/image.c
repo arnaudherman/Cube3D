@@ -1,18 +1,19 @@
 #include "cub3d-bis.h"
 
-t_image	*allocate_map2d(void)
+t_image	*allocate_image()
 {
-	t_image *map2d;
-
-	if (!(map2d = (t_image *)malloc(sizeof(t_image))))
-		return (NULL);
-	map2d->img = NULL;
-	map2d->addr = NULL;
-	map2d->bits_per_pixel = 0;
-	map2d->line_length = 0;
-	map2d->endian = 0;
-	map2d->relative_path = NULL;
-	return (map2d);
+	t_image *image = (t_image *)malloc(sizeof(t_image));
+    if (!image) {
+        perror("Failed to allocate t_image");
+        return NULL;
+    }
+	image->img = NULL;
+	image->addr = NULL;
+	image->bits_per_pixel = 0;
+	image->line_length = 0;
+	image->endian = 0;
+	image->relative_path = NULL;
+	return image;
 }
 
 int init_map2d(t_image *map2d, t_mlx *mlx)
@@ -35,20 +36,6 @@ int init_map2d(t_image *map2d, t_mlx *mlx)
     return 0;
 }
 
-t_image	*allocate_world(void)
-{
-	t_image *world;
-
-	if (!(world = (t_image *)malloc(sizeof(t_image))))
-		return (NULL);
-	world->img = NULL;
-	world->addr = NULL;
-	world->bits_per_pixel = 0;
-	world->line_length = 0;
-	world->endian = 0;
-	world->relative_path = NULL;
-	return (world);
-}
 
 int init_world(t_image *world, t_mlx *mlx)
 {
