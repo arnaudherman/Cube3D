@@ -7,8 +7,11 @@ float get_ray_length(int map_width, int map_height, int window_width, int window
 
     // Calculate the horizontal and vertical field of view
     float horizontal_fov = fov_rad;
-	// TO DO : check if use of atan2 is better
-    float vertical_fov = 2.0 * atan(tan(fov_rad / 2.0) * ((float)window_height / window_width));
+    float vertical_fov = 2.0 * atan2(tan(fov_rad / 2.0) * window_height, window_width);
+
+    // Ensure no division by zero
+    if (tan(horizontal_fov / 2.0) == 0.0 || tan(vertical_fov / 2.0) == 0.0)
+        return 0.0;
 
     // Calculate the horizontal and vertical ray lengths
     float horizontal_ray_length = map_width / (2.0 * tan(horizontal_fov / 2.0));
@@ -20,117 +23,214 @@ float get_ray_length(int map_width, int map_height, int window_width, int window
     return ray_length;
 }
 
-
 void fov_rays(int hauteur_image, int largeur_image, float fov_horizontal_deg) 
 {
     // Convertir le FOV horizontal en radians
     float fov_horizontal_rad = fov_horizontal_deg * M_PI / 180.0;
 
+    // Ensure no division by zero
+    if (tan(fov_horizontal_rad / 2.0) == 0.0)
+        return;
+
     // Calculer le rayon horizontal nécessaire pour couvrir toute l'image
     float rayon_horizontal = largeur_image / (2.0 * tan(fov_horizontal_rad / 2.0));
 
     // Calculer le FOV vertical en fonction du rapport de l'image
-    float fov_vertical_rad = 2.0 * atan(tan(fov_horizontal_rad / 2.0) * ((float)hauteur_image / largeur_image));
+    float fov_vertical_rad = 2.0 * atan2(tan(fov_horizontal_rad / 2.0) * hauteur_image, largeur_image);
     float fov_vertical_deg = fov_vertical_rad * 180.0 / M_PI;
+
+    // Ensure no division by zero
+    if (tan(fov_vertical_rad / 2.0) == 0.0)
+        return;
 
     // Calculer le rayon vertical nécessaire pour couvrir toute l'image
     float rayon_vertical = hauteur_image / (2.0 * tan(fov_vertical_rad / 2.0));
-
-    // Afficher les résultats
-    printf("Rayon horizontal nécessaire : %f\n", rayon_horizontal);
-    printf("Rayon vertical nécessaire : %f\n", rayon_vertical);
-    printf("FOV vertical calculé : %f degrés\n", fov_vertical_deg);
 }
 
-// DRAW RAY SUCCESS
-void draw_ray(t_image *map2d, t_image *world, int x1, int y1, int x2, int y2, t_map *map, t_ray *ray,  t_data *data)
-{
-	int i;
+float correct_fisheye(float distance, float ray_angle, float player_angle) {
+    float angle_difference = ray_angle - player_angle;
+    float corrected_distance = distance * cos(angle_difference);
+    return corrected_distance;
+}
+
+void draw_ray(t_image *map2d, t_image *world, int x1, int y1, int x2, int y2, t_map *map, t_ray *ray, t_data *data) {
     int x, y;
     int dx = x2 - x1;
     int dy = y2 - y1;
 
-	// TO DO : delete ???
-    // Determine the sign of the step (i.e., +1 or -1) for each dimension
-    // int sign_x = (dx > 0) ? 1 : -1;
-    // int sign_y = (dy > 0) ? 1 : -1;
-
-    // Determine the number of steps required along each dimension
     int steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy);
 
-    // Calculate the increment for each dimension per step
+    if (steps == 0) {
+        return;
+    }
+
     float step_x = (float)dx / steps;
     float step_y = (float)dy / steps;
 
-    // Initialize the starting position
     float current_x = x1;
     float current_y = y1;
 
-    // Draw the ray by iterating through each step
-	i = 0;
-    while (i <= steps)
-    {
+    for (int i = 0; i <= steps; i++) {
         x = (int)current_x;
         y = (int)current_y;
-		
-		// Hey dont forget to divide by TILE SIZE to get the right position on your grid
-         if (map->map2d[y / TILE_SIZE][x / TILE_SIZE] != '0')
-        {
-            // Calculate the distance to the wall
+
+        if (map->map2d[y / TILE_SIZE][x / TILE_SIZE] != '0') {
             float distance = sqrt((current_x - x1) * (current_x - x1) + (current_y - y1) * (current_y - y1));
+            if (distance == 0) {
+                distance = 1.0;  // Prevent division by zero
+            }
             ray->wall_dist = distance;
-            ray->wall_height = (int)(WALL_HEIGHT / distance);
-            draw_wall_column(world, x / TILE_SIZE, ray->wall_height);
+            int corrected_distance = correct_fisheye(distance, data->ray->angle, data->player->angle);
+            if (corrected_distance == 0) {
+                corrected_distance = 1;  // Prevent division by zero
+            }
+            ray->wall_height = (int)(WALL_HEIGHT / corrected_distance);
+            draw_wall_column(world, x * TILE_SIZE, ray->wall_height);
             break;
         }
 
         my_mlx_pixel_put(map2d, x, y, 0xffd55c);
 
-        // Move to the next position along each dimension
         current_x += step_x;
         current_y += step_y;
-		i++;
     }
 }
 
-void shoot_rays(t_image *map2d, t_image *world, t_player *player, t_map *map, t_ray *ray, t_data *data)
-{
-	int i;
-	double start_angle;
-	double angle_increment;
-	double angle_rad;
+void shoot_rays(t_image *map2d, t_image *world, t_player *player, t_map *map, t_ray *ray, t_data *data) {
+    double start_angle = player->angle - (player->fov / 2.0);
+    double angle_increment = player->fov / WINDOW_WIDTH;
 
-    // Start angle to shoot my rays
-    start_angle = player->angle - (player->fov / 2.0);
-    
-    // Angle bewteen each ray (one ray per pixel in the FOV of the player)
-    angle_increment = player->fov / WINDOW_WIDTH;
+    for (int i = 0; i < WINDOW_WIDTH; i++) {
+        double angle_rad = (start_angle + i * angle_increment) * (M_PI / 180.0);
 
-	i = 0;
-    while (i < WINDOW_WIDTH)
-    {
-        // Calculer l'angle pour ce rayon
-        angle_rad = (start_angle + i * angle_increment) * (M_PI / 180.0);
-        
-        // Calculer les coordonnées de fin du rayon
         int x_end = (int)(player->x_pos + cos(angle_rad) * ray->ray_length);
         int y_end = (int)(player->y_pos + sin(angle_rad) * ray->ray_length);
-        
-        // Assurez-vous que les coordonnées de fin sont à l'intérieur des limites de la carte
+
         if (x_end < 0) x_end = 0;
         if (x_end >= (MAP_WIDTH * TILE_SIZE)) x_end = (MAP_WIDTH * TILE_SIZE) - 1;
         if (y_end < 0) y_end = 0;
         if (y_end >= (MAP_HEIGHT * TILE_SIZE)) y_end = (MAP_HEIGHT * TILE_SIZE) - 1;
-        
+
         draw_ray(map2d, world, (int)(player->x_pos), (int)(player->y_pos), x_end, y_end, map, ray, data);
-		i++;
     }
 }
 
-int raycasting(t_data *data)
-{
-
-	shoot_rays(data->map2d, data->world, data->player, &data->map, data->ray, data);
-
-	return 0;
+int raycasting(t_data *data) {
+    shoot_rays(data->map2d, data->world, data->player, &data->map, data->ray, data);
+    return 0;
 }
+
+
+// Bresenham
+// void draw_ray(t_image *map2d, t_image *world, int x1, int y1, int x2, int y2, t_map *map, t_ray *ray, t_data *data)
+// {
+//     int x, y;
+//     int dx = abs(x2 - x1);
+//     int dy = abs(y2 - y1);
+//     int sx = (x1 < x2) ? 1 : -1;
+//     int sy = (y1 < y2) ? 1 : -1; 
+//     int err = dx - dy;
+//     int e2;
+
+//     while (1) 
+//     {
+//         // Trace le pixel sur la carte 2D
+//         my_mlx_pixel_put(map2d, x1, y1, 0xffd55c);
+
+//         // Vérifie si le rayon a rencontré un mur
+//         if (map->map2d[y1 / TILE_SIZE][x1 / TILE_SIZE] != '0') 
+//         {
+//             // Calcule la distance au mur
+//             float distance = sqrt((x1 - x1) * (x1 - x1) + (y1 - y1) * (y1 - y1));
+//             ray->wall_dist = distance;
+//             ray->wall_height = (int)(WALL_HEIGHT / distance);
+
+//             // Dessine la colonne de mur correspondante dans le monde 3D
+//             draw_wall_column(world, x1, ray->wall_height);
+//             break;
+//         }
+
+//         // Si le rayon atteint la position finale (aucun mur rencontré), sortir de la boucle
+//         if (x1 == x2 && y1 == y2) 
+//             break;
+
+//         // Calcul de l'erreur pour décider du prochain pixel à tracer
+//         e2 = 2 * err;
+//         if (e2 > -dy) 
+//         {
+//             err -= dy;
+//             x1 += sx;
+//         }
+//         if (e2 < dx) 
+//         {
+//             err += dx;
+//             y1 += sy;
+//         }
+//     }
+// }
+
+// OG 
+// void shoot_rays(t_image *map2d, t_image *world, t_player *player, t_map *map, t_ray *ray, t_data *data)
+// {
+// 	int i;
+// 	double start_angle;
+// 	double angle_increment;
+// 	double angle_rad;
+
+//     // Start angle to shoot my rays
+//     start_angle = player->angle - (player->fov / 2.0);
+    
+//     // Angle bewteen each ray (one ray per pixel in the FOV of the player)
+//     angle_increment = player->fov / WINDOW_WIDTH;
+
+// 	i = 0;
+//     while (i < WINDOW_WIDTH)
+//     {
+//         // Calculer l'angle pour ce rayon
+//         angle_rad = (start_angle + i * angle_increment) * (M_PI / 180.0);
+        
+//         // Calculer les coordonnées de fin du rayon
+//         int x_end = (int)(player->x_pos + cos(angle_rad) * ray->ray_length);
+//         int y_end = (int)(player->y_pos + sin(angle_rad) * ray->ray_length);
+        
+//         // Assurez-vous que les coordonnées de fin sont à l'intérieur des limites de la carte
+//         if (x_end < 0) x_end = 0;
+//         if (x_end >= (MAP_WIDTH * TILE_SIZE)) x_end = (MAP_WIDTH * TILE_SIZE) - 1;
+//         if (y_end < 0) y_end = 0;
+//         if (y_end >= (MAP_HEIGHT * TILE_SIZE)) y_end = (MAP_HEIGHT * TILE_SIZE) - 1;
+        
+//         draw_ray(map2d, world, (int)(player->x_pos), (int)(player->y_pos), x_end, y_end, map, ray, data);
+// 		i++;
+//     }
+// }
+
+// TEST
+// void cast_ray(t_data *data, float ray_angle, int column)
+// {
+//     t_ray ray;
+//     float distance_to_wall;
+//     float corrected_distance;
+
+//     // Initialiser le point de départ du rayon
+//     ray.x_start = data->player->x_pos;
+//     ray.y_start = data->player->y_pos;
+
+//     // Calculer les coordonnées de fin du rayon en fonction de l'angle
+//     ray.x_end = ray.x_start + cos(ray_angle) * MAX_RAY_DISTANCE;
+//     ray.y_end = ray.y_start + sin(ray_angle) * MAX_RAY_DISTANCE;
+
+//     // Trouver le point d'impact du mur
+//     find_wall_hit(&ray, data->map);
+
+//     // Calculer la distance au mur
+//     distance_to_wall = sqrt(pow(ray.x_end - ray.x_start, 2) + pow(ray.y_end - ray.y_start, 2));
+
+//     // Corriger la distorsion fish-eye
+//     corrected_distance = correct_fisheye(distance_to_wall, ray_angle, data->player->angle);
+
+//     // Calculer la hauteur du mur en pixels
+//     int wall_height = (int)(WALL_HEIGHT / corrected_distance);
+
+//     // Dessiner la colonne de mur
+//     draw_wall_column(data->world, column, wall_height, ray);
+// }

@@ -159,6 +159,7 @@ typedef struct s_ray {
     double 		sidedist_y;
 	double 		camera_x;
 	float		ray_length;
+	float		angle; // in radians
 } t_ray;
 
 typedef struct s_map {

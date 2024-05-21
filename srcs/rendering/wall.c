@@ -20,45 +20,104 @@ void	get_wall_height(t_ray *ray)
 
 void draw_wall_column(t_image *world, int column, int wall_height)
 {
-    int top;
+	int top;
 	int bottom;
 	int y;
-	
-	top = (WINDOW_HEIGHT - wall_height) / 2;
+
+    top = (WINDOW_HEIGHT - wall_height) / 2;
     bottom = top + wall_height;
-    y = top;
-    while (y < bottom)
+
+    if (top < 0)
+		top = 0;
+    if (bottom >= WINDOW_HEIGHT)
+		bottom = WINDOW_HEIGHT - 1;
+
+	y = top;
+    while (y <= bottom)
     {
         my_mlx_pixel_put(world, column, y, 0xBBA498);
-        y++;
+		y++;
     }
 }
 
-// void yoooodraw_wall(t_image *image, int x, int y) {
-//     for (int i = y; i < y + TILE_SIZE; i++) {
-//         for (int j = x; j < x + TILE_SIZE; j++) {
-//             my_mlx_pixel_put(image, j, i, 0x02471A); // White color for walls
-//         }
+void draw_wall(t_data *data, t_ray *ray)
+{
+    for (int column = 0; column < WINDOW_WIDTH; column++)
+    {
+        // Calcul de l'angle du rayon pour chaque colonne
+        float ray_angle = data->player->angle - (FOV / 2.0) + ((float)column / (float)WINDOW_WIDTH) * FOV;
+        
+        // Initialiser les coordonnées du rayon
+        ray->x_start = data->player->x_pos;
+        ray->y_start = data->player->y_pos;
+        ray->angle = ray_angle;
+
+        // Calculer la distance au mur
+        get_wall_dist(data->player, ray);
+        
+        // Calculer la hauteur du mur en fonction de la distance
+        get_wall_height(ray);
+        
+        // Dessiner la colonne du mur
+        draw_wall_column(data->world, column, ray->wall_height);
+    }
+}
+
+// OG
+// void draw_wall(t_data *data, int x, int y, int wall_height) 
+// {
+//     float ray_angle;
+//     t_ray ray;
+//     int column;
+
+// 	// column = 0;
+// 	// while (column < WINDOW_WIDTH) // Parcourir chaque colonne de l'écran
+	
+// 	column = x * TILE_SIZE; // Convertir la position x en pixels de l'image
+//     while (column < (x + 1) * TILE_SIZE) // Parcourir chaque colonne du mur
+// 	{
+//         ray_angle = data->player->angle - FOV / 2.0 + ((float)column / (float)WINDOW_WIDTH) * FOV;
+        
+//         // Initialize ray starting position
+//         ray.x_start = data->player->x_pos;
+//         ray.y_start = data->player->y_pos;
+//         ray.angle = ray_angle;
+
+//         get_wall_dist(data->player, &ray);
+        
+//         get_wall_height(&ray);
+        
+//         draw_wall_column(data->world, column, wall_height);
+// 		// draw_wall(data, ray);
+// 		// set_color_on_image(game, ray);
+        
+//         column++;
 //     }
 // }
 
-void draw_wall(t_data *data, int x, int y)
-{
-    // Convertir les coordonnées de la grille en coordonnées du monde
-    float world_x = data->player->x_pos + x * TILE_SIZE;
-    float world_y = data->player->y_pos + y * TILE_SIZE;
+// void draw_wall(t_data *data, int x, int y, int wall_height) 
+// {
+//     float ray_angle;
+//     t_ray ray;
+//     int column;
 
-    // Convertir les coordonnées du monde en coordonnées de l'écran
-    float screen_x = (world_x - data->player->x_pos) * cos(data->player->angle) - (world_y - data->player->y_pos) * sin(data->player->angle) + data->player->x_pos;
-    float screen_y = (world_x - data->player->x_pos) * sin(data->player->angle) + (world_y - data->player->y_pos) * cos(data->player->angle) + data->player->y_pos;
+//     column = x * TILE_SIZE; // Convertir la position x en pixels de l'image
+//     while (column < (x + 1) * TILE_SIZE) // Parcourir chaque colonne du mur
+//     {
+//         ray_angle = data->player->angle - FOV / 2.0 + ((float)column / (float)WINDOW_WIDTH) * FOV;
+        
+//         // Initialize ray starting position
+//         ray.x_start = data->player->x_pos;
+//         ray.y_start = data->player->y_pos;
+//         ray.angle = ray_angle;
 
-    // Calculer la distance entre le mur et le joueur (à titre d'exemple, vous pouvez utiliser une autre méthode pour cela)
-    float distance = sqrt((screen_x - data->player->x_pos) * (screen_x - data->player->x_pos) + (screen_y - data->player->y_pos) * (screen_y - data->player->y_pos));
-
-    // Calculer la hauteur du mur sur l'écran en fonction de sa distance
-    int wall_height = (int)(WALL_HEIGHT / distance);
-
-    // Dessiner le mur sur l'écran
-    draw_wall_column(data, x, wall_height);
-}
+//         get_wall_dist(data->player, &ray);
+        
+//         get_wall_height(&ray);
+        
+//         draw_wall_column(data->world, column, wall_height);
+        
+//         column++; // Incrémenter la valeur de column pour passer à la colonne suivante
+//     }
+// }
 
