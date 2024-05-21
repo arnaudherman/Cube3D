@@ -140,10 +140,14 @@ typedef struct s_ray {
 	int 		step;
     int 		side;
     int 		line_height;
+	int 		draw_start;
+	int 		draw_end;
     int 		x_start;
 	int 		y_start;
     int 		x_end;
 	int			y_end;
+	int		    text_x;
+	int		    text_y;
 	char 		*wall_dir;
 	double 		wall_dist;
 	double 		wall_height;
@@ -432,6 +436,12 @@ void 		draw_ceiling(t_data *data);
 void 		draw_square(t_data *data, int x, int y, int color);
 // Located in *frame.c"
 int			render_next_frame(t_data *data);
+// Located in *image.c"
+void 		pixel_put(t_image *image, int x, int y, int color);
+void 		set_color_on_image(t_data *data, t_ray *ray);
+void 		texture_put(t_data *data, t_image *texture, t_ray *ray);
+void 		set_texture_on_image(t_data *data, t_image *texture, t_ray *ray);
+
 // Located in *map.c*
 int 		draw_map(t_image *map2d, t_map *map);
 void 		draw_tile(t_image *image, int x, int y);
@@ -449,11 +459,16 @@ static void calculate_line_height(t_data *data);
 int 		raycasting(t_data *data);
 
 // Located in *texture.c*
+void 		calculate_draw_positions(t_mlx *mlx, t_ray *ray);
+void 		calculate_wall_x(t_data *data, t_ray *ray);
+t_image 	*select_texture(t_data *data, t_ray *ray);
+void		calculate_texture_x(t_ray *ray, t_image *texture);
+void 		set_wall_texture(t_data *data, t_ray *ray);
 void		found_textures_data(t_data *data);
 // Located in *color.c*
 void		color_data(t_data *data);
 // Located in *wall.c*
-float delta_player_hits(t_player *player, t_ray *ray);
+float 		delta_player_hits(t_player *player, t_ray *ray);
 
 /* -------------------- LIBFT -------------------- */
 

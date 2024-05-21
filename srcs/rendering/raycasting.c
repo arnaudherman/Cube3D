@@ -32,7 +32,7 @@ void fov_rays(int hauteur_image, int largeur_image, float fov_horizontal_deg)
 	float fov_vertical_deg;
 	float rayon_vertical;
 
-	// Convertir le FOV horizontal en radians
+	// Converti ma FOV horizontal en radians
 	fov_horizontal_rad = fov_horizontal_deg * M_PI / 180.0;
 
     // Ensure no division by zero

@@ -31,3 +31,11 @@ void draw_square(t_data *data, int x, int y, int color)
         }
     }
 }
+
+void draw_col(t_data *data, t_mlx *mlx, t_ray *ray) 
+{
+    calculate_draw_positions(mlx, ray);
+    calculate_wall_x(data, ray);
+    set_color_on_image(data, ray);
+    set_wall_texture(data, ray);
+}
