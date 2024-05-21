@@ -59,3 +59,23 @@ int init_world(t_image *world, t_mlx *mlx)
     world->relative_path = NULL;
     return 0;
 }
+
+// int init_image(t_image *img, t_mlx *mlx)
+// {
+// 	img->width = WINDOW_WIDTH;
+// 	img->height = WINDOW_HEIGHT;
+//     img->img = mlx_new_image(mlx->mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT);
+//     if (img->img == NULL) {
+//         perror("Failed to create image\n");
+//         return 1;
+//     }
+//     img->addr = mlx_get_data_addr(img->img, &(img->bits_per_pixel),
+//                                          &(img->line_length), &(img->endian));
+//     if (img->addr == NULL) {
+//         perror("Failed to get image data address\n");
+//         mlx_destroy_image(mlx->mlx_ptr, img->img);
+//         return 1;
+//     }
+//     img->relative_path = NULL;
+//     return 0;
+// }

@@ -1,21 +1,77 @@
 #include "cub3d-bis.h"
 
-void my_mlx_pixel_put(t_image *image, int x, int y, int color) {
-	// printf("xaq mlx_loop_hook line_length = %d, bits_per_pixel = %d\n", image->line_length, image->bits_per_pixel);
-	// HERE : line_length = 0, bits_per_pixel = 0
-    char *dst;
-    dst = image->addr + (y * image->line_length + x * (image->bits_per_pixel / 8));
-	// Debug: x = 0, y = 0, line_length = 24672, bits_per_pixel = 5600
-	// Debug: Calculated address: 0x3e8
-	// printf("Debug: x = %d, y = %d, line_length = %d, bits_per_pixel = %d\n", x, y, image->line_length, image->bits_per_pixel);
-    // printf("Debug: Calculated address: %p\n", (void*)dst); 
-	// Debug: x = 58, y = 57, line_length = 0, bits_per_pixel = 0 (et y boucle avec + 1 par iteration)
-	// Debug: Calculated address: 0x60700001feb0
-    *(unsigned int*)dst = color;
+void draw_tile(t_image *map2d, int x, int y) {
+    int i = 0;
+    while (i < TILE_SIZE) {
+        int j = 0;
+        while (j < TILE_SIZE) {
+            my_mlx_pixel_put(map2d, x + i, y + j, 0xb6d7a8);
+            j++;
+        }
+        i++;
+    }
 }
 
-void	draw_vertical_lign(t_data *data)
-{
+void draw_square(t_data *data, int x, int y, int color) {
+	int i;
+	int j;
+
+	i = 0;
+    while (i < TILE_SIZE) {
+		j = 0; 
+        while (j < TILE_SIZE) {
+            my_mlx_pixel_put(data, x + i, y + j, color);
+			j++;
+        }
+		i++;
+    }
+}
+
+void draw_vertical_lines(t_image *map2d) {
+    int x;
+
+    x = 0;
+    while (x < map2d->width) {
+        draw_vertical_line(map2d, x, 0, 0xFFFFFF); // Draw line at the top
+        draw_vertical_line(map2d, x, map2d->height - 1, 0xFFFFFF); // Draw line at the bottom
+        x += TILE_SIZE;
+    }
+}
+
+void draw_horizontal_lines(t_image *map2d) {
+    int y;
+
+    y = 0;
+    while (y < map2d->height) {
+        draw_horizontal_line(map2d, 0, y, 0xFFFFFF); // Draw line on the left
+        draw_horizontal_line(map2d, map2d->width - 1, y, 0xFFFFFF); // Draw line on the right
+        y += TILE_SIZE;
+    }
+}
+
+// Définir une fonction pour dessiner une ligne verticale à une position x avec une couleur donnée
+void draw_vertical_line(t_image *map2d, int x, int start_y, int color) {
+    int y;
+
+    y = start_y;
+    while (y < map2d->height) {
+        my_mlx_pixel_put(map2d, x, y, color);
+        y++;
+    }
+}
+
+// Définir une fonction pour dessiner une ligne horizontale à une position y avec une couleur donnée
+void draw_horizontal_line(t_image *map2d, int start_x, int y, int color) {
+    int x;
+
+    x = start_x;
+    while (x < map2d->width) {
+        my_mlx_pixel_put(map2d, x, y, color);
+        x++;
+    }
+}
+
+void	draw_vertical_lign(t_data *data) {
     while (data->map.x_map <= MAP_WIDTH * TILE_SIZE) {
         my_mlx_pixel_put(data, data->map.x_map, 0, 0xFFFFFF); // Ligne en haut
         my_mlx_pixel_put(data, data->map.x_map, MAP_HEIGHT * TILE_SIZE, 0xFFFFFF); // Ligne en bas
@@ -23,17 +79,7 @@ void	draw_vertical_lign(t_data *data)
     }
 }
 
-void draw_square(t_data *data, int x, int y, int color)
-{
-    for (int i = 0; i < TILE_SIZE; i++) {
-        for (int j = 0; j < TILE_SIZE; j++) {
-            my_mlx_pixel_put(data, x + i, y + j, color);
-        }
-    }
-}
-
-void draw_col(t_data *data, t_mlx *mlx, t_ray *ray) 
-{
+void draw_col(t_data *data, t_mlx *mlx, t_ray *ray) {
     calculate_draw_positions(mlx, ray);
     calculate_wall_x(data, ray);
     set_color_on_image(data, ray);

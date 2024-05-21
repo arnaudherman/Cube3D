@@ -42,7 +42,6 @@ void	free_if_malloc_failed(t_data *data)
     free(data->player);
     free(data->keys);
     free(data->ray);
-    free(data->texture);
     free(data->color);
 }
 
@@ -55,7 +54,6 @@ void	free_all(t_data *data)
     free(data->player);
     free(data->keys);
     free(data->ray);
-    free(data->texture);
     free(data->color);
 	// Free instances
 	for (int i = 0; i < data->map.h_map; ++i) {

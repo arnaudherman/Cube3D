@@ -239,20 +239,15 @@ typedef struct s_color
 
 typedef struct s_texture
 {
-	// int			texture_found;
-	// int			size;
-	// char		*road;
-	// char		**NO;
-	// char 		**SO;
-	// char 		**WE;
-	// char		**EA;
-	// char 		**xpm_data;
-	t_image NO;
-	t_image SO;
-	t_image WE;
-	t_image EA;
-	t_image floor;
-	t_image ceiling;
+	int			texture_found;
+	int			size;
+	char        *road;
+	t_image 	NO;
+	t_image 	SO;
+	t_image 	WE;
+	t_image 	EA;
+	t_image 	floor;
+	t_image 	ceiling;
 } t_texture;
 
 typedef struct	s_mlx
@@ -268,20 +263,21 @@ typedef struct s_data
 {
 	t_mlx		mlx;
 	t_map		map;
+
 	// t_minimap	minimap;
 	t_image  	*map2d;
 	t_image 	*world;
 	t_player	*player;
 	t_keys		*keys;
 	t_ray  		*ray;
-	t_texture 	*texture;
 	t_color		*color;
-	t_texture	no;
-	t_texture	so;
-	t_texture	we;
-	t_texture	ea;
 	t_color		fcolors;
 	t_color		ccolors;
+	t_texture 	*texture;
+	// t_texture	no;
+	// t_texture	so;
+	// t_texture	we;
+	// t_texture	ea;
 } t_data;
 
 /* /\_/\_/\_/\_/\_/\_/\_/\_/\_/\_ PROTOTYPE _/\_/\_/\_/\_/\_/\_/\_/\_/\_/\ */
@@ -318,19 +314,18 @@ static int	number_word(const char *s1, char c);
 
 /* -------------------- SETUP -------------------- */
 // Located in *all.c*
-int			check_allocations(t_data *data);
-int 		malloc_struct(void **ptr, size_t size);
 int			malloc_all(t_data *data);
 int			init_default_all(t_data *data);
 int			init_custom_all(t_data *data);
 // Located in *color.c*
 t_color 	*allocate_color();
 // Located in *engine.c*
-int			init_data(t_data *data);
+int			init_mlx_engine(t_mlx *mlx);
 // Located in *image.c*
 t_image		*allocate_image();
 int 		init_map2d(t_image *map2d, t_mlx *mlx);
 int 		init_world(t_image *world, t_mlx *mlx);
+int 		init_tex_image(t_image *texture, t_mlx *mlx);
 // Located in *keys.c*
 t_keys		*allocate_keys(void);
 // Located in *map.c*
@@ -341,12 +336,17 @@ int 		init_map(t_map *map);
 // t_minimap 	*allocate_minimap(void); 
 // Located in *player.c*
 t_player	*allocate_player(void);
-static void	default_player(t_player *player);
 int			init_player(t_player *player);
 // Located in *ray.c*
 t_ray 		*allocate_ray(void);
 // Located in *texture.c*
-t_texture	*allocate_texture(t_mlx *mlx);
+// DO NOT DELETE
+// void 	init_texture_img(t_image *texture_img, t_mlx *mlx, char *path);
+// void 	init_textures(t_texture *texture, t_mlx *mlx);
+// void 	init_texture(t_texture *texture, t_mlx *mlx);
+void init_texture(t_texture *texture);
+void init_texture_img(t_image *texture_img, t_mlx *mlx, const char *path);
+void init_textures(t_texture *texture, t_mlx *mlx);
 
 /* -------------------- MOVING -------------------- */
 // Located in *direction.c*
@@ -430,45 +430,53 @@ void 		rotate_right(t_data *data);
 /* -------------------- RENDERING -------------------- */
 
 // Located in *draw.c*
-void		my_mlx_pixel_put(t_image *image, int x, int y, int color);
-void 		draw_floor(t_data *data);
-void 		draw_ceiling(t_data *data);
-void 		draw_square(t_data *data, int x, int y, int color);
-// Located in *frame.c"
-int			render_next_frame(t_data *data);
-// Located in *image.c"
-void 		pixel_put(t_image *image, int x, int y, int color);
-void 		set_color_on_image(t_data *data, t_ray *ray);
-void 		texture_put(t_data *data, t_image *texture, t_ray *ray);
-void 		set_texture_on_image(t_data *data, t_image *texture, t_ray *ray);
-
-// Located in *map.c*
-int 		draw_map(t_image *map2d, t_map *map);
 void 		draw_tile(t_image *image, int x, int y);
+void 		draw_square(t_data *data, int x, int y, int color);
 void 		draw_vertical_lines(t_image *image);
 void 		draw_horizontal_lines(t_image *image);
 void 		draw_vertical_line(t_image *image, int x, int start_y, int color);
 void 		draw_horizontal_line(t_image *image, int start_x, int y, int color);
-// Located in *minimap.c*
+void		draw_vertical_lign(t_data *data);	
+void 		draw_col(t_data *data, t_mlx *mlx, t_ray *ray);
+// Located in *frame.c"
+int			render_next_frame(t_data *data);
+// Located in *image.c"
+void		my_mlx_pixel_put(t_image *image, int x, int y, int color);
+void 		pixel_put(t_image *image, int x, int y, int color);
+void 		set_color_on_image(t_data *data, t_ray *ray);
+void 		texture_put(t_data *data, t_image *texture, t_ray *ray);
+void 		set_texture_on_image(t_data *data, t_image *texture, t_ray *ray);
+// Located in *map.c*
+void 		draw_minimap_bg(t_image *map2d, int color);
+int 		draw_map(t_image *map2d, t_map *map);
 // Located in *player.c*
-// int			draw_player(t_player *player, t_mlx *mlx);
 int			draw_player(t_image *image, t_player *player);
 // Located in *raycasting.c*
-static void perform_dda(t_data *data);
-static void calculate_line_height(t_data *data);
+float 		get_ray_length(int map_width, int map_height, int window_width, int window_height, float field_of_view);
+void 		fov_rays(int hauteur_image, int largeur_image, float fov_horizontal_deg);
+float 		correct_fisheye(float distance, float ray_angle, float player_angle);
+void 		draw_ray(t_image *map2d, t_image *world, int x1, int y1, int x2, int y2, t_map *map, t_ray *ray, t_data *data);
+void 		shoot_rays(t_image *map2d, t_image *world, t_player *player, t_map *map, t_ray *ray, t_data *data);
 int 		raycasting(t_data *data);
-
 // Located in *texture.c*
 void 		calculate_draw_positions(t_mlx *mlx, t_ray *ray);
 void 		calculate_wall_x(t_data *data, t_ray *ray);
 t_image 	*select_texture(t_data *data, t_ray *ray);
 void		calculate_texture_x(t_ray *ray, t_image *texture);
 void 		set_wall_texture(t_data *data, t_ray *ray);
-void		found_textures_data(t_data *data);
 // Located in *color.c*
 void		color_data(t_data *data);
 // Located in *wall.c*
-float 		delta_player_hits(t_player *player, t_ray *ray);
+void		get_wall_dist(t_player *player, t_ray *ray);
+void		get_wall_height(t_ray *ray);
+void 		draw_wall_column(t_image *world, int column, int wall_height);
+void 		draw_wall(t_data *data, t_ray *ray);
+// Located in *world.c*
+float 		degrees_to_radians(float angle);
+float 		radians_to_degrees(float angle);
+void 		draw_world_bg(t_image *world, int color);
+
+
 
 /* -------------------- LIBFT -------------------- */
 
