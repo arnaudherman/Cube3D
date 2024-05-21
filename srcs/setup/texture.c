@@ -20,7 +20,7 @@ t_texture *allocate_texture(void)
         perror("Allocation for texture failed\n");
         exit(EXIT_FAILURE);
     }
-    texture->found = 0;
+    texture->texture_found = 0;
     texture->size = 0;
     texture->road = NULL;
     texture->NO = NULL;

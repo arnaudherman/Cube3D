@@ -14,10 +14,10 @@ t_color *allocate_color(void)
     color->fcolor = NULL;
     color->ccolor = NULL;
     color->final_color = 0;
-    color->r = 0;
-    color->g = 0;
-    color->b = 0;
-    color->found = 0;
+    color->int_r = 0;
+    color->int_g = 0;
+    color->int_b = 0;
+    color->found_color = 0;
     color->floor = 0;
     color->floor_hexa = 0;
     color->ceiling = 0;

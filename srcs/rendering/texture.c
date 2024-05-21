@@ -1,59 +1,70 @@
 #include "cub3d-bis.h"
+#include "cub3d.h"
 
-// void		pixel_put(t_image *image, int x, int y, int color)
-// {
-// 	unsigned char *src;
-// 	unsigned char r;
-// 	unsigned char g;
-// 	unsigned char b;
+void	save_texture_data(t_texture *texture, char *line)
+{
+	char	*path;
+	char	*path_start;
+	char	*newline;
+	int		fd;
 
-// 	src = (unsigned char *)&color;
-// 	r = src[0];
-// 	g = src[1];
-// 	b = src[2];
-// 	image->img_data[y * image->size_line + x * image->bpp / 8] = r;
-// 	image->img_data[y * image->size_line + x * image->bpp / 8 + 1] = g;
-// 	image->img_data[y * image->size_line + x * image->bpp / 8 + 2] = b;
-// }
+	if (texture->texture_found == 0)
+	{
+		path_start = ft_strchr(line, ' ');
+		path_start++;
+		path = (char *)malloc(strlen(path_start) + 1);
+		if (path == NULL)
+			return ;
+		ft_strcpy(path, path_start);
+		newline = ft_strchr(path, '\n');
+		if (newline != NULL)
+			*newline = '\0';
+		fd = open(path, O_RDONLY);
+		if (fd != -1)
+		{
+			close(fd);
+			texture->road = path;
+		}
+		else
+		{
+			ft_error(ERROR_PATH_TEXT);
+			free(path);
+		}
+	}
+	else
+		ft_error(ERROR_DOUBLE_TEXT);
+}
 
-// void		set_color_on_image(t_game *game, t_ray *ray)
-// {
-// 	int	y;
+// L'objectif est de mettre les textures dans nos struct
+// On trouve une ligne qui start avec une direction
+// On regarde que cette direction na pas deja une texture set
+// On envoie dans save data, on extrait la path
+// On regarde si le fichier peut etre open
+// On stock dans la struct
+void	found_textures_data(t_data *data)
+{
+	char	*line;
 
-// 	y = 0;
-// 	while (y < ray->draw_start)
-// 		pixel_put(game->image, ray->x, y++, game->c_color);
-// 	y = ray->draw_end + 1;
-// 	while (y < game->window->height)
-// 		pixel_put(game->image, ray->x, y++, game->f_color);
-// }
-
-// static void	texture_put(t_game *game, t_image *texture, t_ray *ray)
-// {
-// 	int	d;
-
-// 	d = ray->y * texture->size_line - game->window->height
-// 		* texture->size_line / 2 + ray->line_height * texture->size_line / 2;
-// 	ray->text_y = ((d * texture->height) / ray->line_height)
-// 		/ texture->size_line;
-// 	game->image->img_data[ray->y * game->image->size_line
-// 		+ ray->x * game->image->bpp / 8] =
-// 		texture->img_data[ray->text_y * texture->size_line
-// 		+ ray->text_x * (texture->bpp / 8)];
-// 	game->image->img_data[ray->y * game->image->size_line
-// 		+ ray->x * game->image->bpp / 8 + 1] =
-// 		texture->img_data[ray->text_y * texture->size_line
-// 		+ ray->text_x * (texture->bpp / 8) + 1];
-// 	game->image->img_data[ray->y * game->image->size_line
-// 		+ ray->x * game->image->bpp / 8 + 2] =
-// 		texture->img_data[ray->text_y * texture->size_line
-// 		+ ray->text_x * (texture->bpp / 8) + 2];
-// 	ray->y++;
-// }
-
-// void		set_texture_on_image(t_game *game, t_image *texture, t_ray *ray)
-// {
-// 	ray->y = ray->draw_start;
-// 	while (ray->y <= ray->draw_end)
-// 		texture_put(game, texture, ray);
-// }
+	while (1)
+	{
+		line = get_next_line(&data->mlx.fd);
+		if (line == NULL)
+			break ;
+		if (ft_strncmp(line, "NO ", 3) == 0 || ft_strncmp(line, "SO ", 3) == 0
+			|| ft_strncmp(line, "WE ", 3) == 0
+			|| ft_strncmp(line, "EA ", 3) == 0)
+		{
+			if (ft_strncmp(line, "NO ", 3) == 0)
+				save_texture_data(&(data->texture->NO), line);
+			else if (ft_strncmp(line, "SO ", 3) == 0)
+				save_texture_data(&(data->texture->SO), line);
+			else if (ft_strncmp(line, "WE ", 3) == 0)
+				save_texture_data(&(data->texture->WE), line);
+			else if (ft_strncmp(line, "EA ", 3) == 0)
+				save_texture_data(&(data->texture->EA), line);
+		}
+	}
+	if ((data->texture->NO == NULL) || (data->texture->SO == NULL)
+		|| (data->texture->WE == NULL) || (data->texture->EA == NULL))
+		ft_error(ERROR_MISSING_TEXT);
+}

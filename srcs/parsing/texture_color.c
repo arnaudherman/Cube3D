@@ -1,6 +1,8 @@
-// #include "../../include/cub3d.h"
+// // #include "../../include/cub3d.h"
+// #include "cub3d-bis.h"
+// #include "cub3d.h"
 
-// // DONE : fail remplaced by perror everywhere
+// // // DONE : fail remplaced by perror everywhere
 
 // int	open_file_and_init(const char *file_d, int *fd, int *line_counter)
 // {
@@ -57,18 +59,18 @@
 // {
 // 	char	**tmp;
 
-// 	if (check_format(data->color.ccolor))
+// 	if (check_format(data->color->ccolor))
 // 		perror("Wrong format for ceiling color.");
-// 	if (check_format(data->color.fcolor))
+// 	if (check_format(data->color->fcolor))
 // 		perror("Wrong format for floor color.");
-// 	tmp = ft_split(data->color.fcolor, ',');
+// 	tmp = ft_split(data->color->fcolor, ',');
 // 	if (tmp == NULL)
 // 		perror("error split (convert_colors");
-// 	data->color.floor = convert_color(tmp);
-// 	tmp = ft_split(data->color.ccolor, ',');
+// 	data->color->floor = convert_color(tmp);
+// 	tmp = ft_split(data->color->ccolor, ',');
 // 	if (tmp == NULL)
 // 		perror("error split (convert_colros)");
-// 	data->color.ceiling = convert_color(tmp);
+// 	data->color->ceiling = convert_color(tmp);
 // 	return (0);
 // }
 
@@ -88,17 +90,17 @@
 // 		perror("In get_color");
 // 	if (dir == FLOOR)
 // 	{
-// 		data->color.fcolor = ft_strdup(tmp[1]);
-// 		if (data->color.fcolor == NULL)
+// 		data->color->fcolor = ft_strdup(tmp[1]);
+// 		if (data->color->fcolor == NULL)
 // 			perror("In get_color floor");
-// 		data->color.fcolor[ft_strlen(tmp[1]) - 1] = 0;
+// 		data->color->fcolor[ft_strlen(tmp[1]) - 1] = 0;
 // 	}
 // 	else if (dir == CEILING)
 // 	{
-// 		data->color.ccolor = ft_strdup(tmp[1]);
-// 		if (data->color.ccolor == NULL)
+// 		data->color->ccolor = ft_strdup(tmp[1]);
+// 		if (data->color->ccolor == NULL)
 // 			perror("In get_color ceiling");
-// 		data->color.ccolor[ft_strlen(tmp[1]) - 1] = 0;
+// 		data->color->ccolor[ft_strlen(tmp[1]) - 1] = 0;
 // 	}
 // 	free(tmp[0]);
 // 	free(tmp[1]);

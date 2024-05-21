@@ -222,10 +222,10 @@ typedef struct s_color
 		char			*fcolor;
 		char 			*ccolor;
 		int				final_color;
-		int				r;
-		int				g;
-		int				b;
-		int				found;
+		int				int_r;
+		int				int_g;
+		int				int_b;
+		int				found_color;
 		int				floor;
 		unsigned long	floor_hexa;
 		int				ceiling;
@@ -234,7 +234,7 @@ typedef struct s_color
 
 typedef struct s_texture
 {
-	int			found;
+	int			texture_found;
 	int			size;
 	char		*road;
 	char		**NO;
@@ -265,12 +265,12 @@ typedef struct s_data
 	t_ray  		*ray;
 	t_texture 	*texture;
 	t_color		*color;
-	// t_texture_info	no;
-	// t_texture_info	so;
-	// t_texture_info	we;
-	// t_texture_info	ea;
-	// t_color_info	fcolors;
-	// t_color_info	ccolors;
+	t_texture	no;
+	t_texture	so;
+	t_texture	we;
+	t_texture	ea;
+	t_color		fcolors;
+	t_color		ccolors;
 } t_data;
 
 /* /\_/\_/\_/\_/\_/\_/\_/\_/\_/\_ PROTOTYPE _/\_/\_/\_/\_/\_/\_/\_/\_/\_/\ */

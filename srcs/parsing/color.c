@@ -1,4 +1,5 @@
-// #include "../../include/cub3d.h"
+// #include "cub3d.h"
+// #include "cub3d-bis.h"
 
 // int	encode_rgb(int r, int g, int b)
 // {
@@ -41,18 +42,18 @@
 
 // 	while (1)
 // 	{
-// 		line = get_next_line(data->fd);
+// 		line = get_next_line(&data->mlx.fd);
 // 		if (line == NULL)
 // 			break ;
 // 		if (ft_strncmp(line, "F ", 2) == 0 || ft_strncmp(line, "C ", 2) == 0)
 // 		{
 // 			if (ft_strncmp(line, "F ", 2) == 0)
-// 				save_color_data(&data->color.fcolor, line);
+// 				save_color_data(&data->color->fcolor, line);
 // 			else if (ft_strncmp(line, "C ", 2) == 0)
-// 				save_color_data(&data->color.fcolor, line);
+// 				save_color_data(&data->color->fcolor, line);
 // 		}
 // 	}
-// 	if ((data->color.found_color == 1) || (data->color.found_color == 1))
+// 	if ((data->color->found_color == 1) || (data->color->found_color == 1))
 // 		ft_error(ERROR_MISSING_COLOR);
 // }
 
@@ -92,11 +93,11 @@
 // void	color_data(t_data *data)
 // {
 // 	found_color_data(data);
-// 	is_valid_color(&(data->color.fcolor));
-// 	is_valid_color(&(data->color.ccolor));
-// 	data->color.final_color = encode_rgb(data->color.int_r,
-// 			data->color.int_g, data->color.int_b);
-// 	data->color.final_color = encode_rgb(data->color.int_r,
-// 			data->color.int_g, data->color.int_b);
+// 	is_valid_color(&(data->color->fcolor));
+// 	is_valid_color(&(data->color->ccolor));
+// 	data->color->final_color = encode_rgb(data->color->int_r,
+// 			data->color->int_g, data->color->int_b);
+// 	data->color->final_color = encode_rgb(data->color->int_r,
+// 			data->color->int_g, data->color->int_b);
 // }
 
