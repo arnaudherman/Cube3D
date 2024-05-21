@@ -64,6 +64,83 @@ float correct_fisheye(float distance, float ray_angle, float player_angle)
     return corrected_distance;
 }
 
+// void calculate_steps(int x1, int y1, int x2, int y2, int *dx, int *dy, int *steps) 
+// {
+//     *dx = x2 - x1;
+//     *dy = y2 - y1;
+//     *steps = abs(*dx) > abs(*dy) ? abs(*dx) : abs(*dy);
+// }
+
+// void calculate_step_sizes(int dx, int dy, float *step_x, float *step_y, int steps) 
+// {
+//     *step_x = (float)dx / steps;
+//     *step_y = (float)dy / steps;
+// }
+
+// char get_wall_direction(int x, int y, t_map *map) {
+//     return map->map2d[y / TILE_SIZE][x / TILE_SIZE];
+// }
+
+// int calculate_wall_height(float current_x, float current_y, int x1, int y1, t_ray *ray, t_data *data) {
+//     float distance = sqrt((current_x - x1) * (current_x - x1) + (current_y - y1) * (current_y - y1));
+//     if (distance == 0) {
+//         distance = 1.0;  // Prévenir la division par zéro
+//     }
+//     ray->wall_dist = distance;
+//     int corrected_distance = correct_fisheye(distance, data->ray->angle, data->player->angle);
+//     if (corrected_distance == 0) {
+//         corrected_distance = 1;  // Prévenir la division par zéro
+//     }
+//     return (int)(WALL_HEIGHT / corrected_distance);
+// }
+
+// int get_wall_top(int wall_height) {
+//     return (WINDOW_HEIGHT / 2) - (wall_height / 2);
+// }
+
+// void draw_ray(t_image *map2d, t_image *world, int x1, int y1, int x2, int y2, t_map *map, t_ray *ray, t_data *data) {
+//     int i;
+//     int x, y;
+//     int dx, dy;
+//     int steps;
+//     float step_x;
+//     float step_y;
+//     float current_x;
+//     float current_y;
+
+//     calculate_steps(x1, y1, x2, y2, &dx, &dy, &steps);
+//     if (steps == 0) {
+//         return;
+//     }
+
+//     calculate_step_sizes(dx, dy, &step_x, &step_y, steps);
+
+//     current_x = x1;
+//     current_y = y1;
+
+//     i = 0;
+//     while (i <= steps) {
+//         x = (int)current_x;
+//         y = (int)current_y;
+
+//         if (map->map2d[y / TILE_SIZE][x / TILE_SIZE] != '0') {
+//             int wall_height = calculate_wall_height(current_x, current_y, x1, y1, ray, data);
+//             char wall_dir = get_wall_direction(x, y, map);
+//             int wall_top = get_wall_top(wall_height);
+//             render_wall_texture(world, x * TILE_SIZE, ray->wall_height, wall_top, /*&*/data->texture, wall_dir);
+//             break;
+//         }
+
+//         my_mlx_pixel_put(map2d, x, y, 0xffd55c);
+
+//         current_x += step_x;
+//         current_y += step_y;
+//         i++;
+//     }
+// }
+
+
+
 void draw_ray(t_image *map2d, t_image *world, int x1, int y1, int x2, int y2, t_map *map, t_ray *ray, t_data *data) {
     int i;
 	int x, y;
@@ -107,6 +184,19 @@ void draw_ray(t_image *map2d, t_image *world, int x1, int y1, int x2, int y2, t_
                 corrected_distance = 1;  // Prevent division by zero
             }
             ray->wall_height = (int)(WALL_HEIGHT / corrected_distance);
+
+			// TO DO : extern function for wall direction
+			// Determine the direction of the wall (example, you may need to adapt this part)
+			char wall_dir = map->map2d[y / TILE_SIZE][x / TILE_SIZE];
+
+			// TO DO : extern function for wall top
+            int wall_top = (WINDOW_HEIGHT / 2) - (ray->wall_height / 2);
+
+			// // TO DO : extern function to draw the wall column with texture
+            // render_wall_texture(world, x * TILE_SIZE, ray->wall_height, wall_top, /*&*/data->texture, wall_dir);
+            // break;
+
+			// TO DO : delete soon because of render_wall_texture
             draw_wall_column(world, x * TILE_SIZE, ray->wall_height);
             break;
         }

@@ -10,7 +10,7 @@ int malloc_all(t_data *data) {
     data->player = allocate_player();
 	data->keys = allocate_keys();
     data->ray = allocate_ray();
-    data->texture = allocate_texture();
+    // data->texture = init_textures(&data->mlx); // already in main bro
     data->color = allocate_color();
 
     if (data->map2d == NULL || data->player == NULL ||
@@ -71,7 +71,6 @@ int	init_custom_all(t_data *data)
 		perror("Failed to initialize rays\n");
 		return 1;
 	}
-
 
 	return 0;
 }

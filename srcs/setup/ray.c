@@ -93,6 +93,8 @@ t_ray *allocate_ray(void)
     // ray->draw_end = 0;
     ray->wall_dist = 0.0;
 	ray->wall_height = 0.0;
+	// TO DO : WALL_DIR function
+	// ray->wall_dir = 'N';
     // ray->wall_x = 0.0;
 	// ray->wall_y = 0.0;
     // ray->pov_x = 0.0;

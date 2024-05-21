@@ -144,6 +144,7 @@ typedef struct s_ray {
 	int 		y_start;
     int 		x_end;
 	int			y_end;
+	char 		*wall_dir;
 	double 		wall_dist;
 	double 		wall_height;
     double 		wall_x;
@@ -234,14 +235,20 @@ typedef struct s_color
 
 typedef struct s_texture
 {
-	int			texture_found;
-	int			size;
-	char		*road;
-	char		**NO;
-	char 		**SO;
-	char 		**WE;
-	char		**EA;
-	char 		**xpm_data;
+	// int			texture_found;
+	// int			size;
+	// char		*road;
+	// char		**NO;
+	// char 		**SO;
+	// char 		**WE;
+	// char		**EA;
+	// char 		**xpm_data;
+	t_image NO;
+	t_image SO;
+	t_image WE;
+	t_image EA;
+	t_image floor;
+	t_image ceiling;
 } t_texture;
 
 typedef struct	s_mlx
@@ -318,7 +325,8 @@ t_color 	*allocate_color();
 int			init_data(t_data *data);
 // Located in *image.c*
 t_image		*allocate_image();
-int			init_image(t_image *image, t_mlx *mlx);
+int 		init_map2d(t_image *map2d, t_mlx *mlx);
+int 		init_world(t_image *world, t_mlx *mlx);
 // Located in *keys.c*
 t_keys		*allocate_keys(void);
 // Located in *map.c*
@@ -334,7 +342,7 @@ int			init_player(t_player *player);
 // Located in *ray.c*
 t_ray 		*allocate_ray(void);
 // Located in *texture.c*
-t_texture 	*allocate_texture(void);
+t_texture	*allocate_texture(t_mlx *mlx);
 
 /* -------------------- MOVING -------------------- */
 // Located in *direction.c*

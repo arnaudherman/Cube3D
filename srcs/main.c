@@ -26,7 +26,10 @@ int	main(int ac, char **av)
         perror("Failed to init_custom_all in init_default_all\n");
         return -1;
     }
-	
+
+    // init_textures(&data->texture, data->mlx.mlx_ptr);
+	// WTF ??? Assurez-vous que `data` contient toutes les informations nécessaires
+	// data->texture = &texture;
 	loop(data);
 
 	free_all(data);

@@ -2,7 +2,9 @@
 
 t_image	*allocate_image()
 {
-	t_image *image = (t_image *)malloc(sizeof(t_image));
+	t_image *image;
+	
+	image = (t_image *)malloc(sizeof(t_image));
     if (!image) {
         perror("Failed to allocate t_image");
         return NULL;
@@ -37,8 +39,6 @@ int init_map2d(t_image *map2d, t_mlx *mlx)
     map2d->relative_path = NULL;
     return 0;
 }
-
-
 
 int init_world(t_image *world, t_mlx *mlx)
 {
