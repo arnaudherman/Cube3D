@@ -31,25 +31,6 @@ int malloc_all(t_data *data) {
     return 0;
 }
 
-// New syntax try
-// int malloc_all(t_data *data) {
-//     data->map2d = (t_image *)malloc(sizeof(t_image));
-//     data->world = (t_image *)malloc(sizeof(t_image));
-//     data->player = (t_player *)malloc(sizeof(t_player));
-//     data->keys = (t_keys *)malloc(sizeof(t_keys));
-//     data->ray = (t_ray *)malloc(sizeof(t_ray));
-//     data->color = (t_color *)malloc(sizeof(t_color));
-//     data->texture = (t_texture *)malloc(sizeof(t_texture));
-
-//     if (!data->map2d || !data->world || !data->player || !data->keys || !data->ray || !data->color || !data->texture) {
-//         perror("Failed to allocate memory in malloc_all\n");
-//         return -1;
-//     }
-
-//     return 0;
-// }
-
-
 int init_default_all(t_data *data)
 {
 	data->mlx = (t_mlx){0};
@@ -61,8 +42,6 @@ int init_default_all(t_data *data)
         perror("Failed to malloc_all in init_default_all\n");
         return -1;
     }
-	// init_texture(data->texture);
-    // init_textures(data->texture, &data->mlx);
     return 0;
 }
  

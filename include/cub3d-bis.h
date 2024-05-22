@@ -177,20 +177,6 @@ typedef struct s_map {
 	t_ray  		*ray;
 } t_map;
 
-// typedef struct s_minimap
-// {
-//     int			w_minimap;
-//     int 		h_minimap;
-// 	char 		**minimap2d;
-// 	int			tile_size;
-//     int 		x_minimap;
-//     int 		y_minimap;
-// 	unsigned int color;
-// 	t_image	*img;
-// 	t_ray 	*ray;
-	
-// } t_minimap;
-
 typedef struct s_player
 {
  	double  	x_pos; // in pixels
@@ -222,35 +208,20 @@ typedef struct	s_keys
 } t_keys;
 
 typedef struct s_color
-	{
-		char			*string_color;
-		char			*fcolor;
-		char 			*ccolor;
-		int				final_color;
-		int				int_r;
-		int				int_g;
-		int				int_b;
-		int				found_color;
-		int				floor;
-		unsigned long	floor_hexa;
-		int				ceiling;
-		unsigned long	ceiling_hexa;
+{
+	char			*string_color;
+	char			*fcolor;
+	char 			*ccolor;
+	int				final_color;
+	int				int_r;
+	int				int_g;
+	int				int_b;
+	int				found_color;
+	int				floor;
+	unsigned long	floor_hexa;
+	int				ceiling;
+	unsigned long	ceiling_hexa;
 } t_color;
-
-// typedef struct s_texture
-// {
-// 	int 		height;
-// 	int 		width;
-// 	int			texture_found;
-// 	int			size;
-// 	char        *road;
-// 	t_image 	*NO;
-// 	t_image 	*SO;
-// 	t_image 	*WE;
-// 	t_image 	*EA;
-// 	t_image 	*floor;
-// 	t_image 	*ceiling;
-// } t_texture;
 
 typedef struct	s_mlx
 {
@@ -280,12 +251,6 @@ typedef struct s_data
 	t_color		*color;
 	t_color		fcolors;
 	t_color		ccolors;
-
-	// t_texture 	*texture;
-	// t_texture	no;
-	// t_texture	so;
-	// t_texture	we;
-	// t_texture	ea;
 } t_data;
 
 /* /\_/\_/\_/\_/\_/\_/\_/\_/\_/\_ PROTOTYPE _/\_/\_/\_/\_/\_/\_/\_/\_/\_/\ */
@@ -340,19 +305,12 @@ t_keys		*allocate_keys(void);
 int			malloc_map2d(t_map *map);
 int			fill_map(t_map *map);
 int 		init_map(t_map *map);
-// Located in *minimap.c*
-// t_minimap 	*allocate_minimap(void); 
 // Located in *player.c*
 t_player	*allocate_player(void);
 int			init_player(t_player *player);
 // Located in *ray.c*
 t_ray 		*allocate_ray(void);
 // Located in *texture.c*
-// DO NOT DELETE
-// void 	init_texture_img(t_image *texture_img, t_mlx *mlx, char *path);
-// void 	init_textures(t_texture *texture, t_mlx *mlx);
-// void 	init_texture(t_texture *texture, t_mlx *mlx);
-// int 		init_texture(t_texture *texture);
 void 		init_texture_img(t_image *texture_img, t_mlx *mlx, const char *path);
 int 		init_all_textures(t_data *data, t_mlx *mlx);
 
