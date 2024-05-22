@@ -106,7 +106,7 @@ void draw_ray(t_image *map2d, t_image *world, t_map *map, t_ray *ray, t_data *da
 
 		// TO DO : CORRECT everything before draw 3D world walls
 		// draw_wall(data, ray);
-        my_mlx_pixel_put(map2d, x, y, 0xffd55c);
+        my_mlx_pixel_put(map2d, x / TILE_SIZE, y / TILE_SIZE, 0xffd55c);
 
         current_x += ray->step_x;
         current_y += ray->step_y;
