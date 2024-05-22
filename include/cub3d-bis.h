@@ -133,38 +133,33 @@ typedef struct s_image
 } t_image;
 
 typedef struct s_ray {
-    int 		x;
-    int 		y;
-	int 		xinc;
-	int 		yinc;
-	int 		step;
-    int 		side;
-    int 		line_height;
-	int 		draw_start;
-	int 		draw_end;
-    int 		x_start;
-	int 		y_start;
-    int 		x_end;
-	int			y_end;
-	int		    text_x;
-	int		    text_y;
-	char 		*wall_dir;
-	double 		wall_dist;
-	double 		wall_height;
-    double 		wall_x;
-	double 		wall_y;
-	double 		pov_x;
-    double 		dir_x;
-    double 		dir_y;
-    double 		map_x;
-    double 		map_y;
-    double 		dx;
-    double 		dy;
-    double 		sidedist_x;
-    double 		sidedist_y;
-	double 		camera_x;
-	float		ray_length;
-	float		angle; // in radians
+    int x1;
+    int y1;
+	int x2;
+	int y2;
+	double dx;
+    double dy;
+	int steps;
+	int step_x;
+	int step_y;
+    int side;
+    int line_height;
+    int draw_start;
+    int draw_end;
+    int text_x;
+    int text_y;
+    double wall_dist;
+    double wall_height;
+    double wall_x;
+    double dir_x;
+    double dir_y;
+    double map_x;
+    double map_y;
+    double sidedist_x;
+    double sidedist_y;
+    double camera_x;
+    float ray_length;
+    float angle; // in radians
 } t_ray;
 
 typedef struct s_map {
@@ -261,7 +256,9 @@ int 		clean_all(t_data *data);
 void		free_if_malloc_failed(t_data *data);
 void		free_all(t_data *data);
 // Located in *error.c*
+int 		err(char *str);
 void		ft_error(char *error);
+void		debug_ray(t_ray *ray);
 // Located in *exit.c*
 int			exit_game(t_data *data);
 void		clear_map(t_data *data);
@@ -444,7 +441,7 @@ void		color_data(t_data *data);
 void		get_wall_dist(t_player *player, t_ray *ray);
 void		get_wall_height(t_ray *ray);
 void 		draw_wall_column(t_image *world, int column, int wall_height);
-void 		draw_wall(t_data *data, t_ray *ray);
+void 		draw_wall(t_data *data, t_ray *ray, int x, int y);
 // Located in *world.c*
 float 		degrees_to_radians(float angle);
 float 		radians_to_degrees(float angle);

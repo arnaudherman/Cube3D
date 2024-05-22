@@ -35,10 +35,12 @@ SRCS += srcs/parsing/color.c \
 SRCS += srcs/rendering/close.c \
 		srcs/rendering/color.c \
 		srcs/rendering/draw.c \
+		srcs/rendering/fov_rays.c \
 		srcs/rendering/frame.c \
         srcs/rendering/image.c \
         srcs/rendering/map.c \
 		srcs/rendering/player.c \
+		srcs/rendering/ray_length.c \
         srcs/rendering/world.c \
         srcs/rendering/raycasting.c \
         srcs/rendering/draw.c \

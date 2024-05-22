@@ -49,6 +49,13 @@ void set_wall_texture(t_data *data, t_ray *ray)
     set_texture_on_image(data, texture, ray);
 }
 
+// Draw column with the rigth texture
+void draw_col(t_data *data, t_mlx *mlx, t_ray *ray) {
+    calculate_draw_positions(mlx, ray);
+    calculate_wall_x(data, ray);
+    set_color_on_image(data, ray);
+    set_wall_texture(data, ray);
+}
 
 // TO DO : handle dans mon .cub
 // F 220,100,0 for floor

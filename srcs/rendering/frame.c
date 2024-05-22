@@ -13,7 +13,7 @@ int	render_next_frame(t_data *data)
 	draw_map(data->map2d, &data->map);
 	key_move(data);
 	draw_player(data->map2d, data->player);
-	draw_world_bg(data->world, 	0x0057B8);
+	draw_world_bg(data->world, 0x0057B8);
 	raycasting(data);
 	
 	mlx_put_image_to_window(data->mlx.mlx_ptr, data->mlx.mlx_win_ptr, data->world->img, 0, 0);
