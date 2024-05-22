@@ -1,46 +1,77 @@
 #include "cub3d-bis.h"
 
-void	calculate_delta_dist(t_ray *ray)
-{
-	if (ray->dir_y == 0)
-		ray->dx = 0;
-	else if (ray->dir_x == 0)
-		ray->dx = 1;
-	else
-		ray->dx = fabs(1 / ray->dir_x);
+// void	calculate_delta_dist(t_ray *ray)
+// {
+// 	if (ray->dir_y == 0)
+// 		ray->dx = 0;
+// 	else if (ray->dir_x == 0)
+// 		ray->dx = 1;
+// 	else
+// 		ray->dx = fabs(1 / ray->dir_x);
 
-	if (ray->dir_x == 0)
-		ray->dy = 0;
-	else if (ray->dir_y == 0)
-		ray->dy = 1;
-	else
-		ray->dy = fabs(1 / ray->dir_y);
-}
+// 	if (ray->dir_x == 0)
+// 		ray->dy = 0;
+// 	else if (ray->dir_y == 0)
+// 		ray->dy = 1;
+// 	else
+// 		ray->dy = fabs(1 / ray->dir_y);
+// }
 
-void	calculate_side_dist(t_ray *ray, t_player *player)
+// void	calculate_side_dist(t_ray *ray, t_player *player)
+// {
+// 	if (ray->dir_x < 0)
+// 	{
+// 		ray->x = -1;
+// 		ray->sidedist_x = (player->x_pos - ray->map_x) * ray->dx;
+// 	}
+// 	else
+// 	{
+// 		ray->x = 1;
+// 		ray->sidedist_x = (ray->map_x - player->x_pos + 1.0)
+// 			* ray->dx;
+// 	}
+// 	if (ray->dir_y < 0)
+// 	{
+// 		ray->y = -1;
+// 		ray->sidedist_y = (player->y_pos - ray->map_y) * ray->dy;
+// 	}
+// 	else
+// 	{
+// 		ray->y = 1;
+// 		ray->sidedist_y = (ray->map_y - player->y_pos + 1.0)
+// 			* ray->dy;
+// 	}
+// }
+
+float get_ray_length(int map_width, int map_height, int window_width, int window_height, float field_of_view) 
 {
-	if (ray->dir_x < 0)
-	{
-		ray->x = -1;
-		ray->sidedist_x = (player->x_pos - ray->map_x) * ray->dx;
-	}
-	else
-	{
-		ray->x = 1;
-		ray->sidedist_x = (ray->map_x - player->x_pos + 1.0)
-			* ray->dx;
-	}
-	if (ray->dir_y < 0)
-	{
-		ray->y = -1;
-		ray->sidedist_y = (player->y_pos - ray->map_y) * ray->dy;
-	}
-	else
-	{
-		ray->y = 1;
-		ray->sidedist_y = (ray->map_y - player->y_pos + 1.0)
-			* ray->dy;
-	}
+    float fov_rad;
+	float horizontal_fov;
+	float vertical_fov;
+	float horizontal_ray_length;
+	float vertical_ray_length;
+	float ray_length;
+
+	
+	// Convert the field of view from degrees to radians
+	fov_rad = field_of_view * M_PI / 180.0;
+
+    // Calculate the horizontal and vertical field of view
+    horizontal_fov = fov_rad;
+    vertical_fov = 2.0 * atan2(tan(fov_rad / 2.0) * window_height, window_width);
+
+    // Ensure no division by zero
+    if (tan(horizontal_fov / 2.0) == 0.0 || tan(vertical_fov / 2.0) == 0.0)
+        return 0.0;
+
+    // Calculate the horizontal and vertical ray lengths
+    horizontal_ray_length = map_width / (2.0 * tan(horizontal_fov / 2.0));
+    vertical_ray_length = map_height / (2.0 * tan(vertical_fov / 2.0));
+
+    // Choose the larger of the two ray lengths
+    ray_length = (horizontal_ray_length > vertical_ray_length) ? horizontal_ray_length : vertical_ray_length;
+
+    return ray_length;
 }
 
 int init_rays(t_ray *ray, t_player *player)

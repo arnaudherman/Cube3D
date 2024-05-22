@@ -306,6 +306,10 @@ int			malloc_map2d(t_map *map);
 int			fill_map(t_map *map);
 int 		init_map(t_map *map);
 // Located in *player.c*
+void		calculate_delta_dist(t_ray *ray);
+void		calculate_side_dist(t_ray *ray, t_player *player);
+float 		get_ray_length(int map_width, int map_height, int window_width, int window_height, float field_of_view);
+int 		init_rays(t_ray *ray, t_player *player);
 t_player	*allocate_player(void);
 int			init_player(t_player *player);
 // Located in *ray.c*
@@ -418,9 +422,13 @@ int 		draw_map(t_image *map2d, t_map *map);
 // Located in *player.c*
 int			draw_player(t_image *image, t_player *player);
 // Located in *raycasting.c*
-float 		get_ray_length(int map_width, int map_height, int window_width, int window_height, float field_of_view);
 void 		fov_rays(int hauteur_image, int largeur_image, float fov_horizontal_deg);
 float 		correct_fisheye(float distance, float ray_angle, float player_angle);
+void 		calculate_step_sizes(int dx, int dy, float *step_x, float *step_y, int steps);
+void 		calculate_steps(int x1, int y1, int x2, int y2, int *dx, int *dy, int *steps);
+char 		get_wall_direction(int x, int y, t_map *map);
+int			calculate_wall_height(float current_x, float current_y, int x1, int y1, t_ray *ray, t_data *data);
+int 		get_wall_top(int wall_height);
 void 		draw_ray(t_image *map2d, t_image *world, int x1, int y1, int x2, int y2, t_map *map, t_ray *ray, t_data *data);
 void 		shoot_rays(t_image *map2d, t_image *world, t_player *player, t_map *map, t_ray *ray, t_data *data);
 int 		raycasting(t_data *data);
@@ -441,8 +449,6 @@ void 		draw_wall(t_data *data, t_ray *ray);
 float 		degrees_to_radians(float angle);
 float 		radians_to_degrees(float angle);
 void 		draw_world_bg(t_image *world, int color);
-
-
 
 /* -------------------- LIBFT -------------------- */
 

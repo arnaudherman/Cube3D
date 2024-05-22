@@ -34,9 +34,19 @@ void draw_world_bg(t_image *world, int color)
 	}
 }
 
-// void draw_world(t_image *world, t_map *map, t_player *player, t_ray *ray)
+// OG loop to draw walls
+// void draw_3d_world(t_map *map, t_image *world, int x, int y, int current_x, int current_y, int x1, int y1, t_ray *ray, t_data *data)
 // {
-// 	draw_wall(data);
+// 	int wall_height;
+// 	char wall_dir;
+// 	int wall_top;
+
+// 	 if (map->map2d[y / TILE_SIZE][x / TILE_SIZE] != '0') {
+//             wall_height = calculate_wall_height(current_x, current_y, x1, y1, ray, data);
+//             wall_dir = get_wall_direction(x, y, map);
+//             wall_top = get_wall_top(wall_height);
+//             render_wall_texture(world, x * TILE_SIZE, ray->wall_height, wall_top, /*&*/data->texture, wall_dir);
+//         }
 // }
 
 // RESSOURCES : 
