@@ -141,6 +141,7 @@ typedef struct s_ray {
     double wall_dist;
     double wall_height;
     double wall_x;
+	double wall_y;
     double dir_x;
     double dir_y;
     double map_x;

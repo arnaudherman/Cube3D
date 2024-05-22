@@ -13,9 +13,11 @@ int err(char *str)
 	return 1;
 }
 
+// DO NOT FORGET ray->map_x et ray->map_y must be divided by TILE_SIZE
+// to obtain map coordinates so divide by 32 or TILE_SIZE in the code
 void debug_ray(t_ray *ray) {
     if (!ray) {
-        printf("ray is NULL\n");
+        perror("ray is NULL\n");
         return;
     }
     // printf("ray->side = %d\n", ray->side); // TO DO CORRECT VALUE HERE
