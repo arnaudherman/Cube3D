@@ -9,7 +9,7 @@ void check_if_malloc_failed(t_data *data) {
 		data->floor == NULL || data->ceiling == NULL ) {
 		perror("Malloc of one ore more structures failed in malloc_all\n");
 		free_if_malloc_failed(data);
-        return -1;
+        return ;
 		exit(EXIT_FAILURE);
     }
 }
@@ -50,7 +50,7 @@ int init_default_all(t_data *data)
     return 0;
 }
 
-void init_images(t_data *data)
+int init_images(t_data *data)
 {
 	// Image 1
 	if (init_map2d(data->map2d, &data->mlx) != 0) {
@@ -91,7 +91,7 @@ int	init_custom_all(t_data *data)
 		return 1;
 	}
 
-	if (init_rays(data->ray, data->player) != 0) {
+	if (init_rays(data->ray, data->player, &data->map, &data->mlx) != 0) {
 		perror("Failed to initialize rays\n");
 		return 1;
 	}

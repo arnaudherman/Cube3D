@@ -32,20 +32,21 @@ SRCS += srcs/parsing/color.c \
         srcs/parsing/texture_color.c \
         srcs/parsing/texture.c
 
-SRCS += srcs/rendering/close.c \
-		srcs/rendering/color.c \
+SRCS += srcs/rendering/color.c \
+		srcs/rendering/draw_lines.c \
 		srcs/rendering/draw.c \
 		srcs/rendering/fov_rays.c \
 		srcs/rendering/frame.c \
+		srcs/rendering/get.c \
         srcs/rendering/image.c \
         srcs/rendering/map.c \
 		srcs/rendering/player.c \
 		srcs/rendering/ray_length.c \
-        srcs/rendering/world.c \
         srcs/rendering/raycasting.c \
-        srcs/rendering/draw.c \
         srcs/rendering/texture.c \
-		srcs/rendering/wall.c
+		srcs/rendering/wall_utils.c \
+		srcs/rendering/wall.c \
+		srcs/rendering/world.c
 
 SRCS += srcs/utils/get_next_line.c \
         srcs/utils/utils.c

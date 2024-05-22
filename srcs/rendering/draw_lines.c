@@ -1,6 +1,6 @@
 #include "cub3d-bis.h"
 
-void draw_vertical_lines(t_image *map2d) {
+void	draw_vertical_lines(t_image *map2d) {
     int x;
 
     x = 0;
@@ -11,7 +11,7 @@ void draw_vertical_lines(t_image *map2d) {
     }
 }
 
-void draw_horizontal_lines(t_image *map2d) {
+void	draw_horizontal_lines(t_image *map2d) {
     int y;
 
     y = 0;
@@ -23,7 +23,7 @@ void draw_horizontal_lines(t_image *map2d) {
 }
 
 // Définir une fonction pour dessiner une ligne verticale à une position x avec une couleur donnée
-void draw_vertical_line(t_image *map2d, int x, int start_y, int color) {
+void	draw_vertical_line(t_image *map2d, int x, int start_y, int color) {
     int y;
 
     y = start_y;
@@ -34,7 +34,7 @@ void draw_vertical_line(t_image *map2d, int x, int start_y, int color) {
 }
 
 // Définir une fonction pour dessiner une ligne horizontale à une position y avec une couleur donnée
-void draw_horizontal_line(t_image *map2d, int start_x, int y, int color) {
+void	draw_horizontal_line(t_image *map2d, int start_x, int y, int color) {
     int x;
 
     x = start_x;

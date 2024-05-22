@@ -33,11 +33,11 @@ void set_color_on_image(t_data *data, t_ray *ray)
 	
 	y = 0;
     while (y < ray->draw_start) {
-        pixel_put(data->world, ray->x, y++, data->color->ceiling);
+        pixel_put(data->world, ray->x1, y++, data->color->ceiling);
     }
     y = ray->draw_end + 1;
     while (y < data->mlx.win_height) {
-        pixel_put(data->world, ray->x, y++, data->color->floor);
+        pixel_put(data->world, ray->x1, y++, data->color->floor);
     }
 }
 
@@ -46,29 +46,29 @@ void texture_put(t_data *data, t_image *texture, t_ray *ray)
 {
     int d;
 	
-	d = ray->y * texture->line_length - data->mlx.win_height
+	d = ray->y1 * texture->line_length - data->mlx.win_height
             * texture->line_length / 2 + ray->line_height * texture->line_length / 2;
     ray->text_y = ((d * texture->height) / ray->line_height) / texture->line_length;
-    data->world->addr[ray->y * data->world->line_length
-                      + ray->x * data->world->bits_per_pixel / 8] =
+    data->world->addr[ray->y1 * data->world->line_length
+                      + ray->x1 * data->world->bits_per_pixel / 8] =
         texture->addr[ray->text_y * texture->line_length
                       + ray->text_x * (texture->bits_per_pixel / 8)];
-    data->world->addr[ray->y * data->world->line_length
-                      + ray->x * data->world->bits_per_pixel / 8 + 1] =
+    data->world->addr[ray->y1 * data->world->line_length
+                      + ray->x1 * data->world->bits_per_pixel / 8 + 1] =
         texture->addr[ray->text_y * texture->line_length
                       + ray->text_x * (texture->bits_per_pixel / 8) + 1];
-    data->world->addr[ray->y * data->world->line_length
-                      + ray->x * data->world->bits_per_pixel / 8 + 2] =
+    data->world->addr[ray->y1 * data->world->line_length
+                      + ray->x1 * data->world->bits_per_pixel / 8 + 2] =
         texture->addr[ray->text_y * texture->line_length
                       + ray->text_x * (texture->bits_per_pixel / 8) + 2];
-    ray->y++;
+    ray->y1++;
 }
 
 // Apply texture along column
 void set_texture_on_image(t_data *data, t_image *texture, t_ray *ray) 
 {
-    ray->y = ray->draw_start;
-    while (ray->y <= ray->draw_end) {
+    ray->y1 = ray->draw_start;
+    while (ray->y1 <= ray->draw_end) {
         texture_put(data, texture, ray);
     }
 }

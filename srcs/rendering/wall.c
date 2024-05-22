@@ -22,7 +22,7 @@ void draw_wall_column(t_image *world, int column, int wall_height)
     }
 }
 
-void draw_wall(t_data *data, t_ray *ray, int x, int y) 
+void draw_wall(t_data *data, t_ray *ray) 
 {
 	int column;
 
@@ -38,7 +38,7 @@ void draw_wall(t_data *data, t_ray *ray, int x, int y)
 
         get_delta_dist(ray);
         get_side_dist(ray, data->player);
-        perform_dda(ray, &data->map, x, y);
+        perform_dda(ray, &data->map);
         get_wall_dist(data->player, ray);
         get_wall_height(ray);
 

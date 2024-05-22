@@ -305,8 +305,8 @@ int 		init_map(t_map *map);
 // Located in *player.c*
 void		calculate_delta_dist(t_ray *ray);
 void		calculate_side_dist(t_ray *ray, t_player *player);
-float 		get_ray_length(int map_width, int map_height, int window_width, int window_height, float field_of_view);
-int 		init_rays(t_ray *ray, t_player *player);
+float 		get_ray_length(t_map *map, t_mlx *mlx, float field_of_view);
+int 		init_rays(t_ray *ray, t_player *player, t_map *map, t_mlx *mlx);
 t_player	*allocate_player(void);
 int			init_player(t_player *player);
 // Located in *ray.c*
@@ -395,18 +395,30 @@ void 		rotate_right(t_data *data);
 // void		found_textures_data(t_data *data);
 
 /* -------------------- RENDERING -------------------- */
-
+// Located in *color.c*
+void		color_data(t_data *data);
+// Located in *draw_lines.c*
+void 		draw_vertical_lines(t_image *map2d);
+void 		draw_horizontal_lines(t_image *map2d);
+void 		draw_vertical_line(t_image *map2d, int x, int start_y, int color);
+void 		draw_horizontal_line(t_image *map2d, int start_x, int y, int color);
+void		draw_vertical_lign(t_data *data);
 // Located in *draw.c*
-void 		draw_tile(t_image *image, int x, int y);
+void 		draw_tile(t_image *map2d, int x, int y);
 void 		draw_square(t_data *data, int x, int y, int color);
-void 		draw_vertical_lines(t_image *image);
-void 		draw_horizontal_lines(t_image *image);
-void 		draw_vertical_line(t_image *image, int x, int start_y, int color);
-void 		draw_horizontal_line(t_image *image, int start_x, int y, int color);
-void		draw_vertical_lign(t_data *data);	
-void 		draw_col(t_data *data, t_mlx *mlx, t_ray *ray);
+// Located in *fov_rays.c"
+float 		convert_horizontal_fov_to_radians(float fov_horizontal_deg);
+float 		calculate_horizontal_radius(int image_width, float fov_horizontal_rad);
+float 		calculate_vertical_fov(int image_height, int image_width, float fov_horizontal_rad);
+float 		calculate_vertical_radius(int image_height, float fov_vertical_rad);
+void 		fov_rays(int image_height, int image_width, float fov_horizontal_deg);
 // Located in *frame.c"
 int			render_next_frame(t_data *data);
+// Located in *get.c"
+void 		get_steps(t_ray *ray);
+void 		get_step_sizes(t_ray *ray) ;
+void		get_delta_dist(t_ray *ray);
+void		get_side_dist(t_ray *ray, t_player *player);
 // Located in *image.c"
 void		my_mlx_pixel_put(t_image *image, int x, int y, int color);
 void 		pixel_put(t_image *image, int x, int y, int color);
@@ -417,31 +429,35 @@ void 		set_texture_on_image(t_data *data, t_image *texture, t_ray *ray);
 void 		draw_minimap_bg(t_image *map2d, int color);
 int 		draw_map(t_image *map2d, t_map *map);
 // Located in *player.c*
-int			draw_player(t_image *image, t_player *player);
-// Located in *raycasting.c*
-void 		fov_rays(int hauteur_image, int largeur_image, float fov_horizontal_deg);
 float 		correct_fisheye(float distance, float ray_angle, float player_angle);
-void 		calculate_step_sizes(int dx, int dy, float *step_x, float *step_y, int steps);
-void 		calculate_steps(int x1, int y1, int x2, int y2, int *dx, int *dy, int *steps);
-char 		get_wall_direction(int x, int y, t_map *map);
-int			calculate_wall_height(float current_x, float current_y, int x1, int y1, t_ray *ray, t_data *data);
-int 		get_wall_top(int wall_height);
-void 		draw_ray(t_image *map2d, t_image *world, int x1, int y1, int x2, int y2, t_map *map, t_ray *ray, t_data *data);
+int			draw_player(t_image *image, t_player *player);
+// Located in *ray_length.c*
+float 		calculate_vertical_ray_length(int map_height, int window_height, float fov_rad);
+float 		calculate_horizontal_ray_length(int map_width, int window_width, float fov_rad);
+float 		get_ray_length(t_map *map, t_mlx *mlx, float field_of_view);
+// Located in *raycasting.c*
+void 		perform_dda(t_ray *ray, t_map *map);
+void 		draw_ray(t_image *map2d, t_image *world, t_map *map, t_ray *ray, t_data *data);
 void 		shoot_rays(t_image *map2d, t_image *world, t_player *player, t_map *map, t_ray *ray, t_data *data);
 int 		raycasting(t_data *data);
 // Located in *texture.c*
 void 		calculate_draw_positions(t_mlx *mlx, t_ray *ray);
 void 		calculate_wall_x(t_data *data, t_ray *ray);
 t_image 	*select_texture(t_data *data, t_ray *ray);
-void		calculate_texture_x(t_ray *ray, t_image *texture);
+void 		calculate_texture_x(t_ray *ray, t_image *texture);
 void 		set_wall_texture(t_data *data, t_ray *ray);
-// Located in *color.c*
-void		color_data(t_data *data);
+void 		draw_col(t_data *data, t_mlx *mlx, t_ray *ray);
+// Located in *wall_utils.c*
+char		get_wall_direction(int x, int y, t_map *map);
+int 		get_wall_top(int wall_height);
+void 		get_wall_dist(t_player *player, t_ray *ray);
+void		get_wall_height(t_ray *ray);
+int 		calculate_wall_height(float current_x, float current_y, t_ray *ray, t_data *data);
 // Located in *wall.c*
 void		get_wall_dist(t_player *player, t_ray *ray);
 void		get_wall_height(t_ray *ray);
 void 		draw_wall_column(t_image *world, int column, int wall_height);
-void 		draw_wall(t_data *data, t_ray *ray, int x, int y);
+void 		draw_wall(t_data *data, t_ray *ray);
 // Located in *world.c*
 float 		degrees_to_radians(float angle);
 float 		radians_to_degrees(float angle);

@@ -83,36 +83,33 @@ void perform_dda(t_ray *ray, t_map *map)
     }
 }
 
-void draw_ray(t_image *map2d, t_image *world, int x1, int y1, int x2, int y2, t_map *map, t_ray *ray, t_data *data) {
+void draw_ray(t_image *map2d, t_image *world, t_map *map, t_ray *ray, t_data *data) {
     int i;
     int x, y;
-    int dx, dy;
-    int steps;
-    float step_x;
-    float step_y;
     float current_x;
     float current_y;
 
-    get_steps(x1, y1, x2, y2, &dx, &dy, &steps);
-    if (steps == 0)
+	get_steps(ray);
+    if (ray->steps == 0)
         return;
 
-    get_step_sizes(dx, dy, &step_x, &step_y, steps);
+    get_step_sizes(ray);
 
-    current_x = x1;
-    current_y = y1;
+    current_x = ray->x1;
+    current_y = ray->y1;
 
     i = 0;
-    while (i <= steps) 
+    while (i <= ray->steps) 
 	{
         x = (int)current_x;
         y = (int)current_y;
 
-		draw_wall(data, ray, x, y);
+		// TO DO : CORRECT everything before draw 3D world walls
+		// draw_wall(data, ray);
         my_mlx_pixel_put(map2d, x, y, 0xffd55c);
 
-        current_x += step_x;
-        current_y += step_y;
+        current_x += ray->step_x;
+        current_y += ray->step_y;
         i++;
     }
 }
@@ -122,8 +119,6 @@ void shoot_rays(t_image *map2d, t_image *world, t_player *player, t_map *map, t_
 	double angle_increment;
 	double angle_rad;
 	int i;
-	int x_end;
-	int y_end;
 
 	start_angle = player->angle - (player->fov / 2.0);
     angle_increment = player->fov / WINDOW_WIDTH;
@@ -131,15 +126,15 @@ void shoot_rays(t_image *map2d, t_image *world, t_player *player, t_map *map, t_
     while (i < WINDOW_WIDTH) {
         angle_rad = (start_angle + i * angle_increment) * (M_PI / 180.0);
 
-        x_end = (int)(player->x_pos + cos(angle_rad) * ray->ray_length);
-        y_end = (int)(player->y_pos + sin(angle_rad) * ray->ray_length);
+        ray->x2 = (int)(player->x_pos + cos(angle_rad) * ray->ray_length);
+        ray->y2 = (int)(player->y_pos + sin(angle_rad) * ray->ray_length);
 
-        if (x_end < 0) x_end = 0;
-        if (x_end >= (MAP_WIDTH * TILE_SIZE)) x_end = (MAP_WIDTH * TILE_SIZE) - 1;
-        if (y_end < 0) y_end = 0;
-        if (y_end >= (MAP_HEIGHT * TILE_SIZE)) y_end = (MAP_HEIGHT * TILE_SIZE) - 1;
+        if (ray->x2 < 0) ray->x2 = 0;
+        if (ray->x2 >= (MAP_WIDTH * TILE_SIZE)) ray->x2 = (MAP_WIDTH * TILE_SIZE) - 1;
+        if (ray->y2 < 0) ray->y2 = 0;
+        if (ray->y2 >= (MAP_HEIGHT * TILE_SIZE)) ray->y2 = (MAP_HEIGHT * TILE_SIZE) - 1;
 
-        draw_ray(map2d, world, (int)(player->x_pos), (int)(player->y_pos), x_end, y_end, map, ray, data);
+        draw_ray(map2d, world, map, ray, data);
 		i++;
     }
 }
