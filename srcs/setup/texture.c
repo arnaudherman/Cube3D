@@ -96,6 +96,7 @@
 //     // init_texture_img(&texture->ceiling, mlx, "./assets/ceiling.xpm");
 // }
 
+// Heap Allocation
 // t_texture *allocate_texture(void)
 // {
 // 	t_texture *texture; 
@@ -105,9 +106,9 @@
 //         perror("Allocation for texture failed\n");
 //         exit(EXIT_FAILURE);
 //     }
-// 	texture->texture_found = 0;
-// 	texture->size = 0;
-// 	texture->road = NULL;
+// 	// texture->texture_found = 0;
+// 	// texture->size = 0;
+// 	// texture->road = NULL;
 // 	texture->NO = allocate_image();
 // 	texture->SO = allocate_image();
 // 	texture->WE = allocate_image();
@@ -118,49 +119,49 @@
 // 	return texture;
 // }
 
-void init_image(t_image *img) {
-    img->width = 0;
-    img->height = 0;
-    img->img = NULL;
-    img->addr = NULL;
-    img->bits_per_pixel = 0;
-    img->line_length = 0;
-    img->endian = 0;
-    img->relative_path = NULL;
-}
+// // Stack Allocation
+// int init_texture(t_texture *texture)
+// {
+// 	texture->height = WINDOW_HEIGHT;
+// 	texture->width = WINDOW_WIDTH;
+// 	texture->texture_found = 0;
+// 	texture->size = 0;
+// 	texture->road = NULL;
+// 	texture->NO = allocate_image();
+// 	texture->SO = allocate_image();
+// 	texture->WE = allocate_image();
+// 	texture->EA = allocate_image();
+// 	texture->floor = allocate_image();
+// 	texture->ceiling = allocate_image();
+// 	return 0;
+// }
 
-void init_texture(t_texture *texture) {
-    texture->texture_found = 0;
-    texture->size = 0;
-    texture->road = NULL;
-    init_image(&texture->NO);
-    init_image(&texture->SO);
-    init_image(&texture->WE);
-    init_image(&texture->EA);
-    init_image(&texture->floor);
-    init_image(&texture->ceiling);
-}
-
-void init_texture_img(t_image *texture_img, t_mlx *mlx, const char *path) {
+void init_texture_img(t_image *texture_img, t_mlx *mlx, const char *path) 
+{
+	// TO DO : check image size
+	texture_img->width = WINDOW_WIDTH;
+	texture_img->height = WINDOW_HEIGHT;
     texture_img->img = mlx_xpm_file_to_image(mlx->mlx_ptr, (char *)path, &texture_img->width, &texture_img->height);
     if (!texture_img->img) {
-        fprintf(stderr, "Error: Failed to load texture image from %s\n", path);
+        perror("Error: Failed to load texture image in init_texture_img\n");
         exit(1);
     }
     texture_img->addr = mlx_get_data_addr(texture_img->img, &texture_img->bits_per_pixel,
 										&texture_img->line_length, &texture_img->endian);
     if (!texture_img->addr) {
-        fprintf(stderr, "Failed to get image data address for %s\n", path);
+		perror("Failed to get image data address in init_texture_img\n");
         mlx_destroy_image(mlx->mlx_ptr, texture_img->img);
         exit(1);
     }
+	texture_img->relative_path = NULL;
 }
 
-void init_textures(t_texture *texture, t_mlx *mlx) {
-    init_texture_img(&texture->NO, mlx, "./assets/north.xpm");
-    init_texture_img(&texture->SO, mlx, "./assets/south.xpm");
-    init_texture_img(&texture->WE, mlx, "./assets/west.xpm");
-    init_texture_img(&texture->EA, mlx, "./assets/east.xpm");
-    // init_texture_img(&texture->floor, mlx, "./assets/floor.xpm");
-    // init_texture_img(&texture->ceiling, mlx, "./assets/ceiling.xpm");
+int init_all_textures(t_data *data, t_mlx *mlx) {
+    init_texture_img(data->NO, mlx, "./assets/north.xpm");
+    init_texture_img(data->SO, mlx, "./assets/south.xpm");
+    init_texture_img(data->WE, mlx, "./assets/west.xpm");
+    init_texture_img(data->EA, mlx, "./assets/east.xpm");
+    init_texture_img(data->floor, mlx, "./assets/floor.xpm");
+    init_texture_img(data->ceiling, mlx, "./assets/ceiling.xpm");
+	return 0;
 }

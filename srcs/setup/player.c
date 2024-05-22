@@ -35,7 +35,7 @@ int	init_player(t_player *player)
 		player->x_pos = 110;
 		player->y_pos = 110;
 		player->speed = SPEED;
-		player->fov = FOV;
+		player->fov = FOV; // 66 here
 		player->rotate = ROTATION;
 		// player->direction = get_direction(player);
 		player->direction = 'N';

@@ -23,13 +23,13 @@ void calculate_wall_x(t_data *data, t_ray *ray)
 t_image *select_texture(t_data *data, t_ray *ray) 
 {
     if (ray->side == 0 && ray->dir_x < 0)
-        return &data->texture->WE;
+        return &data->WE;
     else if (ray->side == 1 && ray->dir_x >= 0)
-        return &data->texture->EA;
+        return &data->EA;
     else if (ray->side == 2 && ray->dir_y > 0)
-        return &data->texture->SO;
+        return &data->SO;
     else
-        return &data->texture->NO;
+        return &data->NO;
 }
 
 // calculate x position on texture to use for rendering

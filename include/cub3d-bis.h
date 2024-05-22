@@ -237,18 +237,20 @@ typedef struct s_color
 		unsigned long	ceiling_hexa;
 } t_color;
 
-typedef struct s_texture
-{
-	int			texture_found;
-	int			size;
-	char        *road;
-	t_image 	NO;
-	t_image 	SO;
-	t_image 	WE;
-	t_image 	EA;
-	t_image 	floor;
-	t_image 	ceiling;
-} t_texture;
+// typedef struct s_texture
+// {
+// 	int 		height;
+// 	int 		width;
+// 	int			texture_found;
+// 	int			size;
+// 	char        *road;
+// 	t_image 	*NO;
+// 	t_image 	*SO;
+// 	t_image 	*WE;
+// 	t_image 	*EA;
+// 	t_image 	*floor;
+// 	t_image 	*ceiling;
+// } t_texture;
 
 typedef struct	s_mlx
 {
@@ -263,17 +265,23 @@ typedef struct s_data
 {
 	t_mlx		mlx;
 	t_map		map;
-
 	// t_minimap	minimap;
 	t_image  	*map2d;
 	t_image 	*world;
+	t_image 	*NO;
+	t_image 	*SO;
+	t_image 	*WE;
+	t_image 	*EA;
+	t_image 	*floor;
+	t_image 	*ceiling;
 	t_player	*player;
 	t_keys		*keys;
 	t_ray  		*ray;
 	t_color		*color;
 	t_color		fcolors;
 	t_color		ccolors;
-	t_texture 	*texture;
+
+	// t_texture 	*texture;
 	// t_texture	no;
 	// t_texture	so;
 	// t_texture	we;
@@ -344,9 +352,9 @@ t_ray 		*allocate_ray(void);
 // void 	init_texture_img(t_image *texture_img, t_mlx *mlx, char *path);
 // void 	init_textures(t_texture *texture, t_mlx *mlx);
 // void 	init_texture(t_texture *texture, t_mlx *mlx);
-void init_texture(t_texture *texture);
-void init_texture_img(t_image *texture_img, t_mlx *mlx, const char *path);
-void init_textures(t_texture *texture, t_mlx *mlx);
+// int 		init_texture(t_texture *texture);
+void 		init_texture_img(t_image *texture_img, t_mlx *mlx, const char *path);
+int 		init_all_textures(t_data *data, t_mlx *mlx);
 
 /* -------------------- MOVING -------------------- */
 // Located in *direction.c*
