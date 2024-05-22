@@ -6,46 +6,7 @@
 // Video https://www.youtube.com/watch?v=NbSee-XM7WA&t=1s&ab_channel=javidx9
 // https://www.youtube.com/watch?v=W5P8GlaEOSI&ab_channel=AbdulBari
 
-// OG VERSION do not touch
 // TO DO : check x became x1 and y became y1 problem ?
-// void perform_dda(t_ray *ray, t_map *map, int x, int y) 
-// {
-//     int hit = 0;
-//     while (hit == 0) 
-// 	{
-//         if (ray->sidedist_x < ray->sidedist_y) 
-// 		{
-//             ray->sidedist_x += ray->dx;
-//             ray->map_x += ray->x1;
-// 			if (ray->x1 == -1)
-// 				ray->side = 0;
-// 			else
-// 				ray->side = 1;
-//         } else {
-//             ray->sidedist_y += ray->dy;
-//             ray->map_y += ray->y1;
-// 			if (ray->y1 == -1)
-// 			{
-// 				ray->side = 2;
-// 				printf("c debug this shit\n");
-// 			}
-				
-// 			else
-// 			{
-// 				ray->side = 3;
-// 				printf("d debug this shit\n");
-// 			}
-//         }
-// 		printf("5 debug this shit\n");
-// 		// TO DO : CORRECT FUCKING PROBLEM HERE
-// 		if (map->map2d[(int)ray->map_y][(int)ray->map_x] != '0')
-// 		printf(" 6 mamamia debug this shit\n");
-// 			hit = 1;
-//     }
-// }
-
-// TO DO : check x became x1 and y became y1 problem ?
-// TO DO : use of ray->map_x or ray->map_y really ?
 void perform_dda(t_ray *ray, t_map *map) 
 {
     int hit = 0;
@@ -54,14 +15,14 @@ void perform_dda(t_ray *ray, t_map *map)
         if (ray->sidedist_x < ray->sidedist_y) 
 		{
             ray->sidedist_x += ray->dx;
-            ray->map_x += ray->x1;
+            ray->map_x += ray->x1 * TILE_SIZE;
 			if (ray->x1 == -1)
 				ray->side = 0;
 			else
 				ray->side = 1;
         } else {
             ray->sidedist_y += ray->dy;
-            ray->map_y += ray->y1;
+            ray->map_y += ray->y1 * TILE_SIZE;
 			if (ray->y1 == -1)
 			{
 				ray->side = 2;
@@ -76,6 +37,7 @@ void perform_dda(t_ray *ray, t_map *map)
         }
 		printf("5 debug this shit\n");
 		// TO DO : CORRECT FUCKING PROBLEM HERE
+		// TO DO : use of ray->map_x or ray->map_y really ?
 		// Previous function was : if (map->map2d[y / TILE_SIZE][x / TILE_SIZE] != '0')
 		if (map->map2d[(int)ray->map_y][(int)ray->map_x] != '0')
 		printf(" 6 mamamia debug this shit\n");
@@ -83,7 +45,8 @@ void perform_dda(t_ray *ray, t_map *map)
     }
 }
 
-void draw_ray(t_image *map2d, t_image *world, t_map *map, t_ray *ray, t_data *data) {
+void draw_ray(t_image *map2d, t_image *world, t_map *map, t_ray *ray, t_data *data) 
+{
     int i;
     int x, y;
     float current_x;
@@ -95,8 +58,9 @@ void draw_ray(t_image *map2d, t_image *world, t_map *map, t_ray *ray, t_data *da
 
     get_step_sizes(ray);
 
-    current_x = ray->x1;
-    current_y = ray->y1;
+	// POSITION here Use PLAYER coordinates here to shoot your rays piu piu
+	current_x = data->player->x_pos * TILE_SIZE;
+    current_y = data->player->y_pos * TILE_SIZE;
 
     i = 0;
     while (i <= ray->steps) 
@@ -114,7 +78,8 @@ void draw_ray(t_image *map2d, t_image *world, t_map *map, t_ray *ray, t_data *da
     }
 }
 
-void shoot_rays(t_image *map2d, t_image *world, t_player *player, t_map *map, t_ray *ray, t_data *data) {
+void shoot_rays(t_image *map2d, t_image *world, t_player *player, t_map *map, t_ray *ray, t_data *data) 
+{
     double start_angle;
 	double angle_increment;
 	double angle_rad;

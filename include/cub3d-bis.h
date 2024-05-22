@@ -418,7 +418,7 @@ void 		draw_minimap_bg(t_image *map2d, int color);
 int 		draw_map(t_image *map2d, t_map *map);
 // Located in *player.c*
 float 		correct_fisheye(float distance, float ray_angle, float player_angle);
-int			draw_player(t_image *image, t_player *player);
+int			draw_player(t_image *image, t_player *player, t_ray *ray);
 // Located in *ray_length.c*
 float 		calculate_vertical_ray_length(int map_height, int window_height, float fov_rad);
 float 		calculate_horizontal_ray_length(int map_width, int window_width, float fov_rad);
