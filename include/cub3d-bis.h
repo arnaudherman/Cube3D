@@ -20,8 +20,6 @@
 # define WINDOW_WIDTH 1920
 # define WINDOW_HEIGHT 1080
 # define TILE_SIZE 32
-// # define MAPX 8
-// # define MAPY 8
 # define MAP_HEIGHT 10
 # define MAP_WIDTH 10
 # define FOV 66
@@ -35,14 +33,6 @@
 # define MMAP_COLOR_FLOOR 0xE6E6E6
 # define MMAP_COLOR_SPACE 0x404040
 # define BUFFER_SIZE 42
-// # define ROTATE_LEFT 123
-// # define ROTATE_RIGHT 124
-// # define KEY_DOWN 125
-// # define KEY_UP 126
-// # define FORWARD_W_Z 13
-// # define BACK_S_S 1
-// # define RIGHT_D_D 2
-// # define LEFT_A_Q 0
 # define MOUSE_BORDER_DISTANCE 20
 # define FLOOR 0xE6E6E6
 # define CEILING 0x404040
@@ -178,8 +168,6 @@ typedef struct s_player
  	double  	y_pos;
 	double		x_dir;
 	double		y_dir;
-	// double		x_move;
-	// double 		y_move;
 	double		x_plane;
 	double		y_plane;
 	double		speed;
@@ -231,7 +219,6 @@ typedef struct s_data
 {
 	t_mlx		mlx;
 	t_map		map;
-	// t_minimap	minimap;
 	t_image  	*map2d;
 	t_image 	*world;
 	t_image 	*NO;
