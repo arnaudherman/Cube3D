@@ -2,17 +2,6 @@
 
 #include "../../include/cub3d.h"
 
-int	encode_rgb(int r, int g, int b)
-{
-	int	color;
-
-	color = 0;
-	color += r << 16;
-	color += g << 8;
-	color += b;
-	return (color);
-}
-
 void	save_color_data(t_color_info *color, char *line)
 {
 	char	*path;
@@ -91,30 +80,28 @@ void	is_valid_color(t_color_info *color)
 
 void	check_string_color(t_data data)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(data.fcolors.string_color[i])
+	while (data.fcolors.string_color[i])
 	{
-		if(!(data.fcolors.string_color[i] >= 48 && data.fcolors.string_color[i] <= 57) && data.fcolors.string_color[i] != ',')
+		if (!(data.fcolors.string_color[i] >= 48
+				&& data.fcolors.string_color[i] <= 57)
+			&& data.fcolors.string_color[i] != ',')
 			ft_error(ERROR_STRING_COLOR);
 		i++;
 	}
 		i = 0;
-	while(data.ccolors.string_color[i])
+	while (data.ccolors.string_color[i])
 	{
-		if(!(data.ccolors.string_color[i] >= 48 && data.ccolors.string_color[i] <= 57) && data.ccolors.string_color[i] != ',')
+		if (!(data.ccolors.string_color[i] >= 48
+				&& data.ccolors.string_color[i] <= 57)
+			&& data.ccolors.string_color[i] != ',')
 			ft_error(ERROR_STRING_COLOR);
 		i++;
 	}
 }
-// L'objectif est de mettre les couleurs dans nos struct
-// On trouve une ligne qui start avec F ou C
-// On regarde que cette direction na pas deja une couleur set
-// On envoie dans  data, on extrait le char grace a split
-// On atoi dans les differents int r, g, b.
-// On regarde si c'est bien des valeurs rgb
-// et je convertir pour la mlx
+
 void	color_data(char *fname, t_data *data)
 {
 	found_color_data(fname, data);

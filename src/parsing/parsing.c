@@ -1,8 +1,7 @@
 
+
 #include "../../include/cub3d.h"
 
-//check si le fichier map est en cub 
-//et que le fichier peut etre open et renvoie le fd
 void	ft_check_file(char *fname, char *name)
 {
 	int		fd;
@@ -19,7 +18,6 @@ void	ft_check_file(char *fname, char *name)
 	close(fd);
 }
 
-//main du parsing
 int	parsing(char *argv[], t_data *data)
 {
 	printf("start parsing\n");
@@ -33,6 +31,5 @@ int	parsing(char *argv[], t_data *data)
 	printf("finish color_data\n");
 	check_map(argv[1], data);
 	printf("finish check_map\n");
-
 	return (0);
 }
