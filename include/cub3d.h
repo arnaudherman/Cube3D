@@ -211,6 +211,7 @@ char	**ft_split(char const *s, char c);
 char	*ft_strcpy(char *s1, char *s2);
 char	*ft_strrchr(const char *s, int c);
 int		ft_strcmp(char *s1, char *s2);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
 
 // Located in *libft_five.c*
 char	*ft_strtrim(char const *s1, char const *set);

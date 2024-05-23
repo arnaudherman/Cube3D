@@ -11,6 +11,7 @@ SRCS := src/main.c\
 			src/parsing/save_texture.c\
 			src/parsing/found_texture.c\
 			src/parsing/map.c\
+			src/parsing/map_main.c\
 			src/parsing/map_utils.c\
 			src/parsing/map_on.c\
 			src/parsing/map_data.c\
@@ -20,7 +21,7 @@ SRCS := src/main.c\
 			src/libft/libft_two.c\
 			src/libft/libft_three.c\
 			src/libft/libft_four.c\
-			src/libft/libft_five\
+			src/libft/libft_five.c\
 
 
 CC = gcc
