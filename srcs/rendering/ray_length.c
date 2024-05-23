@@ -24,7 +24,6 @@ float get_ray_length(t_player *player)
 	float vertical_ray_length;
 	float horizontal_ray_length;
 	
-	// get me the fov in radians
 	fov_rad = player->fov * M_PI / 180.0;
 
     vertical_ray_length = calculate_vertical_ray_length(fov_rad);
