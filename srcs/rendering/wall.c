@@ -22,28 +22,28 @@ void draw_wall_column(t_image *world, int column, int wall_height)
     }
 }
 
-void draw_wall(t_data *data, t_ray *ray) 
-{
-	int column;
+// void draw_wall(t_data *data, t_ray *ray) 
+// {
+// 	int column;
 
-	column = 0;
-    while (column < WINDOW_WIDTH) {
-		// To do : ray->camera_x init already in init ray, second time is useless ? 
-		ray->camera_x = 2 * column / (double)WINDOW_WIDTH - 1;  // Correct position for camera_x
-        ray->dir_x = data->player->x_dir + data->player->x_plane * ray->camera_x;
-        ray->dir_y = data->player->y_dir + data->player->y_plane * ray->camera_x;
+// 	column = 0;
+//     while (column < WINDOW_WIDTH) {
+// 		// To do : ray->camera_x init already in init ray, second time is useless ? 
+// 		ray->camera_x = 2 * column / (double)WINDOW_WIDTH - 1;  // Correct position for camera_x
+//         ray->dir_x = data->player->x_dir + data->player->x_plane * ray->camera_x;
+//         ray->dir_y = data->player->y_dir + data->player->y_plane * ray->camera_x;
 
-        ray->map_x = (int)data->player->x_pos;
-        ray->map_y = (int)data->player->y_pos;
+//         ray->map_x = (int)data->player->x_pos;
+//         ray->map_y = (int)data->player->y_pos;
 
-        get_delta_dist(data);
-        get_side_dist(data);
-        // TO DO second dda ?
-		perform_dda(data);
-        get_wall_dist(data->player, ray);
-        get_wall_height(ray);
+//         get_delta_dist(data);
+//         get_side_dist(data);
+//         // TO DO second dda ?
+// 		perform_dda(data);
+//         get_wall_dist(data->player, ray);
+//         get_wall_height(ray);
 
-        draw_wall_column(data->world, column, ray->wall_height);
-		column++;
-    }
-}
+//         draw_wall_column(data->world, column, ray->wall_height);
+// 		column++;
+//     }
+// }

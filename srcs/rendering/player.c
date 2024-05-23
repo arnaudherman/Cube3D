@@ -1,14 +1,15 @@
 #include "cub3d-bis.h"
 
-float correct_fisheye(float distance, float ray_angle, float player_angle) 
-{
-    float angle_difference;
-	float corrected_distance;
+// DO NOT DELETE
+// float correct_fisheye(float distance, float ray_angle, float player_angle) 
+// {
+//     float angle_difference;
+// 	float corrected_distance;
 	
-	angle_difference = ray_angle - player_angle;
-    corrected_distance = distance * cos(angle_difference);
-    return corrected_distance;
-}
+// 	angle_difference = ray_angle - player_angle;
+//     corrected_distance = distance * cos(angle_difference);
+//     return corrected_distance;
+// }
 
 // Le but principal de cette fonction est de calculer et 
 // de fournir les limites d'un rectangle centré sur le joueur, 

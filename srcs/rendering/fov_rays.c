@@ -31,17 +31,17 @@ float calculate_vertical_radius(int image_height, float fov_vertical_rad) {
 }
 
 // Get fov in rays radians
-void fov_rays(int image_height, int image_width, float fov_horizontal_deg) {
-	float fov_horizontal_rad;
-    float horizontal_radius;
-    float vertical_fov;
-    float vertical_fov_rad;
-    float vertical_radius;
+// void fov_rays(int image_height, int image_width, float fov_horizontal_deg) {
+// 	float fov_horizontal_rad;
+//     float horizontal_radius;
+//     float vertical_fov;
+//     float vertical_fov_rad;
+//     float vertical_radius;
 
-    fov_horizontal_rad = convert_horizontal_fov_to_radians(fov_horizontal_deg);
-    horizontal_radius = calculate_horizontal_radius(image_width, fov_horizontal_rad);
-    vertical_fov = calculate_vertical_fov(image_height, image_width, fov_horizontal_rad);
-    vertical_fov_rad = convert_horizontal_fov_to_radians(vertical_fov);
-    vertical_radius = calculate_vertical_radius(image_height, vertical_fov_rad);
-}
+//     fov_horizontal_rad = convert_horizontal_fov_to_radians(fov_horizontal_deg);
+//     horizontal_radius = calculate_horizontal_radius(image_width, fov_horizontal_rad);
+//     vertical_fov = calculate_vertical_fov(image_height, image_width, fov_horizontal_rad);
+//     vertical_fov_rad = convert_horizontal_fov_to_radians(vertical_fov);
+//     vertical_radius = calculate_vertical_radius(image_height, vertical_fov_rad);
+// }
 

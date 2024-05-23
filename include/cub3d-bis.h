@@ -123,6 +123,8 @@ typedef struct s_image
 } t_image;
 
 typedef struct s_ray {
+	int x;
+	int y;
     int x1;
     int y1;
 	int x2;
@@ -425,11 +427,15 @@ int			draw_player(t_image *image, t_player *player, t_ray *ray);
 // Located in *ray_length.c*
 float 		calculate_vertical_ray_length(float fov_rad);
 float 		calculate_horizontal_ray_length(float fov_rad);
-float 		get_ray_length(t_player *player);
+// float 		get_ray_length(t_player *player);
+float 		get_ray_length(int map_width, int map_height, int window_width, int window_height, float field_of_view);
 // Located in *raycasting.c*
 void 		perform_dda(t_data *data);
-void 		draw_ray(t_data *data);
-void 		shoot_rays(t_data *data);
+// void 		draw_ray(t_data *data);
+void 		draw_ray(t_image *map2d, t_image *world, int x1, int y1, int x2, int y2, t_map *map, t_ray *ray, t_data *data);
+// void 		shoot_rays(t_data *data);
+void 		shoot_rays(t_image *map2d, t_image *world, t_player *player, t_map *map, t_ray *ray, t_data *data);
+
 int 		raycasting(t_data *data);
 // Located in *texture.c*
 void 		calculate_draw_positions(t_mlx *mlx, t_ray *ray);
