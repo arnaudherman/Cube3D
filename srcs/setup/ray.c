@@ -1,17 +1,17 @@
 #include "cub3d-bis.h"
 
-int init_rays(t_ray *ray, t_player *player, t_map *map, t_mlx *mlx)
+int init_rays(t_data *data)
 {
 	// TO DO : check x became x1 problem ?
-    ray->camera_x = 2 * ray->x1 / (double)WINDOW_WIDTH - 1; // Déplacement avant le calcul des directions
-    ray->dir_x = player->x_dir + player->x_plane * ray->camera_x;
-    ray->dir_y = player->y_dir + player->y_plane * ray->camera_x;
-    ray->map_x = (int)(player->x_pos / TILE_SIZE);
-    ray->map_y = (int)(player->y_pos / TILE_SIZE);
+    data->ray->camera_x = 2 * data->ray->x1 / (double)WINDOW_WIDTH - 1; // Déplacement avant le calcul des directions
+    data->ray->dir_x = data->player->x_dir + data->player->x_plane * data->ray->camera_x;
+    data->ray->dir_y = data->player->y_dir + data->player->y_plane * data->ray->camera_x;
+    data->ray->map_x = (int)(data->player->x_pos / TILE_SIZE);
+    data->ray->map_y = (int)(data->player->y_pos / TILE_SIZE);
 
-    get_delta_dist(ray);
-    get_side_dist(ray, player);
-    ray->ray_length = get_ray_length(player);
+    get_delta_dist(data);
+    get_side_dist(data);
+    data->ray->ray_length = get_ray_length(data->player);
     return 0;
 }
 

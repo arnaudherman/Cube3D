@@ -297,7 +297,7 @@ int 		init_map(t_map *map);
 // Located in *player.c*
 void		calculate_delta_dist(t_ray *ray);
 void		calculate_side_dist(t_ray *ray, t_player *player);
-int 		init_rays(t_ray *ray, t_player *player, t_map *map, t_mlx *mlx);
+int 		init_rays(t_data *data);
 t_player	*allocate_player(void);
 int			init_player(t_player *player);
 // Located in *ray.c*
@@ -406,10 +406,10 @@ void 		fov_rays(int image_height, int image_width, float fov_horizontal_deg);
 // Located in *frame.c"
 int			render_next_frame(t_data *data);
 // Located in *get.c"
-void 		get_steps(t_ray *ray);
-void 		get_step_sizes(t_ray *ray) ;
-void		get_delta_dist(t_ray *ray);
-void		get_side_dist(t_ray *ray, t_player *player);
+void 		get_steps(t_data *data);
+void 		get_step_sizes(t_data *data);
+void		get_delta_dist(t_data *data);
+void		get_side_dist(t_data *data);
 // Located in *image.c"
 void		my_mlx_pixel_put(t_image *image, int x, int y, int color);
 void 		pixel_put(t_image *image, int x, int y, int color);
@@ -428,8 +428,8 @@ float 		calculate_horizontal_ray_length(float fov_rad);
 float 		get_ray_length(t_player *player);
 // Located in *raycasting.c*
 void 		perform_dda(t_ray *ray, t_map *map);
-void 		draw_ray(t_image *map2d, t_image *world, t_map *map, t_ray *ray, t_data *data);
-void 		shoot_rays(t_image *map2d, t_image *world, t_player *player, t_map *map, t_ray *ray, t_data *data);
+void 		draw_ray(t_data *data);
+void 		shoot_rays(t_data *data);
 int 		raycasting(t_data *data);
 // Located in *texture.c*
 void 		calculate_draw_positions(t_mlx *mlx, t_ray *ray);

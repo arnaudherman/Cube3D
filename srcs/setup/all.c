@@ -91,7 +91,7 @@ int	init_custom_all(t_data *data)
 		return 1;
 	}
 
-	if (init_rays(data->ray, data->player, &data->map, &data->mlx) != 0) {
+	if (init_rays(data) != 0) {
 		perror("Failed to initialize rays\n");
 		return 1;
 	}

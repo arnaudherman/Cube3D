@@ -36,8 +36,8 @@ void draw_wall(t_data *data, t_ray *ray)
         ray->map_x = (int)data->player->x_pos;
         ray->map_y = (int)data->player->y_pos;
 
-        get_delta_dist(ray);
-        get_side_dist(ray, data->player);
+        get_delta_dist(data);
+        get_side_dist(data);
         // TO DO second dda ?
 		perform_dda(ray, &data->map);
         get_wall_dist(data->player, ray);
