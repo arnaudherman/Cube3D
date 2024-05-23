@@ -2,18 +2,35 @@
 
 // Fonction simple pour calculer les pas nécessaires pour se déplacer 
 // d'un point initial à un point final dans un espace 2D
+// void get_steps(t_data *data)
+// {
+// 	// mon delta x et y
+// 	data->ray->dx = data->ray->x2 - data->ray->x1;
+//     data->ray->dy = data->ray->y2 - data->ray->y1;
+// 	// valeur absolue de dx > celle de dy ?
+//     if (abs(data->ray->dx) > abs(data->ray->dy)) 
+//         data->ray->steps = abs(data->ray->dx);
+// 	// Sinon distance verticale > distance horizontale
+//     else 
+//         data->ray->steps = abs(data->ray->dy);
+// }
+
 void get_steps(t_data *data)
 {
-	// mon delta x et y
-	data->ray->dx = data->ray->x2 - data->ray->x1;
+	float distance;
+
+    // Calcul de la distance horizontale et verticale
+    data->ray->dx = data->ray->x2 - data->ray->x1;
     data->ray->dy = data->ray->y2 - data->ray->y1;
-	// valeur absolue de dx > celle de dy ?
-    if (abs(data->ray->dx) > abs(data->ray->dy)) 
-        data->ray->steps = abs(data->ray->dx);
-	// Sinon distance verticale > distance horizontale
-    else 
-        data->ray->steps = abs(data->ray->dy);
+    
+    // Calcul de la distance totale parcourue par le rayon
+    distance = sqrt(data->ray->dx * data->ray->dx + data->ray->dy * data->ray->dy);
+
+    // Détermination du nombre d'étapes en fonction de la distance totale
+    // data->ray->steps = distance / STEP_LENGTH; // STEP_LENGTH est la longueur d'étape fixe
+	data->ray->steps = distance; 
 }
+
 
 // Fonction simple pour calculer les pas nécessaires pour se déplacer
 void get_step_sizes(t_data *data) 

@@ -297,7 +297,7 @@ int 		init_map(t_map *map);
 // Located in *player.c*
 void		calculate_delta_dist(t_ray *ray);
 void		calculate_side_dist(t_ray *ray, t_player *player);
-int 		init_rays(t_data *data);
+int 		init_rays(t_data *data, int x);
 t_player	*allocate_player(void);
 int			init_player(t_player *player);
 // Located in *ray.c*
@@ -427,7 +427,7 @@ float 		calculate_vertical_ray_length(float fov_rad);
 float 		calculate_horizontal_ray_length(float fov_rad);
 float 		get_ray_length(t_player *player);
 // Located in *raycasting.c*
-void 		perform_dda(t_ray *ray, t_map *map);
+void 		perform_dda(t_data *data);
 void 		draw_ray(t_data *data);
 void 		shoot_rays(t_data *data);
 int 		raycasting(t_data *data);
