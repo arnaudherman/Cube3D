@@ -11,7 +11,7 @@ int init_rays(t_ray *ray, t_player *player, t_map *map, t_mlx *mlx)
 
     get_delta_dist(ray);
     get_side_dist(ray, player);
-    ray->ray_length = get_ray_length(map, mlx, FOV);
+    ray->ray_length = get_ray_length(player);
     return 0;
 }
 

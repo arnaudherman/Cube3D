@@ -297,7 +297,6 @@ int 		init_map(t_map *map);
 // Located in *player.c*
 void		calculate_delta_dist(t_ray *ray);
 void		calculate_side_dist(t_ray *ray, t_player *player);
-float 		get_ray_length(t_map *map, t_mlx *mlx, float field_of_view);
 int 		init_rays(t_ray *ray, t_player *player, t_map *map, t_mlx *mlx);
 t_player	*allocate_player(void);
 int			init_player(t_player *player);
@@ -424,9 +423,9 @@ int 		draw_map(t_image *map2d, t_map *map);
 float 		correct_fisheye(float distance, float ray_angle, float player_angle);
 int			draw_player(t_image *image, t_player *player, t_ray *ray);
 // Located in *ray_length.c*
-float 		calculate_vertical_ray_length(int map_height, int window_height, float fov_rad);
-float 		calculate_horizontal_ray_length(int map_width, int window_width, float fov_rad);
-float 		get_ray_length(t_map *map, t_mlx *mlx, float field_of_view);
+float 		calculate_vertical_ray_length(float fov_rad);
+float 		calculate_horizontal_ray_length(float fov_rad);
+float 		get_ray_length(t_player *player);
 // Located in *raycasting.c*
 void 		perform_dda(t_ray *ray, t_map *map);
 void 		draw_ray(t_image *map2d, t_image *world, t_map *map, t_ray *ray, t_data *data);
