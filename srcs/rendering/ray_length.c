@@ -44,3 +44,4 @@ float get_ray_length(t_player *player)
 	else 
 		return	vertical_ray_length;
 }
+

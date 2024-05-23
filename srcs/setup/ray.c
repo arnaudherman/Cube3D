@@ -1,28 +1,26 @@
 #include "cub3d-bis.h"
 
-int init_rays(t_data *data, int x)
+int init_rays(t_data *data, int ray_index)
 {
 	// TO DO :
 	// La valeur de x doit être l'indice du rayon dans votre boucle de rendu des rayons. 
+	// data->ray->x1 = 0;
+	// data->ray->y1 = 0;
 	data->ray->x1 = data->player->x_pos;
 	data->ray->y1 = data->player->y_pos;
-	// Cela signifie que x doit être un entier compris entre 0 et WINDOW_WIDTH - 1
+	// data->ray->x1 = (int)data->player->x_pos / TILE_SIZE;
+	// data->ray->y1 = (int)data->player->y_pos / TILE_SIZE;
 
-	// TO DO ; HERE this is not x1
-    data->ray->camera_x = 2 * data->ray->x1 / (double)WINDOW_WIDTH - 1; // Déplacement avant le calcul des directions
+	// Cela signifie que x doit être un entier compris entre 0 et WINDOW_WIDTH - 1
+    data->ray->camera_x = 2 * ray_index / (double)WINDOW_WIDTH - 1; // Déplacement avant le calcul des directions
     data->ray->dir_x = data->player->x_dir + data->player->x_plane * data->ray->camera_x;
     data->ray->dir_y = data->player->y_dir + data->player->y_plane * data->ray->camera_x;
     data->ray->map_x = (int)(data->player->x_pos);
     data->ray->map_y = (int)(data->player->y_pos);
-
     get_delta_dist(data);
     get_side_dist(data);
-	// OR
-	// data->ray->dx = fabs(1 / data->ray->dir_x);
-	// data->ray->dy = fabs(1 / data->ray->dir_y);
 	printf("data->ray->length = %f\n", data->ray->ray_length); // 246.378387
     data->ray->ray_length = get_ray_length(data->player);
-	printf("after GET data->ray->length = %f\n", data->ray->ray_length);
     return 0;
 }
 
