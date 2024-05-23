@@ -171,10 +171,14 @@ typedef struct s_player
 	double		y_dir;
 	double		x_plane;
 	double		y_plane;
+	double  	x_move;
+	double  	y_move;
 	double		speed;
 	float		angle; // in radians
 	float 		fov; // in radians
  	int  		rotate;
+	int 		x_rotated;
+	int			y_rotated;
 	char 		direction;
 	double	 	size;
 	unsigned int color;

@@ -47,6 +47,10 @@ int	init_player(t_player *player)
 		player->y_dir = 0; 
 		player->x_plane = 0.66;
 		player->y_plane = 0.66;
+		player->x_move = 0.0;
+		player->y_move = 0.0;
+		player->x_rotated = 0;
+		player->y_rotated = 0;
 		player->size = 14;
 		player->color = 0x992800;
 		return 0;
