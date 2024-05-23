@@ -10,21 +10,14 @@ int get_wall_top(int wall_height)
     return (WINDOW_HEIGHT / 2) - (wall_height / 2);
 }
 
-// TO DO : check x became x1 and y became y1 problem ?
-// From player to wall hit
-void get_wall_dist(t_player *player, t_ray *ray) 
+float correct_fisheye(float distance, float ray_angle, float player_angle) 
 {
-    if (ray->side == 0 || ray->side == 1)
-        ray->wall_dist = (ray->map_x - player->x_pos + (1 - ray->x1) / 2) / ray->dir_x;
-    else
-        ray->wall_dist = (ray->map_y - player->y_pos + (1 - ray->y1) / 2) / ray->dir_y;
-}
-
-void	get_wall_height(t_ray *ray)
-{
-	if (ray->wall_dist == 0)
-		ray->wall_dist = 1;
-	ray->wall_height = (int)(WALL_HEIGHT / ray->wall_dist);
+    float angle_difference;
+	float corrected_distance;
+	
+	angle_difference = ray_angle - player_angle;
+    corrected_distance = distance * cos(angle_difference);
+    return corrected_distance;
 }
 
 int calculate_wall_height(float current_x, float current_y, t_ray *ray, t_data *data) 

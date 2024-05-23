@@ -1,65 +1,65 @@
 #include "cub3d-bis.h"
 
 // To draw my column
-void calculate_draw_positions(t_mlx *mlx, t_ray *ray) 
-{
-    ray->draw_start = -ray->line_height / 2 + mlx->win_height / 2;
-    ray->draw_end = ray->line_height / 2 + mlx->win_height / 2;
-    if (ray->draw_start < 0) ray->draw_start = 0;
-    if (ray->draw_end >= mlx->win_height) ray->draw_end = mlx->win_height - 1;
-}
+// void calculate_draw_positions(t_mlx *mlx, t_ray *ray) 
+// {
+//     ray->draw_start = -ray->line_height / 2 + mlx->win_height / 2;
+//     ray->draw_end = ray->line_height / 2 + mlx->win_height / 2;
+//     if (ray->draw_start < 0) ray->draw_start = 0;
+//     if (ray->draw_end >= mlx->win_height) ray->draw_end = mlx->win_height - 1;
+// }
 
-// wall position when hit
-void calculate_wall_x(t_data *data, t_ray *ray) 
-{
-    if (ray->side == 0 || ray->side == 1)
-        ray->wall_x = data->player->y_pos + ray->wall_dist * ray->dir_y;
-    else
-        ray->wall_x = data->player->x_pos + ray-> wall_dist * ray->dir_x;
-    ray->wall_x -= floor(ray->wall_x);
-}
+// // wall position when hit
+// void calculate_wall_x(t_data *data, t_ray *ray) 
+// {
+//     if (ray->side == 0 || ray->side == 1)
+//         ray->wall_x = data->player->y_pos + ray->wall_dist * ray->dir_y;
+//     else
+//         ray->wall_x = data->player->x_pos + ray-> wall_dist * ray->dir_x;
+//     ray->wall_x -= floor(ray->wall_x);
+// }
 
-// choose right texture
-t_image *select_texture(t_data *data, t_ray *ray) 
-{
-    if (ray->side == 0 && ray->dir_x < 0)
-        return &data->WE;
-    else if (ray->side == 1 && ray->dir_x >= 0)
-        return &data->EA;
-    else if (ray->side == 2 && ray->dir_y > 0)
-        return &data->SO;
-    else
-        return &data->NO;
-}
+// // choose right texture
+// t_image *select_texture(t_data *data, t_ray *ray) 
+// {
+//     if (ray->side == 0 && ray->dir_x < 0)
+//         return &data->WE;
+//     else if (ray->side == 1 && ray->dir_x >= 0)
+//         return &data->EA;
+//     else if (ray->side == 2 && ray->dir_y > 0)
+//         return &data->SO;
+//     else
+//         return &data->NO;
+// }
 
-// calculate x position on texture to use for rendering
-void calculate_texture_x(t_ray *ray, t_image *texture) 
-{
-    ray->text_x = (int)(ray->wall_x * (double)texture->width);
-    if ((ray->side == 0 && ray->dir_x > 0) || (ray->side == 1 && ray->dir_y < 0))
-        ray->text_x = texture->width - ray->text_x - 1;
-}
+// // calculate x position on texture to use for rendering
+// void calculate_texture_x(t_ray *ray, t_image *texture) 
+// {
+//     ray->text_x = (int)(ray->wall_x * (double)texture->width);
+//     if ((ray->side == 0 && ray->dir_x > 0) || (ray->side == 1 && ray->dir_y < 0))
+//         ray->text_x = texture->width - ray->text_x - 1;
+// }
 
-void set_wall_texture(t_data *data, t_ray *ray) 
-{
-    t_image *texture;
+// void set_wall_texture(t_data *data, t_ray *ray) 
+// {
+//     t_image *texture;
 	
-	texture = select_texture(data, ray);
-    calculate_texture_x(ray, texture);
-    set_texture_on_image(data, texture, ray);
-}
+// 	texture = select_texture(data, ray);
+//     calculate_texture_x(ray, texture);
+//     set_texture_on_image(data, texture, ray);
+// }
 
-// Draw column with the rigth texture
-void draw_col(t_data *data, t_mlx *mlx, t_ray *ray) {
-    calculate_draw_positions(mlx, ray);
-    calculate_wall_x(data, ray);
-    set_color_on_image(data, ray);
-    set_wall_texture(data, ray);
-}
+// // Draw column with the rigth texture
+// void draw_col(t_data *data, t_mlx *mlx, t_ray *ray) {
+//     calculate_draw_positions(mlx, ray);
+//     calculate_wall_x(data, ray);
+//     set_color_on_image(data, ray);
+//     set_wall_texture(data, ray);
+// }
 
-// TO DO : handle dans mon .cub
-// F 220,100,0 for floor
-// C 225,30,0 = ceiling
+// // TO DO : handle dans mon .cub
+// // F 220,100,0 for floor
+// // C 225,30,0 = ceiling
 
 // void render_texture_column(t_image *world, int x, int wall_height, int wall_top, t_image *texture_img) {
     

@@ -1,16 +1,5 @@
 #include "cub3d-bis.h"
 
-// DO NOT DELETE
-// float correct_fisheye(float distance, float ray_angle, float player_angle) 
-// {
-//     float angle_difference;
-// 	float corrected_distance;
-	
-// 	angle_difference = ray_angle - player_angle;
-//     corrected_distance = distance * cos(angle_difference);
-//     return corrected_distance;
-// }
-
 // Le but principal de cette fonction est de calculer et 
 // de fournir les limites d'un rectangle centré sur le joueur, 
 // de manière à pouvoir dessiner ou effectuer des opérations 
@@ -27,41 +16,41 @@ static void get_player_bounds(t_player *player, t_ray *ray)
     ray->y2 = (int)player->y_pos + half_size;
 }
 
-// // Le but principal de cette fonction est de déterminer où se trouve 
-// // la position du joueur (player->x_pos et player->y_pos) par rapport 
-// // à un point central donné (x_center et y_center). Les coordonnées locales 
-// // obtenues (local_x et local_y) représentent la position relative du joueur 
-// // par rapport à ce point central.
+// Le but principal de cette fonction est de déterminer où se trouve 
+// la position du joueur (player->x_pos et player->y_pos) par rapport 
+// à un point central donné (x_center et y_center). Les coordonnées locales 
+// obtenues (local_x et local_y) représentent la position relative du joueur 
+// par rapport à ce point central.
 static void get_local_coordinates(t_player *player, int *local_x, int *local_y)
 {
     *local_x = player->x_move - (int)player->x_pos;
     *local_y = player->y_move - (int)player->y_pos;
 }
 
-// // Le but principal de cette fonction est de prendre les coordonnées locales 
-// // d'un point (local_x, local_y) et de les transformer en de nouvelles 
-// // coordonnées (rotated_x, rotated_y) après avoir appliqué une rotation 
-// // de angle radians autour de l'origine (0, 0).
+// Le but principal de cette fonction est de prendre les coordonnées locales 
+// d'un point (local_x, local_y) et de les transformer en de nouvelles 
+// coordonnées (rotated_x, rotated_y) après avoir appliqué une rotation 
+// de angle radians autour de l'origine (0, 0).
 static void rotate_coordinates(t_player *player, int local_x, int local_y)
 {
     player->x_rotated = (int)(local_x * cos(player->angle) - local_y * sin(player->angle));
     player->y_rotated = (int)(local_x * sin(player->angle) + local_y * cos(player->angle));
 }
 
-// // but de vérifier si les coordonnées d'un joueur se trouvent à l'intérieur 
-// // des limites définies par un rectangle représenté par 
-// // les coordonnées x1, y1, x2, et y2 d'un rayon (t_ray).
+// but de vérifier si les coordonnées d'un joueur se trouvent à l'intérieur 
+// des limites définies par un rectangle représenté par 
+// les coordonnées x1, y1, x2, et y2 d'un rayon (t_ray).
 static int is_within_bounds(int x, int y, t_ray *ray)
 {
     return (x >= (int)ray->x1 && x < (int)ray->x2 && y >= (int)ray->y1 && y < (int)ray->y2);
 }
 
-// // local_x, local_y: Ces variables vont contenir les coordonnées locales 
-// // du pixel du joueur par rapport à son centre.
-// // rotated_x, rotated_y: Elles vont stocker les coordonnées locales du pixel après rotation 
-// // autour du centre du joueur selon son angle de vision.
-// // global_x, global_y: Ces variables vont contenir les coordonnées globales 
-// // du pixel du joueur dans le contexte de l'image.
+// local_x, local_y: Ces variables vont contenir les coordonnées locales 
+// du pixel du joueur par rapport à son centre.
+// rotated_x, rotated_y: Elles vont stocker les coordonnées locales du pixel après rotation 
+// autour du centre du joueur selon son angle de vision.
+// global_x, global_y: Ces variables vont contenir les coordonnées globales 
+// du pixel du joueur dans le contexte de l'image.
 static void draw_player_pixel(t_image *image, t_player *player, t_ray *ray)
 {
     int local_x;

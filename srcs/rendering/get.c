@@ -2,19 +2,6 @@
 
 // Fonction simple pour calculer les pas nécessaires pour se déplacer 
 // d'un point initial à un point final dans un espace 2D
-// void get_steps(t_data *data)
-// {
-// 	// mon delta x et y
-// 	data->ray->dx = data->ray->x2 - data->ray->x1;
-//     data->ray->dy = data->ray->y2 - data->ray->y1;
-// 	// valeur absolue de dx > celle de dy ?
-//     if (abs(data->ray->dx) > abs(data->ray->dy)) 
-//         data->ray->steps = abs(data->ray->dx);
-// 	// Sinon distance verticale > distance horizontale
-//     else 
-//         data->ray->steps = abs(data->ray->dy);
-// }
-
 void get_steps(t_data *data)
 {
 	float distance;
@@ -61,11 +48,13 @@ void	get_side_dist(t_data *data)
 {
 	if (data->ray->dir_x < 0)
 	{
+		// TO DO ; HERE this is not x1
 		data->ray->x1 = -1;
 		data->ray->sidedist_x = (data->player->x_pos - data->ray->map_x) * data->ray->dx;
 	}
 	else
 	{
+		// TO DO ; HERE this is not x1
 		data->ray->x1 = 1;
 		data->ray->sidedist_x = (data->ray->map_x - data->player->x_pos + 1.0) * data->ray->dx;
 	}

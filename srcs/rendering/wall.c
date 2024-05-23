@@ -1,5 +1,20 @@
 #include "cub3d-bis.h"
 
+// From player to wall hit
+void	get_wall_dist(t_data *data)
+{
+	data->ray->dx = data->ray->x2 - data->player->x_pos;
+    data->ray->dy = data->ray->y2 - data->player->y_pos;
+    data->ray->wall_dist = sqrt(data->ray->dx * data->ray->dx + data->ray->dy * data->ray->dy);
+}
+
+void	get_wall_height(t_data *data)
+{
+	if (data->ray->wall_dist == 0)
+		data->ray->wall_dist = 1;
+	data->ray->wall_height = (int)(WALL_HEIGHT / data->ray->wall_dist);
+}
+
 void draw_wall_column(t_image *world, int column, int wall_height)
 {
 	int top;
@@ -22,28 +37,29 @@ void draw_wall_column(t_image *world, int column, int wall_height)
     }
 }
 
-// void draw_wall(t_data *data, t_ray *ray) 
-// {
-// 	int column;
+void draw_wall(t_data *data)
+{
+	int column;
+	
+	column = 0;
+    while ( column < WINDOW_WIDTH)
+    {
+        // Calcul de l'angle du rayon pour chaque colonne
+        float ray_angle = data->player->angle - (FOV / 2.0) + ((float)column / (float)WINDOW_WIDTH) * FOV;
+        
+        // Initialiser les coordonnées du rayon
+        data->ray->x1 = data->player->x_pos;
+        data->ray->y1 = data->player->y_pos;
+        data->ray->angle = ray_angle;
 
-// 	column = 0;
-//     while (column < WINDOW_WIDTH) {
-// 		// To do : ray->camera_x init already in init ray, second time is useless ? 
-// 		ray->camera_x = 2 * column / (double)WINDOW_WIDTH - 1;  // Correct position for camera_x
-//         ray->dir_x = data->player->x_dir + data->player->x_plane * ray->camera_x;
-//         ray->dir_y = data->player->y_dir + data->player->y_plane * ray->camera_x;
-
-//         ray->map_x = (int)data->player->x_pos;
-//         ray->map_y = (int)data->player->y_pos;
-
-//         get_delta_dist(data);
-//         get_side_dist(data);
-//         // TO DO second dda ?
-// 		perform_dda(data);
-//         get_wall_dist(data->player, ray);
-//         get_wall_height(ray);
-
-//         draw_wall_column(data->world, column, ray->wall_height);
-// 		column++;
-//     }
-// }
+        // Calculer la distance au mur
+        get_wall_dist(data);
+        
+        // Calculer la hauteur du mur en fonction de la distance
+        get_wall_height(data);
+        
+        // Dessiner la colonne du mur
+        draw_wall_column(data->world, column, data->ray->wall_height);
+		column++;
+    }
+}

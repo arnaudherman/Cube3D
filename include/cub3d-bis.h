@@ -123,14 +123,10 @@ typedef struct s_image
 } t_image;
 
 typedef struct s_ray {
-	int x;
-	int y;
     int x1;
     int y1;
 	int x2;
 	int y2;
-	double dx;
-    double dy;
 	int steps;
 	int step_x;
 	int step_y;
@@ -140,6 +136,9 @@ typedef struct s_ray {
     int draw_end;
     int text_x;
     int text_y;
+	int wall_hit;
+	double dx;
+    double dy;
     double wall_dist;
     double wall_height;
     double wall_x;
@@ -427,14 +426,11 @@ int			draw_player(t_image *image, t_player *player, t_ray *ray);
 // Located in *ray_length.c*
 float 		calculate_vertical_ray_length(float fov_rad);
 float 		calculate_horizontal_ray_length(float fov_rad);
-// float 		get_ray_length(t_player *player);
-float 		get_ray_length(int map_width, int map_height, int window_width, int window_height, float field_of_view);
+float 		get_ray_length(t_player *player);
 // Located in *raycasting.c*
 void 		perform_dda(t_data *data);
-// void 		draw_ray(t_data *data);
-void 		draw_ray(t_image *map2d, t_image *world, int x1, int y1, int x2, int y2, t_map *map, t_ray *ray, t_data *data);
-// void 		shoot_rays(t_data *data);
-void 		shoot_rays(t_image *map2d, t_image *world, t_player *player, t_map *map, t_ray *ray, t_data *data);
+void 		draw_ray(t_data *data);
+void 		shoot_rays(t_data *data);
 
 int 		raycasting(t_data *data);
 // Located in *texture.c*
@@ -447,14 +443,12 @@ void 		draw_col(t_data *data, t_mlx *mlx, t_ray *ray);
 // Located in *wall_utils.c*
 char		get_wall_direction(int x, int y, t_map *map);
 int 		get_wall_top(int wall_height);
-void 		get_wall_dist(t_player *player, t_ray *ray);
-void		get_wall_height(t_ray *ray);
 int 		calculate_wall_height(float current_x, float current_y, t_ray *ray, t_data *data);
 // Located in *wall.c*
-void		get_wall_dist(t_player *player, t_ray *ray);
-void		get_wall_height(t_ray *ray);
+void		get_wall_dist(t_data *data);
+void		get_wall_height(t_data *data);
 void 		draw_wall_column(t_image *world, int column, int wall_height);
-void 		draw_wall(t_data *data, t_ray *ray);
+void 		draw_wall(t_data *data);
 // Located in *world.c*
 float 		degrees_to_radians(float angle);
 float 		radians_to_degrees(float angle);
