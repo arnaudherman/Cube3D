@@ -1,9 +1,9 @@
 #include "cub3d-bis.h"
 
-float get_ray_length(int map_width, int map_height, int window_width, int window_height, float field_of_view) 
+float get_ray_length(int map_width, int map_height, int window_width, int window_height) 
 {
     // Convert the field of view from degrees to radians
-    float fov_rad = field_of_view * M_PI / 180.0;
+    float fov_rad = (float)FOV * M_PI / 180.0;
 
     // Calculate the horizontal and vertical field of view
     float horizontal_fov = fov_rad;
