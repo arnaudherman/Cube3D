@@ -152,6 +152,7 @@ typedef struct s_ray {
     double camera_x;
     float ray_length;
     float angle; // in radians
+	int ray_index;
 } t_ray;
 
 typedef struct s_map {
@@ -298,7 +299,9 @@ int 		init_map(t_map *map);
 // Located in *player.c*
 void		calculate_delta_dist(t_ray *ray);
 void		calculate_side_dist(t_ray *ray, t_player *player);
-int 		init_one_ray(t_data *data);
+void		init_ray(t_ray *ray);
+int 		init_one_ray(int x, t_ray *ray, t_player *player);
+// int 		init_one_ray(t_data *data);
 t_player	*allocate_player(void);
 int			init_player(t_player *player);
 // Located in *ray.c*
@@ -428,11 +431,13 @@ float 		calculate_vertical_ray_length(float fov_rad);
 float 		calculate_horizontal_ray_length(float fov_rad);
 float 		get_ray_length(t_player *player);
 // Located in *raycasting.c*
-void 		perform_dda(t_data *data);
+// void 		perform_dda(t_data *data);
+void		perform_dda(t_data *data, t_ray *ray);
 void 		draw_ray(t_data *data);
 void 		shoot_rays(t_data *data);
 
-int 		raycasting(t_data *data);
+int 		raycasting(t_player *player, t_data *data);
+// int 		raycasting(t_data *data);
 // Located in *texture.c*
 void 		calculate_draw_positions(t_mlx *mlx, t_ray *ray);
 void 		calculate_wall_x(t_data *data, t_ray *ray);

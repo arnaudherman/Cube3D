@@ -5,7 +5,8 @@ void	get_wall_dist(t_data *data)
 {
 	data->ray->dx = data->ray->x2 - data->player->x_pos;
     data->ray->dy = data->ray->y2 - data->player->y_pos;
-    data->ray->wall_dist = sqrt(data->ray->dx * data->ray->dx + data->ray->dy * data->ray->dy);
+    data->ray->wall_dist = sqrt(data->ray->dx * data->ray->dx 
+						+ data->ray->dy * data->ray->dy);
 }
 
 void	get_wall_height(t_data *data)

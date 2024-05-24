@@ -29,7 +29,7 @@ int malloc_all(t_data *data) {
 	data->ceiling = allocate_image();
     data->player = allocate_player();
 	data->keys = allocate_keys();
-    data->ray = allocate_ray();
+    // data->ray = allocate_ray();
     data->color = allocate_color();	
 
 	check_if_malloc_failed(data);

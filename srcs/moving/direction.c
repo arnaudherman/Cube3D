@@ -49,3 +49,29 @@ void	set_direction(t_player *player)
 	set_north_south(player);
 	set_east_west(player);
 }
+
+
+// void set_direction(t_player *player, char direction)
+// {
+//     if (direction == 'N') {
+//         player->x_dir = 0;
+//         player->y_dir = -1;
+//         player->x_plane = 0.66;
+//         player->y_plane = 0;
+//     } else if (direction == 'E') {
+//         player->x_dir = 1;
+//         player->y_dir = 0;
+//         player->x_plane = 0;
+//         player->y_plane = 0.66;
+//     } else if (direction == 'S') {
+//         player->x_dir = 0;
+//         player->y_dir = 1;
+//         player->x_plane = -0.66;
+//         player->y_plane = 0;
+//     } else if (direction == 'W') {
+//         player->x_dir = -1;
+//         player->y_dir = 0;
+//         player->x_plane = 0;
+//         player->y_plane = -0.66;
+//     }
+// }
