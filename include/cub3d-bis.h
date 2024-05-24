@@ -173,20 +173,6 @@ typedef struct s_map {
 	t_ray  		*ray;
 } t_map;
 
-// typedef struct s_minimap
-// {
-//     int			w_minimap;
-//     int 		h_minimap;
-// 	char 		**minimap2d;
-// 	int			tile_size;
-//     int 		x_minimap;
-//     int 		y_minimap;
-// 	unsigned int color;
-// 	t_image	*img;
-// 	t_ray 	*ray;
-	
-// } t_minimap;
-
 typedef struct s_player
 {
  	double  	x_pos; // in pixels
@@ -439,10 +425,8 @@ void 		draw_vertical_lines(t_image *image);
 void 		draw_horizontal_lines(t_image *image);
 void 		draw_vertical_line(t_image *image, int x, int start_y, int color);
 void 		draw_horizontal_line(t_image *image, int start_x, int y, int color);
-// Located in *minimap.c*
 // Located in *player.c*
-// int			draw_player(t_player *player, t_mlx *mlx);
-int			draw_player(t_image *image, t_player *player);
+int				draw_player(t_image *image, t_player *player);
 // Located in *raycasting.c*
 // float 		get_ray_length(int map_width, int map_height, int window_width, int window_height);
 // void 		fov_rays(int hauteur_image, int largeur_image, float fov_horizontal_deg);
@@ -456,7 +440,7 @@ void		found_textures_data(t_data *data);
 // Located in *color.c*
 void		color_data(t_data *data);
 // Located in *wall.c*
-float delta_player_hits(t_player *player, t_ray *ray);
+float 		delta_player_hits(t_player *player, t_ray *ray);
 
 /* -------------------- LIBFT -------------------- */
 

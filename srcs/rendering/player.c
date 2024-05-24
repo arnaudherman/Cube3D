@@ -1,26 +1,5 @@
 #include "cub3d-bis.h"
 
-// DO NOT DELETE THIS FUNCTION
-// int draw_player(t_image *image, t_player *player) 
-// {
-//     int x, y;
-//     int x_start, x_end;
-//     int y_start, y_end;
-
-//     x_start = (int)(player->x_pos) - (player->size / 2);
-//     y_start = (int)(player->y_pos) - (player->size / 2);
-//     x_end = x_start + player->size;
-//     y_end = y_start + player->size;
-
-//     for (y = y_start; y < y_end; y++) {
-//         for (x = x_start; x < x_end; x++) {
-//             my_mlx_pixel_put(image, x, y, player->color);
-//         }
-//     }
-//     return 0;
-// }
-
-// TEST
 int draw_player(t_image *image, t_player *player) 
 {
     int x, y;
