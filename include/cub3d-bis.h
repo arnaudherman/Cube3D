@@ -444,9 +444,12 @@ void 		draw_horizontal_line(t_image *image, int start_x, int y, int color);
 // int			draw_player(t_player *player, t_mlx *mlx);
 int			draw_player(t_image *image, t_player *player);
 // Located in *raycasting.c*
-static void perform_dda(t_data *data);
-static void calculate_line_height(t_data *data);
-int 		raycasting(t_data *data);
+// float 		get_ray_length(int map_width, int map_height, int window_width, int window_height);
+// void 		fov_rays(int hauteur_image, int largeur_image, float fov_horizontal_deg);
+// float 		correct_fisheye(float distance, float ray_angle, float player_angle);
+// void 		draw_ray(t_image *map2d, t_image *world, int x1, int y1, int x2, int y2, t_map *map, t_ray *ray, t_data *data);
+// void 		shoot_rays(t_image *map2d, t_image *world, t_player *player, t_map *map, t_ray *ray, t_data *data);
+// int 			raycasting(t_data *data);
 
 // Located in *texture.c*
 void		found_textures_data(t_data *data);
