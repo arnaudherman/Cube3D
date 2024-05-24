@@ -15,14 +15,14 @@ void	get_wall_height(t_data *data)
 	data->ray->wall_height = (int)(WALL_HEIGHT / data->ray->wall_dist);
 }
 
-void draw_wall_column(t_image *world, int column, int wall_height)
+void draw_wall_column(t_data *data, int column)
 {
 	int top;
 	int bottom;
 	int y;
 
-    top = (WINDOW_HEIGHT - wall_height) / 2;
-    bottom = top + wall_height;
+    top = (WINDOW_HEIGHT - data->ray->wall_height) / 2;
+    bottom = top + data->ray->wall_height;
 
     if (top < 0)
 		top = 0;
@@ -32,7 +32,7 @@ void draw_wall_column(t_image *world, int column, int wall_height)
 	y = top;
     while (y <= bottom)
     {
-        my_mlx_pixel_put(world, column, y, 0xBBA498);
+        my_mlx_pixel_put(data->world, column, y, 0x451800);
 		y++;
     }
 }
@@ -59,7 +59,7 @@ void draw_wall(t_data *data)
         get_wall_height(data);
         
         // Dessiner la colonne du mur
-        draw_wall_column(data->world, column, data->ray->wall_height);
+        draw_wall_column(data, column);
 		column++;
     }
 }

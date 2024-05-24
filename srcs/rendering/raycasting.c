@@ -84,81 +84,129 @@ void perform_dda(t_data *data)
 		if (data->map.map2d[(int)data->ray->map_y / TILE_SIZE][(int)data->ray->map_x / TILE_SIZE] != '0')
 		{
 			hit = 1;
+			printf("Wall hit at x = %d, y = %d\n", (int)data->ray->map_x, (int)data->ray->map_y);
 			break;
 		}
 	}
 }
-
-void draw_ray(t_data *data) 
+// DDA perform version
+void draw_ray(t_data *data, int column) 
 {
-    int i;
     int x, y;
-    float current_x;
-    float current_y;
-	float distance;
-	int corrected_distance;
-	int wall_top;
-	char wall_dir;
+    float distance;
+    int corrected_distance;
+    int wall_top;
+    char wall_dir;
 
-	// Update Deltas
-	data->ray->dx = data->ray->x2 - data->ray->x1;
-	data->ray->dy = data->ray->y2 - data->ray->y1;
+    // Update Deltas
+    data->ray->dx = data->ray->x2 - data->ray->x1;
+    data->ray->dy = data->ray->y2 - data->ray->y1;
 
-    // TO DO : CHANGE with get_steps(data);
-	data->ray->steps = abs(data->ray->dx) > abs(data->ray->dy) ? abs(data->ray->dx) : abs(data->ray->dy);
+    // Calculate steps and step sizes
+    data->ray->steps = abs(data->ray->dx) > abs(data->ray->dy) ? abs(data->ray->dx) : abs(data->ray->dy);
     if (data->ray->steps == 0)
         return;
 
     get_step_sizes(data);
 
-	// TO DO : Check 
-    // // Utiliser les coordonnées du joueur pour initialiser les rayons
-    // current_x = data->player->x_pos / TILE_SIZE;
-    // current_y = data->player->y_pos / TILE_SIZE;
-	current_x = data->ray->x1;
-    current_y = data->ray->y1;
+    // Initialiser les rayons
+    data->ray->map_x = (int)(data->ray->x1);
+    data->ray->map_y = (int)(data->ray->y1);
 
-    i = 0;
-    while (i <= data->ray->steps) 
-    {
-		// Utiliser les coordonnées de début du rayon
-    	x = (int)current_x;
-        y = (int)current_y;
+    // Appeler perform_dda pour détecter les collisions
+    perform_dda(data);
 
-		if (data->map.map2d[y / TILE_SIZE][x / TILE_SIZE] != '0') {
-            distance = sqrt((current_x - data->ray->x1) * (current_x - data->ray->x1) + (current_y - data->ray->y1) * (current_y - data->ray->y1));
-            if (distance == 0) {
-                distance = 1.0;  // Prevent division by zero
-            }
-            data->ray->wall_dist = distance;
-            corrected_distance = correct_fisheye(distance, data->ray->angle, data->player->angle);
-            if (corrected_distance == 0) {
-                corrected_distance = 1;  // Prevent division by zero
-            }
-            data->ray->wall_height = (int)(WALL_HEIGHT / corrected_distance);
+    // Calculer la distance et les propriétés du mur
+    distance = sqrt((data->ray->map_x - data->ray->x1) * (data->ray->map_x - data->ray->x1) + (data->ray->map_y - data->ray->y1) * (data->ray->map_y - data->ray->y1));
+    if (distance == 0) 
+        distance = 1.0;  // Prevent division by zero
+    data->ray->wall_dist = distance;
+    corrected_distance = correct_fisheye(distance, data->ray->angle, data->player->angle);
+    if (corrected_distance == 0) 
+        corrected_distance = 1;  // Prevent division by zero
+    data->ray->wall_height = (int)(WALL_HEIGHT / corrected_distance);
 
-			// TO DO : extern function for wall direction
-			// Determine the direction of the wall (example, you may need to adapt this part)
-			wall_dir = data->map.map2d[y / TILE_SIZE][x / TILE_SIZE];
+    // Determine the direction of the wall
+    wall_dir = data->map.map2d[(int)data->ray->map_y / TILE_SIZE][(int)data->ray->map_x / TILE_SIZE];
 
-			// TO DO : extern function for wall top
-            wall_top = (WINDOW_HEIGHT / 2) - (data->ray->wall_height / 2);
+    // Calculate the top of the wall
+    wall_top = (WINDOW_HEIGHT / 2) - (data->ray->wall_height / 2);
 
-			// // TO DO : extern function to draw the wall column with texture
-            // render_wall_texture(world, x * TILE_SIZE, ray->wall_height, wall_top, /*&*/data->texture, wall_dir);
-            // break;
-
-			// TO DO : delete soon because of render_wall_texture
-            draw_wall_column(data->world, x * TILE_SIZE, data->ray->wall_height);
-            break;
-        }
-		my_mlx_pixel_put(data->map2d, x, y, 0xffd55c);
-
-        current_x += data->ray->step_x;
-        current_y += data->ray->step_y;
-		i++;
-    }
+    // Draw the wall column
+    // draw_wall_column(data->world, data->ray->map_x * TILE_SIZE, data->ray->wall_height);
+    draw_wall_column(data, column);
 }
+
+// void draw_ray(t_data *data) 
+// {
+//     int i;
+//     int x, y;
+//     float current_x;
+//     float current_y;
+// 	float distance;
+// 	int corrected_distance;
+// 	int wall_top;
+// 	char wall_dir;
+
+// 	// Update Deltas
+// 	data->ray->dx = data->ray->x2 - data->ray->x1;
+// 	data->ray->dy = data->ray->y2 - data->ray->y1;
+
+//     // TO DO : CHANGE with get_steps(data);
+// 	data->ray->steps = abs(data->ray->dx) > abs(data->ray->dy) ? abs(data->ray->dx) : abs(data->ray->dy);
+//     if (data->ray->steps == 0)
+//         return;
+
+//     get_step_sizes(data);
+
+// 	// TO DO : Check 
+//     // // Utiliser les coordonnées du joueur pour initialiser les rayons
+//     // current_x = data->player->x_pos / TILE_SIZE;
+//     // current_y = data->player->y_pos / TILE_SIZE;
+// 	current_x = data->ray->x1;
+//     current_y = data->ray->y1;
+
+//     i = 0;
+//     while (i <= data->ray->steps) 
+//     {
+// 		// Utiliser les coordonnées de début du rayon
+//     	x = (int)current_x;
+//         y = (int)current_y;
+
+// 		if (data->map.map2d[y / TILE_SIZE][x / TILE_SIZE] != '0') {
+//             distance = sqrt((current_x - data->ray->x1) * (current_x - data->ray->x1) + (current_y - data->ray->y1) * (current_y - data->ray->y1));
+//             if (distance == 0) {
+//                 distance = 1.0;  // Prevent division by zero
+//             }
+//             data->ray->wall_dist = distance;
+//             corrected_distance = correct_fisheye(distance, data->ray->angle, data->player->angle);
+//             if (corrected_distance == 0) {
+//                 corrected_distance = 1;  // Prevent division by zero
+//             }
+//             data->ray->wall_height = (int)(WALL_HEIGHT / corrected_distance);
+
+// 			// TO DO : extern function for wall direction
+// 			// Determine the direction of the wall (example, you may need to adapt this part)
+// 			wall_dir = data->map.map2d[y / TILE_SIZE][x / TILE_SIZE];
+
+// 			// TO DO : extern function for wall top
+//             wall_top = (WINDOW_HEIGHT / 2) - (data->ray->wall_height / 2);
+
+// 			// // TO DO : extern function to draw the wall column with texture
+//             // render_wall_texture(world, x * TILE_SIZE, ray->wall_height, wall_top, /*&*/data->texture, wall_dir);
+//             // break;
+
+// 			// TO DO : delete soon because of render_wall_texture
+//             draw_wall_column(data->world, x * TILE_SIZE, data->ray->wall_height);
+//             break;
+//         }
+// 		my_mlx_pixel_put(data->map2d, x, y, 0xffd55c);
+
+//         current_x += data->ray->step_x;
+//         current_y += data->ray->step_y;
+// 		i++;
+//     }
+// }
 
 
 // Trace des rayons depuis la position du joueur pour déterminer ce qu'il voit. 
@@ -207,7 +255,7 @@ void shoot_rays(t_data *data)
         // Calcul des directions pour le rayon
         data->ray->dir_x = cos(angle_rad);
         data->ray->dir_y = sin(angle_rad);
-        draw_ray(data);
+        draw_ray(data, i);
         i++;
     }
 }

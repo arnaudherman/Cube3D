@@ -429,7 +429,7 @@ float 		calculate_horizontal_ray_length(float fov_rad);
 float 		get_ray_length(t_player *player);
 // Located in *raycasting.c*
 void 		perform_dda(t_data *data);
-void 		draw_ray(t_data *data);
+void 		draw_ray(t_data *data, int i);
 void 		shoot_rays(t_data *data);
 
 int 		raycasting(t_data *data);
@@ -447,7 +447,7 @@ int 		calculate_wall_height(float current_x, float current_y, t_ray *ray, t_data
 // Located in *wall.c*
 void		get_wall_dist(t_data *data);
 void		get_wall_height(t_data *data);
-void 		draw_wall_column(t_image *world, int column, int wall_height);
+void 		draw_wall_column(t_data *data, int column);
 void 		draw_wall(t_data *data);
 // Located in *world.c*
 float 		degrees_to_radians(float angle);
