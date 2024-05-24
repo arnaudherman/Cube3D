@@ -91,10 +91,5 @@ int	init_custom_all(t_data *data)
 		return 1;
 	}
 
-	// if (init_rays(data, data->ray->x1) != 0) {
-	// 	perror("Failed to initialize rays\n");
-	// 	return 1;
-	// }
-
 	return 0;
 }

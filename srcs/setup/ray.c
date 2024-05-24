@@ -1,16 +1,11 @@
 #include "cub3d-bis.h"
 
-int init_rays(t_data *data, int ray_index)
+// Will be used during the raycasting process
+int init_one_ray(t_data *data, int ray_index)
 {
 	// TO DO :
-	// La valeur de x doit être l'indice du rayon dans votre boucle de rendu des rayons. 
-	// data->ray->x1 = 0;
-	// data->ray->y1 = 0;
 	data->ray->x1 = data->player->x_pos;
 	data->ray->y1 = data->player->y_pos;
-	// data->ray->x1 = (int)data->player->x_pos / TILE_SIZE;
-	// data->ray->y1 = (int)data->player->y_pos / TILE_SIZE;
-
 	// Cela signifie que x doit être un entier compris entre 0 et WINDOW_WIDTH - 1
     data->ray->camera_x = 2 * ray_index / (double)WINDOW_WIDTH - 1; // Déplacement avant le calcul des directions
     data->ray->dir_x = data->player->x_dir + data->player->x_plane * data->ray->camera_x;
@@ -20,7 +15,9 @@ int init_rays(t_data *data, int ray_index)
     get_delta_dist(data);
     get_side_dist(data);
 	printf("data->ray->length = %f\n", data->ray->ray_length); // 246.378387
-    data->ray->ray_length = get_ray_length(data->player);
+    data->ray->ray_length = 1.0; // get_ray_length(data->player);
+	data->ray->angle = data->player->angle - (data->player->fov / 2.0) + ((double)ray_index / WINDOW_WIDTH) * data->player->fov;
+
     return 0;
 }
 
