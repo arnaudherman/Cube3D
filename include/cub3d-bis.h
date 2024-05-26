@@ -9,7 +9,7 @@
 # include <stdio.h>
 # include <stdbool.h>
 # include <fcntl.h>
-# include "../minilibx/linux/mlx.h"
+// # include "../minilibx/linux/mlx.h"
 # include "../minilibx/mac/mlx.h"
 # include "../libft/libft.h"
 # include "../ft_printf/include/ft_printf.h"
