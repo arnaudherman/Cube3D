@@ -23,6 +23,11 @@
 
 int init_one_ray(int x, t_ray *ray, t_player *player)
 {
+	ray = malloc(sizeof(t_ray));
+    if (ray == NULL) {
+        perror("Allocation for ray failed\n");
+        exit(EXIT_FAILURE);
+    }
 	init_ray(ray);
 	ray->camera_x = 2 * x / (double)WINDOW_WIDTH - 1;
 	ray->dir_x = player->x_dir + player->x_plane * ray->camera_x;

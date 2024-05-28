@@ -12,7 +12,8 @@ int	render_next_frame(t_data *data)
 
 	draw_map(data->map2d, &data->map);
 	key_move(data);
-	draw_player(data->map2d, data->player, data->ray);
+	draw_player(data->map2d, data->player);
+	// draw_player(data->map2d, data->player, data->ray);
 	draw_world_bg(data->world, 0x0057B8);
 	// shoot_rays(data);
 	raycasting(data->player, data);
