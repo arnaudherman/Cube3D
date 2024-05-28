@@ -16,7 +16,7 @@ int		key_press(int key, t_data *data)
 		data->keys->left = 1;
 	else if (key == RIGHT_ARR)
 		data->keys->right = 1;
-	printf("press key = %d\n", data->keys->w);
+	// printf("press key = %d\n", data->keys->w);
 	return (0);
 }
 
@@ -36,7 +36,7 @@ int		key_release(int key, t_data *data)
 		data->keys->left = 0;
 	else if (key == RIGHT_ARR)
 		data->keys->right = 0;
-	printf("release key = %d\n", data->keys->w);
+	// printf("release key = %d\n", data->keys->w);
 	return (0);
 }
 

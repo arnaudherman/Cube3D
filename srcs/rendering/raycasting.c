@@ -64,6 +64,94 @@ float correct_fisheye(float distance, float ray_angle, float player_angle)
     return corrected_distance;
 }
 
+// void draw_ray(t_image *map2d, t_image *world, int x1, int y1, int x2, int y2, t_map *map, t_ray *ray, t_data *data) {
+//     int i;
+// 	int x, y;
+//     int dx, dy;
+// 	int steps;
+// 	float step_x;
+// 	float step_y;
+// 	float current_x;
+// 	float current_y;
+// 	float distance;
+// 	int corrected_distance;
+
+// 	dx = x2 - x1;
+//     printf("dx: %d\n", dx); // 13 // 8 // 6
+//     dy = y2 - y1;
+//     printf("dy: %d\n", dy); // 2 // -12 // 12
+
+//     if (abs(dx) > abs(dy))
+//         steps = abs(dx);
+//     else
+//         steps = abs(dy);
+
+//     if (steps == 0) {
+//         return;
+//     }
+//     printf("steps: %d\n", steps); // 13 // 12 // 12
+//     step_x = (float)dx / steps;
+//     printf("step_x: %f\n", step_x); // 1.0000 // 0.66667 // 0.50000
+//     step_y = (float)dy / steps;
+//     printf("step_y: %f\n", step_y); // 0.8
+
+
+//     current_x = x1;
+//     current_y = y1;
+
+// 	i = 0;
+//     while (i <= steps) {
+//         x = (int)current_x;
+//         y = (int)current_y;
+
+//         printf("current_x: %f, current_y: %f, x: %d, y: %d\n", current_x, current_y, x, y);  // Ajoutez cette ligne pour le débogage
+
+
+//         // Vérifier les limites pour éviter les accès mémoire invalides
+//         if (x < 0 || y < 0 || x >= map->w_map * TILE_SIZE || y >= map->h_map * TILE_SIZE)
+//             break;
+//         // It never goes inside cause rays are too small for now
+//         if (map->map2d[y / TILE_SIZE][x / TILE_SIZE] != '0') 
+//         {
+//             distance = sqrt((current_x - x1) * (current_x - x1) + (current_y - y1) * (current_y - y1));
+//             printf("distance: %f\n", distance);  // Ajoutez cette ligne pour le débogage
+//             if (distance == 0) {
+//                 distance = 1.0;  // Prevent division by zero
+//             }
+//             printf("P2tit test\n");
+
+//             ray->wall_dist = distance;
+//             corrected_distance = correct_fisheye(distance, data->ray->angle, data->player->angle);
+//             printf("corrected distance: %f\n", corrected_distance); 
+//             if (corrected_distance == 0) {
+//                 corrected_distance = 1;  // Prevent division by zero
+//             }
+//             ray->wall_height = (int)(WALL_HEIGHT / corrected_distance);
+
+// 			// TO DO : extern function for wall direction
+// 			// Determine the direction of the wall (example, you may need to adapt this part)
+// 			char wall_dir = map->map2d[y / TILE_SIZE][x / TILE_SIZE];
+
+// 			// TO DO : extern function for wall top
+//             int wall_top = (WINDOW_HEIGHT / 2) - (ray->wall_height / 2);
+
+// 			// // TO DO : extern function to draw the wall column with texture
+//             // render_wall_texture(world, x * TILE_SIZE, ray->wall_height, wall_top, /*&*/data->texture, wall_dir);
+//             // break;
+
+// 			// TO DO : delete soon because of render_wall_texture
+//             draw_wall_column(world, x * TILE_SIZE, ray->wall_height);
+//             break;
+//         }
+
+//         my_mlx_pixel_put(map2d, x, y, 0xffd55c);
+
+//         current_x += step_x;
+//         current_y += step_y;
+// 		i++;
+//     }
+// }
+
 void draw_ray(t_image *map2d, t_image *world, int x1, int y1, int x2, int y2, t_map *map, t_ray *ray, t_data *data) {
     int i;
 	int x, y;
@@ -77,16 +165,25 @@ void draw_ray(t_image *map2d, t_image *world, int x1, int y1, int x2, int y2, t_
 	int corrected_distance;
 
 	dx = x2 - x1;
-    dy = y2 - y1;
+    printf("dx: %d\n", dx);
 
-    steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy);
+    dy = y2 - y1;
+    printf("dy: %d\n", dy);
+
+    if (abs(dx) > abs(dy))
+        steps = abs(dx);
+    else
+        steps = abs(dy);
 
     if (steps == 0) {
         return;
     }
-
+    printf("steps: %d\n", steps); 
     step_x = (float)dx / steps;
+    printf("step_x: %f\n", step_x); 
     step_y = (float)dy / steps;
+    printf("step_y: %f\n", step_y);
+
 
     current_x = x1;
     current_y = y1;
@@ -96,34 +193,16 @@ void draw_ray(t_image *map2d, t_image *world, int x1, int y1, int x2, int y2, t_
         x = (int)current_x;
         y = (int)current_y;
 
-        if (map->map2d[y / TILE_SIZE][x / TILE_SIZE] != '0') {
-            distance = sqrt((current_x - x1) * (current_x - x1) + (current_y - y1) * (current_y - y1));
-            if (distance == 0) {
-                distance = 1.0;  // Prevent division by zero
-            }
-            ray->wall_dist = distance;
-            corrected_distance = correct_fisheye(distance, data->ray->angle, data->player->angle);
-            if (corrected_distance == 0) {
-                corrected_distance = 1;  // Prevent division by zero
-            }
-            ray->wall_height = (int)(WALL_HEIGHT / corrected_distance);
+        printf("current_x: %f, current_y: %f, x: %d, y: %d\n", current_x, current_y, x, y);  // Ajoutez cette ligne pour le débogage
 
-			// TO DO : extern function for wall direction
-			// Determine the direction of the wall (example, you may need to adapt this part)
-			char wall_dir = map->map2d[y / TILE_SIZE][x / TILE_SIZE];
 
-			// TO DO : extern function for wall top
-            int wall_top = (WINDOW_HEIGHT / 2) - (ray->wall_height / 2);
-
-			// // TO DO : extern function to draw the wall column with texture
-            // render_wall_texture(world, x * TILE_SIZE, ray->wall_height, wall_top, /*&*/data->texture, wall_dir);
-            // break;
-
-			// TO DO : delete soon because of render_wall_texture
-            draw_wall_column(world, x * TILE_SIZE, ray->wall_height);
+        // Vérifier les limites pour éviter les accès mémoire invalides
+        if (x < 0 || y < 0 || x >= map->w_map * TILE_SIZE || y >= map->h_map * TILE_SIZE)
             break;
+        if (map->map2d[y / TILE_SIZE][x / TILE_SIZE] != '0') 
+        {
+            printf("wall hit\n");
         }
-
         my_mlx_pixel_put(map2d, x, y, 0xffd55c);
 
         current_x += step_x;

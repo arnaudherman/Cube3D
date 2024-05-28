@@ -65,7 +65,9 @@ int init_rays(t_ray *ray, t_player *player)
 
 	calculate_side_dist(ray, player);
 	ray->camera_x = 2 * ray->x / (double)WINDOW_WIDTH - 1;
+	printf("ray->ray_length = %f\n", ray->ray_length);
 	ray->ray_length = get_ray_length(MAP_WIDTH, MAP_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT);
+	printf("ray->ray_length = %f\n", ray->ray_length);
 	return 0;
 }
 

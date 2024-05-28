@@ -96,4 +96,3 @@ int init_map(t_map *map)
 
     return 0;
 }
-
