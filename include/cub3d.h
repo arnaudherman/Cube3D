@@ -131,89 +131,58 @@ typedef struct s_data
 /* -------------------- ERROR -------------------- */
 
 // Located in *error.c*
-void	ft_error(char *error);
+void		ft_error(char *error);
 
 /* -------------------- PARSING -------------------- */
 
 // Located in *parsing.c*
-int		parsing(char *argv[], t_data *data);
+int			parsing(char *argv[], t_data *data);
 
 // Located in *len_map.c*
-void	len_map(char *file_d, t_data *data);
+int			process_line(char *line, t_data *data);
+char		*ignore_texture(int fd_cub);
+void		len_map(char *file_d, t_data *data);
 
-// Located in *len_map_utils.c*
-int		process_line(char *line, t_data *data);
-char	*ignore_texture(int fd_cub);
-
-// Located in *found_texture.c*
+// Located in *texture.c*
 void	found_textures_data(char *fname, t_data *data);
-
-// Located in *save_texture.c*
-void	save_texture_data(t_texture_info *texture, char *line);
 
 // Located in *color.c*
 void	color_data(char *fname, t_data *data);
 
-// Located in *color_utils.c*
-int		encode_rgb(int r, int g, int b);
-
-// Located in *map_main.c*
-void	check_map(char *fname, t_data *data);
-void	check_map_bounds(t_data *data);
-void	analyze_map_data(t_data *data);
-
 // Located in *map.c*
-void	complet_string_with_space(char **strings, int len);
-void	adjust_string_length(char *string, int new_len);
-int		find_max_string_length(char **strings, int len);
-void	check_start_end(char *string);
-void	only_space_or_one(char *string);
+void check_map(char *fname, t_data *data);
 
-// Located in *map_utils.c*
-void	tab_to_space(char *string);
-void	remove_newline(char **array);
-
-// Located in *map_on.c*
-int		on_map(char car);
-void	check_upper(char *string_up, char *string_down);
-void	check_down(char *string_up, char *string_down);
-
-// Located in *map_data.c*
-void	read_map_data(int fd_cub, t_data *data);
 
 /* -------------------- LIBFT -------------------- */
 
 // Located in *get_next_line.c*
-char	*join_line(char *left_line, char *s1);
-char	*read_the_line(int fd, char *left_line);
-char	*go_line(char *left_line);
-char	*go_next(char *left_line);
-char	*get_next_line(int fd);
+char		*join_line(char *left_line, char *s1);
+char		*read_the_line(int fd, char *left_line);
+char		*go_line(char *left_line);
+char		*go_next(char *left_line);
+char		*get_next_line(int fd);
 
 // Located in *libft_one.c*
-char	*ft_strchr(const char *s, int c);
-void	*ft_calloc(size_t nmemb, size_t size);
-char	*ft_strjoin(char *s1, char *s2);
-char	*ft_strdup(char *src);
-void	ft_bzero(void *s, size_t n);
+char		*ft_strchr(const char *s, int c);
+void		*ft_calloc(size_t nmemb, size_t size);
+char		*ft_strjoin(char *s1, char *s2);
+char		*ft_strdup(char *src);
+void		ft_bzero(void *s, size_t n);
 
 // Located in *libft_two.c*
-size_t	ft_strlen(const char *s);
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
-int		ft_strncmp(const char *s1, const char *s2, size_t size);
-int		ft_atoi(const char *str);
-void	free_tokens(char **tokens);
+size_t		ft_strlen(const char *s);
+size_t		ft_strlcpy(char *dst, const char *src, size_t dstsize);
+int			ft_strncmp(const char *s1, const char *s2, size_t size);
+int			ft_atoi(const char *str);
+void		free_tokens(char **tokens);
 
 // Located in *libft_three.c*
-char	**ft_split(char const *s, char c);
+char		**ft_split(char const *s, char c);
 
 // Located in *libft_four.c*
 char	*ft_strcpy(char *s1, char *s2);
 char	*ft_strrchr(const char *s, int c);
-int		ft_strcmp(char *s1, char *s2);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
-
-// Located in *libft_five.c*
+int	ft_strcmp(char *s1, char *s2);
 char	*ft_strtrim(char const *s1, char const *set);
 
 #endif

@@ -38,6 +38,7 @@ char	*join_line(char *left_line, char *s1)
 		left_line = ft_calloc(1, sizeof(char));
 	}
 	s2 = ft_strjoin(left_line, s1);
+	// free(left_line);
 	return (s2);
 }
 
