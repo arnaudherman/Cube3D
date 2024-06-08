@@ -9,7 +9,7 @@ int malloc_all(t_data *data) {
 	data->world = allocate_image();
     data->player = allocate_player();
 	data->keys = allocate_keys();
-    data->ray = allocate_ray();
+    // data->ray = allocate_ray();
     // data->texture = init_textures(&data->mlx); // already in main bro
     data->color = allocate_color();
 
@@ -67,10 +67,10 @@ int	init_custom_all(t_data *data)
 		return 1;
 	}
 
-	if (init_rays(data->ray, data->player) != 0) {
-		perror("Failed to initialize rays\n");
-		return 1;
-	}
+	// if (init_rays(data->ray, data->player) != 0) {
+	// 	perror("Failed to initialize rays\n");
+	// 	return 1;
+	// }
 
 	return 0;
 }

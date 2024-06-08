@@ -1,244 +1,111 @@
 #include "cub3d-bis.h"
 
-float get_ray_length(int map_width, int map_height, int window_width, int window_height) 
+// BRO U USE CHAR INSTEAD OF INT IN MAP2D
+// BRO U USE CHAR INSTEAD OF INT IN MAP2D
+// BRO U USE CHAR INSTEAD OF INT IN MAP2D !!!
+void dda(t_data *data, t_map *map, t_ray *ray)
 {
-    // Convert the field of view from degrees to radians
-    float fov_rad = FOV * M_PI / 180.0;
+    int map_x;
+    int map_y;
 
-    // Calculate the horizontal and vertical field of view
-    float horizontal_fov = fov_rad;
-    float vertical_fov = 2.0 * atan2(tan(fov_rad / 2.0) * window_height, window_width);
-
-    // Ensure no division by zero
-    if (tan(horizontal_fov / 2.0) == 0.0 || tan(vertical_fov / 2.0) == 0.0)
-        return 0.0;
-
-    // Calculate the horizontal and vertical ray lengths
-    float horizontal_ray_length = map_width / (2.0 * tan(horizontal_fov / 2.0));
-    float vertical_ray_length = map_height / (2.0 * tan(vertical_fov / 2.0));
-
-    // Choose the larger of the two ray lengths
-    float ray_length = (horizontal_ray_length > vertical_ray_length) ? horizontal_ray_length : vertical_ray_length;
-
-    return ray_length;
-}
-
-void fov_rays(int hauteur_image, int largeur_image, float fov_horizontal_deg) 
-{
-    
-    float fov_horizontal_rad;
-	float rayon_horizontal;
-	float fov_vertical_rad;
-	float fov_vertical_deg;
-	float rayon_vertical;
-
-	// Convertir le FOV horizontal en radians
-	fov_horizontal_rad = fov_horizontal_deg * M_PI / 180.0;
-
-    // Ensure no division by zero
-    if (tan(fov_horizontal_rad / 2.0) == 0.0)
-        return;
-
-    // Calculer le rayon horizontal nécessaire pour couvrir toute l'image
-    rayon_horizontal = largeur_image / (2.0 * tan(fov_horizontal_rad / 2.0));
-
-    // Calculer le FOV vertical en fonction du rapport de l'image
-    fov_vertical_rad = 2.0 * atan2(tan(fov_horizontal_rad / 2.0) * hauteur_image, largeur_image);
-    fov_vertical_deg = fov_vertical_rad * 180.0 / M_PI;
-
-    // Ensure no division by zero
-    if (tan(fov_vertical_rad / 2.0) == 0.0)
-        return;
-
-    // Calculer le rayon vertical nécessaire pour couvrir toute l'image
-    rayon_vertical = hauteur_image / (2.0 * tan(fov_vertical_rad / 2.0));
-}
-
-float correct_fisheye(float distance, float ray_angle, float player_angle) 
-{
-    float angle_difference;
-	float corrected_distance;
-	
-	angle_difference = ray_angle - player_angle;
-    corrected_distance = distance * cos(angle_difference);
-    return corrected_distance;
-}
-
-// void draw_ray(t_image *map2d, t_image *world, int x1, int y1, int x2, int y2, t_map *map, t_ray *ray, t_data *data) {
-//     int i;
-// 	int x, y;
-//     int dx, dy;
-// 	int steps;
-// 	float step_x;
-// 	float step_y;
-// 	float current_x;
-// 	float current_y;
-// 	float distance;
-// 	int corrected_distance;
-
-// 	dx = x2 - x1;
-//     printf("dx: %d\n", dx); // 13 // 8 // 6
-//     dy = y2 - y1;
-//     printf("dy: %d\n", dy); // 2 // -12 // 12
-
-//     if (abs(dx) > abs(dy))
-//         steps = abs(dx);
-//     else
-//         steps = abs(dy);
-
-//     if (steps == 0) {
-//         return;
-//     }
-//     printf("steps: %d\n", steps); // 13 // 12 // 12
-//     step_x = (float)dx / steps;
-//     printf("step_x: %f\n", step_x); // 1.0000 // 0.66667 // 0.50000
-//     step_y = (float)dy / steps;
-//     printf("step_y: %f\n", step_y); // 0.8
-
-
-//     current_x = x1;
-//     current_y = y1;
-
-// 	i = 0;
-//     while (i <= steps) {
-//         x = (int)current_x;
-//         y = (int)current_y;
-
-//         printf("current_x: %f, current_y: %f, x: %d, y: %d\n", current_x, current_y, x, y);  // Ajoutez cette ligne pour le débogage
-
-
-//         // Vérifier les limites pour éviter les accès mémoire invalides
-//         if (x < 0 || y < 0 || x >= map->w_map * TILE_SIZE || y >= map->h_map * TILE_SIZE)
-//             break;
-//         // It never goes inside cause rays are too small for now
-//         if (map->map2d[y / TILE_SIZE][x / TILE_SIZE] != '0') 
-//         {
-//             distance = sqrt((current_x - x1) * (current_x - x1) + (current_y - y1) * (current_y - y1));
-//             printf("distance: %f\n", distance);  // Ajoutez cette ligne pour le débogage
-//             if (distance == 0) {
-//                 distance = 1.0;  // Prevent division by zero
-//             }
-//             printf("P2tit test\n");
-
-//             ray->wall_dist = distance;
-//             corrected_distance = correct_fisheye(distance, data->ray->angle, data->player->angle);
-//             printf("corrected distance: %f\n", corrected_distance); 
-//             if (corrected_distance == 0) {
-//                 corrected_distance = 1;  // Prevent division by zero
-//             }
-//             ray->wall_height = (int)(WALL_HEIGHT / corrected_distance);
-
-// 			// TO DO : extern function for wall direction
-// 			// Determine the direction of the wall (example, you may need to adapt this part)
-// 			char wall_dir = map->map2d[y / TILE_SIZE][x / TILE_SIZE];
-
-// 			// TO DO : extern function for wall top
-//             int wall_top = (WINDOW_HEIGHT / 2) - (ray->wall_height / 2);
-
-// 			// // TO DO : extern function to draw the wall column with texture
-//             // render_wall_texture(world, x * TILE_SIZE, ray->wall_height, wall_top, /*&*/data->texture, wall_dir);
-//             // break;
-
-// 			// TO DO : delete soon because of render_wall_texture
-//             draw_wall_column(world, x * TILE_SIZE, ray->wall_height);
-//             break;
-//         }
-
-//         my_mlx_pixel_put(map2d, x, y, 0xffd55c);
-
-//         current_x += step_x;
-//         current_y += step_y;
-// 		i++;
-//     }
-// }
-
-void draw_ray(t_image *map2d, t_image *world, int x1, int y1, int x2, int y2, t_map *map, t_ray *ray, t_data *data) {
-    int i;
-	int x, y;
-    int dx, dy;
-	int steps;
-	float step_x;
-	float step_y;
-	float current_x;
-	float current_y;
-	float distance;
-	int corrected_distance;
-
-	dx = x2 - x1;
-    printf("dx: %d\n", dx);
-
-    dy = y2 - y1;
-    printf("dy: %d\n", dy);
-
-    if (abs(dx) > abs(dy))
-        steps = abs(dx);
-    else
-        steps = abs(dy);
-
-    if (steps == 0) {
-        return;
-    }
-    printf("steps: %d\n", steps); 
-    step_x = (float)dx / steps;
-    printf("step_x: %f\n", step_x); 
-    step_y = (float)dy / steps;
-    printf("step_y: %f\n", step_y);
-
-
-    current_x = x1;
-    current_y = y1;
-
-	i = 0;
-    while (i <= steps) {
-        x = (int)current_x;
-        y = (int)current_y;
-
-        printf("current_x: %f, current_y: %f, x: %d, y: %d\n", current_x, current_y, x, y);  // Ajoutez cette ligne pour le débogage
-
-
-        // Vérifier les limites pour éviter les accès mémoire invalides
-        if (x < 0 || y < 0 || x >= map->w_map * TILE_SIZE || y >= map->h_map * TILE_SIZE)
-            break;
-        if (map->map2d[y / TILE_SIZE][x / TILE_SIZE] != '0') 
+    map_x = ray->x_map / 32;
+    map_y = ray->y_map / 32;
+    while (ray->hit == 0)
+    {
+        if (ray->sx < ray->sy)
         {
-            printf("wall hit\n");
+            ray->sx += ray->dx;
+            ray->x_map += ray->x_step;
+            ray->side = 0;
         }
-        my_mlx_pixel_put(map2d, x, y, 0xffd55c);
-
-        current_x += step_x;
-        current_y += step_y;
-		i++;
+        else
+        {
+            ray->sy += ray->dy;
+            ray->y_map += ray->y_step;
+            ray->side = 1;
+        }
+        // Wall hit detection
+        if (ray->x_map >= 0 && ray->x_map < map->w_map * 32 &&
+            ray->y_map >= 0 && ray->y_map < map->h_map * 32)
+            {
+                
+                int map_x = ray->x_map / 32;
+                int map_y = ray->y_map / 32;
+                
+                if (map->map2d[map_y][map_x] == '1')
+                {
+                    ray->hit = 1;
+                    printf("ray->y_map = %d\n", ray->y_map); // 75
+                    printf("ray->x_map = %d\n", ray->x_map); // 128
+                    printf("Hit wall: map->map2d[%d][%d] = %c\n", map_y, map_x, map->map2d[map_y][map_x]);
+                }
+            }
+        else
+        {
+            printf("ray->y_map = %d, ray->x_map = %d\n", ray->y_map, ray->x_map); // DEBUG y 111 et x 110
+            printf("map->map2d[ray->y_map][ray->x_map] = %d\n", map->map2d[ray->y_map / 32][ray->x_map / 32]);
+            // Si les coordonnées sont en dehors des limites, arrêtez la boucle
+            printf("Error: In DDA() map->map2d[ray->y_map][ray->x_map] is out of bounds\n");
+            exit(1);
+        }
     }
 }
 
-void shoot_rays(t_image *map2d, t_image *world, t_player *player, t_map *map, t_ray *ray, t_data *data) {
-    double start_angle;
-	double angle_increment;
-	double angle_rad;
-	int i;
-	int x_end;
-	int y_end;
+void get_perp_and_height(t_ray *ray, t_player *player, t_mlx *mlx)
+{
+    if (ray->side == 0)
+        ray->wall_dist = (ray->x_map - player->x_pos + (1 - ray->x_step) / 2) / ray->dir_x;
+    else
+        ray->wall_dist = (ray->y_map - player->y_pos + (1 - ray->y_step) / 2) / ray->dir_y;
 
-	start_angle = player->angle - (player->fov / 2.0);
-    angle_increment = player->fov / WINDOW_WIDTH;
-	i = 0;
-    while (i < WINDOW_WIDTH) {
-        angle_rad = (start_angle + i * angle_increment) * (M_PI / 180.0);
+    ray->line_height = (int)(mlx->win_height / ray->wall_dist);
 
-        x_end = (int)(player->x_pos + cos(angle_rad) * ray->ray_length);
-        y_end = (int)(player->y_pos + sin(angle_rad) * ray->ray_length);
+    ray->draw_start = -ray->line_height / 2 + mlx->win_height / 2;
+    if (ray->draw_start < 0)
+        ray->draw_start = 0;
+    ray->draw_end = ray->line_height / 2 + mlx->win_height / 2;
+    if (ray->draw_end >= mlx->win_height)
+        ray->draw_end = mlx->win_height - 1;
+}
 
-        if (x_end < 0) x_end = 0;
-        if (x_end >= (MAP_WIDTH * TILE_SIZE)) x_end = (MAP_WIDTH * TILE_SIZE) - 1;
-        if (y_end < 0) y_end = 0;
-        if (y_end >= (MAP_HEIGHT * TILE_SIZE)) y_end = (MAP_HEIGHT * TILE_SIZE) - 1;
+void draw_col(t_data *data, t_mlx *mlx, t_ray *ray)
+{
+    int y;
+    int color;
 
-        draw_ray(map2d, world, (int)(player->x_pos), (int)(player->y_pos), x_end, y_end, map, ray, data);
-		i++;
+    y = ray->draw_start;
+    while (y < ray->draw_end)
+    {
+        if (ray->side == 1)
+            color = 0xffd700;
+        else
+            color = 0xff4500;
+
+        my_mlx_pixel_put(data->world, ray->x, y, color);
+        y++;
     }
 }
 
-int raycasting(t_data *data) {
-    shoot_rays(data->map2d, data->world, data->player, &data->map, data->ray, data);
-    return 0;
+void raycasting(t_data *data, t_player *player, t_mlx *mlx)
+{
+    t_ray ray;
+    ray.x = 0;
+
+    if (!(ray.z_index = (double *)malloc(sizeof(double) * mlx->win_width)))
+        perror("Malloc z_index failed in raycasting();\n");
+
+    ft_bzero(ray.z_index, sizeof(double) * mlx->win_width);
+
+    while (ray.x < mlx->win_width)
+    {
+        init_ray(&ray, player);
+        dda(data, &data->map, &ray);
+        get_perp_and_height(&ray, player, mlx);
+        draw_col(data, mlx, &ray);
+        ray.x++;
+    }
+    
+    free(ray.z_index);
+
+    mlx_put_image_to_window(data->mlx.mlx_ptr, data->mlx.mlx_win_ptr, data->world->img, 0, 0);
 }

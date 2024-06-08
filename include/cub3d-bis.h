@@ -135,32 +135,27 @@ typedef struct s_image
 typedef struct s_ray {
     int 		x;
     int 		y;
-	int 		xinc;
-	int 		yinc;
-	int 		step;
+	int 		x_map;
+    int 		y_map;
+	int 		x_step;
+	int 		y_step;
+	int			hit;
     int 		side;
     int 		line_height;
-    int 		x_start;
-	int 		y_start;
-    int 		x_end;
-	int			y_end;
-	char 		*wall_dir;
-	double 		wall_dist;
-	double 		wall_height;
-    double 		wall_x;
-	double 		wall_y;
-	double 		pov_x;
-    double 		dir_x;
-    double 		dir_y;
-    double 		map_x;
-    double 		map_y;
-    double 		dx;
-    double 		dy;
-    double 		sidedist_x;
-    double 		sidedist_y;
+    int 		draw_start;
+	int 		draw_end;
+	int 		x_text;
+	int 		y_text;
+	double 		wall_x;
+	double 		*z_index;
 	double 		camera_x;
-	float		ray_length;
-	float		angle; // in radians
+	double 		wall_dist;
+	double 		dir_x;
+    double 		dir_y;
+	double 		sx; // side distance
+	double 		sy;
+	double 		dx; // delta distance
+    double 		dy;
 } t_ray;
 
 typedef struct s_map {
@@ -276,6 +271,7 @@ void		free_all(t_data *data);
 // Located in *error.c*
 void		ft_error(char *error);
 int 		err(char *str);
+void 		print_ray_info(t_ray *ray);
 // Located in *exit.c*
 int			exit_game(t_data *data);
 void		clear_map(t_data *data);
@@ -327,7 +323,7 @@ t_player	*allocate_player(void);
 static void	default_player(t_player *player);
 int			init_player(t_player *player);
 // Located in *ray.c*
-int init_rays(t_ray *ray, t_player *player);
+int 		init_ray(t_ray *ray, t_player *player);
 t_ray 		*allocate_ray(void);
 // Located in *texture.c*
 t_texture	*allocate_texture(t_mlx *mlx);
@@ -433,9 +429,9 @@ int				draw_player(t_image *image, t_player *player);
 float 		get_ray_length(int map_width, int map_height, int window_width, int window_height);
 void 		fov_rays(int hauteur_image, int largeur_image, float fov_horizontal_deg);
 float 		correct_fisheye(float distance, float ray_angle, float player_angle);
-void 		draw_ray(t_image *map2d, t_image *world, int x1, int y1, int x2, int y2, t_map *map, t_ray *ray, t_data *data);
-void 		shoot_rays(t_image *map2d, t_image *world, t_player *player, t_map *map, t_ray *ray, t_data *data);
-int 			raycasting(t_data *data);
+void 		draw_ray(t_data *data);
+void 		shoot_rays(t_data *data, t_player *player, t_ray *ray, t_mlx *mlx);
+void 		raycasting(t_data *data, t_player *player, t_mlx *mlx);
 
 // Located in *texture.c*
 void		found_textures_data(t_data *data);

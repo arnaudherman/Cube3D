@@ -1,18 +1,12 @@
 #include "cub3d-bis.h"
 
-void my_mlx_pixel_put(t_image *image, int x, int y, int color) {
-	// printf("xaq mlx_loop_hook line_length = %d, bits_per_pixel = %d\n", image->line_length, image->bits_per_pixel);
-	// HERE : line_length = 0, bits_per_pixel = 0
+void my_mlx_pixel_put(t_image *image, int x, int y, int color) 
+{
     char *dst;
     dst = image->addr + (y * image->line_length + x * (image->bits_per_pixel / 8));
-	// Debug: x = 0, y = 0, line_length = 24672, bits_per_pixel = 5600
-	// Debug: Calculated address: 0x3e8
-	// printf("Debug: x = %d, y = %d, line_length = %d, bits_per_pixel = %d\n", x, y, image->line_length, image->bits_per_pixel);
-    // printf("Debug: Calculated address: %p\n", (void*)dst); 
-	// Debug: x = 58, y = 57, line_length = 0, bits_per_pixel = 0 (et y boucle avec + 1 par iteration)
-	// Debug: Calculated address: 0x60700001feb0
     *(unsigned int*)dst = color;
 }
+
 
 void	draw_vertical_lign(t_data *data)
 {
@@ -29,5 +23,43 @@ void draw_square(t_data *data, int x, int y, int color)
         for (int j = 0; j < TILE_SIZE; j++) {
             my_mlx_pixel_put(data, x + i, y + j, color);
         }
+    }
+}
+
+void draw_ray_on_map(t_data *data, t_ray *ray, t_player *player, t_mlx *mlx)
+{
+    init_ray(ray, player);
+
+    // Use DDA to draw the ray on the 2D map
+    while (ray->hit == 0)
+    {
+        if (ray->sx < ray->sy)
+        {
+            ray->sx += ray->dx;
+            ray->x_map += ray->x_step;
+            ray->side = 0;
+        }
+        else
+        {
+            ray->sy += ray->dy;
+            ray->y_map += ray->y_step;
+            ray->side = 1;
+        }
+        if (data->map.map2d[ray->y_map][ray->x_map] > 0)
+            ray->hit = 1;
+    }
+
+    // Draw my ray on 2D map
+    my_mlx_pixel_put(data->map2d, ray->x_map * TILE_SIZE, ray->y_map * TILE_SIZE, 0xff0000);
+}
+
+void draw_rays_on_map(t_data *data, t_player *player, t_mlx *mlx)
+{
+    t_ray ray;
+    ray.x = 0;
+    while (ray.x < WINDOW_WIDTH)
+    {
+        draw_ray_on_map(data, &ray, player, mlx);
+        ray.x++;
     }
 }

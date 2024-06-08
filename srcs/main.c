@@ -30,6 +30,8 @@ int	main(int ac, char **av)
     // init_textures(&data->texture, data->mlx.mlx_ptr);
 	// WTF ??? Assurez-vous que `data` contient toutes les informations nécessaires
 	// data->texture = &texture;
+	print_ray_info(&data->ray);
+	printf("test\n");
 	loop(data);
 
 	free_all(data);

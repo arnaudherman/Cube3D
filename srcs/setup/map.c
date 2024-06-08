@@ -92,7 +92,7 @@ int init_map(t_map *map)
 	map->x_map = 0;
     map->y_map = 0;
     map->color = 0xC03865; // majenta
-	map->ray = allocate_ray();
+	// map->ray = allocate_ray();
 
     return 0;
 }

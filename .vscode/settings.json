@@ -16,6 +16,7 @@
 		"utility": "c",
 		"vector": "c",
 		"__node_handle": "c",
-		"complex": "c"
+		"complex": "c",
+		"stdlib.h": "c"
 	}
 }
