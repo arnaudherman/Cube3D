@@ -50,7 +50,7 @@ void init_ray(t_ray *ray, t_player *player)
     ray->camera_x = 2 * ray->x / (double)WINDOW_WIDTH - 1;
     ray->dir_x = player->x_dir + player->x_plane * ray->camera_x;
     ray->dir_y = player->y_dir + player->y_plane * ray->camera_x;
-	 ray->dx = fabs(1 / ray->dir_x);
+	ray->dx = fabs(1 / ray->dir_x);
     ray->dy = fabs(1 / ray->dir_y);
     // Initialize step and initial sideDist
     if (ray->dir_x < 0) {

@@ -37,13 +37,19 @@ void dda(t_data *data, t_map *map, t_ray *ray)
         {
             ray->sx += ray->dx;
             ray->x_map += ray->x_step;
-            ray->side = 0;
+            if (ray->x_step == -1)
+                ray->side = 0; // West
+            else
+                ray->side = 1; // East        
         }
         else
         {
             ray->sy += ray->dy;
             ray->y_map += ray->y_step;
-            ray->side = 1;
+            if (ray->y_step == -1)
+                ray->side = 2; // North
+            else
+                ray->side = 3; // South        
         }
         // Wall hit detection
         if (ray->x_map >= 0 && ray->x_map < map->w_map * 32 &&
@@ -84,7 +90,7 @@ void get_perp_and_height(t_ray *ray, t_player *player, t_mlx *mlx)
     // Handle fish-eye
     ray->wall_dist *= cos(ray->camera_x * M_PI / 180);
 
-    ray->line_height = (int)(mlx->win_height / ray->wall_dist) *8;
+    ray->line_height = (int)(mlx->win_height / ray->wall_dist) * 8; // Adjust wall height x8
 
     ray->draw_start = -ray->line_height / 2 + mlx->win_height / 2;
     if (ray->draw_start < 0)
@@ -102,10 +108,14 @@ void draw_col(t_data *data, t_mlx *mlx, t_ray *ray)
     y = ray->draw_start;
     while (y < ray->draw_end)
     {
-        if (ray->side == 1)
+        if (ray->side == 0)
             color = 0x420f2a;
-        else
+        else if (ray->side == 1)
             color = 0x79563D;
+        else if (ray->side == 2)
+            color = 0x906c7b;
+        else if (ray->side == 3)
+            color = 0xc1ac91;
 
         my_mlx_pixel_put(data->world, ray->x, y, color);
         y++;
@@ -135,3 +145,6 @@ void raycasting(t_data *data, t_player *player, t_mlx *mlx)
 
     mlx_put_image_to_window(data->mlx.mlx_ptr, data->mlx.mlx_win_ptr, data->world->img, 0, 0);
 }
+
+
+        

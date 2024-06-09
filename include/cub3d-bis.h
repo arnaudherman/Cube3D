@@ -224,12 +224,12 @@ typedef struct s_texture
 	// char 		**WE;
 	// char		**EA;
 	// char 		**xpm_data;
-	t_image NO;
-	t_image SO;
-	t_image WE;
-	t_image EA;
-	t_image floor;
-	t_image ceiling;
+	t_image *NO;
+	t_image *SO;
+	t_image *WE;
+	t_image *EA;
+	t_image *floor;
+	t_image *ceiling;
 } t_texture;
 
 typedef struct	s_mlx
@@ -246,6 +246,7 @@ typedef struct s_data
 	t_mlx		mlx;
 	t_map		map;
 	// t_minimap	minimap;
+	t_image 	*image;
 	t_image  	*map2d;
 	t_image 	*world;
 	t_player	*player;
@@ -253,10 +254,10 @@ typedef struct s_data
 	t_ray  		*ray;
 	t_texture 	*texture;
 	t_color		*color;
-	t_texture	no;
-	t_texture	so;
-	t_texture	we;
-	t_texture	ea;
+	// t_texture	no;
+	// t_texture	so;
+	// t_texture	we;
+	// t_texture	ea;
 	t_color		fcolors;
 	t_color		ccolors;
 } t_data;
