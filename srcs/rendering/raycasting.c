@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-void draw_line(t_image *img, int x_start, int y_start, int x_end, int y_end, int color)
+void    draw_line(t_image *img, int x_start, int y_start, int x_end, int y_end, int color)
 {
     int dx = x_end - x_start;
     int dy = y_end - y_start;
@@ -24,7 +24,7 @@ void draw_line(t_image *img, int x_start, int y_start, int x_end, int y_end, int
 // BRO U USE CHAR INSTEAD OF INT IN MAP2D
 // BRO U USE CHAR INSTEAD OF INT IN MAP2D
 // BRO U USE CHAR INSTEAD OF INT IN MAP2D !!!
-void dda(t_data *data, t_map *map, t_ray *ray)
+void    dda(t_data *data, t_map *map, t_ray *ray)
 {
     int map_x;
     int map_y;
@@ -71,16 +71,16 @@ void dda(t_data *data, t_map *map, t_ray *ray)
             }
         else
         {
+            // Coordinate outside bounds
             printf("ray->y_map = %d, ray->x_map = %d\n", ray->y_map, ray->x_map); // DEBUG y 111 et x 110
             printf("map->map2d[ray->y_map][ray->x_map] = %d\n", map->map2d[ray->y_map / 32][ray->x_map / 32]);
-            // Si les coordonnées sont en dehors des limites, arrêtez la boucle
             printf("Error: In DDA() map->map2d[ray->y_map][ray->x_map] is out of bounds\n");
             exit(1);
         }
     }
 }
 
-void get_perp_and_height(t_ray *ray, t_player *player, t_mlx *mlx)
+void    get_perp_and_height(t_ray *ray, t_player *player, t_mlx *mlx)
 {
     if (ray->side == 0)
         ray->wall_dist = (ray->x_map - player->x_pos + (1 - ray->x_step) / 2) / ray->dir_x;
@@ -100,30 +100,7 @@ void get_perp_and_height(t_ray *ray, t_player *player, t_mlx *mlx)
         ray->draw_end = mlx->win_height - 1;
 }
 
-// WORKING DO NOT TOUCH
-// void draw_col(t_data *data, t_mlx *mlx, t_ray *ray)
-// {
-//     int y;
-//     int color;
-
-//     y = ray->draw_start;
-//     while (y < ray->draw_end)
-//     {
-//         if (ray->side == 0)
-//             color = 0x420f2a;
-//         else if (ray->side == 1)
-//             color = 0x79563D;
-//         else if (ray->side == 2)
-//             color = 0x906c7b;
-//         else if (ray->side == 3)
-//             color = 0xc1ac91;
-
-//         my_mlx_pixel_put(data->world, ray->x, y, color);
-//         y++;
-//     }
-// }
-
-void raycasting(t_data *data, t_player *player, t_mlx *mlx)
+void    raycasting(t_data *data, t_player *player, t_mlx *mlx)
 {
     t_ray ray;
     ray.x = 0;

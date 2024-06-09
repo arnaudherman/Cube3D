@@ -108,14 +108,6 @@
 # define MMAP_COLOR_FLOOR 0xE6E6E6
 # define MMAP_COLOR_SPACE 0x404040
 # define BUFFER_SIZE 42
-// # define ROTATE_LEFT 123
-// # define ROTATE_RIGHT 124
-// # define KEY_DOWN 125
-// # define KEY_UP 126
-// # define FORWARD_W_Z 13
-// # define BACK_S_S 1
-// # define RIGHT_D_D 2
-// # define LEFT_A_Q 0
 # define MOUSE_BORDER_DISTANCE 20
 # define FLOOR 0xE6E6E6
 # define CEILING 0x404040
@@ -266,26 +258,28 @@ typedef struct s_data
 
 /* /\_/\_/\_/\_/\_/\_/\_/\_/\_/\_ PROTOTYPE _/\_/\_/\_/\_/\_/\_/\_/\_/\_/\ */
 
-/* -------------------- ERROR -------------------- */
-
-// Located in *error.c*
-void		ft_error(char *error);
-
 /* -------------------- CLEAN -------------------- */
 // Located in *all.c*
+void 		free_tokens(char **tokens);
 int 		clean_all(t_data *data);
 void		free_if_malloc_failed(t_data *data);
 void		free_all(t_data *data);
+
 // Located in *error.c*
+void		ft_putchar_fd(char c, int fd);
+void		ft_putstr_fd(char *s, int fd);
+void		ft_putendl_fd(char *s, int fd);
 void		ft_error(char *error);
-int 		err(char *str);
+int			err(char *str);
 void 		print_ray_info(t_ray *ray);
+
 // Located in *exit.c*
 int			exit_game(t_data *data);
 void		clear_map(t_data *data);
 void		clear_window(t_mlx *mlx);
 void		clear_image(t_image *image, t_mlx *mlx);
 void		destroy_data(t_data *data);
+
 // Located in *map.c*
 void 		free_map(t_map *map);
 

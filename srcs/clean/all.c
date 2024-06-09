@@ -1,5 +1,21 @@
 #include "cub3d.h"
 
+void free_tokens(char **tokens)
+{
+    int i;
+
+    if (tokens == NULL)
+        return;
+
+    i = 0;
+    while (tokens[i] != NULL)
+    {
+        free(tokens[i]);
+        i++;
+    }
+    free(tokens);
+}
+
 // Main function to clean used ressources
 // int clean_all(t_data *data)
 // {
