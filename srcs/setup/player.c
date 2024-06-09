@@ -47,7 +47,7 @@ int	init_player(t_player *player)
 		player->y_dir = 0; 
 		player->x_plane = 0.66;
 		player->y_plane = 0.66;
-		player->size = 14;
+		player->size = 10;
 		player->color = 0x992800;
 		return 0;
 }

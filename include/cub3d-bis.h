@@ -135,10 +135,10 @@ typedef struct s_image
 typedef struct s_ray {
     int 		x;
     int 		y;
-	int 		x_map;
-    int 		y_map;
-	int 		x_step;
-	int 		y_step;
+    int     	x_map;
+    int      	y_map;
+    int      	x_step;
+    int      	y_step;
 	int			hit;
     int 		side;
     int 		line_height;
@@ -323,7 +323,7 @@ t_player	*allocate_player(void);
 static void	default_player(t_player *player);
 int			init_player(t_player *player);
 // Located in *ray.c*
-int 		init_ray(t_ray *ray, t_player *player);
+void 		init_ray(t_ray *ray, t_player *player);
 t_ray 		*allocate_ray(void);
 // Located in *texture.c*
 t_texture	*allocate_texture(t_mlx *mlx);
@@ -411,9 +411,9 @@ void 		rotate_right(t_data *data);
 
 // Located in *draw.c*
 void		my_mlx_pixel_put(t_image *image, int x, int y, int color);
-void 		draw_floor(t_data *data);
-void 		draw_ceiling(t_data *data);
+void		draw_vertical_lign(t_data *data);
 void 		draw_square(t_data *data, int x, int y, int color);
+void 		draw_rays_on_map(t_data *data, t_player *player, t_mlx *mlx);
 // Located in *frame.c"
 int			render_next_frame(t_data *data);
 // Located in *map.c*

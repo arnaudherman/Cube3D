@@ -1,5 +1,26 @@
 #include "cub3d-bis.h"
 
+void draw_line(t_image *img, int x_start, int y_start, int x_end, int y_end, int color)
+{
+    int dx = x_end - x_start;
+    int dy = y_end - y_start;
+    int steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy);
+
+    float x_increment = dx / (float)steps;
+    float y_increment = dy / (float)steps;
+
+    float x = x_start;
+    float y = y_start;
+
+    for (int i = 0; i <= steps; i++)
+    {
+        my_mlx_pixel_put(img, x, y, color);
+        // my_mlx_pixel_put(img, round(x), round(y), color);
+        x += x_increment;
+        y += y_increment;
+    }
+}
+
 // BRO U USE CHAR INSTEAD OF INT IN MAP2D
 // BRO U USE CHAR INSTEAD OF INT IN MAP2D
 // BRO U USE CHAR INSTEAD OF INT IN MAP2D !!!
@@ -35,10 +56,12 @@ void dda(t_data *data, t_map *map, t_ray *ray)
                 if (map->map2d[map_y][map_x] == '1')
                 {
                     ray->hit = 1;
-                    printf("ray->y_map = %d\n", ray->y_map); // 75
-                    printf("ray->x_map = %d\n", ray->x_map); // 128
+                    printf("ray->y_map = %d\n", ray->y_map);
+                    printf("ray->x_map = %d\n", ray->x_map);
                     printf("Hit wall: map->map2d[%d][%d] = %c\n", map_y, map_x, map->map2d[map_y][map_x]);
                 }
+                else 
+                    my_mlx_pixel_put(data->map2d, map_x, map_y, 0xFF0000);
             }
         else
         {
@@ -58,7 +81,10 @@ void get_perp_and_height(t_ray *ray, t_player *player, t_mlx *mlx)
     else
         ray->wall_dist = (ray->y_map - player->y_pos + (1 - ray->y_step) / 2) / ray->dir_y;
 
-    ray->line_height = (int)(mlx->win_height / ray->wall_dist);
+    // Handle fish-eye
+    ray->wall_dist *= cos(ray->camera_x * M_PI / 180);
+
+    ray->line_height = (int)(mlx->win_height / ray->wall_dist) *8;
 
     ray->draw_start = -ray->line_height / 2 + mlx->win_height / 2;
     if (ray->draw_start < 0)
@@ -77,9 +103,9 @@ void draw_col(t_data *data, t_mlx *mlx, t_ray *ray)
     while (y < ray->draw_end)
     {
         if (ray->side == 1)
-            color = 0xffd700;
+            color = 0x420f2a;
         else
-            color = 0xff4500;
+            color = 0x79563D;
 
         my_mlx_pixel_put(data->world, ray->x, y, color);
         y++;
