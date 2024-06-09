@@ -72,10 +72,10 @@ void		set_color_on_image(t_data *data, t_ray *ray)
 
 	y = 0;
 	while (y < ray->draw_start)
-		pixel_put(data->image, ray->x, y++, &data->ccolors);
+		pixel_put(data->image, ray->x, y++, data->c_color);
 	y = ray->draw_end + 1;
 	while (y < data->mlx.win_height)
-		pixel_put(data->image, ray->x, y++, &data->fcolors);
+		pixel_put(data->image, ray->x, y++, data->f_color);
 }
 
 void	texture_put(t_data *data, t_image *texture, t_ray *ray)

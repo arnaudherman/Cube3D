@@ -14,11 +14,10 @@ int malloc_all(t_data *data) {
 	data->SO = allocate_image();
 	data->WE = allocate_image();
 	data->EA = allocate_image();
-    data->color = allocate_color();
 
     if (data->map2d == NULL || data->player == NULL ||
-        data->ray == NULL || data->color == NULL || 
-		data->keys == NULL ||data->world == NULL) {
+        data->ray == NULL || data->keys == NULL 
+		|| data->world == NULL) {
 		perror("Malloc of one ore more structures failed in malloc_all\n");
 		free_if_malloc_failed(data);
         return -1;
@@ -30,7 +29,8 @@ int init_default_all(t_data *data)
 {
 	data->mlx = (t_mlx){0};
     data->map = (t_map){0};
-	// data->minimap = (t_minimap){0};
+	data->fcolors = (t_color_info){0};
+	data->ccolors = (t_color_info){0};
 
 	if (malloc_all(data) != 0) {
         perror("Failed to malloc_all in init_default_all\n");
@@ -68,11 +68,6 @@ int	init_custom_all(t_data *data)
 		perror("Failed to initialize player\n");
 		return 1;
 	}
-
-	// if (init_rays(data->ray, data->player) != 0) {
-	// 	perror("Failed to initialize rays\n");
-	// 	return 1;
-	// }
 
 	return 0;
 }

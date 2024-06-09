@@ -26,11 +26,9 @@ SRCS += srcs/moving/direction.c \
         srcs/moving/rotation.c
 
 SRCS += srcs/parsing/color.c \
-        srcs/parsing/initialize_map.c \
         srcs/parsing/len_map.c \
         srcs/parsing/map.c \
         srcs/parsing/parsing.c \
-        srcs/parsing/texture_color.c \
         srcs/parsing/texture.c
 
 SRCS += srcs/rendering/close.c \

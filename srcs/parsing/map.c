@@ -1,6 +1,7 @@
 #include "cub3d.h"
 
-void print_string_array(char **array) {
+void print_string_array(char **array)
+{
 	if (array == NULL) {
 		printf("NULL\n");
 		return;
@@ -12,7 +13,8 @@ void print_string_array(char **array) {
 	}
 }
 
-void afficherAvecEspaces(const char *chaine) {
+void show_with_spaces(const char *chaine)
+{
 	printf("La chaîne de destination est : ");
 	for (int i = 0; chaine[i] != '\0'; i++) {
 		if (chaine[i] == '\t') {
@@ -123,7 +125,8 @@ void	check_start_end(char *string)
 	}
 }
 
-void complet_string_with_space(char **string, int len) {
+void complet_string_with_space(char **string, int len) 
+{
 	int max_len = 0;
 	int i = 0;
 
@@ -154,10 +157,6 @@ void complet_string_with_space(char **string, int len) {
 		i++;
 	}
 }
-
-
-
-
 
 int on_map(char car)
 {
@@ -270,7 +269,7 @@ void check_map(char *fname, t_data *data)
 	while(i < data->map.y_map)
 	{
 		printf("check_map string send to check start end:%s\n", data->map.map2d[i]);
-		afficherAvecEspaces(data->map.map2d[i]);
+		show_with_spaces(data->map.map2d[i]);
 		check_start_end(data->map.map2d[i]);
 		i++;
 	}
@@ -293,7 +292,7 @@ void check_map(char *fname, t_data *data)
 	i = 0;
 	while(data->map.map2d[i])
 	{
-		afficherAvecEspaces(data->map.map2d[i]);
+		show_with_spaces(data->map.map2d[i]);
 		i++;
 	}
 	printf("map_x:%d\n", data->map.x_map);

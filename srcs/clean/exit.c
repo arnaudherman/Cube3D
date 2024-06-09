@@ -21,8 +21,8 @@ void	clear_window(t_mlx *mlx)
 
 void	clear_image(t_image *image, t_mlx *mlx)
 {
-	if (image->relative_path)
-		free(image->relative_path);
+	if (image->road)
+		free(image->road);
 	if (image->img)
 		mlx_destroy_image(mlx->mlx_ptr, image->img);
 	free(image);

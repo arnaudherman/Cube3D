@@ -17,7 +17,7 @@ t_image	*allocate_image()
 	image->line_length = 0;
 	image->endian = 0;
     image->data = NULL;
-	image->relative_path = NULL;
+	image->road = NULL;
 	return image;
 }
 
@@ -37,7 +37,7 @@ int init_map2d(t_image *map2d, t_mlx *mlx)
         mlx_destroy_image(mlx->mlx_ptr, map2d->img);
         return 1;
     }
-    map2d->relative_path = NULL;
+    map2d->road = NULL;
     return 0;
 }
 
@@ -57,6 +57,6 @@ int init_world(t_image *world, t_mlx *mlx)
         mlx_destroy_image(mlx->mlx_ptr, world->img);
         return 1;
     }
-    world->relative_path = NULL;
+    world->road = NULL;
     return 0;
 }
