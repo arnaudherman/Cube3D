@@ -1,4 +1,4 @@
-#include "cub3d-bis.h"
+#include "cub3d.h"
 
 // // Allocation d'une structure t_map
 // t_map *allocate_map() {
@@ -75,6 +75,7 @@ int fill_map(t_map *map)
 int init_map(t_map *map)
 {
 	int i;
+    map->f_spawn = 0;
     map->w_map = MAP_WIDTH;
     map->h_map = MAP_HEIGHT;
 

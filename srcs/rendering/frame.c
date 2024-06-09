@@ -1,4 +1,4 @@
-#include "cub3d-bis.h"
+#include "cub3d.h"
 
 // Use mlx_put_image_to_window() with a recycled image that you have cleared
 // to display the image on the window instead of mlx_clear_window()

@@ -1,4 +1,4 @@
-#include "cub3d-bis.h"
+#include "cub3d.h"
 
 	// int rows = sizeof(data->map.map2d)/sizeof(data->map.map2d[0]);
 	// int columns = sizeof(data->map.map2d[0])/sizeof(data->map.map2d[0][0]);

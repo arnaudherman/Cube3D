@@ -1,4 +1,4 @@
-// #include "cub3d-bis.h"
+#include "cub3d.h"
 
 // char minimap_data[MAP_HEIGHT][MAP_WIDTH] = {
 //     {'1', '1', '1', '1', '1', '1', '1', '1', '1', '1'},

@@ -1,4 +1,4 @@
-#include "../include/cub3d-bis.h"
+#include "cub3d.h"
 
 float degrees_to_radians(float angle)
 {

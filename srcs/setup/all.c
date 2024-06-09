@@ -1,4 +1,4 @@
-#include "cub3d-bis.h"
+#include "cub3d.h"
 
 int malloc_all(t_data *data) {
 	if (data == NULL) {
@@ -9,14 +9,16 @@ int malloc_all(t_data *data) {
 	data->world = allocate_image();
     data->player = allocate_player();
 	data->keys = allocate_keys();
-    // data->ray = allocate_ray();
-    // data->texture = init_textures(&data->mlx); // already in main bro
+    data->image = allocate_image();
+	data->NO = allocate_image();
+	data->SO = allocate_image();
+	data->WE = allocate_image();
+	data->EA = allocate_image();
     data->color = allocate_color();
 
     if (data->map2d == NULL || data->player == NULL ||
-        data->ray == NULL || data->texture == NULL || 
-		data->color == NULL || data->keys == NULL ||
-		data->world == NULL) {
+        data->ray == NULL || data->color == NULL || 
+		data->keys == NULL ||data->world == NULL) {
 		perror("Malloc of one ore more structures failed in malloc_all\n");
 		free_if_malloc_failed(data);
         return -1;

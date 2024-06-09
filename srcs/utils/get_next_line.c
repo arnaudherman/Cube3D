@@ -1,5 +1,4 @@
-#include "../../include/cub3d.h"
-#include "../../include/cub3d-bis.h"
+#include "cub3d.h"
 
 char	*read_the_line(int fd, char *left_line)
 {

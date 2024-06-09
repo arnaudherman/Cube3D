@@ -1,4 +1,4 @@
-#include "cub3d-bis.h"
+#include "cub3d.h"
 
 // void rotate_left(t_data *data) {
 //     data->player->angle -= 5.0;

@@ -1,4 +1,4 @@
-#include "cub3d-bis.h"
+#include "cub3d.h"
 
 int draw_player(t_image *image, t_player *player) 
 {

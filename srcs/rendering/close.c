@@ -1,4 +1,4 @@
-// #include "../include/cub3d-bis.h"
+#include "cub3d.h"
 
 // int	close(int keycode, t_data *data)
 // {

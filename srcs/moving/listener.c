@@ -1,4 +1,4 @@
-#include "cub3d-bis.h"
+#include "cub3d.h"
 
 // Handle key press events && exit game
 void	loop(t_data *data)

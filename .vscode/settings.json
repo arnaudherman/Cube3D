@@ -17,6 +17,7 @@
 		"vector": "c",
 		"__node_handle": "c",
 		"complex": "c",
-		"stdlib.h": "c"
+		"stdlib.h": "c",
+		"libft.h": "c"
 	}
 }

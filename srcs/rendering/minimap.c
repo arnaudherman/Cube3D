@@ -1,4 +1,4 @@
-#include "cub3d-bis.h"
+#include "cub3d.h"
 
 // void draw_minimap_bg(t_image *image, int color) 
 // {

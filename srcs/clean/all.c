@@ -1,4 +1,4 @@
-#include "cub3d-bis.h"
+#include "cub3d.h"
 
 // Main function to clean used ressources
 // int clean_all(t_data *data)

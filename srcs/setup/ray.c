@@ -1,4 +1,4 @@
-#include "cub3d-bis.h"
+#include "cub3d.h"
 
 void	calculate_deltas(t_ray *ray)
 {

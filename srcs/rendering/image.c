@@ -1,5 +1,4 @@
-#include "cub3d-bis.h"
-
+#include "cub3d.h"
 
 // mlx_xpm_to_image
 // void	*mlx_xpm_to_image(void *mlx_ptr, char **xpm_data, int *width, int *height);

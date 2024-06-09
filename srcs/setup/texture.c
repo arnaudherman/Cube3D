@@ -1,4 +1,4 @@
-#include "cub3d-bis.h"
+#include "cub3d.h"
 
 // Use mlx function for xpm format and no leak
 // void	*mlx_xpm_to_image(void *mlx_ptr, char **xpm_data, int *width, int *height);

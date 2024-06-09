@@ -1,4 +1,4 @@
-#include "cub3d-bis.h"
+#include "cub3d.h"
 
 t_image	*allocate_image()
 {
@@ -16,6 +16,7 @@ t_image	*allocate_image()
 	image->bits_per_pixel = 0;
 	image->line_length = 0;
 	image->endian = 0;
+    image->data = NULL;
 	image->relative_path = NULL;
 	return image;
 }

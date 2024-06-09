@@ -1,4 +1,4 @@
-#include "cub3d-bis.h"
+#include "cub3d.h"
 
 // en fonction de son angle
 // void update_player_pos(t_player *player, double move_distance) {

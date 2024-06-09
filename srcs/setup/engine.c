@@ -1,4 +1,4 @@
-#include "cub3d-bis.h"
+#include "cub3d.h"
 
 int	init_mlx_engine(t_mlx *mlx)
 {

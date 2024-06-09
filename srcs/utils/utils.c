@@ -1,4 +1,4 @@
-#include "../../include/cub3d.h"
+#include "cub3d.h"
 
 int	ft_strcmp(char *s1, char *s2)
 {

@@ -1,4 +1,4 @@
-#include "cub3d-bis.h"
+#include "cub3d.h"
 
 void draw_line(t_image *img, int x_start, int y_start, int x_end, int y_end, int color)
 {
@@ -100,27 +100,28 @@ void get_perp_and_height(t_ray *ray, t_player *player, t_mlx *mlx)
         ray->draw_end = mlx->win_height - 1;
 }
 
-void draw_col(t_data *data, t_mlx *mlx, t_ray *ray)
-{
-    int y;
-    int color;
+// WORKING DO NOT TOUCH
+// void draw_col(t_data *data, t_mlx *mlx, t_ray *ray)
+// {
+//     int y;
+//     int color;
 
-    y = ray->draw_start;
-    while (y < ray->draw_end)
-    {
-        if (ray->side == 0)
-            color = 0x420f2a;
-        else if (ray->side == 1)
-            color = 0x79563D;
-        else if (ray->side == 2)
-            color = 0x906c7b;
-        else if (ray->side == 3)
-            color = 0xc1ac91;
+//     y = ray->draw_start;
+//     while (y < ray->draw_end)
+//     {
+//         if (ray->side == 0)
+//             color = 0x420f2a;
+//         else if (ray->side == 1)
+//             color = 0x79563D;
+//         else if (ray->side == 2)
+//             color = 0x906c7b;
+//         else if (ray->side == 3)
+//             color = 0xc1ac91;
 
-        my_mlx_pixel_put(data->world, ray->x, y, color);
-        y++;
-    }
-}
+//         my_mlx_pixel_put(data->world, ray->x, y, color);
+//         y++;
+//     }
+// }
 
 void raycasting(t_data *data, t_player *player, t_mlx *mlx)
 {

@@ -1,4 +1,4 @@
-#include "cub3d-bis.h"
+#include "cub3d.h"
 
 // TO DO : handle dans mon .cub
 // F 220,100,0 for floor
@@ -61,9 +61,9 @@ void		pixel_put(t_image *image, int x, int y, int color)
 	r = src[0];
 	g = src[1];
 	b = src[2];
-	image->img[y * image->line_length + x * image->bits_per_pixel / 8] = r;
-	image->img[y * image->line_length + x * image->bits_per_pixel / 8 + 1] = g;
-	image->img[y * image->line_length + x * image->bits_per_pixel / 8 + 2] = b;
+	image->data[y * image->line_length + x * image->bits_per_pixel / 8] = r;
+	image->data[y * image->line_length + x * image->bits_per_pixel / 8 + 1] = g;
+	image->data[y * image->line_length + x * image->bits_per_pixel / 8 + 2] = b;
 }
 
 void		set_color_on_image(t_data *data, t_ray *ray)
@@ -78,7 +78,7 @@ void		set_color_on_image(t_data *data, t_ray *ray)
 		pixel_put(data->image, ray->x, y++, &data->fcolors);
 }
 
-static void	texture_put(t_data *data, t_image *texture, t_ray *ray)
+void	texture_put(t_data *data, t_image *texture, t_ray *ray)
 {
 	int	d;
 
@@ -86,17 +86,17 @@ static void	texture_put(t_data *data, t_image *texture, t_ray *ray)
 		* texture->line_length / 2 + ray->line_height * texture->line_length / 2;
 	ray->y_text = ((d * texture->height) / ray->line_height)
 		/ texture->line_length;
-	data->image->img[ray->y * data->image->line_length
+	data->image->data[ray->y * data->image->line_length
 		+ ray->x * data->image->bits_per_pixel / 8] =
-		texture->img[ray->y_text * texture->line_length
+		texture->data[ray->y_text * texture->line_length
 		+ ray->x_text * (texture->bits_per_pixel / 8)];
-	data->image->img[ray->y * data->image->line_length
+	data->image->data[ray->y * data->image->line_length
 		+ ray->x * data->image->bits_per_pixel / 8 + 1] =
-		texture->img[ray->y_text * texture->line_length
+		texture->data[ray->y_text * texture->line_length
 		+ ray->x_text * (texture->bits_per_pixel / 8) + 1];
-	data->image->img[ray->y * data->image->line_length
+	data->image->data[ray->y * data->image->line_length
 		+ ray->x * data->image->bits_per_pixel / 8 + 2] =
-		texture->img[ray->y_text * texture->line_length
+		texture->data[ray->y_text * texture->line_length
 		+ ray->x_text * (texture->bits_per_pixel / 8) + 2];
 	ray->y++;
 }
