@@ -5,14 +5,14 @@ void	set_wall(t_data *data, t_ray *ray)
 	int		text_x;
 	t_image	*texture;
 
-	texture = data->WE;
+	texture = &data->WE;
 	if (ray->side == 1)
-		texture = data->EA;
+		texture = &data->EA;
 	else if (ray->side == 2)
-		texture = data->NO;
+		texture = &data->NO;
 	else if (ray->side == 3)
-		texture = data->SO;
-		
+		texture = &data->SO;
+
 	text_x = (int)(ray->wall_x * (double)texture->width);
 	if ((ray->side == 0 || ray->side == 1) && ray->dir_x > 0)
 		text_x = texture->width - text_x - 1;

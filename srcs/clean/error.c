@@ -64,3 +64,26 @@ void print_ray_info(t_ray *ray)
     printf("dy: %f\n", ray->dy);
 }
 
+void print_ray_texture_info(t_data *data, t_ray *ray, t_image *texture)
+{
+    // Print the values of ray's coordinates
+    printf("Ray Coordinates: x = %d, y = %d\n", ray->x, ray->y);
+
+    // Print the values of texture coordinates
+    printf("Texture Coordinates: x_text = %d, y_text = %d\n", ray->x_text, ray->y_text); //
+
+    // Print the values of data->image's properties
+    printf("Data Image Line Length: %d\n", data->image->line_length);
+    printf("Data Image Bits Per Pixel: %d\n", data->image->bits_per_pixel);
+
+    // Print the values of texture's properties
+    printf("Texture Line Length: %d\n", texture->line_length);
+    printf("Texture Bits Per Pixel: %d\n", texture->bits_per_pixel);
+
+    // Print the final calculated indices
+    int data_index = ray->y * data->image->line_length + ray->x * data->image->bits_per_pixel / 8;
+    int texture_index = ray->y_text * texture->line_length + ray->x_text * (texture->bits_per_pixel / 8);
+
+    printf("Data Index: %d\n", data_index);
+    printf("Texture Index: %d\n", texture_index); 
+}

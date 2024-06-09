@@ -10,10 +10,6 @@ int malloc_all(t_data *data) {
     data->player = allocate_player();
 	data->keys = allocate_keys();
     data->image = allocate_image();
-	data->NO = allocate_image();
-	data->SO = allocate_image();
-	data->WE = allocate_image();
-	data->EA = allocate_image();
 
     if (data->map2d == NULL || data->player == NULL ||
         data->ray == NULL || data->keys == NULL 
@@ -31,6 +27,10 @@ int init_default_all(t_data *data)
     data->map = (t_map){0};
 	data->fcolors = (t_color_info){0};
 	data->ccolors = (t_color_info){0};
+	data->NO = (t_image){0};
+	data->SO = (t_image){0};
+	data->WE = (t_image){0};
+	data->EA = (t_image){0};
 
 	if (malloc_all(data) != 0) {
         perror("Failed to malloc_all in init_default_all\n");

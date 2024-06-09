@@ -78,6 +78,15 @@ void		set_color_on_image(t_data *data, t_ray *ray)
 		pixel_put(data->image, ray->x, y++, data->f_color);
 }
 
+// First values coming in texture_put()
+// Ray Coordinates: x = 0, y = 460
+// Texture Coordinates: x_text = -1, y_text = 0
+// Data Image Line Length: 0
+// Data Image Bits Per Pixel: 0
+// Texture Line Length: 0
+// Texture Bits Per Pixel: 0
+// Data Index: 0
+// Texture Index: 0
 void	texture_put(t_data *data, t_image *texture, t_ray *ray)
 {
 	int	d;
@@ -85,22 +94,30 @@ void	texture_put(t_data *data, t_image *texture, t_ray *ray)
 		* texture->line_length / 2 + ray->line_height * texture->line_length / 2;
 	ray->y_text = ((d * texture->height) / ray->line_height)
 		/ texture->line_length;
+
+	print_ray_texture_info(data, ray, texture);
 	write(1, "texd\n", 5); // DEBUG
+
 	data->image->data[ray->y * data->image->line_length
 		+ ray->x * data->image->bits_per_pixel / 8] =
 		texture->data[ray->y_text * texture->line_length
 		+ ray->x_text * (texture->bits_per_pixel / 8)];
+
 	write(1, "tast\n", 5);// DEBUG
+
 	data->image->data[ray->y * data->image->line_length
 		+ ray->x * data->image->bits_per_pixel / 8 + 1] =
 		texture->data[ray->y_text * texture->line_length
 		+ ray->x_text * (texture->bits_per_pixel / 8) + 1];
+
 	write(1, "eest\n", 5);// DEBUG
+
 	data->image->data[ray->y * data->image->line_length
 		+ ray->x * data->image->bits_per_pixel / 8 + 2] =
 		texture->data[ray->y_text * texture->line_length
 		+ ray->x_text * (texture->bits_per_pixel / 8) + 2];
 	write(1, "efft\n", 5);// DEBUG
+
 	ray->y++;
 }
 

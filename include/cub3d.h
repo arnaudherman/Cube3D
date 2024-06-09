@@ -247,10 +247,10 @@ typedef struct s_data
 	t_image 	    *image;
 	t_image  	    *map2d;
 	t_image 	    *world;
-	t_image 	    *NO;
-	t_image 	    *SO;
-	t_image 	    *WE;
-	t_image 	    *EA;
+	t_image 	    NO;
+	t_image 	    SO;
+	t_image 	    WE;
+	t_image 	    EA;
 	t_image 	    *floor;
 	t_image 	    *ceiling;
 
@@ -272,6 +272,7 @@ void		ft_putendl_fd(char *s, int fd);
 void		ft_error(char *error);
 int			err(char *str);
 void 		print_ray_info(t_ray *ray);
+void 		print_ray_texture_info(t_data *data, t_ray *ray, t_image *texture);
 
 // Located in *exit.c*
 int			exit_game(t_data *data);
@@ -326,6 +327,9 @@ int			init_player(t_player *player);
 // Located in *ray.c*
 void 		init_ray(t_ray *ray, t_player *player);
 t_ray 		*allocate_ray(void);
+// Located in *texture.c*
+void 		init_texture_img(t_image *texture_img, t_mlx *mlx, char *path);
+void 		init_textures(t_data *data, t_mlx *mlx);
 
 /* -------------------- MOVING -------------------- */
 // Located in *direction.c*
@@ -395,8 +399,8 @@ void		ft_check_file(char *fname, char *name);
 int			parsing(char *argv[], t_data *data);
 
 // Located in *texture.c*
-void		save_texture_data(t_image *texture, char *line);
-void	    found_textures_data(char *fname, t_data *data);
+void		save_texture_data(t_image *texture, char *line, t_mlx *mlx);
+void	    found_textures_data(char *fname, t_data *data, t_mlx *mlx);
 
 /* -------------------- RENDERING -------------------- */
 
