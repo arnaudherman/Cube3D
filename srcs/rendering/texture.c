@@ -124,6 +124,9 @@ void	texture_put(t_data *data, t_image *texture, t_ray *ray)
 void		set_texture_on_image(t_data *data, t_image *texture, t_ray *ray)
 {
 	ray->y = ray->draw_start;
+	print_ray_info(ray);
+	printf("separationssssssssssss\n");
+	print_ray_texture_info(data, ray, texture);
 	while (ray->y <= ray->draw_end)
 		texture_put(data, texture, ray);
 }

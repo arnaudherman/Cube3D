@@ -21,10 +21,10 @@ void init_texture_img(t_image *texture_img, t_mlx *mlx, char *path)
 
 void init_textures(t_data *data, t_mlx *mlx) 
 {
-	init_texture_img(&data->NO, mlx->mlx_ptr, "./assets/north.xpm");
-	init_texture_img(&data->SO, mlx->mlx_ptr, "./assets/south.xpm");
-	init_texture_img(&data->WE, mlx->mlx_ptr, "./assets/west.xpm");
-	init_texture_img(&data->EA, mlx->mlx_ptr, "./assets/east.xpm");
+	init_texture_img(&data->NO, mlx, "./assets/north.xpm");
+	init_texture_img(&data->SO, mlx, "./assets/south.xpm");
+	init_texture_img(&data->WE, mlx, "./assets/west.xpm");
+	init_texture_img(&data->EA, mlx, "./assets/east.xpm");
 	// init_texture(&texture->floor, mlx, "./assets/floor.xpm", "./assets/north.xpm");
     // init_texture(&texture->ceiling, mlx, "./assets/ceiling.xpm", "./assets/north.xpm");
 

@@ -325,8 +325,10 @@ t_player	*allocate_player(void);
 static void	default_player(t_player *player);
 int			init_player(t_player *player);
 // Located in *ray.c*
+void		calculate_deltas(t_ray *ray);
+void		calculate_steps_sides(t_ray *ray, t_player *player);
 void 		init_ray(t_ray *ray, t_player *player);
-t_ray 		*allocate_ray(void);
+void 		init_default_ray(t_ray *ray);
 // Located in *texture.c*
 void 		init_texture_img(t_image *texture_img, t_mlx *mlx, char *path);
 void 		init_textures(t_data *data, t_mlx *mlx);

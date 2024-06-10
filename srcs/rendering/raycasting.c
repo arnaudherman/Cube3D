@@ -112,6 +112,8 @@ void    raycasting(t_data *data, t_player *player, t_mlx *mlx)
 
     while (ray.x < mlx->win_width)
     {
+        init_default_ray(&ray);
+        ray.x = ray.x; // Réinitialise la valeur de ray.x après init_default_ray
         init_ray(&ray, player);
         dda(data, &data->map, &ray);
         get_perp_and_height(&ray, player, mlx);

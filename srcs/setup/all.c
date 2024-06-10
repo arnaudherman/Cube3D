@@ -4,16 +4,16 @@ int malloc_all(t_data *data) {
 	if (data == NULL) {
         perror("t_data pointer is NULL in malloc_all\n");
         return -1;
-    }    
+    }
+	data->image = allocate_image();
 	data->map2d = allocate_image();
 	data->world = allocate_image();
     data->player = allocate_player();
 	data->keys = allocate_keys();
-    data->image = allocate_image();
 
     if (data->map2d == NULL || data->player == NULL ||
-        data->ray == NULL || data->keys == NULL 
-		|| data->world == NULL) {
+        data->ray == NULL || data->keys == NULL ||
+		data->image == NULL || data->world == NULL) {
 		perror("Malloc of one ore more structures failed in malloc_all\n");
 		free_if_malloc_failed(data);
         return -1;

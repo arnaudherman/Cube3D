@@ -13,10 +13,11 @@ int	main(int ac, char **av)
 {
 	t_data	*data;
 
-	if (ac != 2) {
-        perror("There must be precisely 2 arguments\n");
-        return EXIT_FAILURE;
-    }
+	// TO DO : activate later aligator
+	// if (ac != 2) {
+    //     perror("There must be precisely 2 arguments\n");
+    //     return EXIT_FAILURE;
+    // }
 
 	data = malloc(sizeof(t_data));
     if (!data) {
@@ -34,13 +35,18 @@ int	main(int ac, char **av)
         return -1;
     }
 
-	if (!parsing(av[1], data))
-	{
-		perror("Parsing failed sorry I'm out!\n");
-		return -1;
-	}
+	// TO DO : activate later aligator
+	// if (!parsing(av[1], data))
+	// {
+	// 	perror("Parsing failed sorry I'm out!\n");
+	// 	return -1;
+	// }
+
+	// TO DO : delete later cause gonna be in parsing
+	init_textures(data, &data->mlx);
 
 	loop(data);
+	
 	free_all(data);
 
 	return (0);

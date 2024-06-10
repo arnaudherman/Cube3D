@@ -74,3 +74,30 @@ void init_ray(t_ray *ray, t_player *player)
 //     ray->hit = 0;
 //     return 0;
 // }
+
+void init_default_ray(t_ray *ray) 
+{
+    ray->x = 0;
+    ray->y = 0;
+    ray->x_map = 0;
+    ray->y_map = 0;
+    ray->x_step = 0;
+    ray->y_step = 0;
+    ray->hit = 0;
+    ray->side = 0;
+    ray->line_height = 0;
+    ray->draw_start = 0;
+    ray->draw_end = 0;
+    ray->x_text = 0;
+    ray->y_text = 0;
+    ray->wall_x = 0.0;
+    ray->z_index = NULL;
+    ray->camera_x = 0.0;
+    ray->wall_dist = 0.0;
+    ray->dir_x = 0.0;
+    ray->dir_y = 0.0;
+    ray->sx = 0.0;
+    ray->sy = 0.0;
+    ray->dx = 0.0;
+    ray->dy = 0.0;
+}
