@@ -92,34 +92,40 @@ void		set_color_on_image(t_data *data, t_ray *ray)
 void	texture_put(t_data *data, t_image *texture, t_ray *ray)
 {
 	int	d;
+
+	// DEBUG CHECK CONDITION
+	if (data->image->line_length == 0 || data->image->bits_per_pixel == 0) {
+		write(2, "Erreur: In texture_put() function, data->image->line_length or bpp = 0.\n", 45);
+		exit(1);
+	}
+
 	d = ray->y * texture->line_length - data->mlx.win_height
 		* texture->line_length / 2 + ray->line_height * texture->line_length / 2;
 	ray->y_text = ((d * texture->height) / ray->line_height)
 		/ texture->line_length;
 
-	print_ray_texture_info(data, ray, texture);
-	write(1, "texd\n", 5); // DEBUG
+	// TO DO : DEBUG HERE data->image->addr
+	// WRONG VALUES, images bad init???
+	printf("          RAY TEXTURE INFO chorizooooooooooooooooooooooooo\n");
+	// TO DO : DEBUG HERE values below = 0
+	// printf("Texture Line Length: %d\n", texture->line_length);
+    // printf("Texture Bits Per Pixel: %d\n", texture->bits_per_pixel);
+	print_ray_texture_info(data, ray, texture); // DEBUG RAY TEXTURE
 
-	// TO DO : DEBUG HERE data->image->addr is 0x62900007d200 but not data needed
 	data->image->addr[ray->y * data->image->line_length
 		+ ray->x * data->image->bits_per_pixel / 8] =
 		texture->addr[ray->y_text * texture->line_length
 		+ ray->x_text * (texture->bits_per_pixel / 8)];
-
-	write(1, "tast\n", 5);// DEBUG
 
 	data->image->addr[ray->y * data->image->line_length
 		+ ray->x * data->image->bits_per_pixel / 8 + 1] =
 		texture->addr[ray->y_text * texture->line_length
 		+ ray->x_text * (texture->bits_per_pixel / 8) + 1];
 
-	write(1, "eest\n", 5);// DEBUG
-
 	data->image->addr[ray->y * data->image->line_length
 		+ ray->x * data->image->bits_per_pixel / 8 + 2] =
 		texture->addr[ray->y_text * texture->line_length
 		+ ray->x_text * (texture->bits_per_pixel / 8) + 2];
-	write(1, "efft\n", 5);// DEBUG
 
 	ray->y++;
 }
@@ -129,8 +135,7 @@ void		set_texture_on_image(t_data *data, t_image *texture, t_ray *ray)
 	ray->y = ray->draw_start;
 	printf("          RAY INFO : separationaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n");
 	print_ray_info(ray); // DEBUG RAY STRUCT
-	printf("          RAY TEXTURE INFO separationssssssssssssssssssssssssssssssssssssssssssss\n");
-	print_ray_texture_info(data, ray, texture); // DEBUG RAY TEXTURE
+
 	printf("          TEXTURE IMAGE INFO separationxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
 	print_image_info(texture); // DEBUG IMAGE STRUCT
 

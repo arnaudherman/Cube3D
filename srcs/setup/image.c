@@ -60,3 +60,18 @@ int init_world(t_image *world, t_mlx *mlx)
     world->road = NULL;
     return 0;
 }
+
+int	init_image(t_data *data, t_image *image, void *mlx_ptr)
+{
+	image->img = mlx_new_image(mlx_ptr, data->mlx.win_width, data->mlx.win_height);
+	if (!image->img) {
+		write(2, "Erreur: Impossible de créer l'image.\n", 37);
+		return -1;
+	}
+	image->addr = mlx_get_data_addr(image->img, &image->bits_per_pixel, &image->line_length, &image->endian);
+	if (!image->addr) {
+		write(2, "Erreur: Impossible d'obtenir les données de l'image.\n", 55);
+		return -1;
+	}
+	return 0;
+}

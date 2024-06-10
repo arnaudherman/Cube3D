@@ -307,6 +307,7 @@ int			check_allocations(t_data *data);
 int 		malloc_struct(void **ptr, size_t size);
 int			malloc_all(t_data *data);
 int			init_default_all(t_data *data);
+int			init_all_images(t_data *data);
 int			init_custom_all(t_data *data);
 
 // Located in *engine.c*
@@ -315,6 +316,7 @@ int	init_mlx_engine(t_mlx *mlx);
 t_image		*allocate_image();
 int 		init_map2d(t_image *map2d, t_mlx *mlx);
 int 		init_world(t_image *world, t_mlx *mlx);
+int			init_image(t_data *data, t_image *image, void *mlx_ptr);
 // Located in *keys.c*
 t_keys		*allocate_keys(void);
 // Located in *map.c*
@@ -333,8 +335,8 @@ void		calculate_steps_sides(t_ray *ray, t_player *player);
 void 		init_ray(t_ray *ray, t_player *player);
 void 		init_default_ray(t_ray *ray);
 // Located in *texture.c*
-void 		init_texture_img(t_image *texture_img, t_mlx *mlx, char *path);
-void 		init_textures(t_data *data, t_mlx *mlx);
+void 		init_texture_img(t_image *texture_img, void *mlx_ptr, char *path);
+void 		init_textures(t_data *data, void *mlx_ptr);
 void		set_texture_image_road(t_image *texture_img, t_ray *ray);
 
 /* -------------------- MOVING -------------------- */

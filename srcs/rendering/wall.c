@@ -5,13 +5,28 @@ void	set_wall(t_data *data, t_ray *ray)
 	int		text_x;
 	t_image	*texture_img;
 
+	// TO DO : DEBUG ALL IMAGES VALUES LOOKING GOOD
 	texture_img = &data->WE;
+	// write(1, "WE TEST :\n", 11); // DEBUG
+	// print_image_info(texture_img); // DEBUG
 	if (ray->side == 1)
+	{
 		texture_img = &data->EA;
+		// write(1, "EA TEST :\n", 11); // DEBUG
+		// print_image_info(texture_img); // DEBUG
+	}
 	else if (ray->side == 2)
+	{
 		texture_img = &data->NO;
+		// write(1, "NO TEST : \n", 11); // DEBUG
+		// print_image_info(texture_img); // DEBUG
+	}
 	else if (ray->side == 3)
+	{
 		texture_img = &data->SO;
+		// write(1, "SO TEST : \n", 11); // DEBUG
+		// print_image_info(texture_img); // DEBUG
+	}
 
 	text_x = (int)(ray->wall_x * (double)texture_img->width);
 	if ((ray->side == 0 || ray->side == 1) && ray->dir_x > 0)

@@ -43,7 +43,7 @@ int	main(int ac, char **av)
 	// }
 
 	// TO DO : delete later cause gonna be in parsing
-	init_textures(data, &data->mlx);
+	init_textures(data, &data->mlx.mlx_ptr);
 
 	loop(data);
 	

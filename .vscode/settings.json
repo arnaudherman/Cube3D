@@ -18,6 +18,7 @@
 		"__node_handle": "c",
 		"complex": "c",
 		"stdlib.h": "c",
-		"libft.h": "c"
+		"libft.h": "c",
+		"iterator": "c"
 	}
 }
