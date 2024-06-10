@@ -5,7 +5,8 @@ SRCS += srcs/main.c
 SRCS += srcs/clean/all.c \
 		srcs/clean/error.c \
 		srcs/clean/exit.c \
-		srcs/clean/map.c
+		srcs/clean/map.c \
+		srcs/clean/print_struct_values.c
 
 SRCS += srcs/setup/all.c \
 		srcs/setup/color.c \
@@ -16,7 +17,7 @@ SRCS += srcs/setup/all.c \
 		srcs/setup/minimap.c \
 		srcs/setup/player.c \
 		srcs/setup/ray.c \
-		srcs/setup/texture.c
+		srcs/setup/texture.c 
 
 SRCS += srcs/moving/direction.c \
         srcs/moving/keys.c \

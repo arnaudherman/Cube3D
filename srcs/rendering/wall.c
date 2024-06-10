@@ -3,26 +3,29 @@
 void	set_wall(t_data *data, t_ray *ray)
 {
 	int		text_x;
-	t_image	*texture;
+	t_image	*texture_img;
 
-	texture = &data->WE;
+	texture_img = &data->WE;
 	if (ray->side == 1)
-		texture = &data->EA;
+		texture_img = &data->EA;
 	else if (ray->side == 2)
-		texture = &data->NO;
+		texture_img = &data->NO;
 	else if (ray->side == 3)
-		texture = &data->SO;
+		texture_img = &data->SO;
 
-	text_x = (int)(ray->wall_x * (double)texture->width);
+	text_x = (int)(ray->wall_x * (double)texture_img->width);
 	if ((ray->side == 0 || ray->side == 1) && ray->dir_x > 0)
-		text_x = texture->width - text_x - 1;
+		text_x = texture_img->width - text_x - 1;
 	if ((ray->side == 2 || ray->side == 3) && ray->dir_y < 0)
-		text_x = texture->width - text_x - 1;
+		text_x = texture_img->width - text_x - 1;
 	ray->x_text = text_x;
-	set_texture_on_image(data, texture, ray);
+	set_texture_image_road(texture_img, ray);
+	print_image_info(texture_img); // DEBUG
+	// exit(1); // DEBUG
+	set_texture_on_image(data, texture_img, ray);
 }
 
-void		draw_col(t_data *data, t_mlx *mlx, t_ray *ray)
+void	draw_col(t_data *data, t_mlx *mlx, t_ray *ray)
 {
 	ray->draw_start = -ray->line_height / 2 + mlx->win_height / 2;
 	ray->draw_end = ray->line_height / 2 + mlx->win_height / 2;
@@ -40,6 +43,7 @@ void		draw_col(t_data *data, t_mlx *mlx, t_ray *ray)
 	set_wall(data, ray);
 	set_color_on_image(data, ray);
 }
+
 
 // WORKING DO NOT TOUCH
 // void draw_col(t_data *data, t_mlx *mlx, t_ray *ray)

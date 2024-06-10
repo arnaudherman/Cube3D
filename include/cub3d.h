@@ -136,9 +136,9 @@ typedef struct s_image
 	int			bits_per_pixel;
 	int			line_length;
 	int			endian;
-	void		*img;
+	void		*img; // Here's my pointer
 	char		*addr;
-	char 		*data;
+	// char 		*data;
 	char		*road;
     int		    texture_found;
 } t_image;
@@ -271,8 +271,6 @@ void		ft_putstr_fd(char *s, int fd);
 void		ft_putendl_fd(char *s, int fd);
 void		ft_error(char *error);
 int			err(char *str);
-void 		print_ray_info(t_ray *ray);
-void 		print_ray_texture_info(t_data *data, t_ray *ray, t_image *texture);
 
 // Located in *exit.c*
 int			exit_game(t_data *data);
@@ -283,6 +281,11 @@ void		destroy_data(t_data *data);
 
 // Located in *map.c*
 void 		free_map(t_map *map);
+
+// Located in *print_struct_values.c*
+void 		print_ray_info(t_ray *ray);
+void 		print_ray_texture_info(t_data *data, t_ray *ray, t_image *texture);
+void 		print_image_info(t_image *image);
 
 /* -------------------- DIY LIBFT -------------------- */
 // Located in *get_next_line.c*
@@ -332,6 +335,7 @@ void 		init_default_ray(t_ray *ray);
 // Located in *texture.c*
 void 		init_texture_img(t_image *texture_img, t_mlx *mlx, char *path);
 void 		init_textures(t_data *data, t_mlx *mlx);
+void		set_texture_image_road(t_image *texture_img, t_ray *ray);
 
 /* -------------------- MOVING -------------------- */
 // Located in *direction.c*

@@ -16,7 +16,7 @@ t_image	*allocate_image()
 	image->bits_per_pixel = 0;
 	image->line_length = 0;
 	image->endian = 0;
-    image->data = NULL;
+    // image->data = NULL;
 	image->road = NULL;
 	return image;
 }

@@ -2,7 +2,7 @@
 
 // Use mlx function for xpm format and no leak
 
-void init_texture_img(t_image *texture_img, t_mlx *mlx, char *path) 
+void	init_texture_img(t_image *texture_img, t_mlx *mlx, char *path) 
 {
     texture_img->img = mlx_xpm_file_to_image(mlx->mlx_ptr, path, &texture_img->width, &texture_img->height);
     if (!texture_img->img) {
@@ -19,7 +19,7 @@ void init_texture_img(t_image *texture_img, t_mlx *mlx, char *path)
     }
 }
 
-void init_textures(t_data *data, t_mlx *mlx) 
+void	init_textures(t_data *data, t_mlx *mlx) 
 {
 	init_texture_img(&data->NO, mlx, "./assets/north.xpm");
 	init_texture_img(&data->SO, mlx, "./assets/south.xpm");
@@ -29,4 +29,17 @@ void init_textures(t_data *data, t_mlx *mlx)
     // init_texture(&texture->ceiling, mlx, "./assets/ceiling.xpm", "./assets/north.xpm");
 
     return ;
+}
+
+// TO DO : TEMP FUNC : DELETE WHEN PARSING LINKED
+void	set_texture_image_road(t_image *texture_img, t_ray *ray)
+{
+	if (ray->side == 1)
+		texture_img->road = "./assets/east.xpm";
+	else if (ray->side == 2)
+		texture_img->road = "./assets/north.xpm";
+	else if (ray->side == 3)	
+		texture_img->road = "./assets/south.xpm";
+	else
+		texture_img->road = "./assets/west.xpm";
 }

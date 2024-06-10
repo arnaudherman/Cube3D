@@ -61,9 +61,9 @@ void		pixel_put(t_image *image, int x, int y, int color)
 	r = src[0];
 	g = src[1];
 	b = src[2];
-	image->data[y * image->line_length + x * image->bits_per_pixel / 8] = r;
-	image->data[y * image->line_length + x * image->bits_per_pixel / 8 + 1] = g;
-	image->data[y * image->line_length + x * image->bits_per_pixel / 8 + 2] = b;
+	image->addr[y * image->line_length + x * image->bits_per_pixel / 8] = r;
+	image->addr[y * image->line_length + x * image->bits_per_pixel / 8 + 1] = g;
+	image->addr[y * image->line_length + x * image->bits_per_pixel / 8 + 2] = b;
 }
 
 void		set_color_on_image(t_data *data, t_ray *ray)
@@ -87,6 +87,8 @@ void		set_color_on_image(t_data *data, t_ray *ray)
 // Texture Bits Per Pixel: 0
 // Data Index: 0
 // Texture Index: 0
+
+// Image texture data edit here
 void	texture_put(t_data *data, t_image *texture, t_ray *ray)
 {
 	int	d;
@@ -98,23 +100,24 @@ void	texture_put(t_data *data, t_image *texture, t_ray *ray)
 	print_ray_texture_info(data, ray, texture);
 	write(1, "texd\n", 5); // DEBUG
 
-	data->image->data[ray->y * data->image->line_length
+	// TO DO : DEBUG HERE data->image->addr is 0x62900007d200 but not data needed
+	data->image->addr[ray->y * data->image->line_length
 		+ ray->x * data->image->bits_per_pixel / 8] =
-		texture->data[ray->y_text * texture->line_length
+		texture->addr[ray->y_text * texture->line_length
 		+ ray->x_text * (texture->bits_per_pixel / 8)];
 
 	write(1, "tast\n", 5);// DEBUG
 
-	data->image->data[ray->y * data->image->line_length
+	data->image->addr[ray->y * data->image->line_length
 		+ ray->x * data->image->bits_per_pixel / 8 + 1] =
-		texture->data[ray->y_text * texture->line_length
+		texture->addr[ray->y_text * texture->line_length
 		+ ray->x_text * (texture->bits_per_pixel / 8) + 1];
 
 	write(1, "eest\n", 5);// DEBUG
 
-	data->image->data[ray->y * data->image->line_length
+	data->image->addr[ray->y * data->image->line_length
 		+ ray->x * data->image->bits_per_pixel / 8 + 2] =
-		texture->data[ray->y_text * texture->line_length
+		texture->addr[ray->y_text * texture->line_length
 		+ ray->x_text * (texture->bits_per_pixel / 8) + 2];
 	write(1, "efft\n", 5);// DEBUG
 
@@ -124,9 +127,17 @@ void	texture_put(t_data *data, t_image *texture, t_ray *ray)
 void		set_texture_on_image(t_data *data, t_image *texture, t_ray *ray)
 {
 	ray->y = ray->draw_start;
-	print_ray_info(ray);
-	printf("separationssssssssssss\n");
-	print_ray_texture_info(data, ray, texture);
+	printf("          RAY INFO : separationaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n");
+	print_ray_info(ray); // DEBUG RAY STRUCT
+	printf("          RAY TEXTURE INFO separationssssssssssssssssssssssssssssssssssssssssssss\n");
+	print_ray_texture_info(data, ray, texture); // DEBUG RAY TEXTURE
+	printf("          TEXTURE IMAGE INFO separationxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
+	print_image_info(texture); // DEBUG IMAGE STRUCT
+
+	// Here values sent are :
+	// ray->y = 460
+	// ray->draw_start = 460
+	// ray->draw_end = 620
 	while (ray->y <= ray->draw_end)
 		texture_put(data, texture, ray);
 }
