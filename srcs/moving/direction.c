@@ -4,19 +4,15 @@ static void	set_east_west(t_player *player)
 {
 	if (player->direction == 'E')
 	{
-		player->angle = 0.0f; // East
+		player->angle = 0.0f;
 		player->x_dir = 1;
 		player->y_dir = 0;
-		player->x_plane = 0;
-		player->y_plane = 0.66;
 	}
 	else if (player->direction == 'W')
 	{
-		player->angle = M_PI; // 180 degrés, ou π radians = West
+		player->angle = M_PI;
 		player->x_dir = -1;
 		player->y_dir = 0;
-		player->x_plane = 0;
-		player->y_plane = -0.66;
 	}
 	else
 		return ;
@@ -26,19 +22,15 @@ static void	set_north_south(t_player *player)
 {
 	if (player->direction == 'N')
 	{
-		player->angle = M_PI / 2.0f; // Nord = 90 degrees, or π/2 radians
+		player->angle = M_PI / 2.0f;
 		player->x_dir = 0;
 		player->y_dir = 1;
-		player->x_plane = 0.66;
-		player->y_plane = 0;
 	}
 	else if (player->direction == 'S')
 	{
-		player->angle = 3 * M_PI / 2.0f; // Sout = 270 degrés, ou 3π/2 radians
+		player->angle = 3 * M_PI / 2.0f;
 		player->x_dir = 0;
 		player->y_dir = -1;
-		player->x_plane = -0.66;
-		player->y_plane = 0;
 	}
 	else
 		return ;

@@ -6,13 +6,11 @@ SRCS += srcs/clean/all.c \
 		srcs/clean/error.c \
 		srcs/clean/exit.c \
 		srcs/clean/map.c \
-		srcs/clean/print_struct_values.c
+		srcs/clean/print_values.c
 
 SRCS += srcs/setup/all.c \
 		srcs/setup/engine.c \
 		srcs/setup/image.c \
-		srcs/setup/keys.c \
-		srcs/setup/minimap.c \
 		srcs/setup/player.c \
 		srcs/setup/ray.c \
 		srcs/setup/texture.c 
@@ -30,18 +28,11 @@ SRCS += srcs/parsing/color.c \
         srcs/parsing/parsing.c \
         srcs/parsing/texture.c
 
-SRCS += srcs/rendering/close.c \
-		srcs/rendering/color.c \
-		srcs/rendering/draw.c \
+SRCS += srcs/rendering/draw.c \
 		srcs/rendering/frame.c \
-        srcs/rendering/image.c \
         srcs/rendering/map.c \
-		srcs/rendering/minimap.c \
-		srcs/rendering/player.c \
-        srcs/rendering/world.c \
         srcs/rendering/raycasting.c \
         srcs/rendering/draw.c \
-        srcs/rendering/texture.c \
 		srcs/rendering/wall.c
 
 SRCS += srcs/utils/get_next_line.c \

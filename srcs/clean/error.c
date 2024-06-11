@@ -29,9 +29,9 @@ void	ft_error(char *error)
 	exit(-1);
 }
 
-int err(char *str)
+int	err(char *str)
 {	
 	while (*str)
 		write(2, str++, 1);
-	return 1;
+	return (1);
 }

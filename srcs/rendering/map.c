@@ -1,33 +1,5 @@
 #include "cub3d.h"
 
-void draw_minimap_bg(t_image *map2d, int color) 
-{
-    int x;
-    int y;
-
-    y = 0;
-    while (y < map2d->height) {
-        x = 0;
-        while (x < map2d->width) {
-            my_mlx_pixel_put(map2d, x, y, color);
-            x++;
-        }
-        y++;
-    }
-}
-
-void draw_tile(t_image *map2d, int x, int y) {
-    int i = 0;
-    while (i < map2d->tile_size) {
-        int j = 0;
-        while (j < map2d->tile_size) {
-            my_mlx_pixel_put(map2d, x + i, y + j, 0xb6d7a8);
-            j++;
-        }
-        i++;
-    }
-}
-
 void draw_vertical_lines(t_image *map2d) {
     int x;
 
@@ -50,7 +22,6 @@ void draw_horizontal_lines(t_image *map2d) {
     }
 }
 
-// Définir une fonction pour dessiner une ligne verticale à une position x avec une couleur donnée
 void draw_vertical_line(t_image *map2d, int x, int start_y, int color) {
     int y;
 
@@ -61,7 +32,6 @@ void draw_vertical_line(t_image *map2d, int x, int start_y, int color) {
     }
 }
 
-// Définir une fonction pour dessiner une ligne horizontale à une position y avec une couleur donnée
 void draw_horizontal_line(t_image *map2d, int start_x, int y, int color) {
     int x;
 
@@ -84,13 +54,12 @@ int draw_map(t_image *map2d, t_map *map) {
     y = 0;
     while (map->map2d[y]) {
         x = 0;
-        while (map->map2d[y][x]) {
-            
-            // print_map(map);
+        while (map->map2d[y][x]) 
+		{
             tile = map->map2d[y][x];
-            if (tile == '0' || tile == 'N' || tile == 'S' || tile == 'W' || tile == 'E') {
-                draw_tile(map2d, x * map2d->tile_size, y * map2d->tile_size);
-            }
+            if (tile == '0' || tile == 'N' || tile == 'S' 
+				|| tile == 'W' || tile == 'E')
+                	draw_tile(map2d, x * map2d->tile_size, y * map2d->tile_size);
             x++;
         }
         y++;

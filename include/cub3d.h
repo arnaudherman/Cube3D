@@ -185,8 +185,6 @@ typedef struct s_player
  	double  	y_pos;
 	double		x_dir;
 	double		y_dir;
-	double		x_plane;
-	double		y_plane;
 	double		speed;
 	float		angle; // in radians
 	float 		fov; // in radians
@@ -281,7 +279,7 @@ void		destroy_data(t_data *data);
 // Located in *map.c*
 void 		free_map(t_map *map);
 
-// Located in *print_struct_values.c*
+// Located in *print_values.c*
 void		print_map(t_map *map) ;
 void 		print_ray_info(t_ray *ray);
 void 		print_ray_texture_info(t_data *data, t_ray *ray, t_image *texture);
@@ -317,14 +315,10 @@ t_image		*allocate_image();
 int 		init_map2d(t_image *map2d, t_mlx *mlx, int nb_tiles_x, int nb_tiles_y);
 int 		init_world(t_image *world, t_mlx *mlx);
 int			init_image(t_data *data, t_image *image, t_mlx *mlx);
-// Located in *keys.c*
-t_keys		*allocate_keys(void);
 // Located in *map.c*
 // int			malloc_map2d(t_map *map);
 int			fill_map(t_map *map);
-int 		init_map(t_map *map, int map_max_width, int map_max_height);
-// Located in *minimap.c*
-// t_minimap 	*allocate_minimap(void); 
+int 		init_map(t_map *map, int map_max_width, int map_max_height); 
 // Located in *player.c*
 t_player	*allocate_player(void);
 static void	default_player(t_player *player);
@@ -336,11 +330,12 @@ void 		init_ray(t_ray *ray, t_player *player);
 void 		init_default_ray(t_ray *ray);
 // Located in *texture.c*
 void 		init_texture_img(t_image *texture_img, t_mlx *mlx, char *path);
-void 		init_textures(t_data *data, t_mlx *mlx);
-void		set_texture_image_road(t_image *texture_img, t_ray *ray);
+void		set_texture_on_image(t_data *data, t_image *texture, t_ray *ray);
+int 		get_pixel_color(t_image *img, int x, int y);
 
 /* -------------------- MOVING -------------------- */
 // Located in *direction.c*
+t_keys		*allocate_keys(void);
 static void	set_east_west(t_player *player);
 static void	set_north_south(t_player *player);
 void		set_direction(t_player *player);
@@ -348,9 +343,7 @@ void		set_direction(t_player *player);
 int			key_release(int key, t_data *data);
 int			key_press(int key, t_data *data);
 void		key_move(t_data *data, int tile_size);
-// static void	wrap_mouse_position(t_data *data, int x, int y);
-// static int	mouse_motion(int x, int y, t_data *data);
-// void		listen_input(t_data *data);
+t_keys		*allocate_keys(void);
 // Located in *listener.c*
 void		loop(t_data *data);
 // Located in *move.c*
@@ -414,11 +407,14 @@ void	    found_textures_data(char *fname, t_data *data, t_mlx *mlx);
 
 // Located in *draw.c*
 void		my_mlx_pixel_put(t_image *image, int x, int y, int color);
+void 		draw_minimap_bg(t_image *map2d, int color);
+void 		draw_tile(t_image *map2d, int x, int y);
 void		draw_vertical_lign(t_data *data, int tile_size);
 void 		draw_square(t_data *data, int tile_size, int x, int y, int color);
-void 		draw_rays_on_map(t_data *data, t_player *player, t_mlx *mlx);
 
 // Located in *frame.c"
+int			draw_player(t_image *image, t_player *player);
+void 		draw_world_bg(t_image *world, int color);
 int			render_next_frame(t_data *data);
 
 // Located in *map.c*
@@ -429,9 +425,6 @@ void 		draw_horizontal_lines(t_image *image);
 void 		draw_vertical_line(t_image *image, int x, int start_y, int color);
 void 		draw_horizontal_line(t_image *image, int start_x, int y, int color);
 
-// Located in *player.c*
-int				draw_player(t_image *image, t_player *player);
-
 // Located in *raycasting.c*
 float 		get_ray_length(int map_width, int map_height, int window_width, int window_height);
 void 		fov_rays(int hauteur_image, int largeur_image, float fov_horizontal_deg);
@@ -440,12 +433,6 @@ void 		draw_ray(t_data *data);
 void 		shoot_rays(t_data *data, t_player *player, t_ray *ray, t_mlx *mlx);
 void 		raycasting(t_data *data, t_player *player, t_mlx *mlx);
 
-// Located in *texture.c*
-void		pixel_put(t_image *image, int x, int y, int color);
-void		set_color_on_image(t_data *data, t_ray *ray);
-void		texture_put(t_data *data, t_image *texture, t_ray *ray);
-void		set_texture_on_image(t_data *data, t_image *texture, t_ray *ray);
-
 // Located in *wall.c*
 void		get_wall_dist(t_player *player, t_ray *ray);
 void		get_wall_height(t_ray *ray);
@@ -453,9 +440,6 @@ void 		draw_wall_column(t_image *world, int column, int wall_height);
 void 		draw_wall(t_data *data, t_ray *ray);
 void		set_wall(t_data *data, t_ray *ray);
 void		draw_col(t_data *data, t_mlx *mlx, t_ray *ray);
-
-// Located in *world.c*
-void 		draw_world_bg(t_image *world, int color);
 
 /* -------------------- LIBFT -------------------- */
 
