@@ -68,7 +68,7 @@ int	draw_map(t_image *map2d, t_map *map)
 			tile = map->map2d[y][x];
 			if (tile == '0' || tile == 'N' || tile == 'S'
 				|| tile == 'W' || tile == 'E')
-				raw_tile(map2d, x * map2d->tile_size, y
+				draw_tile(map2d, x * map2d->tile_size, y
 					* map2d->tile_size);
 			x++;
 		}

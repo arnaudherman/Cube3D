@@ -304,7 +304,7 @@ int			go_down(t_data *data, int tile_size);
 int			go_right(t_data *data, int tile_size);
 
 // Located in *position.c*
-bool 		is_wall(t_map *map, double x, double y);
+bool 		is_wall(t_map *map, int x, int y);
 bool 		player_wall_collision(t_map *map, int tile_size, double x, double y);
 
 // Located in *rotation.c*
@@ -354,11 +354,11 @@ void	    found_textures_data(char *fname, t_data *data, t_mlx *mlx);
 
 // Located in *draw.c*
 void		my_mlx_pixel_put(t_image *image, int x, int y, int color);
-void 		draw_minimap_bg(t_image *map2d, int color);
 void 		draw_tile(t_image *map2d, int x, int y);
 void		draw_vertical_lign(t_data *data, int tile_size);
 
 // Located in *frame.c"
+void 		draw_minimap_bg(t_image *map2d, int color);
 void 		draw_world_bg(t_image *world, int color);
 int			draw_player(t_image *image, t_player *player);
 int			render_next_frame(t_data *data);

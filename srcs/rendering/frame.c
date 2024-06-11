@@ -1,5 +1,23 @@
 #include "cub3d.h"
 
+void	draw_minimap_bg(t_image *map2d, int color)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (y < map2d->height)
+	{
+		x = 0;
+		while (x < map2d->width)
+		{	
+			my_mlx_pixel_put(map2d, x, y, color);
+			x++;
+		}
+		y++;
+	}
+}
+
 void	draw_world_bg(t_image *world, int color)
 {
 	int	x;
@@ -73,6 +91,7 @@ int	render_next_frame(t_data *data)
 	memset(data->world->addr, 0, WINDOW_WIDTH * WINDOW_HEIGHT
 		* (data->world->bits_per_pixel / 8));
 	draw_map(data->map2d, &data->map);
+	printf("bien vu\n"); // DEBUG
 	key_move(data, data->map2d->tile_size);
 	draw_player(data->map2d, data->player);
 	draw_world_bg(data->world, 0x0057B8);

@@ -9,24 +9,6 @@ void	my_mlx_pixel_put(t_image *image, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-void	draw_minimap_bg(t_image *map2d, int color)
-{
-	int	x;
-	int	y;
-
-	y = 0;
-	while (y < map2d->height)
-	{
-		x = 0;
-		while (x < map2d->width)
-		{
-			my_mlx_pixel_put(map2d, x, y, color);
-			x++;
-		}
-		y++;
-	}
-}
-
 void	draw_tile(t_image *map2d, int x, int y)
 {
 	int	i;
