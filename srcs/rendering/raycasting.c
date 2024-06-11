@@ -14,26 +14,27 @@ void	dda(t_data *data, t_map *map, t_ray *ray)
 			if (ray->x_step == -1)
 				ray->side = 0;
 			else
-				ray->side = 1; 
+				ray->side = 1;
 		}
 		else
 		{
-            ray->sy += ray->dy;
-            ray->y_map += ray->y_step;
-            if (ray->y_step == -1)
-                ray->side = 2;
-            else
-                ray->side = 3;    
+			ray->sy += ray->dy;
+			ray->y_map += ray->y_step;
+			if (ray->y_step == -1)
+				ray->side = 2;
+			else
+				ray->side = 3;
 		}
-		if (ray->x_map >= 0 && ray->x_map < map->x_map * data->map2d->tile_size &&
-            ray->y_map >= 0 && ray->y_map < map->y_map * data->map2d->tile_size)
+		if (ray->x_map >= 0 && ray->x_map < map->x_map * data->map2d->tile_size
+			&& ray->y_map >= 0 && ray->y_map < map->y_map
+			* data->map2d->tile_size)
 		{
-				map_x = ray->x_map / data->map2d->tile_size;
-				map_y = ray->y_map / data->map2d->tile_size;
-				if (map->map2d[map_y][map_x] == '1')
-					ray->hit = 1;
-				else 
-					my_mlx_pixel_put(data->map2d, ray->x_map,
+			map_x = ray->x_map / data->map2d->tile_size;
+			map_y = ray->y_map / data->map2d->tile_size;
+			if (map->map2d[map_y][map_x] == '1')
+				ray->hit = 1;
+			else
+				my_mlx_pixel_put(data->map2d, ray->x_map,
 					ray->y_map, 0xFF0000);
 		}
 		else
