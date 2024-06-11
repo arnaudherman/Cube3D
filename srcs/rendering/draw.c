@@ -1,29 +1,28 @@
-#include "cub3d-bis.h"
+#include "cub3d.h"
 
-void draw_tile(t_image *map2d, int x, int y) {
-    int i = 0;
-    while (i < TILE_SIZE) {
-        int j = 0;
-        while (j < TILE_SIZE) {
-            my_mlx_pixel_put(map2d, x + i, y + j, 0xb6d7a8);
-            j++;
-        }
-        i++;
+
+void my_mlx_pixel_put(t_image *image, int x, int y, int color) 
+{
+    char *dst;
+    dst = image->addr + (y * image->line_length + x * (image->bits_per_pixel / 8));
+    *(unsigned int*)dst = color;
+}
+
+
+void	draw_vertical_lign(t_data *data, int tile_size)
+{
+    while (data->map.x_map <= data->map.x_map * tile_size) {
+        my_mlx_pixel_put(data, data->map.x_map, 0, 0xFFFFFF); // Ligne en haut
+        my_mlx_pixel_put(data, data->map.x_map, data->map.y_map * tile_size, 0xFFFFFF); // Ligne en bas
+        data->map.x_map += tile_size;
     }
 }
 
-// Similar
-void draw_square(t_data *data, int x, int y, int color) {
-	int i;
-	int j;
-
-	i = 0;
-    while (i < TILE_SIZE) {
-		j = 0; 
-        while (j < TILE_SIZE) {
+void draw_square(t_data *data, int tile_size, int x, int y, int color)
+{
+    for (int i = 0; i < tile_size; i++) {
+        for (int j = 0; j < tile_size; j++) {
             my_mlx_pixel_put(data, x + i, y + j, color);
-			j++;
         }
-		i++;
     }
 }

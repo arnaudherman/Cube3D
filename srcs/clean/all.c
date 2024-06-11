@@ -1,4 +1,20 @@
-#include "cub3d-bis.h"
+#include "cub3d.h"
+
+void free_tokens(char **tokens)
+{
+    int i;
+
+    if (tokens == NULL)
+        return;
+
+    i = 0;
+    while (tokens[i] != NULL)
+    {
+        free(tokens[i]);
+        i++;
+    }
+    free(tokens);
+}
 
 // Main function to clean used ressources
 // int clean_all(t_data *data)
@@ -42,7 +58,6 @@ void	free_if_malloc_failed(t_data *data)
     free(data->player);
     free(data->keys);
     free(data->ray);
-    free(data->color);
 }
 
 
@@ -54,7 +69,6 @@ void	free_all(t_data *data)
     free(data->player);
     free(data->keys);
     free(data->ray);
-    free(data->color);
 	// Free instances
 	for (int i = 0; i < data->map.h_map; ++i) {
         free(data->map.map2d[i]);

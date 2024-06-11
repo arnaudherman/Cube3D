@@ -1,4 +1,4 @@
-#include "cub3d-bis.h"
+#include "cub3d.h"
 
 t_player	*allocate_player(void)
 {
@@ -32,10 +32,10 @@ int	init_player(t_player *player)
 {
 		// TO DO : GO recup la position de départ
 		// set_position(player);
-		player->x_pos = 110;
-		player->y_pos = 110;
+		player->x_pos = 84;
+		player->y_pos = 104;
 		player->speed = SPEED;
-		player->fov = FOV; // 66 here
+		player->fov = FOV;
 		player->rotate = ROTATION;
 		// player->direction = get_direction(player);
 		player->direction = 'N';
@@ -45,13 +45,9 @@ int	init_player(t_player *player)
 		player->angle = 2.0f;
 		player->x_dir = 1;
 		player->y_dir = 0; 
-		player->x_plane = 0.66;
-		player->y_plane = 0.66;
-		player->x_move = 0.0;
-		player->y_move = 0.0;
-		player->x_rotated = 0;
-		player->y_rotated = 0;
-		player->size = 14;
+		// player->x_plane = 0.66;
+		// player->y_plane = 0.66;
+		player->size = 10;
 		player->color = 0x992800;
 		return 0;
 }

@@ -1,4 +1,4 @@
-#include "cub3d-bis.h"
+#include "cub3d.h"
 
 int		key_press(int key, t_data *data)
 {
@@ -16,7 +16,7 @@ int		key_press(int key, t_data *data)
 		data->keys->left = 1;
 	else if (key == RIGHT_ARR)
 		data->keys->right = 1;
-	printf("press key = %d\n", data->keys->w);
+	// printf("press key = %d\n", data->keys->w);
 	return (0);
 }
 
@@ -36,31 +36,27 @@ int		key_release(int key, t_data *data)
 		data->keys->left = 0;
 	else if (key == RIGHT_ARR)
 		data->keys->right = 0;
-	printf("release key = %d\n", data->keys->w);
+	// printf("release key = %d\n", data->keys->w);
 	return (0);
 }
 
-void	key_move(t_data *data)
+void	key_move(t_data *data, int tile_size)
 {
-	printf("move key = %d\n", data->keys->w);
+	// printf("move key = %d\n", data->keys->w);
 	if (data->keys->w == 1)
-		go_up(data);
+		go_up(data, tile_size);
 	else if (data->keys->a == 1)
-		go_left(data);
+		go_left(data, tile_size);
 	else if (data->keys->s == 1)
-		go_down(data);
+		go_down(data, tile_size);
 	else if (data->keys->d == 1)
-		go_right(data);
+		go_right(data, tile_size);
 	else if (data->keys->left == 1)
 		rotate_left(data);
 	else if (data->keys->right == 1)
 		rotate_right(data);
 	else if (data->keys->esc == 1)
 		exit_game(data);
-	if (player_wall_collision(&data->map, data->player->x_pos, data->player->y_pos))
-		printf("Collision détectée!\n");
-	else
-		printf("Aucune collision.\n");
 }
 
 // static int	key_press(int key, t_data *data)

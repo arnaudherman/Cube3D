@@ -5,7 +5,8 @@ SRCS += srcs/main.c
 SRCS += srcs/clean/all.c \
 		srcs/clean/error.c \
 		srcs/clean/exit.c \
-		srcs/clean/map.c
+		srcs/clean/map.c \
+		srcs/clean/print_struct_values.c
 
 SRCS += srcs/setup/all.c \
 		srcs/setup/color.c \
@@ -13,43 +14,46 @@ SRCS += srcs/setup/all.c \
 		srcs/setup/image.c \
 		srcs/setup/keys.c \
 		srcs/setup/map.c \
+		srcs/setup/minimap.c \
 		srcs/setup/player.c \
 		srcs/setup/ray.c \
-		srcs/setup/texture.c
+		srcs/setup/texture.c 
 
 SRCS += srcs/moving/direction.c \
-        srcs/moving/keys.c \
+		srcs/moving/keys.c \
 		srcs/moving/listener.c \
-        srcs/moving/move.c \
-        srcs/moving/position.c \
-        srcs/moving/rotation.c
+		srcs/moving/move.c \
+		srcs/moving/position.c \
+		srcs/moving/rotation.c
 
 SRCS += srcs/parsing/color.c \
-        srcs/parsing/initialize_map.c \
-        srcs/parsing/len_map.c \
-        srcs/parsing/map.c \
-        srcs/parsing/parsing.c \
-        srcs/parsing/texture_color.c \
-        srcs/parsing/texture.c
+		srcs/parsing/color_utils.c \
+		srcs/parsing/len_map.c \
+		srcs/parsing/len_map_utils.c \
+		srcs/parsing/map.c \
+		srcs/parsing/map_process.c \
+		srcs/parsing/map_utils.c \
+		srcs/parsing/map_check.c \
+		srcs/parsing/parsing.c \
+		srcs/parsing/texture.c \
+		srcs/parsing/texture_utils.c \
 
-SRCS += srcs/rendering/color.c \
-		srcs/rendering/draw_lines.c \
+SRCS += srcs/rendering/close.c \
+		srcs/rendering/color.c \
 		srcs/rendering/draw.c \
-		srcs/rendering/fov_rays.c \
 		srcs/rendering/frame.c \
-		srcs/rendering/get.c \
-        srcs/rendering/image.c \
-        srcs/rendering/map.c \
+		srcs/rendering/image.c \
+		srcs/rendering/map.c \
+		srcs/rendering/minimap.c \
 		srcs/rendering/player.c \
-		srcs/rendering/ray_length.c \
-        srcs/rendering/raycasting.c \
-        srcs/rendering/texture.c \
-		srcs/rendering/wall_utils.c \
-		srcs/rendering/wall.c \
-		srcs/rendering/world.c
+		srcs/rendering/world.c \
+		srcs/rendering/raycasting.c \
+		srcs/rendering/draw.c \
+		srcs/rendering/texture.c \
+		srcs/rendering/wall.c
 
 SRCS += srcs/utils/get_next_line.c \
-        srcs/utils/utils.c
+		srcs/utils/utils.c
 
 # ---------------  --------------- #
 

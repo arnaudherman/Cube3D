@@ -1,50 +1,30 @@
+#include "cub3d.h"
 
-// #include "../../include/cub3d.h"
+void	ft_check_file(char *fname, char *name)
+{
+	int		fd;
+	char	*s1;
 
-// //check si le fichier map est en cub et que le fichier peut etre open et renvoie le fd
-// int	ft_check_file(char *fname, char *name)
-// {
-// 	int		fd;
-// 	char	*s1;
-// 	s1 = ft_strchr(fname, '.');
-// 	if (s1 && !ft_strcmp(s1, name))
-// 		ft_error(ERROR_MAP_EXT);
-// 	else if (!fname || !s1)
-// 		return (0);
-// 	fd = open(fname, O_RDONLY);
-// 	if (fd == -1)
-// 		ft_error(ERROR_MAP_OPEN);
-// 	return (fd);
-// }
+	s1 = ft_strrchr(fname, '.');
+	if (!s1 || ft_strcmp(s1, name) != 0)
+		ft_error(ERROR_MAP_EXT);
+	fd = open(fname, O_RDONLY);
+	if (fd == -1)
+		ft_error(ERROR_MAP_OPEN);
+	close(fd);
+}
 
-// void	process_textures_and_colors(char *file_d, t_data *data)
-// {
-// 	len_map(file_d, data);
-// 	if (parse_textures(file_d, data) != 0)
-// 		perror("error parse_textures\n");
-// 	convert_colors(data);
-// 	free(data->color.fcolor);
-// 	free(data->color.ccolor);
-// }
-
-// //main du parsing
-// int	parsing(char *argv[], t_data *data)
-// {
-// 	data->fd = ft_check_file(argv[1], ".cub");
-// 	process_textures_and_colors(argv[1], data);
-// 	initialize_map(data);
-// 	fill_validate_and_close_map(argv[1], data, data->fd);
-// 	return (0);
-// }
-
-// // TO DO : Pourquoi 2 fois le main du parsing
-
-// // int	parsing(char *argv[], t_data *data)
-// // {
-// // 	data->fd = ft_check_file(argv[1], ".cub");
-// // 	len_map(argv[1], data);
-// // 	found_textures_data(data);
-// // 	color_data(data);
-
-// // 	return (0);
-// // }
+int	parsing(char *fname, t_data *data)
+{
+	ft_check_file(fname, ".cub");
+	printf("finish ft_check_file\n");
+	len_map(fname, data);
+	printf("finish len_map\n");
+	found_textures_data(fname, data, &data->mlx);
+	printf("finish found_textures_data\n");
+	color_data(fname, data);
+	printf("finish color_data\n");
+	check_map(fname, data);
+	printf("finish check_map\n");
+	return (0);
+}

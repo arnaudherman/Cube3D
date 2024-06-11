@@ -1,4 +1,4 @@
-#include "cub3d-bis.h"
+#include "cub3d.h"
 
 t_image	*allocate_image()
 {
@@ -16,14 +16,20 @@ t_image	*allocate_image()
 	image->bits_per_pixel = 0;
 	image->line_length = 0;
 	image->endian = 0;
-	image->relative_path = NULL;
+    // image->data = NULL;
+	image->road = NULL;
 	return image;
 }
 
-int init_map2d(t_image *map2d, t_mlx *mlx)
+int init_map2d(t_image *map2d, t_mlx *mlx, int nb_tiles_x, int nb_tiles_y)
 {
     map2d->width = 320;
-    map2d->height = 320;
+    map2d->height = map2d->width;
+    // ! TODO TILE_SIZE
+    if (nb_tiles_x > nb_tiles_y)
+        map2d->tile_size = map2d->width / nb_tiles_x;
+    else
+        map2d->tile_size = map2d->height / nb_tiles_y;
     map2d->img = mlx_new_image(mlx->mlx_ptr, map2d->width, map2d->height);
     if (map2d->img == NULL) {
         perror("Failed to create map2d\n");
@@ -36,7 +42,7 @@ int init_map2d(t_image *map2d, t_mlx *mlx)
         mlx_destroy_image(mlx->mlx_ptr, map2d->img);
         return 1;
     }
-    map2d->relative_path = NULL;
+    map2d->road = NULL;
     return 0;
 }
 
@@ -56,26 +62,21 @@ int init_world(t_image *world, t_mlx *mlx)
         mlx_destroy_image(mlx->mlx_ptr, world->img);
         return 1;
     }
-    world->relative_path = NULL;
+    world->road = NULL;
     return 0;
 }
 
-// int init_image(t_image *img, t_mlx *mlx)
-// {
-// 	img->width = WINDOW_WIDTH;
-// 	img->height = WINDOW_HEIGHT;
-//     img->img = mlx_new_image(mlx->mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT);
-//     if (img->img == NULL) {
-//         perror("Failed to create image\n");
-//         return 1;
-//     }
-//     img->addr = mlx_get_data_addr(img->img, &(img->bits_per_pixel),
-//                                          &(img->line_length), &(img->endian));
-//     if (img->addr == NULL) {
-//         perror("Failed to get image data address\n");
-//         mlx_destroy_image(mlx->mlx_ptr, img->img);
-//         return 1;
-//     }
-//     img->relative_path = NULL;
-//     return 0;
-// }
+int	init_image(t_data *data, t_image *image, t_mlx *mlx)
+{
+	image->img = mlx_new_image(&mlx->mlx_ptr, data->mlx.win_width, data->mlx.win_height);
+	if (!image->img) {
+		write(2, "Erreur: Impossible de créer l'image.\n", 37);
+		return -1;
+	}
+	image->addr = mlx_get_data_addr(image->img, &image->bits_per_pixel, &image->line_length, &image->endian);
+	if (!image->addr) {
+		write(2, "Erreur: Impossible d'obtenir les données de l'image.\n", 55);
+		return -1;
+	}
+	return 0;
+}

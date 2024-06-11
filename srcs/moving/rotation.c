@@ -1,4 +1,4 @@
-#include "cub3d-bis.h"
+#include "cub3d.h"
 
 // void rotate_left(t_data *data) {
 //     data->player->angle -= 5.0;
@@ -24,7 +24,7 @@
 
 // TEST
 void rotate_left(t_data *data) {
-    data->player->angle -= 5.0;
+    data->player->angle -= ROTATION;
     
     if (data->player->angle < 0.0)
         data->player->angle += 360.0;
@@ -34,7 +34,7 @@ void rotate_left(t_data *data) {
 }
 
 void rotate_right(t_data *data) {
-    data->player->angle += 5.0;
+    data->player->angle += ROTATION;
 
     if (data->player->angle >= 360.0)
         data->player->angle -= 360.0;

@@ -1,132 +1,127 @@
-#include "cub3d-bis.h"
+#include "cub3d.h"
 
-// RESSOURCES : 
-// Raycasting : https://lodev.org/cgtutor/raycasting.html
-// DDA Algorithm https://lodev.org/cgtutor/raycasting.html
-// Video https://www.youtube.com/watch?v=NbSee-XM7WA&t=1s&ab_channel=javidx9
-// https://www.youtube.com/watch?v=W5P8GlaEOSI&ab_channel=AbdulBari
-
-void perform_dda(t_ray *ray, t_map *map) 
+void    draw_line(t_image *img, int x_start, int y_start, int x_end, int y_end, int color)
 {
-    int hit = 0;
-    while (hit == 0) 
-	{
-        if (ray->sidedist_x < ray->sidedist_y) 
-		{
-            ray->sidedist_x += ray->dx;
-            ray->map_x += ray->x1 * TILE_SIZE;
-			if (ray->x1 == -1)
-				ray->side = 0;
-			else
-				ray->side = 1;
-        } else {
-            ray->sidedist_y += ray->dy;
-            ray->map_y += ray->y1 * TILE_SIZE;
-			if (ray->y1 == -1)
-			{
-				ray->side = 2;
-				printf("c debug this shit\n");
-			}
-				
-			else
-			{
-				ray->side = 3;
-				printf("d debug this shit\n");
-			}
+    int dx = x_end - x_start;
+    int dy = y_end - y_start;
+    int steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy);
+
+    float x_increment = dx / (float)steps;
+    float y_increment = dy / (float)steps;
+
+    float x = x_start;
+    float y = y_start;
+
+    for (int i = 0; i <= steps; i++)
+    {
+        my_mlx_pixel_put(img, x, y, color);
+        // my_mlx_pixel_put(img, round(x), round(y), color);
+        x += x_increment;
+        y += y_increment;
+    }
+}
+
+// BRO U USE CHAR INSTEAD OF INT IN MAP2D
+// BRO U USE CHAR INSTEAD OF INT IN MAP2D
+// BRO U USE CHAR INSTEAD OF INT IN MAP2D !!!
+void    dda(t_data *data, t_map *map, t_ray *ray)
+{
+    int map_x;
+    int map_y;
+    while (ray->hit == 0)
+    {
+        if (ray->sx < ray->sy)
+        {
+            ray->sx += ray->dx;
+            ray->x_map += ray->x_step;
+            if (ray->x_step == -1)
+                ray->side = 0; // West
+            else
+                ray->side = 1; // East        
         }
-		printf("5 debug this shit\n");
-		// TO DO : CORRECT FUCKING PROBLEM HERE
-		// TO DO : use of ray->map_x or ray->map_y really ?
-		// Previous function was : if (map->map2d[y / TILE_SIZE][x / TILE_SIZE] != '0')
-		if (map->map2d[(int)ray->map_y][(int)ray->map_x] != '0')
-		printf(" 6 mamamia debug this shit\n");
-			hit = 1;
+        else
+        {
+            ray->sy += ray->dy;
+            ray->y_map += ray->y_step;
+            if (ray->y_step == -1)
+                ray->side = 2; // North
+            else
+                ray->side = 3; // South        
+        }
+        // Wall hit detection
+        if (ray->x_map >= 0 && ray->x_map < map->x_map * data->map2d->tile_size &&
+            ray->y_map >= 0 && ray->y_map < map->y_map * data->map2d->tile_size)
+            {
+                map_x = ray->x_map / data->map2d->tile_size;
+                map_y = ray->y_map / data->map2d->tile_size;
+                // print_ray_info(ray); // DEBUG
+                if (map->map2d[map_y][map_x] == '1')
+                {
+                    ray->hit = 1;
+                    // printf("ray->y_map = %d\n", ray->y_map);
+                    // printf("ray->x_map = %d\n", ray->x_map);
+                    // printf("Hit wall: map->map2d[%d][%d] = %c\n", map_y, map_x, map->map2d[map_y][map_x]);
+                }
+                else 
+                    my_mlx_pixel_put(data->map2d, ray->x_map, ray->y_map, 0xFF0000);
+            }
+        else
+        {
+            // Coordinate outside bounds
+            printf("map->x_map = %d, map->y_map = %d\n", map->x_map, map->y_map);
+            printf("ray->y_map = %d, ray->x_map = %d\n", ray->y_map, ray->x_map); // DEBUG y 111 et x 110
+            printf("map->map2d[ray->y_map][ray->x_map] = %d\n", map->map2d[ray->y_map / data->map2d->tile_size][ray->x_map / data->map2d->tile_size]);
+            printf("Error: In DDA() map->map2d[ray->y_map][ray->x_map] is out of bounds\n");
+            exit(1);
+        }
     }
 }
 
-
-void draw_ray(t_image *map2d, t_image *world, t_map *map, t_ray *ray, t_data *data) 
+void    get_perp_and_height(t_ray *ray, t_player *player, t_mlx *mlx)
 {
-    int i;
-    int x, y;
-    float current_x;
-    float current_y;
+    if (ray->side == 0)
+        ray->wall_dist = (ray->x_map - player->x_pos + (1 - ray->x_step) / 2) / ray->dir_x;
+    else
+        ray->wall_dist = (ray->y_map - player->y_pos + (1 - ray->y_step) / 2) / ray->dir_y;
 
-	get_steps(ray);
-    if (ray->steps == 0)
-        return;
+    // Handle fish-eye
+    ray->wall_dist *= cos(ray->camera_x * M_PI / 180);
 
-    get_step_sizes(ray);
+    ray->line_height = (int)(mlx->win_height / ray->wall_dist) * 8; // Adjust wall height x8
 
-	// POSITION here Use PLAYER coordinates here to shoot your rays piu piu
-	current_x = data->player->x_pos / TILE_SIZE;
-    current_y = data->player->y_pos / TILE_SIZE;
-
-    i = 0;
-    while (i <= ray->steps) 
-	{
-        x = (int)current_x;
-        y = (int)current_y;
-		
-		// TO DO : FIRST CORRECT everything 
-
-		// THEN : 3D world walls, textures etc here
-		// if (map->map2d[y / TILE_SIZE][x / TILE_SIZE] != '0')
-		// 	draw_wall(data, ray);
-
-		// TO DO : OR this version or another one
-		// if (map->map2d[y / TILE_SIZE][x / TILE_SIZE] != '0')
-			// draw_3d_world(map, world, x, y, current_x, current_y, ray->x2, ray->y2, ray, data);
-		
-		
-		// If my rays hit a wall, I stop raytracing
-		if (map->map2d[y / TILE_SIZE][x / TILE_SIZE] != '0')
-		{
-			// printf("wall hit in x = %d, y = %d\n", x, y);
-			break;
-		}
-
-        my_mlx_pixel_put(map2d, x / TILE_SIZE, y / TILE_SIZE, 0xffd55c);
-
-        current_x += ray->step_x;
-        current_y += ray->step_y;
-        i++;
-    }
+    ray->draw_start = -ray->line_height / 2 + mlx->win_height / 2;
+    if (ray->draw_start <20)
+        ray->draw_start = 0;
+    ray->draw_end = ray->line_height / 2 + mlx->win_height / 2;
+    if (ray->draw_end >= mlx->win_height)
+        ray->draw_end = mlx->win_height - 1;
 }
 
-// Trace des rayons depuis la position du joueur pour déterminer ce qu'il voit. 
-// Chaque rayon est tracé selon un certain angle, couvrant ainsi la player fov.
-// Le résultat de ce traçage est utilisé pour dessiner la scène 3D.
-void shoot_rays(t_image *map2d, t_image *world, t_player *player, t_map *map, t_ray *ray, t_data *data) 
+void    raycasting(t_data *data, t_player *player, t_mlx *mlx)
 {
-    double start_angle;
-	double angle_increment;
-	double angle_rad;
-	int i;
+    t_ray ray;
+    int x = 0;
 
-	start_angle = player->angle - (player->fov / 2.0);
-    angle_increment = player->fov / WINDOW_WIDTH;
-	i = 0;
-    while (i < WINDOW_WIDTH) {
-        angle_rad = (start_angle + i * angle_increment) * (M_PI / 180.0);
+    if (!(ray.z_index = (double *)malloc(sizeof(double) * mlx->win_width)))
+        perror("Malloc z_index failed in raycasting();\n");
 
-        ray->x2 = (int)(player->x_pos + cos(angle_rad) * ray->ray_length);
-        ray->y2 = (int)(player->y_pos + sin(angle_rad) * ray->ray_length);
+    ft_bzero(ray.z_index, sizeof(double) * mlx->win_width);
 
-        if (ray->x2 < 0) 
-			ray->x2 = 0;
-        if (ray->x2 >= (MAP_WIDTH * TILE_SIZE)) 
-			ray->x2 = (MAP_WIDTH * TILE_SIZE) - 1;
-        if (ray->y2 < 0) ray->y2 = 0;
-        if (ray->y2 >= (MAP_HEIGHT * TILE_SIZE)) 
-			ray->y2 = (MAP_HEIGHT * TILE_SIZE) - 1;
-
-        draw_ray(map2d, world, map, ray, data);
-		i++;
+    while (x < mlx->win_width)
+    {
+        init_default_ray(&ray); 
+        ray.x = x; // Réinitialise la valeur de ray.x après init_default_ray
+        init_ray(&ray, player);
+        dda(data, &data->map, &ray);
+        get_perp_and_height(&ray, player, mlx);
+        draw_col(data, mlx, &ray);
+        x += 1;
     }
+    
+    free(ray.z_index);
+
+    mlx_put_image_to_window(data->mlx.mlx_ptr, data->mlx.mlx_win_ptr, data->world->img, 0, 0);
 }
 
-int raycasting(t_data *data) {
-    shoot_rays(data->map2d, data->world, data->player, &data->map, data->ray, data);
-    return 0;
-}
+
+    

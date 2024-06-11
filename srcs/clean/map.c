@@ -1,4 +1,4 @@
-#include "cub3d-bis.h"
+#include "cub3d.h"
 
 // Fonction pour libérer la mémoire de la carte
 void free_map(t_map *map) {

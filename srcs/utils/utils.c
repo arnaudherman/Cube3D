@@ -1,4 +1,4 @@
-#include "../../include/cub3d.h"
+#include "cub3d.h"
 
 int	ft_strcmp(char *s1, char *s2)
 {
@@ -21,7 +21,7 @@ char *ft_strcpy(char *dst, const char *src)
 		dst[i] = src[i];
 		i++;
 	}
-	dst[i] = '\0';
+	dst[i] = NULL;
 	return (dst);
 }
 
