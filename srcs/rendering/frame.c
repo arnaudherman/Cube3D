@@ -1,22 +1,26 @@
 #include "cub3d.h"
 
-void draw_world_bg(t_image *world, int color) 
+void	draw_world_bg(t_image *world, int color)
 {
-	int x;
-	int y;
+	int	x;
+	int	y;
 
 	y = 0;
-    while (y < WINDOW_HEIGHT / 2) {
+	while (y < WINDOW_HEIGHT / 2)
+	{
 		x = 0;
-		while (x < WINDOW_WIDTH) {
+		while (x < WINDOW_WIDTH)
+		{
 			my_mlx_pixel_put(world, x, y, color);
 			x++;
 		}
 		y++;
 	}
-	while (y < WINDOW_HEIGHT) {
+	while (y < WINDOW_HEIGHT)
+	{
 		x = 0;
-		while (x < WINDOW_WIDTH) {
+		while (x < WINDOW_WIDTH)
+		{
 			my_mlx_pixel_put(world, x, y, 0xFFD700);
 			x++;
 		}
@@ -24,7 +28,7 @@ void draw_world_bg(t_image *world, int color)
 	}
 }
 
-int draw_player(t_image *image, t_player *player) 
+int	draw_player(t_image *image, t_player *player)
 {
     int x, y;
     int x_center = (int)player->x_pos;
@@ -66,14 +70,16 @@ int draw_player(t_image *image, t_player *player)
 int	render_next_frame(t_data *data)
 {
 	mlx_clear_window(data->mlx.mlx_ptr, data->mlx.mlx_win_ptr);
-    memset(data->world->addr, 0, WINDOW_WIDTH * WINDOW_HEIGHT * (data->world->bits_per_pixel / 8));
+	memset(data->world->addr, 0, WINDOW_WIDTH * WINDOW_HEIGHT
+		* (data->world->bits_per_pixel / 8));
 	draw_map(data->map2d, &data->map);
 	key_move(data, data->map2d->tile_size);
 	draw_player(data->map2d, data->player);
-	draw_world_bg(data->world, 	0x0057B8);
-    raycasting(data, data->player, &data->mlx);
-	mlx_put_image_to_window(data->mlx.mlx_ptr, data->mlx.mlx_win_ptr, data->world->img, 0, 0);
-	mlx_put_image_to_window(data->mlx.mlx_ptr, data->mlx.mlx_win_ptr, data->map2d->img, 20, 20);
-	
+	draw_world_bg(data->world, 0x0057B8);
+	raycasting(data, data->player, &data->mlx);
+	mlx_put_image_to_window(data->mlx.mlx_ptr, data->mlx.mlx_win_ptr,
+		data->world->img, 0, 0);
+	mlx_put_image_to_window(data->mlx.mlx_ptr, data->mlx.mlx_win_ptr,
+		data->map2d->img, 20, 20);
 	return (0);
 }

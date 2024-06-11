@@ -410,7 +410,6 @@ void		my_mlx_pixel_put(t_image *image, int x, int y, int color);
 void 		draw_minimap_bg(t_image *map2d, int color);
 void 		draw_tile(t_image *map2d, int x, int y);
 void		draw_vertical_lign(t_data *data, int tile_size);
-void 		draw_square(t_data *data, int tile_size, int x, int y, int color);
 
 // Located in *frame.c"
 int			draw_player(t_image *image, t_player *player);

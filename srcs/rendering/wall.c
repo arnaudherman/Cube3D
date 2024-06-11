@@ -30,11 +30,11 @@ void	draw_col(t_data *data, t_mlx *mlx, t_ray *ray)
 	if (ray->draw_end >= mlx->win_height)
 		ray->draw_end = mlx->win_height - 1;
 	if (ray->side == 0 || ray->side == 1)
-		ray->wall_x = data->player->y_pos +
-			ray->wall_dist * ray->dir_y;
+		ray->wall_x = data->player->y_pos
+			+ ray->wall_dist * ray->dir_y;
 	else
-		ray->wall_x = data->player->x_pos +
-			ray->wall_dist * ray->dir_x;
+		ray->wall_x = data->player->x_pos
+			+ ray->wall_dist * ray->dir_x;
 	ray->wall_x -= floor(ray->wall_x);
 	set_wall(data, ray);
 }
