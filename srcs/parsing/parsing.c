@@ -14,17 +14,41 @@ void	ft_check_file(char *fname, char *name)
 	close(fd);
 }
 
+void	hoockgps(t_data *data)
+{
+	char	**ptr;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	ptr = data->map.map2d;
+	while (ptr[j] != NULL)
+	{
+		i = 0;
+		while (ptr[j][i] != '\0')
+		{
+			if (ptr[j][i] == 'N' || ptr[j][i] == 'S'
+			|| ptr[j][i] == 'W' || ptr[j][i] == 'E')
+			{
+				data->player->x_pos = i;
+				data->player->y_pos = j;
+				data->player->direction = ptr[j][i];
+				return ;
+			}
+			i++;
+		}
+		j++;
+	}
+}
+
 int	parsing(char *fname, t_data *data)
 {
 	ft_check_file(fname, ".cub");
-	printf("finish ft_check_file\n");
 	len_map(fname, data);
-	printf("finish len_map\n");
 	found_textures_data(fname, data, &data->mlx);
-	printf("finish found_textures_data\n");
 	color_data(fname, data);
-	printf("finish color_data\n");
 	check_map(fname, data);
-	printf("finish check_map\n");
+	hoockgps(data);
 	return (0);
 }
