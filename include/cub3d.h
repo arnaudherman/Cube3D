@@ -320,7 +320,7 @@ int			init_image(t_data *data, t_image *image, t_mlx *mlx);
 // Located in *keys.c*
 t_keys		*allocate_keys(void);
 // Located in *map.c*
-int			malloc_map2d(t_map *map);
+// int			malloc_map2d(t_map *map);
 int			fill_map(t_map *map);
 int 		init_map(t_map *map, int map_max_width, int map_max_height);
 // Located in *minimap.c*

@@ -39,22 +39,6 @@ int init_default_all(t_data *data)
     return 0;
 }
 
-// int	init_all_images(t_data *data)
-// {
-
-
-
-// 	init_image(data, data->image, &data->mlx.mlx_ptr);
-// 	init_map2d(data->map2d, &data->mlx);
-// 	init_world(data->world, &data->mlx);
-
-// 	init_image(data, &data->NO, &data->mlx.mlx_ptr);
-// 	init_image(data, &data->SO, &data->mlx.mlx_ptr);
-// 	init_image(data, &data->WE, &data->mlx.mlx_ptr);
-// 	init_image(data, &data->EA, &data->mlx.mlx_ptr);
-// 	return 0;
-// }
-
 int	init_custom_all(t_data *data)
 {
 	
@@ -62,32 +46,16 @@ int	init_custom_all(t_data *data)
 		perror("Failed to initialize mlx_engine\n");
 		return 1;
 	}
-	// if (init_map(&data->map, data->map.x_map, data->map.y_map) != 0) {
-	// 	perror("Failed to initialize map\n");
-	// 	return 1;
-	// }
-
 	if (init_player(data->player) != 0) {
 		perror("Failed to initialize player\n");
 		return 1;
 	}
-
-	// if (init_all_images(data) != 0) {
-	// 	perror("Failed to initialize images\n");
-	// 	return 1;
-	// }
 	init_image(data, data->image, &data->mlx.mlx_ptr);
-	 
-	// init_map2d(data->map2d, &data->mlx);
-	
 	init_world(data->world, &data->mlx);
-
 	init_image(data, &data->NO, &data->mlx.mlx_ptr);
 	init_image(data, &data->SO, &data->mlx.mlx_ptr);
 	init_image(data, &data->WE, &data->mlx.mlx_ptr);
 	init_image(data, &data->EA, &data->mlx.mlx_ptr);
-
-
-
 	return 0;
 }
+

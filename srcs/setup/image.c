@@ -16,16 +16,14 @@ t_image	*allocate_image()
 	image->bits_per_pixel = 0;
 	image->line_length = 0;
 	image->endian = 0;
-    // image->data = NULL;
 	image->road = NULL;
 	return image;
 }
 
-int init_map2d(t_image *map2d, t_mlx *mlx, int nb_tiles_x, int nb_tiles_y)
+int	init_map2d(t_image *map2d, t_mlx *mlx, int nb_tiles_x, int nb_tiles_y)
 {
     map2d->width = 320;
     map2d->height = map2d->width;
-    // ! TODO TILE_SIZE
     if (nb_tiles_x > nb_tiles_y)
         map2d->tile_size = map2d->width / nb_tiles_x;
     else
@@ -46,7 +44,7 @@ int init_map2d(t_image *map2d, t_mlx *mlx, int nb_tiles_x, int nb_tiles_y)
     return 0;
 }
 
-int init_world(t_image *world, t_mlx *mlx)
+int	init_world(t_image *world, t_mlx *mlx)
 {
 	world->width = WINDOW_WIDTH;
 	world->height = WINDOW_HEIGHT;
@@ -80,3 +78,4 @@ int	init_image(t_data *data, t_image *image, t_mlx *mlx)
 	}
 	return 0;
 }
+
