@@ -257,8 +257,8 @@ typedef struct s_data
 
 /* -------------------- CLEAN -------------------- */
 // Located in *all.c*
+void 		free_map(t_map *map);
 void 		free_tokens(char **tokens);
-int 		clean_all(t_data *data);
 void		free_if_malloc_failed(t_data *data);
 void		free_all(t_data *data);
 
@@ -271,13 +271,9 @@ int			err(char *str);
 
 // Located in *exit.c*
 int			exit_game(t_data *data);
-void		clear_map(t_data *data);
 void		clear_window(t_mlx *mlx);
 void		clear_image(t_image *image, t_mlx *mlx);
 void		destroy_data(t_data *data);
-
-// Located in *map.c*
-void 		free_map(t_map *map);
 
 // Located in *print_values.c*
 void		print_map(t_map *map) ;
@@ -285,81 +281,32 @@ void 		print_ray_info(t_ray *ray);
 void 		print_ray_texture_info(t_data *data, t_ray *ray, t_image *texture);
 void 		print_image_info(t_image *image);
 
-/* -------------------- DIY LIBFT -------------------- */
-// Located in *get_next_line.c*
-char		*read_the_line(int fd, char *left_line);
-char		*join_line(char *left_line, char *s1);
-char		*go_line(char *left_line);
-char		*go_next(char *left_line);
-char		*get_next_line(int fd);
-// Located in *utils.c*
-int			ft_strcmp(char *s1, char *s2);
-char 		*ft_strcpy(char *dst, const char *src);
-void		free_tokens(char **tokens);
-static char	*in_tab(const char *s1, int c1, int c2);
-static int	number_word(const char *s1, char c);
-
-/* -------------------- SETUP -------------------- */
-// Located in *all.c*
-int			check_allocations(t_data *data);
-int 		malloc_struct(void **ptr, size_t size);
-int			malloc_all(t_data *data);
-int			init_default_all(t_data *data);
-int			init_all_images(t_data *data);
-int			init_custom_all(t_data *data);
-
-// Located in *engine.c*
-int	init_mlx_engine(t_mlx *mlx);
-// Located in *image.c*
-t_image		*allocate_image();
-int 		init_map2d(t_image *map2d, t_mlx *mlx, int nb_tiles_x, int nb_tiles_y);
-int 		init_world(t_image *world, t_mlx *mlx);
-int			init_image(t_data *data, t_image *image, t_mlx *mlx);
-// Located in *map.c*
-// int			malloc_map2d(t_map *map);
-int			fill_map(t_map *map);
-int 		init_map(t_map *map, int map_max_width, int map_max_height); 
-// Located in *player.c*
-t_player	*allocate_player(void);
-static void	default_player(t_player *player);
-int			init_player(t_player *player);
-// Located in *ray.c*
-void		calculate_deltas(t_ray *ray);
-void		calculate_steps_sides(t_ray *ray, t_player *player);
-void 		init_ray(t_ray *ray, t_player *player);
-void 		init_default_ray(t_ray *ray);
-// Located in *texture.c*
-void 		init_texture_img(t_image *texture_img, t_mlx *mlx, char *path);
-void		set_texture_on_image(t_data *data, t_image *texture, t_ray *ray);
-int 		get_pixel_color(t_image *img, int x, int y);
-
 /* -------------------- MOVING -------------------- */
+
 // Located in *direction.c*
-t_keys		*allocate_keys(void);
 static void	set_east_west(t_player *player);
 static void	set_north_south(t_player *player);
 void		set_direction(t_player *player);
+
 // Located in *keys.c*
 int			key_release(int key, t_data *data);
 int			key_press(int key, t_data *data);
 void		key_move(t_data *data, int tile_size);
 t_keys		*allocate_keys(void);
+
 // Located in *listener.c*
 void		loop(t_data *data);
+
 // Located in *move.c*
 int			go_up(t_data *data, int tile_size);
 int			go_left(t_data *data, int tile_size);
 int			go_down(t_data *data, int tile_size);
 int			go_right(t_data *data, int tile_size);
-int			go_move(t_data *data, int tile_size);
-// Located in *player.c*
+
 // Located in *position.c*
-// bool is_wall(t_map *map, double x, double y);
+bool 		is_wall(t_map *map, double x, double y);
 bool 		player_wall_collision(t_map *map, int tile_size, double x, double y);
-// bool	check_map_pos(t_data *data, double x, double y);
-// bool	check_wall_pos(t_data *data, double x, double y);
-// bool	check_pos(t_data *data, double x, double y);
-// bool	check_move(t_data *data, double x_new, double y_new);
+
 // Located in *rotation.c*
 void 		rotate_left(t_data *data);
 void 		rotate_right(t_data *data);
@@ -412,33 +359,55 @@ void 		draw_tile(t_image *map2d, int x, int y);
 void		draw_vertical_lign(t_data *data, int tile_size);
 
 // Located in *frame.c"
-int			draw_player(t_image *image, t_player *player);
 void 		draw_world_bg(t_image *world, int color);
+int			draw_player(t_image *image, t_player *player);
 int			render_next_frame(t_data *data);
 
 // Located in *map.c*
-int 		draw_map(t_image *map2d, t_map *map);
-void 		draw_tile(t_image *image, int x, int y);
 void 		draw_vertical_lines(t_image *image);
 void 		draw_horizontal_lines(t_image *image);
 void 		draw_vertical_line(t_image *image, int x, int start_y, int color);
 void 		draw_horizontal_line(t_image *image, int start_x, int y, int color);
+int 		draw_map(t_image *map2d, t_map *map);
 
 // Located in *raycasting.c*
-float 		get_ray_length(int map_width, int map_height, int window_width, int window_height);
-void 		fov_rays(int hauteur_image, int largeur_image, float fov_horizontal_deg);
-float 		correct_fisheye(float distance, float ray_angle, float player_angle);
-void 		draw_ray(t_data *data);
-void 		shoot_rays(t_data *data, t_player *player, t_ray *ray, t_mlx *mlx);
+void		dda(t_data *data, t_map *map, t_ray *ray);
+void		get_perp_and_height(t_ray *ray, t_player *player, t_mlx *mlx);
 void 		raycasting(t_data *data, t_player *player, t_mlx *mlx);
 
 // Located in *wall.c*
-void		get_wall_dist(t_player *player, t_ray *ray);
-void		get_wall_height(t_ray *ray);
-void 		draw_wall_column(t_image *world, int column, int wall_height);
-void 		draw_wall(t_data *data, t_ray *ray);
 void		set_wall(t_data *data, t_ray *ray);
 void		draw_col(t_data *data, t_mlx *mlx, t_ray *ray);
+
+/* -------------------- SETUP -------------------- */
+// Located in *all.c*
+int			malloc_all(t_data *data);
+int			init_default_all(t_data *data);
+int			init_custom_all(t_data *data);
+
+// Located in *engine.c*
+int			init_mlx_engine(t_mlx *mlx);
+
+// Located in *image.c*
+t_image		*allocate_image();
+int 		init_map2d(t_image *map2d, t_mlx *mlx, int nb_tiles_x, int nb_tiles_y);
+int 		init_world(t_image *world, t_mlx *mlx);
+int			init_image(t_data *data, t_image *image, t_mlx *mlx);
+
+// Located in *player.c*
+t_player	*allocate_player(void);
+int			init_player(t_player *player);
+
+// Located in *ray.c*
+void		calculate_deltas(t_ray *ray);
+void		calculate_steps_sides(t_ray *ray, t_player *player);
+void 		init_ray(t_ray *ray, t_player *player);
+void 		init_default_ray(t_ray *ray);
+
+// Located in *texture.c*
+void 		init_texture_img(t_image *texture_img, t_mlx *mlx, char *path);
+int			get_pixel_color(t_image *img, int x, int y);
+void		set_texture_on_image(t_data *data, t_image *texture, t_ray *ray);
 
 /* -------------------- LIBFT -------------------- */
 
@@ -471,6 +440,20 @@ char		**ft_split(char const *s, char c);
 char	    *ft_strrchr(const char *s, int c);
 int 	    ft_strcmp(char *s1, char *s2);
 char	    *ft_strtrim(char const *s1, char const *set);
+
+/* -------------------- DIY LIBFT -------------------- */
+// Located in *get_next_line.c*
+char		*read_the_line(int fd, char *left_line);
+char		*join_line(char *left_line, char *s1);
+char		*go_line(char *left_line);
+char		*go_next(char *left_line);
+char		*get_next_line(int fd);
+// Located in *utils.c*
+int			ft_strcmp(char *s1, char *s2);
+char 		*ft_strcpy(char *dst, const char *src);
+void		free_tokens(char **tokens);
+static char	*in_tab(const char *s1, int c1, int c2);
+static int	number_word(const char *s1, char c);
 
 /* -------------------- MAIN.C -------------------- */
 int			main(int ac, char **av);
