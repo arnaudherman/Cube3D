@@ -28,9 +28,6 @@ void    dda(t_data *data, t_map *map, t_ray *ray)
 {
     int map_x;
     int map_y;
-
-    map_x = ray->x_map / 32;
-    map_y = ray->y_map / 32;
     while (ray->hit == 0)
     {
         if (ray->sx < ray->sy)
@@ -52,28 +49,28 @@ void    dda(t_data *data, t_map *map, t_ray *ray)
                 ray->side = 3; // South        
         }
         // Wall hit detection
-        if (ray->x_map >= 0 && ray->x_map < map->w_map * 32 &&
-            ray->y_map >= 0 && ray->y_map < map->h_map * 32)
+        if (ray->x_map >= 0 && ray->x_map < map->x_map * data->map2d->tile_size &&
+            ray->y_map >= 0 && ray->y_map < map->y_map * data->map2d->tile_size)
             {
-                
-                int map_x = ray->x_map / 32;
-                int map_y = ray->y_map / 32;
-                
+                map_x = ray->x_map / data->map2d->tile_size;
+                map_y = ray->y_map / data->map2d->tile_size;
+                // print_ray_info(ray); // DEBUG
                 if (map->map2d[map_y][map_x] == '1')
                 {
                     ray->hit = 1;
-                    printf("ray->y_map = %d\n", ray->y_map);
-                    printf("ray->x_map = %d\n", ray->x_map);
-                    printf("Hit wall: map->map2d[%d][%d] = %c\n", map_y, map_x, map->map2d[map_y][map_x]);
+                    // printf("ray->y_map = %d\n", ray->y_map);
+                    // printf("ray->x_map = %d\n", ray->x_map);
+                    // printf("Hit wall: map->map2d[%d][%d] = %c\n", map_y, map_x, map->map2d[map_y][map_x]);
                 }
                 else 
-                    my_mlx_pixel_put(data->map2d, map_x, map_y, 0xFF0000);
+                    my_mlx_pixel_put(data->map2d, ray->x_map, ray->y_map, 0xFF0000);
             }
         else
         {
             // Coordinate outside bounds
+            printf("map->x_map = %d, map->y_map = %d\n", map->x_map, map->y_map);
             printf("ray->y_map = %d, ray->x_map = %d\n", ray->y_map, ray->x_map); // DEBUG y 111 et x 110
-            printf("map->map2d[ray->y_map][ray->x_map] = %d\n", map->map2d[ray->y_map / 32][ray->x_map / 32]);
+            printf("map->map2d[ray->y_map][ray->x_map] = %d\n", map->map2d[ray->y_map / data->map2d->tile_size][ray->x_map / data->map2d->tile_size]);
             printf("Error: In DDA() map->map2d[ray->y_map][ray->x_map] is out of bounds\n");
             exit(1);
         }
@@ -93,7 +90,7 @@ void    get_perp_and_height(t_ray *ray, t_player *player, t_mlx *mlx)
     ray->line_height = (int)(mlx->win_height / ray->wall_dist) * 8; // Adjust wall height x8
 
     ray->draw_start = -ray->line_height / 2 + mlx->win_height / 2;
-    if (ray->draw_start < 0)
+    if (ray->draw_start <20)
         ray->draw_start = 0;
     ray->draw_end = ray->line_height / 2 + mlx->win_height / 2;
     if (ray->draw_end >= mlx->win_height)
@@ -103,22 +100,22 @@ void    get_perp_and_height(t_ray *ray, t_player *player, t_mlx *mlx)
 void    raycasting(t_data *data, t_player *player, t_mlx *mlx)
 {
     t_ray ray;
-    ray.x = 0;
+    int x = 0;
 
     if (!(ray.z_index = (double *)malloc(sizeof(double) * mlx->win_width)))
         perror("Malloc z_index failed in raycasting();\n");
 
     ft_bzero(ray.z_index, sizeof(double) * mlx->win_width);
 
-    while (ray.x < mlx->win_width)
+    while (x < mlx->win_width)
     {
-        init_default_ray(&ray);
-        ray.x = ray.x; // Réinitialise la valeur de ray.x après init_default_ray
+        init_default_ray(&ray); 
+        ray.x = x; // Réinitialise la valeur de ray.x après init_default_ray
         init_ray(&ray, player);
         dda(data, &data->map, &ray);
         get_perp_and_height(&ray, player, mlx);
         draw_col(data, mlx, &ray);
-        ray.x++;
+        x += 1;
     }
     
     free(ray.z_index);
@@ -127,4 +124,4 @@ void    raycasting(t_data *data, t_player *player, t_mlx *mlx)
 }
 
 
-        
+    

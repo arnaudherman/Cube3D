@@ -18,9 +18,9 @@ void draw_minimap_bg(t_image *map2d, int color)
 
 void draw_tile(t_image *map2d, int x, int y) {
     int i = 0;
-    while (i < TILE_SIZE) {
+    while (i < map2d->tile_size) {
         int j = 0;
-        while (j < TILE_SIZE) {
+        while (j < map2d->tile_size) {
             my_mlx_pixel_put(map2d, x + i, y + j, 0xb6d7a8);
             j++;
         }
@@ -35,7 +35,7 @@ void draw_vertical_lines(t_image *map2d) {
     while (x < map2d->width) {
         draw_vertical_line(map2d, x, 0, 0xFFFFFF); // Draw line at the top
         draw_vertical_line(map2d, x, map2d->height - 1, 0xFFFFFF); // Draw line at the bottom
-        x += TILE_SIZE;
+        x += map2d->tile_size;
     }
 }
 
@@ -46,7 +46,7 @@ void draw_horizontal_lines(t_image *map2d) {
     while (y < map2d->height) {
         draw_horizontal_line(map2d, 0, y, 0xFFFFFF); // Draw line on the left
         draw_horizontal_line(map2d, map2d->width - 1, y, 0xFFFFFF); // Draw line on the right
-        y += TILE_SIZE;
+        y += map2d->tile_size;
     }
 }
 
@@ -74,23 +74,26 @@ void draw_horizontal_line(t_image *map2d, int start_x, int y, int color) {
 
 int draw_map(t_image *map2d, t_map *map) {
 
-    int x;
-    int y;
+    int     x;
+    int     y;
+    char    tile;
 
     draw_minimap_bg(map2d, 0xbba498);
     draw_vertical_lines(map2d);
     draw_horizontal_lines(map2d);
-
     y = 0;
-    while (y < MAP_HEIGHT * TILE_SIZE) {
+    while (map->map2d[y]) {
         x = 0;
-        while (x < MAP_WIDTH * TILE_SIZE) {
-            if (map->map2d[y / TILE_SIZE][x / TILE_SIZE] == '0') {
-                draw_tile(map2d, x, y);
+        while (map->map2d[y][x]) {
+            
+            // print_map(map);
+            tile = map->map2d[y][x];
+            if (tile == '0' || tile == 'N' || tile == 'S' || tile == 'W' || tile == 'E') {
+                draw_tile(map2d, x * map2d->tile_size, y * map2d->tile_size);
             }
-            x += TILE_SIZE;
+            x++;
         }
-        y += TILE_SIZE;
+        y++;
     }
     return (0);
 }

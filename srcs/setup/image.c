@@ -21,10 +21,15 @@ t_image	*allocate_image()
 	return image;
 }
 
-int init_map2d(t_image *map2d, t_mlx *mlx)
+int init_map2d(t_image *map2d, t_mlx *mlx, int nb_tiles_x, int nb_tiles_y)
 {
     map2d->width = 320;
-    map2d->height = 320;
+    map2d->height = map2d->width;
+    // ! TODO TILE_SIZE
+    if (nb_tiles_x > nb_tiles_y)
+        map2d->tile_size = map2d->width / nb_tiles_x;
+    else
+        map2d->tile_size = map2d->height / nb_tiles_y;
     map2d->img = mlx_new_image(mlx->mlx_ptr, map2d->width, map2d->height);
     if (map2d->img == NULL) {
         perror("Failed to create map2d\n");
@@ -61,9 +66,9 @@ int init_world(t_image *world, t_mlx *mlx)
     return 0;
 }
 
-int	init_image(t_data *data, t_image *image, void *mlx_ptr)
+int	init_image(t_data *data, t_image *image, t_mlx *mlx)
 {
-	image->img = mlx_new_image(mlx_ptr, data->mlx.win_width, data->mlx.win_height);
+	image->img = mlx_new_image(&mlx->mlx_ptr, data->mlx.win_width, data->mlx.win_height);
 	if (!image->img) {
 		write(2, "Erreur: Impossible de créer l'image.\n", 37);
 		return -1;

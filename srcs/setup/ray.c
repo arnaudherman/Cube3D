@@ -47,9 +47,19 @@ void init_ray(t_ray *ray, t_player *player)
 {
     ray->x_map = (int)player->x_pos;
     ray->y_map = (int)player->y_pos;
-    ray->camera_x = 2 * ray->x / (double)WINDOW_WIDTH - 1;
-    ray->dir_x = player->x_dir + player->x_plane * ray->camera_x;
-    ray->dir_y = player->y_dir + player->y_plane * ray->camera_x;
+    // ray->camera_x = 2 * ray->x / (double)WINDOW_WIDTH - 1;
+    // ray->dir_x = player->x_dir * ray->camera_x + player->x_plane * ray->camera_x;
+    // ray->dir_y = player->y_dir * ray->camera_x + player->y_plane * ray->camera_x;
+
+    // float angle = atan2(ray->dir_y, ray->dir_x);
+
+    float rad_fov = player->fov * M_PI / 180;
+    float angle = player->angle + (player->fov / 2) - (ray->x *rad_fov / WINDOW_WIDTH);
+    ray->dir_x = player->x_dir * cos(angle) - player->y_dir * sin(angle);
+    ray->dir_y = player->x_dir * sin(angle) + player->y_dir * cos(angle);
+    
+	// printf("player->x_dir: %f\n", player->x_dir);
+	// printf("player->x_plane: %f\n", player->x_plane);
 	ray->dx = fabs(1 / ray->dir_x);
     ray->dy = fabs(1 / ray->dir_y);
     // Initialize step and initial sideDist
@@ -69,11 +79,6 @@ void init_ray(t_ray *ray, t_player *player)
     }
     ray->hit = 0;
 }
-//     calculate_deltas(ray);
-//     calculate_steps_sides(ray, player);
-//     ray->hit = 0;
-//     return 0;
-// }
 
 void init_default_ray(t_ray *ray) 
 {

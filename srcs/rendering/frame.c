@@ -7,10 +7,10 @@ int	render_next_frame(t_data *data)
 	// Clear previous image
 	mlx_clear_window(data->mlx.mlx_ptr, data->mlx.mlx_win_ptr);
 
-	// Clear previous frame
+	// // Clear previous frame
     memset(data->world->addr, 0, WINDOW_WIDTH * WINDOW_HEIGHT * (data->world->bits_per_pixel / 8));
 	draw_map(data->map2d, &data->map);
-	key_move(data);
+	key_move(data, data->map2d->tile_size);
 	draw_player(data->map2d, data->player);
 	draw_world_bg(data->world, 	0x0057B8);
     raycasting(data, data->player, &data->mlx);

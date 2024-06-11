@@ -1,5 +1,41 @@
 #include "cub3d.h"
 
+void print_map(t_map *map) 
+{
+    if (map == NULL) {
+        printf("Map is NULL\n");
+        return;
+    }
+    printf("Map:\n");
+    printf("  f_spawn: %d\n", map->f_spawn);
+    printf("  w_map: %d\n", map->w_map);
+    printf("  h_map: %d\n", map->h_map);
+    printf("  x_map: %d\n", map->x_map);
+    printf("  y_map: %d\n", map->y_map);
+    printf("  color: %u\n", map->color);
+
+    // Imprimer le tableau 2D map2d
+    if (map->map2d != NULL) {
+        printf("  map2d:\n");
+        for (int i = 0; i < map->h_map; i++) {
+            if (map->map2d[i] != NULL) {
+                printf("    row %d: %s\n", i, map->map2d[i]);
+            } else {
+                printf("    row %d: NULL\n", i);
+            }
+        }
+    } else {
+        printf("  map2d is NULL\n");
+    }
+
+    // Imprimer les valeurs de la struct ray si elle n'est pas NULL
+    // if (map->ray != NULL) {
+    //     print_ray(map->ray);
+    // } else {
+    //     printf("Ray is NULL\n");
+    // }
+}
+
 void print_ray_info(t_ray *ray) 
 {
     printf("Ray Info:\n");

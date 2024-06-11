@@ -252,6 +252,7 @@ void check_map(char *fname, t_data *data)
 		if (i < data->map.y_map)
 			line = get_next_line(fd_cub);
 	}
+	data->map.map2d[i] = NULL; // ? TODO is it correct?
 	i = 0;
 	while (i < data->map.y_map && data->map.map2d[i])
 	{
@@ -262,14 +263,14 @@ void check_map(char *fname, t_data *data)
 		i++;
 	}
 	i = 0;
-	print_string_array(data->map.map2d);
+	// print_string_array(data->map.map2d);
 	remove_newline(data->map.map2d);
-	print_string_array(data->map.map2d);
+	// print_string_array(data->map.map2d);
 	complet_string_with_space(data->map.map2d, data->map.x_map);
 	while(i < data->map.y_map)
 	{
-		printf("check_map string send to check start end:%s\n", data->map.map2d[i]);
-		show_with_spaces(data->map.map2d[i]);
+		// printf("check_map string send to check start end:%s\n", data->map.map2d[i]);
+		// show_with_spaces(data->map.map2d[i]);
 		check_start_end(data->map.map2d[i]);
 		i++;
 	}
@@ -292,9 +293,9 @@ void check_map(char *fname, t_data *data)
 	i = 0;
 	while(data->map.map2d[i])
 	{
-		show_with_spaces(data->map.map2d[i]);
+		// show_with_spaces(data->map.map2d[i]);
 		i++;
 	}
-	printf("map_x:%d\n", data->map.x_map);
-	printf("map_y:%d\n", data->map.y_map);
+	// printf("map_x:%d\n", data->map.x_map);
+	// printf("map_y:%d\n", data->map.y_map);
 }

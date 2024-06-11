@@ -95,11 +95,9 @@
 # define TILE_SIZE 32
 // # define MAPX 8
 // # define MAPY 8
-# define MAP_HEIGHT 10
-# define MAP_WIDTH 10
 # define FOV 66
 # define SPEED 4.2
-# define ROTATION 0.042
+# define ROTATION 0.02
 /* MINIMAP MACROS */
 # define MMAP_PIXEL_SIZE 128
 # define MMAP_VIEW_DIST 4
@@ -141,6 +139,7 @@ typedef struct s_image
 	// char 		*data;
 	char		*road;
     int		    texture_found;
+	int			tile_size;
 } t_image;
 
 typedef struct s_ray {
@@ -283,6 +282,7 @@ void		destroy_data(t_data *data);
 void 		free_map(t_map *map);
 
 // Located in *print_struct_values.c*
+void		print_map(t_map *map) ;
 void 		print_ray_info(t_ray *ray);
 void 		print_ray_texture_info(t_data *data, t_ray *ray, t_image *texture);
 void 		print_image_info(t_image *image);
@@ -314,15 +314,15 @@ int			init_custom_all(t_data *data);
 int	init_mlx_engine(t_mlx *mlx);
 // Located in *image.c*
 t_image		*allocate_image();
-int 		init_map2d(t_image *map2d, t_mlx *mlx);
+int 		init_map2d(t_image *map2d, t_mlx *mlx, int nb_tiles_x, int nb_tiles_y);
 int 		init_world(t_image *world, t_mlx *mlx);
-int			init_image(t_data *data, t_image *image, void *mlx_ptr);
+int			init_image(t_data *data, t_image *image, t_mlx *mlx);
 // Located in *keys.c*
 t_keys		*allocate_keys(void);
 // Located in *map.c*
 int			malloc_map2d(t_map *map);
 int			fill_map(t_map *map);
-int 		init_map(t_map *map);
+int 		init_map(t_map *map, int map_max_width, int map_max_height);
 // Located in *minimap.c*
 // t_minimap 	*allocate_minimap(void); 
 // Located in *player.c*
@@ -335,8 +335,8 @@ void		calculate_steps_sides(t_ray *ray, t_player *player);
 void 		init_ray(t_ray *ray, t_player *player);
 void 		init_default_ray(t_ray *ray);
 // Located in *texture.c*
-void 		init_texture_img(t_image *texture_img, void *mlx_ptr, char *path);
-void 		init_textures(t_data *data, void *mlx_ptr);
+void 		init_texture_img(t_image *texture_img, t_mlx *mlx, char *path);
+void 		init_textures(t_data *data, t_mlx *mlx);
 void		set_texture_image_road(t_image *texture_img, t_ray *ray);
 
 /* -------------------- MOVING -------------------- */
@@ -347,22 +347,22 @@ void		set_direction(t_player *player);
 // Located in *keys.c*
 int			key_release(int key, t_data *data);
 int			key_press(int key, t_data *data);
-void		key_move(t_data *data);
+void		key_move(t_data *data, int tile_size);
 // static void	wrap_mouse_position(t_data *data, int x, int y);
 // static int	mouse_motion(int x, int y, t_data *data);
 // void		listen_input(t_data *data);
 // Located in *listener.c*
 void		loop(t_data *data);
 // Located in *move.c*
-int			go_up(t_data *data);
-int			go_left(t_data *data);
-int			go_down(t_data *data);
-int			go_right(t_data *data);
-int			go_move(t_data *data);
+int			go_up(t_data *data, int tile_size);
+int			go_left(t_data *data, int tile_size);
+int			go_down(t_data *data, int tile_size);
+int			go_right(t_data *data, int tile_size);
+int			go_move(t_data *data, int tile_size);
 // Located in *player.c*
 // Located in *position.c*
 // bool is_wall(t_map *map, double x, double y);
-bool 		player_wall_collision(t_map *map, double x, double y);
+bool 		player_wall_collision(t_map *map, int tile_size, double x, double y);
 // bool	check_map_pos(t_data *data, double x, double y);
 // bool	check_wall_pos(t_data *data, double x, double y);
 // bool	check_pos(t_data *data, double x, double y);
@@ -404,7 +404,7 @@ void 		check_map(char *fname, t_data *data);
 
 // Located in *parsing.c*
 void		ft_check_file(char *fname, char *name);
-int			parsing(char *argv[], t_data *data);
+int			parsing(char *fname, t_data *data);
 
 // Located in *texture.c*
 void		save_texture_data(t_image *texture, char *line, t_mlx *mlx);
@@ -414,8 +414,8 @@ void	    found_textures_data(char *fname, t_data *data, t_mlx *mlx);
 
 // Located in *draw.c*
 void		my_mlx_pixel_put(t_image *image, int x, int y, int color);
-void		draw_vertical_lign(t_data *data);
-void 		draw_square(t_data *data, int x, int y, int color);
+void		draw_vertical_lign(t_data *data, int tile_size);
+void 		draw_square(t_data *data, int tile_size, int x, int y, int color);
 void 		draw_rays_on_map(t_data *data, t_player *player, t_mlx *mlx);
 
 // Located in *frame.c"

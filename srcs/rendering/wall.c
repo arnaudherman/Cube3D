@@ -1,5 +1,37 @@
 #include "cub3d.h"
 
+// get_pixel_color
+// int get_pixel_color(t_image *img, int x, int y)
+// {
+// 	char *dst;
+
+// 	dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
+// 	return (*(unsigned int *)dst);
+// }
+
+// void draw_sprite_image(t_image *texture_img, t_image *surface_img, int x, int y)
+// {
+// 	int i;
+// 	int j;
+// 	int color;
+
+// 	i = 0;
+// 	while (i < texture_img->width)
+// 	{
+// 		j = 0;
+// 		while (j < texture_img->height)
+// 		{
+// 			color = get_pixel_color(texture_img, i, j);
+// 			if (color != 0)
+// 				my_mlx_pixel_put(surface_img, x + i, y + j, color);
+// 			j++;
+// 		}
+// 		i++;
+// 	}
+// }
+
+
+
 void	set_wall(t_data *data, t_ray *ray)
 {
 	int		text_x;
@@ -34,11 +66,14 @@ void	set_wall(t_data *data, t_ray *ray)
 	if ((ray->side == 2 || ray->side == 3) && ray->dir_y < 0)
 		text_x = texture_img->width - text_x - 1;
 	ray->x_text = text_x;
-	set_texture_image_road(texture_img, ray);
-	print_image_info(texture_img); // DEBUG
+	// set_texture_image_road(texture_img, ray);
+	// print_image_info(texture_img); // DEBUG
 	// exit(1); // DEBUG
 	set_texture_on_image(data, texture_img, ray);
+	// draw_sprite_image(texture_img, data->world, 1000, 100);
 }
+
+
 
 void	draw_col(t_data *data, t_mlx *mlx, t_ray *ray)
 {
@@ -56,7 +91,7 @@ void	draw_col(t_data *data, t_mlx *mlx, t_ray *ray)
 			ray->wall_dist * ray->dir_x;
 	ray->wall_x -= floor(ray->wall_x);
 	set_wall(data, ray);
-	set_color_on_image(data, ray);
+	// set_color_on_image(data, ray);
 }
 
 
@@ -77,7 +112,6 @@ void	draw_col(t_data *data, t_mlx *mlx, t_ray *ray)
 //             color = 0x906c7b;
 //         else if (ray->side == 3)
 //             color = 0xc1ac91;
-
 //         my_mlx_pixel_put(data->world, ray->x, y, color);
 //         y++;
 //     }

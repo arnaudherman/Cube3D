@@ -20,18 +20,18 @@
 //     return map;
 // }
 
-char map_data[MAP_HEIGHT][MAP_WIDTH] = {
-    {'1', '1', '1', '1', '1', '1', '1', '1', '1', '1'},
-    {'1', '0', '0', '0', '0', '0', '1', '0', '0', '1'},
-    {'1', '0', '1', '0', '1', '1', '1', '1', '0', '1'},
-    {'1', '0', '1', '0', '0', '0', '0', '1', '0', '1'},
-    {'1', '0', '1', '1', '1', '1', '0', '1', '0', '1'},
-    {'1', '0', '1', '0', '1', '1', '0', '1', '0', '1'},
-    {'1', '0', '0', '0', '0', '0', '0', '1', '0', '1'},
-    {'1', '0', '1', '1', '1', '1', '1', '1', '0', '1'},
-    {'1', '0', '0', '0', '0', '0', '0', '0', '0', '1'},
-    {'1', '1', '1', '1', '1', '1', '1', '1', '1', '1'}
-};
+// char map_data[MAP_HEIGHT][MAP_WIDTH] = {
+//     {'1', '1', '1', '1', '1', '1', '1', '1', '1', '1'},
+//     {'1', '0', '0', '0', '0', '0', '1', '0', '0', '1'},
+//     {'1', '0', '1', '0', '1', '1', '1', '1', '0', '1'},
+//     {'1', '0', '1', '0', '0', '0', '0', '1', '0', '1'},
+//     {'1', '0', '1', '1', '1', '1', '0', '1', '0', '1'},
+//     {'1', '0', '1', '0', '1', '1', '0', '1', '0', '1'},
+//     {'1', '0', '0', '0', '0', '0', '0', '1', '0', '1'},
+//     {'1', '0', '1', '1', '1', '1', '1', '1', '0', '1'},
+//     {'1', '0', '0', '0', '0', '0', '0', '0', '0', '1'},
+//     {'1', '1', '1', '1', '1', '1', '1', '1', '1', '1'}
+// };
 
 int malloc_map2d(t_map *map)
 {
@@ -43,57 +43,56 @@ int malloc_map2d(t_map *map)
     return 0;
 }
 
-int fill_map(t_map *map)
-{
-    int i;
+// int fill_map(t_map *map)
+// {
+//     int i;
 
-    // Allocation de mémoire pour chaque ligne de la carte 2D
-    for (i = 0; i < map->h_map; i++) {
-        map->map2d[i] = (char *)malloc((map->w_map + 1) * sizeof(char));
-        if (map->map2d[i] == NULL) {
-            perror("fail in fill_map\n");
-            // Libérer la mémoire allouée pour les lignes précédentes
-            while (i > 0) {
-                free(map->map2d[--i]);
-            }
-            free(map->map2d);
-            return -1;
-        }
-    }
+//     // Allocation de mémoire pour chaque ligne de la carte 2D
+//     for (i = 0; i < map->h_map; i++) {
+//         map->map2d[i] = (char *)malloc((map->w_map + 1) * sizeof(char));
+//         if (map->map2d[i] == NULL) {
+//             perror("fail in fill_map\n");
+//             // Libérer la mémoire allouée pour les lignes précédentes
+//             while (i > 0) {
+//                 free(map->map2d[--i]);
+//             }
+//             free(map->map2d);
+//             return -1;
+//         }
+//     }
+//     for (i = 0; i < map->h_map; i++) {
+//         for (int j = 0; j < map->w_map; j++) {
+//             map->map2d[i][j] = map_data[i][j];
+//         }
+//         map->map2d[i][map->w_map] = '\0';
+//     }
+    
 
-    for (i = 0; i < map->h_map; i++) {
-        for (int j = 0; j < map->w_map; j++) {
-            map->map2d[i][j] = map_data[i][j];
-        }
-        map->map2d[i][map->w_map] = '\0';
-    }
-
-    return 0;
-}
+//     return 0;
+// }
 
 
-int init_map(t_map *map)
-{
-	int i;
-    map->f_spawn = 0;
-    map->w_map = MAP_WIDTH;
-    map->h_map = MAP_HEIGHT;
+// int init_map(t_map *map, int map_max_width, int map_max_height)
+// {
+// 	int i;
+//     map->f_spawn = 0;
+//     map->w_map = map_max_width;
+//     map->h_map = map_max_height;
+	
 
-    if (malloc_map2d(map) == -1) {
-        perror("Failed to allocate memory for map2d\n");
-        return -1;
-    }
-    if (fill_map(map) != 0) {
-		i = -1;
-		while (++i < map->h_map)
-            free(map->map2d[i]);
-        free(map->map2d);
-        return -1;
-    }
-	map->x_map = 0;
-    map->y_map = 0;
-    map->color = 0xC03865; // majenta
-	// map->ray = allocate_ray();
-
-    return 0;
-}
+//     if (malloc_map2d(map) == -1) {
+//         perror("Failed to allocate memory for map2d\n");
+//         return -1;
+//     }
+//     if (fill_map(map) != 0) {
+// 		i = -1;
+// 		while (++i < map->h_map)
+//             free(map->map2d[i]);
+//         free(map->map2d);
+//         return -1;
+//     }
+// 	map->x_map = 0;
+//     map->y_map = 0;
+//     map->color = 0xC03865;
+//     return 0;
+// }
