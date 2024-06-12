@@ -26,10 +26,7 @@ void	raycasting(t_data *data, t_player *player, t_mlx *mlx)
 	x = 0;
 	ray.z_index = (double *)malloc(sizeof(double) * mlx->win_width);
 	if (!ray.z_index)
-	{
 		perror("Malloc z_index failed in raycasting();\n");
-		return (NULL);
-	}
 	ft_bzero(ray.z_index, sizeof(double) * mlx->win_width);
 	while (x < mlx->win_width)
 	{
