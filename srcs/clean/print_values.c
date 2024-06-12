@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-void	print_map(t_map *map) 
+void	print_map(t_map *map)
 {
 	int	i;
 
@@ -28,7 +28,7 @@ void	print_map(t_map *map)
 		printf("  map2d is NULL\n");
 }
 
-void	print_ray_info(t_ray *ray) 
+void	print_ray_info(t_ray *ray)
 {
 	printf("Ray Info:\n");
 	printf("x: %d\n", ray->x);
@@ -45,7 +45,7 @@ void	print_ray_info(t_ray *ray)
 	printf("x_text: %d\n", ray->x_text);
 	printf("y_text: %d\n", ray->y_text);
 	printf("wall_x: %f\n", ray->wall_x);
-	printf("z_index: %p\n", (void*)ray->z_index);
+	printf("z_index: %p\n", (void *)ray->z_index);
 	printf("camera_x: %f\n", ray->camera_x);
 	printf("wall_dist: %f\n", ray->wall_dist);
 	printf("dir_x: %f\n", ray->dir_x);
@@ -56,29 +56,33 @@ void	print_ray_info(t_ray *ray)
 	printf("dy: %f\n", ray->dy);
 }
 
-void print_ray_texture_info(t_data *data, t_ray *ray, t_image *texture)
+void	print_ray_texture_info(t_data *data, t_ray *ray, t_image *texture)
 {
-    printf("Ray Coordinates: x = %d, y = %d\n", ray->x, ray->y);
-    printf("Texture Coordinates: x_text = %d, y_text = %d\n", ray->x_text, ray->y_text);
-    printf("Data Image Line Length: %d\n", data->image->line_length);
-    printf("Data Image Bits Per Pixel: %d\n", data->image->bits_per_pixel);
-    printf("Texture Line Length: %d\n", texture->line_length);
-    printf("Texture Bits Per Pixel: %d\n", texture->bits_per_pixel);
-    int data_index = ray->y * data->image->line_length + ray->x * 
-					data->image->bits_per_pixel / 8;
-    int texture_index = ray->y_text * texture->line_length + ray->x_text 
-					* (texture->bits_per_pixel / 8);
-    printf("Data Index: %d\n", data_index);
-    printf("Texture Index: %d\n", texture_index); 
+	int	data_index;
+	int	texture_index;
+
+	printf("Ray Coordinates: x = %d, y = %d\n", ray->x, ray->y);
+	printf("Texture Coordinates: x_text = %d, y_text = %d\n",
+		ray->x_text, ray->y_text);
+	printf("Data Image Line Length: %d\n", data->image->line_length);
+	printf("Data Image Bits Per Pixel: %d\n", data->image->bits_per_pixel);
+	printf("Texture Line Length: %d\n", texture->line_length);
+	printf("Texture Bits Per Pixel: %d\n", texture->bits_per_pixel);
+	data_index = ray->y * data->image->line_length + ray->x
+		* data->image->bits_per_pixel / 8;
+	texture_index = ray->y_text * texture->line_length + ray->x_text
+		* (texture->bits_per_pixel / 8);
+	printf("Data Index: %d\n", data_index);
+	printf("Texture Index: %d\n", texture_index);
 }
 
-void print_image_info(t_image *image) 
+void	print_image_info(t_image *image)
 {
-    if (image == NULL) 
-    {
-        printf("Image structure is NULL\n");
-        return;
-    }
+	if (image == NULL)
+	{
+		printf("Image structure is NULL\n");
+		return ;
+	}
 	printf("Image Info:\n");
 	printf("  Width: %d\n", image->width);
 	printf("  Height: %d\n", image->height);
@@ -87,6 +91,6 @@ void print_image_info(t_image *image)
 	printf("  Endian: %d\n", image->endian);
 	printf("  Img pointer: %p\n", image->img);
 	printf("  DATA Addr: %p\n", image->addr);
-	printf("  Road: %s\n", image->road ? image->road : "NULL");
+	printf("  Road: %s\n", image->road);
 	printf("  Texture found: %d\n", image->texture_found);
 }
