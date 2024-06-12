@@ -1,27 +1,26 @@
 #include "cub3d.h"
 
-int	main(int ac, char **av) 
+int	main(int ac, char **av)
 {
 	t_data	*data;
 
-	if (ac != 2) {
-        perror("There must be precisely 2 arguments\n");
-        return EXIT_FAILURE;
-    }
-	data = malloc(sizeof(t_data));
-    if (!data) {
-        fprintf(stderr, "Failed to malloc data in main\n");
-        exit(EXIT_FAILURE);
-    }
-	if (init_default_all(data) || init_custom_all(data) != 0) {
-        perror("Failed to init struct in main\n");
-        return -1;
-    }
-	if (parsing(av[1], data) != 0)
+	if (ac != 2)
 	{
-		perror("Parsing failed sorry I'm out!\n");
-		return -1;
+		perror("There must be precisely 2 arguments\n");
+		return (EXIT_FAILURE);
 	}
+	data = malloc(sizeof(t_data));
+	if (!data)
+	{
+		fprintf(stderr, "Failed to malloc data in main\n");
+		exit(EXIT_FAILURE);
+	}
+	if (init_default_all(data) || init_custom_all(data) != 0)
+	{
+		perror("Failed to init struct in main\n");
+		return (-1);
+	}
+	parsing(av[1], data);
 	init_map2d(data->map2d, &data->mlx, data->map.x_map, data->map.y_map);
 	loop(data);
 	free_all(data);
