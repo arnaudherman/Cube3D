@@ -30,28 +30,15 @@ int	get_pixel_color(t_image *img, int x, int y)
 	return (*(unsigned int *)dst);
 }
 
-//  
 void	set_texture_on_image(t_data *data, t_image *texture, t_ray *ray)
 {
-	// int		x_texture_pos;
 	int		y_texture_pos;
 	int		y;
 	float	relative_height;
 	int		color;
 
-
 	ray->y = ray->draw_start;
-	// position the ray hit the wall in the tile
-	// ray->wall_x = ray->side ? data->player->pos_x + ray->perp_wall_dist * ray->ray_dir_x
-	
-	// ray->wall_x = (data->player->x_pos + ray->ray_length
-	// 			* cos(ray->ray_angle)) / 50;
-	// ray->wall_x -= floor(ray->wall_x);
-	// ray->tex_x = (int)((ray->wall_x) * (double)ray->texture.size.x);
-	// x_texture_pos = ray->x_text;
-
 	y = ray->draw_start;
-	// 	y < ray->draw_end);
 	while (y < ray->draw_end)
 	{
 		relative_height = (WINDOW_HEIGHT / ray->line_height);

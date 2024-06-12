@@ -4,7 +4,8 @@ t_player	*allocate_player(void)
 {
 	t_player	*player;
 
-	if (!(player = (t_player *)calloc(sizeof(t_player), 1)))
+	player = (t_player *)ft_calloc(1, sizeof(t_player));
+	if (!player)
 		return (NULL);
 	return (player);
 }
@@ -22,7 +23,6 @@ int	init_player(t_player *player)
 	player->y_dir = 0;
 	player->size = 10;
 	player->color = 0x992800;
-	// DRAW PLAYER VALUES
 	player->x_center = 0;
 	player->y_center = 0;
 	player->global_x = 0;

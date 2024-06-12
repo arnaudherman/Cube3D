@@ -377,7 +377,7 @@ void		draw_vertical_lign(t_data *data, int tile_size);
 // Located in *frame.c"
 void 		draw_minimap_bg(t_image *map2d, int color);
 void 		draw_world_bg(t_image *world, int color);
-int			draw_player(t_image *image, t_player *player);
+void		draw_player(t_image *image, t_player *player);
 int			render_next_frame(t_data *data);
 
 // Located in *map.c*
