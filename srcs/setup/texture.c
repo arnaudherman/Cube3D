@@ -30,35 +30,34 @@ int	get_pixel_color(t_image *img, int x, int y)
 	return (*(unsigned int *)dst);
 }
 
-//  texture->width / data->map2d->tile_size * (ray->x % data->map2d->tile_size); // THIS HAS PROBLEM
+//  
 void	set_texture_on_image(t_data *data, t_image *texture, t_ray *ray)
 {
-	int		x_texture_pos;
+	// int		x_texture_pos;
 	int		y_texture_pos;
 	int		y;
 	float	relative_height;
 	int		color;
 
+
 	ray->y = ray->draw_start;
-	x_texture_pos = (ray->wall_x - floor(ray->wall_x)) * texture->width;
-	printf("x_texture_pos : %d   ++ ray->x %d\n", x_texture_pos, ray->x);
+	// position the ray hit the wall in the tile
+	// ray->wall_x = ray->side ? data->player->pos_x + ray->perp_wall_dist * ray->ray_dir_x
+	
+	// ray->wall_x = (data->player->x_pos + ray->ray_length
+	// 			* cos(ray->ray_angle)) / 50;
+	// ray->wall_x -= floor(ray->wall_x);
+	// ray->tex_x = (int)((ray->wall_x) * (double)ray->texture.size.x);
+	// x_texture_pos = ray->x_text;
+
 	y = ray->draw_start;
-	printf("y, ray->draw_end : %d, %d %d\n", y, ray->draw_end,
-		y < ray->draw_end);
+	// 	y < ray->draw_end);
 	while (y < ray->draw_end)
 	{
 		relative_height = (WINDOW_HEIGHT / ray->line_height);
 		y_texture_pos = (y - ray->draw_start) * relative_height
 			* texture->height / WINDOW_HEIGHT;
-		if (y % 100 == 0)
-		{
-			printf("y_texture_pos : %d\t\t texture->height %d\n",
-				y_texture_pos, texture->height);
-			printf("ray->draw_end %d, ray->draw_start %d\n",
-				ray->draw_end, ray->draw_start);
-			printf("y %d\n", y);
-		}
-		color = get_pixel_color(texture, x_texture_pos, y_texture_pos);
+		color = get_pixel_color(texture, ray->x_text, y_texture_pos);
 		my_mlx_pixel_put(data->world, ray->x, y, color);
 		y++;
 	}

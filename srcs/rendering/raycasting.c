@@ -1,65 +1,16 @@
 #include "cub3d.h"
 
-void	dda(t_data *data, t_map *map, t_ray *ray)
-{
-	int	map_x;
-	int	map_y;
-
-	while (ray->hit == 0)
-	{
-		if (ray->sx < ray->sy)
-		{
-			ray->sx += ray->dx;
-			ray->x_map += ray->x_step;
-			if (ray->x_step == -1)
-				ray->side = 0;
-			else
-				ray->side = 1;
-		}
-		else
-		{
-			ray->sy += ray->dy;
-			ray->y_map += ray->y_step;
-			if (ray->y_step == -1)
-				ray->side = 2;
-			else
-				ray->side = 3;
-		}
-		if (ray->x_map >= 0 && ray->x_map < map->x_map * data->map2d->tile_size
-			&& ray->y_map >= 0 && ray->y_map < map->y_map
-			* data->map2d->tile_size)
-		{
-			map_x = ray->x_map / data->map2d->tile_size;
-			map_y = ray->y_map / data->map2d->tile_size;
-			if (map->map2d[map_y][map_x] == '1')
-				ray->hit = 1;
-			else
-				my_mlx_pixel_put(data->map2d, ray->x_map,
-					ray->y_map, 0xFF0000);
-		}
-		else
-		{
-			printf("map->x_map = %d, map->y_map = %d\n", map->x_map, map->y_map);
-			printf("ray->y_map = %d, ray->x_map = %d\n", ray->y_map, ray->x_map);
-			printf("map->map2d[ray->y_map][ray->x_map] = %d\n",
-				map->map2d[ray->y_map / data->map2d->tile_size][ray->x_map
-				/ data->map2d->tile_size]);
-			exit(1);
-		}
-	}
-}
-
 // TO DO : Check < 20 et * 10 cause magic numbers
 void	get_perp_and_height(t_ray *ray, t_player *player, t_mlx *mlx)
 {
-	if (ray->side == 0)
+	if (ray->side == 0 || ray->side == 1)
 		ray->wall_dist = (ray->x_map - player->x_pos
 				+ (1 - ray->x_step) / 2) / ray->dir_x;
 	else
 		ray->wall_dist = (ray->y_map - player->y_pos
 				+ (1 - ray->y_step) / 2) / ray->dir_y;
-	ray->wall_dist *= cos(ray->camera_x * M_PI / 180);
-	ray->line_height = (int)(mlx->win_height / ray->wall_dist) * 10;
+	// ray->wall_dist *= cos(ray->camera_x * M_PI / 180);
+	ray->line_height = (int)(mlx->win_height / ray->wall_dist) * WALL_HEIGHT_MULT;
 	ray->draw_start = -ray->line_height / 2 + mlx->win_height / 2;
 	if (ray->draw_start < 20)
 		ray->draw_start = 0;

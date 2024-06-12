@@ -97,7 +97,8 @@
 // # define MAPY 8
 # define FOV 66
 # define SPEED 4.2
-# define ROTATION 0.02
+# define ROTATION 0.03
+# define WALL_HEIGHT_MULT 10
 /* MINIMAP MACROS */
 # define MMAP_PIXEL_SIZE 128
 # define MMAP_VIEW_DIST 4
@@ -110,7 +111,6 @@
 # define FLOOR 0xE6E6E6
 # define CEILING 0x404040
 # define TEXTURE 42
-# define WALL_HEIGHT (WINDOW_HEIGHT / 2)
 /* KEYS CONSTANTS */
 # define ESC_KEY 53
 # define KEY_W 13
@@ -181,17 +181,29 @@ typedef struct s_map {
 
 typedef struct s_player
 {
- 	double  	x_pos; // in pixels
- 	double  	y_pos;
-	double		x_dir;
-	double		y_dir;
-	double		speed;
-	float		angle; // in radians
-	float 		fov; // in radians
- 	int  		rotate;
-	char 		direction;
-	double	 	size;
-	unsigned int color;
+ 	double  		x_pos; // in pixels
+ 	double  		y_pos;
+	double			x_dir;
+	double			y_dir;
+	double			speed;
+	float			angle; // in radians
+	float 			fov; // in radians
+ 	int  			rotate;
+	char 			direction;
+	double	 		size;
+	unsigned int	color;
+	int				x_center;
+	int 			y_center;
+	int				global_x;
+	int				global_y;
+	int				local_x;
+	int				local_y;
+	int				x;
+	int				y;
+	int				x_end;
+	int				y_end;
+	int				x_start;
+	int				y_start;
 } t_player;
 
 typedef struct	s_keys
@@ -352,6 +364,11 @@ void	    found_textures_data(char *fname, t_data *data, t_mlx *mlx);
 
 /* -------------------- RENDERING -------------------- */
 
+// Located in *dda.c*
+void		update_ray_coordinates(t_ray *ray);
+void		check_wall_hit(t_data *data, t_map *map, t_ray *ray);
+void		check_coordinates(t_data *data, t_map *map, t_ray *ray);
+void		dda(t_data *data, t_map *map, t_ray *ray);
 // Located in *draw.c*
 void		my_mlx_pixel_put(t_image *image, int x, int y, int color);
 void 		draw_tile(t_image *map2d, int x, int y);
@@ -371,7 +388,6 @@ void 		draw_horizontal_line(t_image *image, int start_x, int y, int color);
 int 		draw_map(t_image *map2d, t_map *map);
 
 // Located in *raycasting.c*
-void		dda(t_data *data, t_map *map, t_ray *ray);
 void		get_perp_and_height(t_ray *ray, t_player *player, t_mlx *mlx);
 void 		raycasting(t_data *data, t_player *player, t_mlx *mlx);
 

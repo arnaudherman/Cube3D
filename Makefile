@@ -27,7 +27,8 @@ SRCS += srcs/parsing/color.c \
         srcs/parsing/parsing.c \
         srcs/parsing/texture.c
 
-SRCS += srcs/rendering/draw.c \
+SRCS += srcs/rendering/dda.c \
+		srcs/rendering/draw.c \
 		srcs/rendering/frame.c \
         srcs/rendering/map.c \
         srcs/rendering/raycasting.c \

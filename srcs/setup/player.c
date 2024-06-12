@@ -17,10 +17,23 @@ int	init_player(t_player *player)
 	player->fov = FOV;
 	player->rotate = ROTATION;
 	player->direction = 'N';
-	player->angle = 2.0f;
+	player->angle = 0;
 	player->x_dir = 1;
 	player->y_dir = 0;
 	player->size = 10;
 	player->color = 0x992800;
+	// DRAW PLAYER VALUES
+	player->x_center = 0;
+	player->y_center = 0;
+	player->global_x = 0;
+	player->global_y = 0;
+	player->local_x = 0;
+	player->local_y = 0;
+	player->x = 0;
+	player->y = 0;
+	player->x_start = 0;
+	player->y_start = 0;
+	player->x_end = 0;
+	player->y_end = 0;
 	return (0);
 }

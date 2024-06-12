@@ -25,7 +25,7 @@ void	draw_world_bg(t_image *world, int color)
 
 	y = 0;
 	while (y < WINDOW_HEIGHT / 2)
-	{
+	{ 
 		x = 0;
 		while (x < WINDOW_WIDTH)
 		{
@@ -46,41 +46,49 @@ void	draw_world_bg(t_image *world, int color)
 	}
 }
 
-int	draw_player(t_image *image, t_player *player)
+int draw_player(t_image *image, t_player *player)
 {
-    int x, y;
-    int x_center = (int)player->x_pos;
-    int y_center = (int)player->y_pos;
-    int half_size = player->size / 2;
+    player->x_center = (int)player->x_pos;
+    player->y_center = (int)player->y_pos;
+    player->x_start = player->x_center - player->size / 2;
+    player->y_start = player->y_center - player->size / 2;
+    player->x_end = player->x_center + player->size / 2;
+    player->y_end = player->y_center + player->size / 2;
+    player->y = player->y_start; 
+    while (player->y < player->y_end)
+    {
+        player->x = player->x_start;
+        while (player->x < player->x_end)
+        {
+            player->local_x = player->x - player->x_center;
+            player->local_y =player->y - player->y_center;
 
-    int x_start = x_center - half_size;
-    int y_start = y_center - half_size;
-    int x_end = x_center + half_size;
-    int y_end = y_center + half_size;
+            player->global_x = player->local_x + player->x_center;
+            player->global_y = player->local_y + player->y_center;
 
-    // Dessiner le joueur en parcourant les pixels du rectangle
-    for (y = y_start; y < y_end; y++) {
-        for (x = x_start; x < x_end; x++) {
-            // Calcul des coordonnées du pixel dans le repère local du joueur
-            // en soustrayant les coordonnées du centre du joueur
-            int local_x = x - x_center;
-            int local_y = y - y_center;
-
-            // Rotation des coordonnées locales en fonction de l'angle du joueur
-            int rotated_x = (int)(local_x * cos(player->angle) - local_y * sin(player->angle));
-            int rotated_y = (int)(local_x * sin(player->angle) + local_y * cos(player->angle));
-
-            // Ajout des coordonnées du centre du joueur pour obtenir les coordonnées globales
-            int global_x = rotated_x + x_center;
-            int global_y = rotated_y + y_center;
-
-            // Dessiner le pixel seulement s'il est à l'intérieur du rectangle représentant le joueur
-            if (global_x >= x_start && global_x < x_end && global_y >= y_start && global_y < y_end) {
-                my_mlx_pixel_put(image, global_x, global_y, player->color);
-            }
+            if (player->global_x >= player->x_start && player->global_x < player->x_end && player->global_y >= player->y_start && player->global_y < player->y_end)
+                my_mlx_pixel_put(image, player->global_x, player->global_y, player->color);
+             player->x++;
         }
+        player->y++;
     }
     return 0;
+}
+
+
+#include <time.h>
+double get_elapsed_time() // DEBUG stuff
+{
+    static clock_t start_time = 0;
+    // if (start_time == 0) {
+    //     start_time = clock();
+    //     return 0.0;
+    // } else {
+        clock_t current_time = clock();
+        double elapsed_time = (double)(current_time - start_time) / CLOCKS_PER_SEC;
+		start_time = clock();
+        return elapsed_time;
+    // }
 }
 
 // Use mlx_put_image_to_window() with a recycled image that you have cleared
@@ -91,7 +99,6 @@ int	render_next_frame(t_data *data)
 	memset(data->world->addr, 0, WINDOW_WIDTH * WINDOW_HEIGHT
 		* (data->world->bits_per_pixel / 8));
 	draw_map(data->map2d, &data->map);
-	printf("bien vu\n"); // DEBUG
 	key_move(data, data->map2d->tile_size);
 	draw_player(data->map2d, data->player);
 	draw_world_bg(data->world, 0x0057B8);
@@ -100,5 +107,26 @@ int	render_next_frame(t_data *data)
 		data->world->img, 0, 0);
 	mlx_put_image_to_window(data->mlx.mlx_ptr, data->mlx.mlx_win_ptr,
 		data->map2d->img, 20, 20);
+	// fps 
+	
+	// DEBUG stuff
+	static	int all_fps;
+	static	int frame_count;
+	static	int total_frame_count;
+	static	int total_fps_count;
+	double dt = get_elapsed_time();
+	double fps = 1.0 / dt;
+	all_fps += fps;
+	frame_count++;
+	total_frame_count++;
+	if (frame_count == 100)
+	{
+		total_fps_count += all_fps;
+		printf("last %d frames avrage fps: %d\t(total: %d)\t(dt: %f)\n", frame_count, all_fps / frame_count, total_fps_count / total_frame_count, dt);
+		all_fps = 0;
+		frame_count = 0;
+	}
+
+
 	return (0);
 }

@@ -29,12 +29,17 @@ void	draw_col(t_data *data, t_mlx *mlx, t_ray *ray)
 		ray->draw_start = 0;
 	if (ray->draw_end >= mlx->win_height)
 		ray->draw_end = mlx->win_height - 1;
+	// double ray_angle = atan2(ray->dir_y, ray->dir_x);
 	if (ray->side == 0 || ray->side == 1)
-		ray->wall_x = data->player->y_pos
-			+ ray->wall_dist * ray->dir_y;
+		// ray->wall_x = (data->player->y_pos
+		// 	- ray->wall_dist) * sin(ray_angle) / data->map2d->tile_size;
+		ray->wall_x = (data->player->y_pos
+			+ ray->wall_dist * ray->dir_y) / data->map2d->tile_size;
 	else
-		ray->wall_x = data->player->x_pos
-			+ ray->wall_dist * ray->dir_x;
+		// ray->wall_x = (data->player->x_pos
+		// 	- ray->wall_dist) * cos(ray_angle) / data->map2d->tile_size;
+		ray->wall_x = (data->player->x_pos
+			+ ray->wall_dist * ray->dir_x)  / data->map2d->tile_size;
 	ray->wall_x -= floor(ray->wall_x);
 	set_wall(data, ray);
 }

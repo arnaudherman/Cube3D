@@ -26,8 +26,7 @@ void	calculate_steps_sides(t_ray *ray, t_player *player)
 	else
 	{
 		ray->x_step = 1;
-		ray->sx = (ray->x_map - player->x_pos + 1.0)
-			* ray->dx;
+		ray->sx = (ray->x_map + 1.0 - player->x_pos) * ray->dx;
 	}
 	if (ray->dir_y < 0)
 	{
@@ -37,8 +36,7 @@ void	calculate_steps_sides(t_ray *ray, t_player *player)
 	else
 	{
 		ray->y_step = 1;
-		ray->sy = (ray->y_map - player->y_pos + 1.0)
-			* ray->dy;
+		ray->sy = (ray->y_map + 1.0 - player->y_pos) * ray->dy;
 	}
 }
 
@@ -58,26 +56,7 @@ void	init_ray(t_ray *ray, t_player *player)
 		+ player->y_dir * cos(angle);
 	ray->dx = fabs(1 / ray->dir_x);
 	ray->dy = fabs(1 / ray->dir_y);
-	if (ray->dir_x < 0)
-	{
-		ray->x_step = -1;
-		ray->sx = (player->x_pos - ray->x_map) * ray->dx;
-	}
-	else
-	{
-		ray->x_step = 1;
-		ray->sx = (ray->x_map + 1.0 - player->x_pos) * ray->dx;
-	}
-	if (ray->dir_y < 0)
-	{
-		ray->y_step = -1;
-		ray->sy = (player->y_pos - ray->y_map) * ray->dy;
-	}
-	else
-	{
-		ray->y_step = 1;
-		ray->sy = (ray->y_map + 1.0 - player->y_pos) * ray->dy;
-	}
+	calculate_steps_sides(ray, player);
 	ray->hit = 0;
 }
 
@@ -98,7 +77,7 @@ void	init_default_ray(t_ray *ray)
 	ray->y_text = 0;
 	ray->wall_x = 0.0;
 	ray->z_index = NULL;
-	ray->camera_x = 0.0;
+	ray->camera_x = 1.0;
 	ray->wall_dist = 0.0;
 	ray->dir_x = 0.0;
 	ray->dir_y = 0.0;

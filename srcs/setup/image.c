@@ -18,6 +18,8 @@ t_image	*allocate_image(void)
 	image->line_length = 0;
 	image->endian = 0;
 	image->road = NULL;
+	image->texture_found = 0;
+	image->tile_size = 0;
 	return (image);
 }
 
@@ -37,7 +39,7 @@ int	init_map2d(t_image *map2d, t_mlx *mlx, int nb_tiles_x, int nb_tiles_y)
 	}
 	map2d->addr = mlx_get_data_addr(map2d->img, &(map2d->bits_per_pixel),
 			&(map2d->line_length), &(map2d->endian));
-	if (map2d->addr = NULL)
+	if (map2d->addr == NULL)
 	{
 		perror("Failed to get map2d data address\n");
 		mlx_destroy_image(mlx->mlx_ptr, map2d->img);
