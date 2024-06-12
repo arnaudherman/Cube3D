@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bbessard <bbessard@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/12 15:59:33 by bbessard          #+#    #+#             */
+/*   Updated: 2024/06/12 16:18:11 by bbessard         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_H
 # define CUB3D_H
 
@@ -9,11 +21,9 @@
 # include <stdio.h>
 # include <stdbool.h>
 # include <fcntl.h>
-// # include "../minilibx/linux/mlx.h"
 # include "../minilibx/mac/mlx.h"
 # include "../libft/libft.h"
 # include "../ft_printf/include/ft_printf.h"
-# include "../include/colors.h"
 
 /* /\_/\_/\_/\_/\_/\_/\_/\_/\_/\_ MACRO _/\_/\_/\_/\_/\_/\_/\_/\_/\_/\ */
 
@@ -93,8 +103,6 @@
 # define WINDOW_WIDTH 1920
 # define WINDOW_HEIGHT 1080
 # define TILE_SIZE 32
-// # define MAPX 8
-// # define MAPY 8
 # define FOV 66
 # define SPEED 4.2
 # define ROTATION 0.03
@@ -130,70 +138,71 @@
 typedef struct s_image
 {
 	int			width;
-	int 		height;
+	int			height;
 	int			bits_per_pixel;
 	int			line_length;
 	int			endian;
-	void		*img; // Here's my pointer
+	void		*img;
 	char		*addr;
-	// char 		*data;
 	char		*road;
-    int		    texture_found;
+	int			texture_found;
 	int			tile_size;
-} t_image;
+}	t_image;
 
-typedef struct s_ray {
-    int 		x;
-    int 		y;
-    int     	x_map;
-    int      	y_map;
-    int      	x_step;
-    int      	y_step;
+typedef struct s_ray
+{
+	int			x;
+	int			y;
+	int			x_map;
+	int			y_map;
+	int			x_step;
+	int			y_step;
 	int			hit;
-    int 		side;
-    int 		line_height;
-    int 		draw_start;
-	int 		draw_end;
-	int 		x_text;
-	int 		y_text;
-	double 		wall_x;
-	double 		*z_index;
-	double 		camera_x;
-	double 		wall_dist;
-	double 		dir_x;
-    double 		dir_y;
-	double 		sx; // side distance
-	double 		sy;
-	double 		dx; // delta distance
-    double 		dy;
-} t_ray;
+	int			side;
+	int			line_height;
+	int			draw_start;
+	int			draw_end;
+	int			x_text;
+	int			y_text;
+	double		wall_x;
+	double		*z_index;
+	double		camera_x;
+	double		wall_dist;
+	double		dir_x;
+	double		dir_y;
+	double		sx;
+	double		sy;
+	double		dx;
+	double		dy;
+}	t_ray;
 
-typedef struct s_map {
-    int			f_spawn;
-    int			w_map;
-    int 		h_map;
-	char 		**map2d;
-    int 		x_map;
-    int 		y_map;
-	unsigned int color;
-	t_ray  		*ray;
-} t_map;
+typedef struct s_map
+{
+	int				f_spawn;
+	int				w_map;
+	int				h_map;
+	char			**map2d;
+	int				x_map;
+	int				y_map;
+	unsigned int	color;
+	t_ray			*ray;
+}	t_map;
 
 typedef struct s_player
 {
- 	double  		x_pos; // in pixels
- 	double  		y_pos;
+	double			x_pos;
+	double			y_pos;
 	double			x_dir;
 	double			y_dir;
 	double			speed;
-	float			angle; // in radians
-	float 			fov; // in radians
- 	int  			rotate;
-	char 			direction;
-	double	 		size;
+	float			angle;
+	float			fov;
+	int				rotate;
+	char			direction;
+	double			size;
 	unsigned int	color;
 	int				x_center;
-	int 			y_center;
+	int				y_center;
 	int				global_x;
 	int				global_y;
 	int				local_x;
@@ -204,9 +213,9 @@ typedef struct s_player
 	int				y_end;
 	int				x_start;
 	int				y_start;
-} t_player;
+}	t_player;
 
-typedef struct	s_keys
+typedef struct s_keys
 {
 	int	w;
 	int	a;
@@ -215,62 +224,61 @@ typedef struct	s_keys
 	int	esc;
 	int	left;
 	int	right;
-} t_keys;
+}	t_keys;
 
 typedef struct s_color_info
-	{
-		char			*string_color;
-		char			*fcolor;
-		char 			*ccolor;
-		int				final_color;
-		int				int_r;
-		int				int_g;
-		int				int_b;
-		int				found_color;
-		int				floor;
-		unsigned long	floor_hexa;
-		int				ceiling;
-		unsigned long	ceiling_hexa;
-} t_color_info;
-typedef struct	s_mlx
+{
+	char			*string_color;
+	char			*fcolor;
+	char			*ccolor;
+	int				final_color;
+	int				int_r;
+	int				int_g;
+	int				int_b;
+	int				found_color;
+	int				floor;
+	unsigned long	floor_hexa;
+	int				ceiling;
+	unsigned long	ceiling_hexa;
+}	t_color_info;
+typedef struct s_mlx
 {
 	int			fd;
 	int			win_width;
 	int			win_height;
 	void		*mlx_ptr;
 	void		*mlx_win_ptr;
-} t_mlx;
+}	t_mlx;
 
 typedef struct s_data
 {
-	// TO DO : HANDLE t_color_info struct
-	int		 		c_color;
-	int 			f_color;
-	t_color_info    fcolors;
+	int				c_color;
+	int				f_color;
+	t_color_info	fcolors;
 	t_color_info	ccolors;
-	t_mlx		    mlx;
-	t_map		    map;
-	t_player	    *player;
-	t_keys		    *keys;
-	t_ray  		    *ray;
-	t_image 	    *image;
-	t_image  	    *map2d;
-	t_image 	    *world;
-	t_image 	    NO;
-	t_image 	    SO;
-	t_image 	    WE;
-	t_image 	    EA;
-	t_image 	    *floor;
-	t_image 	    *ceiling;
+	t_mlx			mlx;
+	t_map			map;
+	t_player		*player;
+	t_keys			*keys;
+	t_ray			*ray;
+	t_image			*image;
+	t_image			*map2d;
+	t_image			*world;
+	t_image			no;
+	t_image			so;
+	t_image			we;
+	t_image			ea;
+	t_image			*floor;
+	t_image			*ceiling;
 
-} t_data;
+}	t_data;
 
 /* /\_/\_/\_/\_/\_/\_/\_/\_/\_/\_ PROTOTYPE _/\_/\_/\_/\_/\_/\_/\_/\_/\_/\ */
 
 /* -------------------- CLEAN -------------------- */
 // Located in *all.c*
-void 		free_map(t_map *map);
-void 		free_tokens(char **tokens);
+void		free_map(t_map *map);
+void		free_tokens(char **tokens);
 void		free_if_malloc_failed(t_data *data);
 void		free_all(t_data *data);
 
@@ -288,10 +296,10 @@ void		clear_image(t_image *image, t_mlx *mlx);
 void		destroy_data(t_data *data);
 
 // Located in *print_values.c*
-void		print_map(t_map *map) ;
-void 		print_ray_info(t_ray *ray);
-void 		print_ray_texture_info(t_data *data, t_ray *ray, t_image *texture);
-void 		print_image_info(t_image *image);
+void		print_map(t_map *map);
+void		print_ray_info(t_ray *ray);
+void		print_ray_texture_info(t_data *data, t_ray *ray, t_image *texture);
+void		print_image_info(t_image *image);
 
 /* -------------------- MOVING -------------------- */
 
@@ -316,12 +324,13 @@ int			go_down(t_data *data, int tile_size);
 int			go_right(t_data *data, int tile_size);
 
 // Located in *position.c*
-bool 		is_wall(t_map *map, int x, int y);
-bool 		player_wall_collision(t_map *map, int tile_size, double x, double y);
+bool		is_wall(t_map *map, int x, int y);
+bool		player_wall_collision(t_map *map, int tile_size,
+				double x, double y);
 
 // Located in *rotation.c*
-void 		rotate_left(t_data *data);
-void 		rotate_right(t_data *data);
+void		rotate_left(t_data *data);
+void		rotate_right(t_data *data);
 
 /* -------------------- PARSING -------------------- */
 
@@ -339,20 +348,24 @@ int			process_line(char *line, t_data *data);
 char		*read_and_filter_line(int fd_cub, char **ptr);
 char		*ignore_texture(int fd_cub);
 void		len_map(char *file_d, t_data *data);
+void		for_line_len(char *line, int fd);
+void		handle_error_on_open(int fd);
+void		process_map_lines(int fd, t_data *data);
+void		check_spawn(t_data *data);
 
 // Located in *map.c*
-void 		print_string_array(char **array);
-void 		show_with_spaces(const char *chaine);
-void 		remove_newline(char **array);
-void 		tab_to_space(char* string);
-void 		only_space_or_one(char *string);
+void		print_string_array(char **array);
+void		show_with_spaces(const char *chaine);
+void		remove_newline(char **array);
+void		tab_to_space(char *string);
+void		only_space_or_one(char *string);
 void		check_start_end(char *string);
-void 		complet_string_with_space(char **string, int len);
-int 		on_map(char car);
+void		complet_string_with_space(char **string, int len);
+int			on_map(char car);
 void		check_upper(char *string_up, char *string_down);
 void		check_down(char *string_up, char *string_down);
 void		check_zero(char *string_up, char *string_down);
-void 		check_map(char *fname, t_data *data);
+void		check_map(char *fname, t_data *data);
 
 // Located in *parsing.c*
 void		ft_check_file(char *fname, char *name);
@@ -360,7 +373,7 @@ int			parsing(char *fname, t_data *data);
 
 // Located in *texture.c*
 void		save_texture_data(t_image *texture, char *line, t_mlx *mlx);
-void	    found_textures_data(char *fname, t_data *data, t_mlx *mlx);
+void		found_textures_data(char *fname, t_data *data, t_mlx *mlx);
 
 /* -------------------- RENDERING -------------------- */
 
@@ -369,33 +382,35 @@ void		update_ray_coordinates(t_ray *ray);
 void		check_wall_hit(t_data *data, t_map *map, t_ray *ray);
 void		check_coordinates(t_data *data, t_map *map, t_ray *ray);
 void		dda(t_data *data, t_map *map, t_ray *ray);
+
 // Located in *draw.c*
 void		my_mlx_pixel_put(t_image *image, int x, int y, int color);
-void 		draw_tile(t_image *map2d, int x, int y);
+void		draw_tile(t_image *map2d, int x, int y);
 void		draw_vertical_lign(t_data *data, int tile_size);
 
 // Located in *frame.c"
-void 		draw_minimap_bg(t_image *map2d, int color);
-void 		draw_world_bg(t_image *world, int color);
+void		draw_minimap_bg(t_image *map2d, int color);
+void		draw_world_bg(t_image *world, int color);
 void		draw_player(t_image *image, t_player *player);
 int			render_next_frame(t_data *data);
 
 // Located in *map.c*
-void 		draw_vertical_lines(t_image *image);
-void 		draw_horizontal_lines(t_image *image);
-void 		draw_vertical_line(t_image *image, int x, int start_y, int color);
-void 		draw_horizontal_line(t_image *image, int start_x, int y, int color);
-int 		draw_map(t_image *map2d, t_map *map);
+void		draw_vertical_lines(t_image *image);
+void		draw_horizontal_lines(t_image *image);
+void		draw_vertical_line(t_image *image, int x, int start_y, int color);
+void		draw_horizontal_line(t_image *image, int start_x, int y, int color);
+int			draw_map(t_image *map2d, t_map *map);
 
 // Located in *raycasting.c*
 void		get_perp_and_height(t_ray *ray, t_player *player, t_mlx *mlx);
-void 		raycasting(t_data *data, t_player *player, t_mlx *mlx);
+void		raycasting(t_data *data, t_player *player, t_mlx *mlx);
 
 // Located in *wall.c*
 void		set_wall(t_data *data, t_ray *ray);
 void		draw_col(t_data *data, t_mlx *mlx, t_ray *ray);
 
 /* -------------------- SETUP -------------------- */
+
 // Located in *all.c*
 int			malloc_all(t_data *data);
 int			init_default_all(t_data *data);
@@ -405,9 +420,10 @@ int			init_custom_all(t_data *data);
 int			init_mlx_engine(t_mlx *mlx);
 
 // Located in *image.c*
-t_image		*allocate_image();
-int 		init_map2d(t_image *map2d, t_mlx *mlx, int nb_tiles_x, int nb_tiles_y);
-int 		init_world(t_image *world, t_mlx *mlx);
+t_image		*allocate_image(void);
+int			init_map2d(t_image *map2d, t_mlx *mlx,
+				int nb_tiles_x, int nb_tiles_y);
+int			init_world(t_image *world, t_mlx *mlx);
 int			init_image(t_data *data, t_image *image, t_mlx *mlx);
 
 // Located in *player.c*
@@ -417,11 +433,11 @@ int			init_player(t_player *player);
 // Located in *ray.c*
 void		calculate_deltas(t_ray *ray);
 void		calculate_steps_sides(t_ray *ray, t_player *player);
-void 		init_ray(t_ray *ray, t_player *player);
-void 		init_default_ray(t_ray *ray);
+void		init_ray(t_ray *ray, t_player *player);
+void		init_default_ray(t_ray *ray);
 
 // Located in *texture.c*
-void 		init_texture_img(t_image *texture_img, t_mlx *mlx, char *path);
+void		init_texture_img(t_image *texture_img, t_mlx *mlx, char *path);
 int			get_pixel_color(t_image *img, int x, int y);
 void		set_texture_on_image(t_data *data, t_image *texture, t_ray *ray);
 
@@ -437,8 +453,6 @@ char		*get_next_line(int fd);
 // Located in *libft_one.c*
 char		*ft_strchr(const char *s, int c);
 void		*ft_calloc(size_t nmemb, size_t size);
-// char		*ft_strjoin(char *s1, char *s2);
-// char		*ft_strdup(char *src);
 void		ft_bzero(void *s, size_t n);
 
 // Located in *libft_two.c*
@@ -452,21 +466,22 @@ void		free_tokens(char **tokens);
 char		**ft_split(char const *s, char c);
 
 // Located in *libft_four.c*
-// char	    *ft_strcpy(char *s1, char *s2);
-char	    *ft_strrchr(const char *s, int c);
-int 	    ft_strcmp(char *s1, char *s2);
-char	    *ft_strtrim(char const *s1, char const *set);
+char		*ft_strrchr(const char *s, int c);
+int			ft_strcmp(char *s1, char *s2);
+char		*ft_strtrim(char const *s1, char const *set);
 
 /* -------------------- DIY LIBFT -------------------- */
+
 // Located in *get_next_line.c*
 char		*read_the_line(int fd, char *left_line);
 char		*join_line(char *left_line, char *s1);
 char		*go_line(char *left_line);
 char		*go_next(char *left_line);
 char		*get_next_line(int fd);
+
 // Located in *utils.c*
 int			ft_strcmp(char *s1, char *s2);
-char 		*ft_strcpy(char *dst, const char *src);
+char		*ft_strcpy(char *dst, const char *src);
 void		free_tokens(char **tokens);
 static char	*in_tab(const char *s1, int c1, int c2);
 static int	number_word(const char *s1, char c);

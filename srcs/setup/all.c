@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   all.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bbessard <bbessard@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/12 15:49:55 by bbessard          #+#    #+#             */
+/*   Updated: 2024/06/12 16:11:05 by bbessard         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 int	malloc_all(t_data *data)
@@ -33,10 +45,10 @@ int	init_default_all(t_data *data)
 	data->map = (t_map){0};
 	data->fcolors = (t_color_info){0};
 	data->ccolors = (t_color_info){0};
-	data->NO = (t_image){0};
-	data->SO = (t_image){0};
-	data->WE = (t_image){0};
-	data->EA = (t_image){0};
+	data->no = (t_image){0};
+	data->so = (t_image){0};
+	data->we = (t_image){0};
+	data->ea = (t_image){0};
 	if (malloc_all(data) != 0)
 	{
 		perror("Failed to malloc_all in init_default_all\n");
@@ -59,9 +71,9 @@ int	init_custom_all(t_data *data)
 	}
 	init_image(data, data->image, &data->mlx.mlx_ptr);
 	init_world(data->world, &data->mlx);
-	init_image(data, &data->NO, &data->mlx.mlx_ptr);
-	init_image(data, &data->SO, &data->mlx.mlx_ptr);
-	init_image(data, &data->WE, &data->mlx.mlx_ptr);
-	init_image(data, &data->EA, &data->mlx.mlx_ptr);
+	init_image(data, &data->no, &data->mlx.mlx_ptr);
+	init_image(data, &data->so, &data->mlx.mlx_ptr);
+	init_image(data, &data->we, &data->mlx.mlx_ptr);
+	init_image(data, &data->ea, &data->mlx.mlx_ptr);
 	return (0);
 }

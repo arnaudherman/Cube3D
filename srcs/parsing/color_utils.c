@@ -1,23 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   listener.c                                         :+:      :+:    :+:   */
+/*   color_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bbessard <bbessard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/12 15:46:59 by bbessard          #+#    #+#             */
-/*   Updated: 2024/06/12 15:47:00 by bbessard         ###   ########.fr       */
+/*   Created: 2024/06/12 15:47:22 by bbessard          #+#    #+#             */
+/*   Updated: 2024/06/12 15:47:23 by bbessard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-// Handle key press events && exit game
-void	loop(t_data *data)
+int	encode_rgb(int r, int g, int b)
 {
-	mlx_hook(data->mlx.mlx_win_ptr, KEY_PRESS, 1L << 0, key_press, data);
-	mlx_hook(data->mlx.mlx_win_ptr, KEY_RELEASE, 1L << 1, key_release, data);
-	mlx_hook(data->mlx.mlx_win_ptr, 17, 1L << 17, exit_game, data);
-	mlx_loop_hook(data->mlx.mlx_ptr, render_next_frame, data);
-	mlx_loop(data->mlx.mlx_ptr);
+	int	color;
+
+	color = 0;
+	color += r << 16;
+	color += g << 8;
+	color += b;
+	return (color);
 }

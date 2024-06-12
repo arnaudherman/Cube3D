@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   player.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bbessard <bbessard@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/12 15:50:13 by bbessard          #+#    #+#             */
+/*   Updated: 2024/06/12 15:50:14 by bbessard         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 t_player	*allocate_player(void)
@@ -12,8 +24,6 @@ t_player	*allocate_player(void)
 
 int	init_player(t_player *player)
 {
-	player->x_pos = 84;
-	player->y_pos = 104;
 	player->speed = SPEED;
 	player->fov = FOV;
 	player->rotate = ROTATION;
