@@ -1,4 +1,5 @@
 #include "cub3d.h"
+#include "cub3d.h"
 
 t_player	*allocate_player(void)
 {

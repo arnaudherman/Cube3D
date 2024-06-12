@@ -1,4 +1,5 @@
 #include "cub3d.h"
+#include "cub3d.h"
 
 int	malloc_all(t_data *data)
 {

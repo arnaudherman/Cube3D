@@ -354,42 +354,60 @@ void		check_down(char *string_up, char *string_down);
 void		check_zero(char *string_up, char *string_down);
 void 		check_map(char *fname, t_data *data);
 
-// Located in *parsing.c*
-void		ft_check_file(char *fname, char *name);
-int			parsing(char *fname, t_data *data);
+// Located in *texture_utils.c*
+char *get_texture_path(char *line);
+void process_texture_path(t_image *texture, char *path, t_mlx *mlx);
+void save_texture_data(t_image *texture, char *line, t_mlx *mlx);
 
 // Located in *texture.c*
-void		save_texture_data(t_image *texture, char *line, t_mlx *mlx);
-void	    found_textures_data(char *fname, t_data *data, t_mlx *mlx);
+void handle_texture_line(char *line, t_data *data, t_mlx *mlx);
+void check_missing_textures(t_data *data);
+void found_textures_data(char *fname, t_data *data, t_mlx *mlx);
+
 
 /* -------------------- RENDERING -------------------- */
 
-// Located in *dda.c*
-void		update_ray_coordinates(t_ray *ray);
-void		check_wall_hit(t_data *data, t_map *map, t_ray *ray);
-void		check_coordinates(t_data *data, t_map *map, t_ray *ray);
-void		dda(t_data *data, t_map *map, t_ray *ray);
 // Located in *draw.c*
 void		my_mlx_pixel_put(t_image *image, int x, int y, int color);
-void 		draw_tile(t_image *map2d, int x, int y);
 void		draw_vertical_lign(t_data *data, int tile_size);
+void 		draw_square(t_data *data, int tile_size, int x, int y, int color);
+void 		draw_rays_on_map(t_data *data, t_player *player, t_mlx *mlx);
 
 // Located in *frame.c"
-void 		draw_minimap_bg(t_image *map2d, int color);
-void 		draw_world_bg(t_image *world, int color);
-void		draw_player(t_image *image, t_player *player);
 int			render_next_frame(t_data *data);
 
 // Located in *map.c*
+int 		draw_map(t_image *map2d, t_map *map);
+void 		draw_tile(t_image *image, int x, int y);
 void 		draw_vertical_lines(t_image *image);
 void 		draw_horizontal_lines(t_image *image);
 void 		draw_vertical_line(t_image *image, int x, int start_y, int color);
 void 		draw_horizontal_line(t_image *image, int start_x, int y, int color);
-int 		draw_map(t_image *map2d, t_map *map);
+
+// Located in *player.c*
+int				draw_player(t_image *image, t_player *player);
 
 // Located in *raycasting.c*
-void		get_perp_and_height(t_ray *ray, t_player *player, t_mlx *mlx);
+float 		get_ray_length(int map_width, int map_height, int window_width, int window_height);
+void 		fov_rays(int hauteur_image, int largeur_image, float fov_horizontal_deg);
+float 		correct_fisheye(float distance, float ray_angle, float player_angle);
+void 		draw_ray(t_data *data);
+void 		shoot_rays(t_data *data, t_player *player, t_ray *ray, t_mlx *mlx);
 void 		raycasting(t_data *data, t_player *player, t_mlx *mlx);
+
+// Located in *texture.c*
+void		pixel_put(t_image *image, int x, int y, int color);
+void		set_color_on_image(t_data *data, t_ray *ray);
+void		texture_put(t_data *data, t_image *texture, t_ray *ray);
+void		set_texture_on_image(t_data *data, t_image *texture, t_ray *ray);
+
+// Located in *wall.c*
+void		get_wall_dist(t_player *player, t_ray *ray);
+void		get_wall_height(t_ray *ray);
+void 		draw_wall_column(t_image *world, int column, int wall_height);
+void 		draw_wall(t_data *data, t_ray *ray);
+void		set_wall(t_data *data, t_ray *ray);
+void		draw_col(t_data *data, t_mlx *mlx, t_ray *ray);
 
 // Located in *wall.c*
 void		set_wall(t_data *data, t_ray *ray);
@@ -456,20 +474,6 @@ char		**ft_split(char const *s, char c);
 char	    *ft_strrchr(const char *s, int c);
 int 	    ft_strcmp(char *s1, char *s2);
 char	    *ft_strtrim(char const *s1, char const *set);
-
-/* -------------------- DIY LIBFT -------------------- */
-// Located in *get_next_line.c*
-char		*read_the_line(int fd, char *left_line);
-char		*join_line(char *left_line, char *s1);
-char		*go_line(char *left_line);
-char		*go_next(char *left_line);
-char		*get_next_line(int fd);
-// Located in *utils.c*
-int			ft_strcmp(char *s1, char *s2);
-char 		*ft_strcpy(char *dst, const char *src);
-void		free_tokens(char **tokens);
-static char	*in_tab(const char *s1, int c1, int c2);
-static int	number_word(const char *s1, char c);
 
 /* -------------------- MAIN.C -------------------- */
 int			main(int ac, char **av);

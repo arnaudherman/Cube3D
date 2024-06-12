@@ -1,5 +1,7 @@
 #include "cub3d.h"
+#include "cub3d.h"
 
+void	calculate_deltas(t_ray *ray)
 void	calculate_deltas(t_ray *ray)
 {
 	if (ray->dir_y == 0)
@@ -17,9 +19,12 @@ void	calculate_deltas(t_ray *ray)
 }
 
 void	calculate_steps_sides(t_ray *ray, t_player *player)
+void	calculate_steps_sides(t_ray *ray, t_player *player)
 {
 	if (ray->dir_x < 0)
 	{
+		ray->x_step = -1;
+		ray->sx = (player->x_pos - ray->x_map) * ray->dx;
 		ray->x_step = -1;
 		ray->sx = (player->x_pos - ray->x_map) * ray->dx;
 	}
@@ -30,6 +35,8 @@ void	calculate_steps_sides(t_ray *ray, t_player *player)
 	}
 	if (ray->dir_y < 0)
 	{
+		ray->y_step = -1;
+		ray->sy = (player->y_pos - ray->y_map) * ray->dy;
 		ray->y_step = -1;
 		ray->sy = (player->y_pos - ray->y_map) * ray->dy;
 	}
@@ -86,3 +93,4 @@ void	init_default_ray(t_ray *ray)
 	ray->dx = 0.0;
 	ray->dy = 0.0;
 }
+

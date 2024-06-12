@@ -1,4 +1,5 @@
 #include "cub3d.h"
+#include "cub3d.h"
 
 void	set_wall(t_data *data, t_ray *ray)
 {

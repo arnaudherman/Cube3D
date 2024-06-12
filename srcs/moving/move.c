@@ -1,4 +1,5 @@
 #include "cub3d.h"
+#include "cub3d.h"
 
 int	go_up(t_data *data, int tile_size)
 {
@@ -15,6 +16,7 @@ int	go_up(t_data *data, int tile_size)
 }
 
 int	go_left(t_data *data, int tile_size)
+int	go_left(t_data *data, int tile_size)
 {
 	double	x_new;
 	double	y_new;
@@ -29,6 +31,7 @@ int	go_left(t_data *data, int tile_size)
 }
 
 int	go_down(t_data *data, int tile_size)
+int	go_down(t_data *data, int tile_size)
 {
 	double	x_new;
 	double	y_new;
@@ -42,6 +45,7 @@ int	go_down(t_data *data, int tile_size)
 	return (0);
 }
 
+int	go_right(t_data *data, int tile_size)
 int	go_right(t_data *data, int tile_size)
 {
 	double	x_new;

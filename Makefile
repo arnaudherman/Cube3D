@@ -15,17 +15,23 @@ SRCS += srcs/setup/all.c \
 		srcs/setup/texture.c 
 
 SRCS += srcs/moving/direction.c \
-        srcs/moving/keys.c \
+		srcs/moving/keys.c \
 		srcs/moving/listener.c \
-        srcs/moving/move.c \
-        srcs/moving/position.c \
-        srcs/moving/rotation.c
+		srcs/moving/move.c \
+		srcs/moving/position.c \
+		srcs/moving/rotation.c
 
 SRCS += srcs/parsing/color.c \
-        srcs/parsing/len_map.c \
-        srcs/parsing/map.c \
-        srcs/parsing/parsing.c \
-        srcs/parsing/texture.c
+		srcs/parsing/color_utils.c \
+		srcs/parsing/len_map.c \
+		srcs/parsing/len_map_utils.c \
+		srcs/parsing/map.c \
+		srcs/parsing/map_process.c \
+		srcs/parsing/map_utils.c \
+		srcs/parsing/map_check.c \
+		srcs/parsing/parsing.c \
+		srcs/parsing/texture.c \
+		srcs/parsing/texture_utils.c \
 
 SRCS += srcs/rendering/dda.c \
 		srcs/rendering/draw.c \
@@ -36,7 +42,7 @@ SRCS += srcs/rendering/dda.c \
 		srcs/rendering/wall.c
 
 SRCS += srcs/utils/get_next_line.c \
-        srcs/utils/utils.c
+		srcs/utils/utils.c
 
 # ---------------  --------------- #
 

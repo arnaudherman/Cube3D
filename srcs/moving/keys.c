@@ -1,4 +1,5 @@
 #include "cub3d.h"
+#include "cub3d.h"
 
 int	key_press(int key, t_data *data)
 {
@@ -39,12 +40,16 @@ int	key_release(int key, t_data *data)
 }
 
 void	key_move(t_data *data, int tile_size)
+void	key_move(t_data *data, int tile_size)
 {
 	if (data->keys->w == 1)
 		go_up(data, tile_size);
+		go_up(data, tile_size);
 	else if (data->keys->a == 1)
 		go_left(data, tile_size);
+		go_left(data, tile_size);
 	else if (data->keys->s == 1)
+		go_down(data, tile_size);
 		go_down(data, tile_size);
 	else if (data->keys->d == 1)
 		go_right(data, tile_size);

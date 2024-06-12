@@ -1,4 +1,5 @@
 #include "cub3d.h"
+#include "cub3d.h"
 
 // Use mlx function for xpm format for no leak
 void	init_texture_img(t_image *texture_img, t_mlx *mlx, char *path)
