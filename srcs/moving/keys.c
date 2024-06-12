@@ -60,7 +60,7 @@ t_keys	*allocate_keys(void)
 {
 	t_keys	*keys;
 
-	keys = (t_keys *)calloc(1, sizeof(t_keys));
+	keys = (t_keys *)ft_calloc(1, sizeof(t_keys));
 	if (!keys)
 		return (NULL);
 	keys->w = 0;
